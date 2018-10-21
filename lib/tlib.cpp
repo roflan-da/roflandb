@@ -5,5 +5,5 @@
 #include "inc/tlib.h"
 
 void tlib::tlib::printmet() {
-    std::cout << "mem";
+    std::cout << "mems";
 }

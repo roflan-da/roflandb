@@ -1,7 +1,4 @@
-#SET(TARGET_NAME, "KEKLIB")
-
-FILE(GLOB SRC ./*.cpp)
-
+FILE(GLOB SRC "./*.cpp")
 
 add_library(keklib SHARED ${SRC})
-target_include_directories(keklib PRIVATE inc/)
+target_include_directories(keklib PUBLIC inc/)
