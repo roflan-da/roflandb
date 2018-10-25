@@ -1,2 +1,5 @@
 .idea
 cmake-build-*/
+
+# MacOS
+.DS_Store
