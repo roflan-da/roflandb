@@ -10,3 +10,4 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 
 add_subdirectory(src)
 add_subdirectory(lib)
+add_subdirectory(tests)
