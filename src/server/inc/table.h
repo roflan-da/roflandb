@@ -21,12 +21,12 @@ public:
     }
 
     std::string getTypeName(){
-        return type_name;
+        return type_name_;
     }
 
 protected:
     std::string name_;
-    std::string type_name;
+    std::string type_name_;
 };
 
 class IntegerColumn : public Column {
@@ -48,9 +48,8 @@ private:
 
 class TableBuilder {
 public:
-    explicit TableBuilder(std::string table_name) {
-        table_name_ = std::move(table_name);
-    }
+    explicit TableBuilder(std::string table_name) :
+    table_name_(std::move(table_name)) {}
 
     void addColumn(std::string column_type, std::string column_name);
 

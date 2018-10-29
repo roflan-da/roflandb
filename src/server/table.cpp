@@ -4,8 +4,8 @@
 
 //IntegerColumn
 IntegerColumn::IntegerColumn(std::string name) {
-name_ = std::move(name);
-type_name = "INT";
+    name_ = std::move(name);
+    type_name_ = "INT";
 }
 
 //Table
