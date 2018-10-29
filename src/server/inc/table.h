@@ -1,6 +1,4 @@
-#ifndef ROFLANDB_TABLE_H
-#define ROFLANDB_TABLE_H
-#endif //ROFLANDB_TABLE_H
+#pragma once
 
 #include <string>
 #include <vector>    //юзать вектор или нет?
