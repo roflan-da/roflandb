@@ -1,3 +1,5 @@
+#include <utility>
+
 #pragma once
 
 #include <memory>
@@ -29,7 +31,7 @@ protected:
 
 class IntegerColumn : public Column {
 public:
-    IntegerColumn(std::string name);
+    explicit IntegerColumn(std::string name);
 
 private:
     std::vector<int> data_;       //мб можно темплейт как то прикрутить
@@ -37,7 +39,7 @@ private:
 
 class Table {
 public:
-    Table(TableBuilder builder);
+    explicit Table(TableBuilder builder);
     std::string getSql();
 private:
     std::string name_;
@@ -46,8 +48,8 @@ private:
 
 class TableBuilder {
 public:
-    TableBuilder(std::string table_name) {
-        table_name_ = table_name;
+    explicit TableBuilder(std::string table_name) {
+        table_name_ = std::move(table_name);
     }
 
     void addColumn(std::string column_type, std::string column_name);
