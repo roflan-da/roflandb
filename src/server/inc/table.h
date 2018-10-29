@@ -1,7 +1,8 @@
-#ifndef ROFLANDB_TABLE_H
-#define ROFLANDB_TABLE_H
-#endif //ROFLANDB_TABLE_H
+#pragma once
 
+#include <utility>
+
+#include <memory>
 #include <string>
 #include <vector>    //юзать вектор или нет?
 
@@ -20,17 +21,17 @@ public:
     }
 
     std::string getTypeName(){
-        return type_name;
+        return type_name_;
     }
 
 protected:
     std::string name_;
-    std::string type_name;
+    std::string type_name_;
 };
 
 class IntegerColumn : public Column {
 public:
-    IntegerColumn(std::string name);
+    explicit IntegerColumn(std::string name);
 
 private:
     std::vector<int> data_;       //мб можно темплейт как то прикрутить
@@ -38,18 +39,17 @@ private:
 
 class Table {
 public:
-    Table(TableBuilder builder);
+    explicit Table(TableBuilder builder);
     std::string getSql();
 private:
     std::string name_;
-    std::vector<Column*> columns_;
+    std::vector<std::shared_ptr<Column>> columns_;
 };
 
 class TableBuilder {
 public:
-    TableBuilder(std::string table_name) {
-        table_name_ = table_name;
-    }
+    explicit TableBuilder(std::string table_name) :
+    table_name_(std::move(table_name)) {}
 
     void addColumn(std::string column_type, std::string column_name);
 
@@ -59,11 +59,11 @@ public:
         return table_name_;
     }
 
-    std::vector<Column*> getColumns(){
+    std::vector<std::shared_ptr<Column>> getColumns(){
         return std::move(columns_);             //я умный или наоборот?
     }
 
 private:
     std::string table_name_;
-    std::vector<Column*> columns_;
+    std::vector<std::shared_ptr<Column>> columns_;
 };
