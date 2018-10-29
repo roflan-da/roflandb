@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>    //юзать вектор или нет?
 
@@ -40,7 +41,7 @@ public:
     std::string getSql();
 private:
     std::string name_;
-    std::vector<Column*> columns_;
+    std::vector<std::shared_ptr<Column>> columns_;
 };
 
 class TableBuilder {
@@ -57,11 +58,11 @@ public:
         return table_name_;
     }
 
-    std::vector<Column*> getColumns(){
+    std::vector<std::shared_ptr<Column>> getColumns(){
         return std::move(columns_);             //я умный или наоборот?
     }
 
 private:
     std::string table_name_;
-    std::vector<Column*> columns_;
+    std::vector<std::shared_ptr<Column>> columns_;
 };

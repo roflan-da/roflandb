@@ -34,6 +34,6 @@ Table TableBuilder::build() {
 
 void TableBuilder::addColumn(std::string column_type, std::string column_name) {
     if (column_type == "INT") {                                           //убрать костыль
-        columns_.push_back(new IntegerColumn(std::move(column_name)));
+        columns_.push_back(std::make_shared<IntegerColumn>(IntegerColumn(std::move(column_name))));
     }
 }
