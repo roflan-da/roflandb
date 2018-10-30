@@ -1,6 +1,6 @@
 FILE(GLOB SRC "./*.cpp")
 
-add_executable(roflandb ${SRC})
+add_executable(roflandb ${SRC} inc/table_storage.h table_storage.cpp)
 target_include_directories(roflandb PUBLIC inc/)
 target_link_libraries(roflandb PUBLIC storage_engine commands parser)
 

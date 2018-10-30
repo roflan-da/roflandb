@@ -41,6 +41,9 @@ class Table {
 public:
     explicit Table(TableBuilder builder);
     std::string getSql();
+    std::string getName(){
+        return name_;
+    }
 private:
     std::string name_;
     std::vector<std::shared_ptr<Column>> columns_;
@@ -60,7 +63,7 @@ public:
     }
 
     std::vector<std::shared_ptr<Column>> getColumns(){
-        return std::move(columns_);             //я умный или наоборот?
+        return std::move(columns_);
     }
 
 private:
