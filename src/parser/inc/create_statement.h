@@ -4,6 +4,8 @@
 #include <vector>
 #include <memory>
 
+namespace prs{
+
 enum column_type{
     INT,
     STRING,
@@ -16,14 +18,15 @@ struct column{
     std::string name;
 };
 
-class createStatement{
+class CreateStatement{
 public:
-    explicit createStatement(std::string table_name, column n_columns, ...);
+    explicit CreateStatement(std::string table_name, column n_columns, ...);
 
-    std::string getTableName();
+    std::string get_table_name();
 
 private:
     std::string table_name_;
     std::vector<std::shared_ptr<column>> columns_;
 
 };
+} //namespace prs

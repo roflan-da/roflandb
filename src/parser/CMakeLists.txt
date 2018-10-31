@@ -1,6 +1,6 @@
 FILE(GLOB SRC "./*.cpp")
 
-add_library(parser SHARED ${SRC} inc/createStatement.h createStatement.cpp)
+add_library(parser SHARED ${SRC})
 
 target_include_directories(parser PUBLIC inc)
 
