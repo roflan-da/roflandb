@@ -3,14 +3,16 @@
 namespace cmd{
 enum StatementType{
     CREATE_TABLE,
-    SHOW_CREATE_TABLE
+    SHOW_CREATE_TABLE,
+    DROP_TABLE
 };
 
 class SQLStatement {
 public:
-    explicit SQLStatement(StatementType type): type_(type) {};
+    SQLStatement() = default;;
+    explicit SQLStatement(StatementType type);
 
-    StatementType type();
+    StatementType type() const;
 private:
     StatementType type_;
 };

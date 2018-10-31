@@ -1,8 +1,6 @@
 #include <storage_engine.h>
 #include "iostream"
 
-#include "storage_engine.h"
-
 cdm::Command::Command() : isValid_(false){};
 
 cdm::Command::Command(cmd::SQLStatement *statement) : isValid_(false) {
@@ -23,4 +21,8 @@ void cdm::Command::addStatement(cmd::SQLStatement *statement) {
 
 long long int cdm::Command::getStatemensSize() const {
     return statements_.size();
+}
+
+void cdm::Command::isValid(bool isValid) {
+    isValid_ = isValid;
 }

@@ -16,6 +16,7 @@ public:
     virtual void execute(st_e::IEngineStorage engine_storage) = 0;
 
     bool isValid() const;
+    void isValid(bool isValid);
     long long int getStatemensSize() const;
     void addStatement(cmd::SQLStatement* statement);
     std::shared_ptr<cmd::SQLStatement> getStatement(int index) const;
