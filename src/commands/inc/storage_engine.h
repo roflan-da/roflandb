@@ -5,7 +5,7 @@
 #include <vector>
 #include "SQL_Statement.h"
 
-namespace cdm{
+namespace cmd{
 
 class Command {
 public:

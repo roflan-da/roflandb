@@ -1,28 +1,28 @@
 #include <storage_engine.h>
 #include "iostream"
 
-cdm::Command::Command() : isValid_(false){};
+cmd::Command::Command() : isValid_(false){};
 
-cdm::Command::Command(cmd::SQLStatement *statement) : isValid_(false) {
+cmd::Command::Command(cmd::SQLStatement *statement) : isValid_(false) {
     addStatement(statement);
 };
 
-bool cdm::Command::isValid() const {
+bool cmd::Command::isValid() const {
     return isValid_;
 }
 
-std::shared_ptr<cmd::SQLStatement> cdm::Command::getStatement(int index) const {
+std::shared_ptr<cmd::SQLStatement> cmd::Command::getStatement(int index) const {
     return getStatemensSize() > index ? statements_[index] : nullptr;
 }
 
-void cdm::Command::addStatement(cmd::SQLStatement *statement) {
+void cmd::Command::addStatement(cmd::SQLStatement *statement) {
     statements_.emplace_back(statement);
 }
 
-long long int cdm::Command::getStatemensSize() const {
+long long int cmd::Command::getStatemensSize() const {
     return statements_.size();
 }
 
-void cdm::Command::isValid(bool isValid) {
+void cmd::Command::isValid(bool isValid) {
     isValid_ = isValid;
 }
