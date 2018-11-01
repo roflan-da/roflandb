@@ -1,17 +1,19 @@
 %option noyywrap nodefault yylineno case-insensitive
 %{
-#include "parser.tab.h"
-#include <stdarg.h>
-#include <string.h>
-void yyerror(char *s, ...);
-int oldstate;
+	#include "parser.tab.h"
+	#include <stdarg.h>
+	#include <string.h>
+	void yyerror(char *s, ...);
 %}
-%x COMMENT
-%s BTWMODE
+	%x COMMENT
+	%s BTWMODE
 %%
+
 CREATE  { return CREATE; }
 SHOW    { return SHOW; }
 DROP    { return DROP; }
+TABLE   {return  TABLE;}
+DATABASE{ return DATABASE; }
 
   /* types */
 FLOAT4? { return FLOAT; }
@@ -22,14 +24,12 @@ INT4?|INTEGER   { return INTEGER; }
 
   /* numbers */
 -?[0-9]+                { yylval.intval = atoi(yytext); return INTNUM; } 
--?[0-9]+"."[0-9]* |
--?"."[0-9]+     |
--?[0-9]+E[-+]?[0-9]+    |
--?[0-9]+"."[0-9]*E[-+]?[0-9]+ |
-    /* booleans */
-TRUE    { yylval.intval = 1; return BOOL; }
-UNKNOWN { yylval.intval = -1; return BOOL; }
-FALSE   { yylval.intval = 0; return BOOL; }
+
+/* user variables */
+@[0-9a-z_.$]+ |
+@\"[^"\n]+\" |
+@`[^`\n]+` |
+@'[^'\n]+' { yylval.strval = strdup(yytext+1); return USERVAR; }
 
         /* everything else */
 [ \t\n]         /* whitespace */
