@@ -17,8 +17,6 @@ public:
 
     bool isValid() const;
     void isValid(bool isValid);
-    long long int getStatemensSize() const;
-    void addStatement(std::shared_ptr<cmd::SQLStatement> statement);
     std::shared_ptr<cmd::SQLStatement> getStatement(int index) const;
 private:
     bool isValid_;

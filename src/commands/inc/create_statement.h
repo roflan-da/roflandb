@@ -24,6 +24,8 @@ class CreateStatement : public SQLStatement{
 public:
     CreateStatement();
 
+    void execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) override;
+
     explicit CreateStatement(std::shared_ptr<std::string> table_name);
 
     explicit CreateStatement(std::shared_ptr<std::string> table_name,

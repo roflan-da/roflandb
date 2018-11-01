@@ -23,6 +23,10 @@ cmd::CreateStatement::CreateStatement() :
 
 void cmd::CreateStatement::add_column(std::shared_ptr<cmd::Column> column) {
     columns_.get()->emplace_back(column);
+}
+
+void cmd::CreateStatement::execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) {
+    //сохранить таблицу в файл (пишет Серега прямо сейчас)
 };
 
 cmd::Column::Column(cmd::ColumnType type, std::string name) :
