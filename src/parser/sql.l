@@ -1,6 +1,7 @@
 %option noyywrap nodefault yylineno case-insensitive
+%option c++
 %{
-	#include "sql_parser.tab.h"
+	#include "sql_parser.tab.hpp"
 	#include <stdarg.h>
 	#include <string.h>
 %}
