@@ -14,3 +14,16 @@ void TableStorage::deleteTable(std::string table_name) {
 std::map<std::string, std::shared_ptr<Table>>::iterator TableStorage::findTable(std::string table_name) {
     return tables_.find(table_name);
 }
+
+std::string TableStorage::Save() {
+    std::string tables_string;
+    tables_string = std::to_string(tables_.size()) + " ";
+    for (auto it = tables_.begin(); it != tables_.end(); it++) {
+        tables_string += it->second->Save();
+    }
+    return tables_string;
+}
+
+void TableStorage::Load(std::string tables_string) {
+
+}

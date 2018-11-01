@@ -24,6 +24,8 @@ public:
         return type_name_;
     }
 
+    virtual std::string Save() = 0;
+
 protected:
     std::string name_;
     std::string type_name_;
@@ -32,6 +34,7 @@ protected:
 class IntegerColumn : public Column {
 public:
     explicit IntegerColumn(std::string name);
+    std::string Save() override;
 
 private:
     std::vector<int> data_;       //мб можно темплейт как то прикрутить
@@ -44,6 +47,7 @@ public:
     std::string getName(){
         return name_;
     }
+    std::string Save();
 private:
     std::string name_;
     std::vector<std::shared_ptr<Column>> columns_;
