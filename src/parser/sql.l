@@ -5,15 +5,14 @@
 	#include <string.h>
 	void yyerror(char *s, ...);
 %}
-	%x COMMENT
-	%s BTWMODE
+
 %%
 
-CREATE  { return CREATE; }
-SHOW    { return SHOW; }
-DROP    { return DROP; }
-TABLE   {return  TABLE;}
-DATABASE{ return DATABASE; }
+CREATE   { return CREATE; }
+SHOW     { return SHOW; }
+DROP     { return DROP; }
+TABLE    {return  TABLE;}
+DATABASE { return DATABASE; }
 
   /* types */
 FLOAT4? { return FLOAT; }
@@ -25,7 +24,7 @@ INT4?|INTEGER   { return INTEGER; }
   /* numbers */
 -?[0-9]+                { yylval.intval = atoi(yytext); return INTNUM; } 
 
-/* user variables */
+  /* user variables */
 @[0-9a-z_.$]+ |
 @\"[^"\n]+\" |
 @`[^`\n]+` |
