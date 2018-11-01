@@ -5,3 +5,5 @@ cmd::StatementType cmd::SQLStatement::type() const {
 }
 
 cmd::SQLStatement::SQLStatement(cmd::StatementType type): type_(type) {}
+
+cmd::SQLStatement::SQLStatement() : type_(NONE){};
