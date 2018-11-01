@@ -14,14 +14,14 @@ bool cmd::Command::isValid() const {
 }
 
 std::shared_ptr<cmd::SQLStatement> cmd::Command::getStatement(int index) const {
-    return getStatemensSize() > index ? statements_[index] : nullptr;
+    return getStatementsSize() > index ? statements_[index] : nullptr;
 }
 
 void cmd::Command::addStatement(std::shared_ptr<cmd::SQLStatement> statement) {
     statements_.emplace_back(statement);
 }
 
-long long int cmd::Command::getStatemensSize() const {
+long long int cmd::Command::getStatementsSize() const {
     return statements_.size();
 }
 
