@@ -11,14 +11,14 @@ class Command {
 public:
     Command();
 
-    explicit Command(cmd::SQLStatement* statement);
+    explicit Command(std::shared_ptr<cmd::SQLStatement> statement);
 
-    virtual void execute(st_e::IEngineStorage engine_storage) = 0;
+    virtual void execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) {};
 
     bool isValid() const;
     void isValid(bool isValid);
     long long int getStatemensSize() const;
-    void addStatement(cmd::SQLStatement* statement);
+    void addStatement(std::shared_ptr<cmd::SQLStatement> statement);
     std::shared_ptr<cmd::SQLStatement> getStatement(int index) const;
 private:
     bool isValid_;

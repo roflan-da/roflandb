@@ -9,7 +9,7 @@ enum StatementType{
 
 class SQLStatement {
 public:
-    SQLStatement() = default;;
+    SQLStatement() = default;
     explicit SQLStatement(StatementType type);
 
     StatementType type() const;

@@ -20,7 +20,7 @@ struct Column{
     std::string name;
 };
 
-class CreateStatement : SQLStatement{
+class CreateStatement : public SQLStatement{
 public:
     CreateStatement();
 
@@ -28,6 +28,8 @@ public:
 
     explicit CreateStatement(std::shared_ptr<std::string> table_name,
                              std::shared_ptr<std::vector<std::shared_ptr<Column>>> n_columns);
+
+    void add_column(std::shared_ptr<Column> column);
 
     std::shared_ptr<std::string> get_table_name();
 
