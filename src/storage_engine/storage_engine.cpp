@@ -19,16 +19,17 @@ namespace st_e {
         return tables_.find(table_name)->second;
     }
 
-    std::string StorageEngine::Save() {
+    void StorageEngine::Save() {
         std::string tables_string;
         tables_string = std::to_string(tables_.size()) + " ";
         for (auto it = tables_.begin(); it != tables_.end(); it++) {
             tables_string += it->second->Save();
         }
-        return tables_string;
+        std::cout << tables_string;
     }
 
-    void StorageEngine::Load(std::ifstream &in) {
+    void StorageEngine::Load() {
+        std::ifstream in("My_db.txt");
         int count;
         in >> count;
         for (int i = 0; i < count; i++){

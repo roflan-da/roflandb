@@ -2,6 +2,7 @@
 
 #include "i_storage_engine.h"
 #include "table.h"
+#include <iostream>
 #include <fstream>
 #include <memory>
 #include <map>
@@ -11,11 +12,11 @@ namespace st_e {
 
     class StorageEngine : public IEngineStorage {
     public:
-        void addTable(std::shared_ptr<Table> table);
-        void deleteTable(std::string table_name);
+        void addTable(std::shared_ptr<Table> table) override;
+        void deleteTable(std::string table_name) override;
         std::shared_ptr<Table> getTableByName(std::string table_name) override;
-        std::string Save();
-        void Load(std::ifstream &in);
+        void Save() override;
+        void Load() override;
 
     private:
         std::map<std::string, std::shared_ptr<Table>> tables_;

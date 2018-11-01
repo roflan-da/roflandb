@@ -7,7 +7,7 @@ int main() {
     std::cout << "Hello, world!" << std::endl;
     std::cout << "My name is RoflanDB." << std::endl;
     std::cout << "RoflanDB strong!" << std::endl;
-    //чтение
+    /*//чтение
     std::ifstream in("My_db.txt");
     //std::string tables_string;
     st_e::StorageEngine storageEngine;
@@ -29,6 +29,6 @@ int main() {
     tableStorage.addTable(std::make_shared<Table>(table1));
     tableStorage.addTable(std::make_shared<Table>(table2));
     std::ofstream out("My_db.txt");
-    out << storageEngine.Save();
+    out << storageEngine.Save();*/
     return 1;
 }
