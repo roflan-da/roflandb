@@ -1,6 +1,6 @@
 #include <utility>
 
-#include "table.h"
+#include "inc/table.h"
 
 //IntegerColumn
 IntegerColumn::IntegerColumn(std::string name) {

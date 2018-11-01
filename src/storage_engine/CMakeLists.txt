@@ -1,0 +1,4 @@
+FILE(GLOB SRC "./*.cpp")
+
+add_library(storage_engine SHARED ${SRC})
+target_include_directories(storage_engine PUBLIC inc)
