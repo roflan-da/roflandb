@@ -1,3 +1,5 @@
+#include "table.h"
+#include <string>
 #include "storage_engine.h"
 
 namespace st_e {
@@ -13,8 +15,8 @@ namespace st_e {
         }
     }
 
-    std::map<std::string, std::shared_ptr<Table>>::iterator StorageEngine::findTable(std::string table_name) {
-        return tables_.find(table_name);
+    std::shared_ptr<Table> st_e::StorageEngine::getTableByName(std::string table_name) {
+        return tables_.find(table_name)->second;
     }
 
     std::string StorageEngine::Save() {
@@ -26,8 +28,23 @@ namespace st_e {
         return tables_string;
     }
 
-    void StorageEngine::Load(std::string tables_string) {
-
+    void StorageEngine::Load(std::ifstream &in) {
+        int count;
+        in >> count;
+        for (int i = 0; i < count; i++){
+            std::string table_name;
+            in >> table_name;
+            TableBuilder tableBuilder(table_name);
+            int columns_count;
+            in >> columns_count;
+            for (int j = 0; j < columns_count; j++){
+                std::string type, column_name;
+                in >> column_name >> type;
+                tableBuilder.addColumn(type, column_name);
+            }
+            Table table = tableBuilder.build();
+            addTable(std::make_shared<Table>(table));
+        }
     }
 
 }//namespace st_e

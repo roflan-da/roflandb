@@ -25,6 +25,7 @@ public:
     }
 
     virtual std::string Save() = 0;
+    //virtual void Load(std::ostream in) = 0;
 
 protected:
     std::string name_;
@@ -35,6 +36,7 @@ class IntegerColumn : public Column {
 public:
     explicit IntegerColumn(std::string name);
     std::string Save() override;
+    // Load(std::ostream in) override;
 
 private:
     std::vector<int> data_;       //мб можно темплейт как то прикрутить
@@ -48,6 +50,7 @@ public:
         return name_;
     }
     std::string Save();
+    //void Load(std::ostream in);
 private:
     std::string name_;
     std::vector<std::shared_ptr<Column>> columns_;

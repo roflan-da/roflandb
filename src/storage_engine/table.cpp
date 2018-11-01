@@ -10,7 +10,7 @@ IntegerColumn::IntegerColumn(std::string name) {
 
 std::string IntegerColumn::Save() {
     std::string column_string;
-    column_string = name_ + " ";
+    column_string = name_ + " " + type_name_ + " ";
     return column_string;
 }
 
