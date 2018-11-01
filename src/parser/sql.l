@@ -3,9 +3,6 @@
 	#include "sql_parser.tab.h"
 	#include <stdarg.h>
 	#include <string.h>
-	void yyerror (char const *s) {
-		fprintf (stderr, "%s\n", s);
-	}
 %}
 
 %%
@@ -41,5 +38,5 @@ INT4?|INTEGER   { return INTEGER; }
 
         /* everything else */
 [ \t\n]         /* whitespace */
-.               { yyerror("mystery character '%c'", *yytext); }
+.               { yyerror(("mystery character %c", yytext)); }
 %%

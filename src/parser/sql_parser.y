@@ -38,6 +38,8 @@ command:
         create_table
         |
         drop_table
+	|
+	show_create_table
         ;
 
 create_table:
@@ -50,7 +52,11 @@ drop_table:
 		printf("\tDrop table statement\n");
 	}
 	;
-
+show_create_table:
+        SHOW CREATE TABLE NAME '(' NAME INTEGER ')'{
+		printf("\tShow Create table statement\n");
+	} 
+	;
 %%
 main(){
         yyparse();
