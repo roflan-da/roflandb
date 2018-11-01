@@ -15,7 +15,7 @@ public:
     SQLStatement();
     explicit SQLStatement(StatementType type);
 
-    virtual void execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) = 0;
+    virtual void execute(std::shared_ptr<st_e::IEngineStorage> engine_storage){};
 
     StatementType type() const;
 private:

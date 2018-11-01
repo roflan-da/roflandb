@@ -20,3 +20,9 @@ void cmd::Command::addStatement(std::shared_ptr<cmd::SQLStatement> statement) {
 void cmd::Command::isValid(bool isValid) {
     isValid_ = isValid;
 }
+
+void cmd::Command::execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) {
+    for (auto statement : statements_){
+        statement.get()->execute(engine_storage);
+    }
+}

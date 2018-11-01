@@ -16,6 +16,7 @@ enum ColumnType{
 
 struct Column{
     Column(ColumnType type, std::string name);
+
     ColumnType type;
     std::string name;
 };
@@ -26,17 +27,18 @@ public:
 
     void execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) override;
 
-    explicit CreateStatement(std::shared_ptr<std::string> table_name);
+    explicit CreateStatement(std::string table_name);
 
-    explicit CreateStatement(std::shared_ptr<std::string> table_name,
+    explicit CreateStatement(std::string table_name,
                              std::shared_ptr<std::vector<std::shared_ptr<Column>>> n_columns);
 
     void add_column(std::shared_ptr<Column> column);
 
-    std::shared_ptr<std::string> get_table_name();
+    std::shared_ptr<std::vector<std::shared_ptr<Column>>> get_columns() const;
+    std::string get_table_name() const;
 
 private:
-    std::shared_ptr<std::string> table_name_;
+    std::string table_name_;
     std::shared_ptr<std::vector<std::shared_ptr<Column>>> columns_;
 
 };
