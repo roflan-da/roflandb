@@ -5,7 +5,10 @@ void TableStorage::addTable(std::shared_ptr<Table> table) {
 }
 
 void TableStorage::deleteTable(std::string table_name) {
-    tables_.erase(table_name);
+    auto it = tables_.find(table_name);
+    if(it != tables_.end()){
+        tables_.erase(it);
+    }
 }
 
 std::map<std::string, std::shared_ptr<Table>>::iterator TableStorage::findTable(std::string table_name) {
