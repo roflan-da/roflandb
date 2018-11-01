@@ -1,9 +1,11 @@
 %option noyywrap nodefault yylineno case-insensitive
 %{
-	#include "parser.tab.h"
+	#include "sql_parser.tab.h"
 	#include <stdarg.h>
 	#include <string.h>
-	void yyerror(char *s, ...);
+	void yyerror (char const *s) {
+		fprintf (stderr, "%s\n", s);
+	}
 %}
 
 %%
