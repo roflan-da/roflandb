@@ -43,17 +43,17 @@ command:
         ;
 
 create_table:
-        CREATE TABLE NAME '(' NAME INTEGER ')'{
+        CREATE TABLE NAME '(' NAME INTEGER ')'';'{
 		printf("\tCreate table statement\n");
 	} 
 	;
 drop_table:
-	DROP TABLE NAME{
+	DROP TABLE NAME';'{
 		printf("\tDrop table statement\n");
 	}
 	;
 show_create_table:
-        SHOW CREATE TABLE NAME '(' NAME INTEGER ')'{
+        SHOW CREATE TABLE NAME '(' NAME INTEGER ')'';'{
 		printf("\tShow Create table statement\n");
 	} 
 	;
