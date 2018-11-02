@@ -59,6 +59,7 @@ private:
 
 class TableBuilder {
 public:
+    friend Table;
     explicit TableBuilder(std::string table_name) :
             table_name_(std::move(table_name)) {}
 
@@ -75,11 +76,6 @@ private:
         return table_name_;
     }
 
-    std::vector<std::shared_ptr<Column>> getColumns(){
-        return std::move(columns_);
-    }
-
-private:
     std::string table_name_;
     std::vector<std::shared_ptr<Column>> columns_;
 };
