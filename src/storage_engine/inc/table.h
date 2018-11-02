@@ -24,6 +24,9 @@ public:
         return type_name_;
     }
 
+    virtual std::string Save() = 0;
+    //virtual void Load(std::ostream in) = 0;
+
 protected:
     std::string name_;
     std::string type_name_;
@@ -32,6 +35,8 @@ protected:
 class IntegerColumn : public Column {
 public:
     explicit IntegerColumn(std::string name);
+    std::string Save() override;
+    // Load(std::ostream in) override;
 
 private:
     std::vector<int> data_;       //мб можно темплейт как то прикрутить
@@ -41,6 +46,11 @@ class Table {
 public:
     friend TableBuilder;
     std::string getSql();
+    std::string getName(){
+        return name_;
+    }
+    std::string Save();
+    //void Load(std::ostream in);
 private:
     explicit Table(TableBuilder builder);
     std::string name_;
@@ -61,7 +71,7 @@ private:
     std::vector<std::shared_ptr<Column>> getColumns(){
         return std::move(columns_);
     }
-
+  
     std::string getTableName(){
         return table_name_;
     }

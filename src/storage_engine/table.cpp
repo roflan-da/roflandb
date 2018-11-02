@@ -8,6 +8,12 @@ IntegerColumn::IntegerColumn(std::string name) {
     type_name_ = "INT";
 }
 
+std::string IntegerColumn::Save() {
+    std::string column_string;
+    column_string = name_ + " " + type_name_ + " ";
+    return column_string;
+}
+
 //Table
 Table::Table(TableBuilder builder) {
     name_ = builder.getTableName();
@@ -25,6 +31,15 @@ std::string Table::getSql() {
     }
     answer += ");";
     return answer;
+}
+
+std::string Table::Save() {
+    std::string table_string;
+    table_string = name_ + " " + std::to_string(columns_.size()) + " ";
+    for (int i = 0; i < columns_.size(); i++){
+        table_string += columns_[i]->Save();
+    }
+    return table_string;
 }
 
 //TableBuilder
