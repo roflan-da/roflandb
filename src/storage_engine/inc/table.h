@@ -44,7 +44,7 @@ private:
 
 class Table {
 public:
-    explicit Table(TableBuilder builder);
+    friend TableBuilder;
     std::string getSql();
     std::string getName(){
         return name_;
@@ -52,12 +52,14 @@ public:
     std::string Save();
     //void Load(std::ostream in);
 private:
+    explicit Table(TableBuilder builder);
     std::string name_;
     std::vector<std::shared_ptr<Column>> columns_;
 };
 
 class TableBuilder {
 public:
+    friend Table;
     explicit TableBuilder(std::string table_name) :
     table_name_(std::move(table_name)) {}
 
@@ -65,15 +67,15 @@ public:
 
     Table build();
 
+private:
+    std::vector<std::shared_ptr<Column>> getColumns(){
+        return std::move(columns_);
+    }
+  
     std::string getTableName(){
         return table_name_;
     }
 
-    std::vector<std::shared_ptr<Column>> getColumns(){
-        return std::move(columns_);
-    }
-
-private:
     std::string table_name_;
     std::vector<std::shared_ptr<Column>> columns_;
 };
