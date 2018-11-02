@@ -14,13 +14,20 @@ class IntegerColumn;
 
 class TableBuilder;
 
+enum ColumnType{
+    INT,
+    STRING,
+    CHAR,
+    TEXT
+};
+
 class Column {
 public:
     std::string getName(){
         return name_;
     }
 
-    std::string getTypeName(){
+    ColumnType getTypeName(){
         return type_name_;
     }
 
@@ -29,7 +36,7 @@ public:
 
 protected:
     std::string name_;
-    std::string type_name_;
+    ColumnType type_name_;
 };
 
 class IntegerColumn : public Column {
@@ -63,7 +70,7 @@ public:
     explicit TableBuilder(std::string table_name) :
             table_name_(std::move(table_name)) {}
 
-    void addColumn(std::string column_type, std::string column_name);
+    void addColumn(ColumnType column_type, std::string column_name);
 
     Table build();
 

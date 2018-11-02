@@ -39,6 +39,6 @@ cmd::CreateStatement::CreateStatement(std::string table_name) :
     table_name_(std::move(table_name)),
     columns_(nullptr){}
 
-cmd::Column::Column(cmd::ColumnType type, std::string name) :
+cmd::Column::Column(ColumnType type, std::string name) :
     type(type),
     name(std::move(name)) {}

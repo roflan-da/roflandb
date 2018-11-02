@@ -5,12 +5,12 @@
 //IntegerColumn
 IntegerColumn::IntegerColumn(std::string name) {
     name_ = std::move(name);
-    type_name_ = "INT";
+    type_name_ = INT;
 }
 
 std::string IntegerColumn::Save() {
     std::string column_string;
-    column_string = name_ + " " + type_name_ + " ";
+    column_string = name_ + " " + std::to_string(type_name_) + " ";
     return column_string;
 }
 
@@ -27,7 +27,7 @@ std::string Table::getSql() {
         if (i > 0){
             answer += ", ";
         }
-        answer += "\'" + columns_[i]->getName() + "\' " + columns_[i]->getTypeName();
+        answer += "\'" + columns_[i]->getName() + "\' " + std::to_string(columns_[i]->getTypeName());
     }
     answer += ");";
     return answer;
@@ -47,8 +47,8 @@ Table TableBuilder::build() {
     return Table(*this);
 }
 
-void TableBuilder::addColumn(std::string column_type, std::string column_name) {
-    if (column_type == "INT") {                                           //убрать костыль
+void TableBuilder::addColumn(ColumnType column_type, std::string column_name) {
+    if (column_type == INT) {                                           //убрать костыль
         columns_.push_back(std::make_shared<IntegerColumn>(IntegerColumn(std::move(column_name))));
     }
 }

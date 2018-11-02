@@ -7,13 +7,6 @@
 
 namespace cmd{
 
-enum ColumnType{
-    INT,
-    STRING,
-    CHAR,
-    TEXT
-};
-
 struct Column{
     Column(ColumnType type, std::string name);
 

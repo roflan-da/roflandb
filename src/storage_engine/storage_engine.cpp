@@ -29,7 +29,7 @@ namespace st_e {
     }
 
     void StorageEngine::Load() {
-        std::ifstream in("My_db.txt");
+        /*std::ifstream in("My_db.txt");
         int count;
         in >> count;
         for (int i = 0; i < count; i++){
@@ -45,7 +45,7 @@ namespace st_e {
             }
             Table table = tableBuilder.build();
             addTable(std::make_shared<Table>(table));
-        }
+        }*/
     }
 
 }//namespace st_e
