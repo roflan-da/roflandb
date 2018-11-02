@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include <string.h>
+#include <string>
 
  void yyerror (char const *s) {
    fprintf (stderr, "%s\n", s);
@@ -16,6 +16,8 @@ void emit(char *s, ...);
 	char *strval;
 }
 
+
+%token <strval> DATATYPE
 %token <strval> NAME
 %token <strval> STRING
 %token <intval> INTNUM
@@ -43,10 +45,15 @@ command:
         ;
 
 create_table:
-        CREATE TABLE NAME '(' NAME INTEGER ')'';'{
-		printf("\tCreate table ($3) statement\n");
-	} 
+        CREATE TABLE NAME '(' col_list ')'';'{ printf("\tCreate table ($3) statement\n"); }
 	;
+
+col_list : create_def {}
+        | col_def  ',' create_def {}
+        ;
+
+create_def : NAME NAME {}
+
 drop_table:
 	DROP TABLE NAME';'{
 		printf("\tDrop table statement\n");
