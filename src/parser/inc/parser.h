@@ -4,6 +4,6 @@
 #include "command.h"
 
 class parser {
-    static bool parse(const std::string& sql, Command* result);
+    static bool parse(const std::string& sql, cmd::Command* result);
 
 };

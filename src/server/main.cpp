@@ -13,13 +13,11 @@ int main() {
     st_e::StorageEngine storageEngine;
     //in >> tables_string;
 
-
     std::string command;
     while (true) {
         std::cin >> command;
         std::cout << command;
     }
-
 
 
     return 0;
