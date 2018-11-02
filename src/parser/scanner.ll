@@ -19,6 +19,9 @@
 /* enable c++ scanner class generation */
 %option c++
 
+/* change the name of the scanner class. results in "RoflanFlexLexer" */
+%option prefix="Roflan"
+
 /* the manual says "somewhat more optimized" */
 %option batch
 
@@ -52,7 +55,7 @@
  /*** LEXER RULES ***/
 
 
-CREATE   { return token::CREATE }
+ /*CREATE   { return token::CREATE; } */
 
 [0-9]+ {
     yylval->integerVal = atoi(yytext);
@@ -93,7 +96,7 @@ namespace RoflanParser {
 
 Scanner::Scanner(std::istream* in,
 		 std::ostream* out)
-    : FlexLexer(in, out)
+    : yyFlexLexer(in, out)
 {
 }
 
@@ -116,7 +119,7 @@ void Scanner::set_debug(bool b)
 #undef yylex
 #endif
 
-int FlexLexer::yylex()
+int RoflanFlexLexer::yylex()
 {
     std::cerr << "in FlexLexer::yylex() !" << std::endl;
     return 0;
@@ -128,7 +131,7 @@ int FlexLexer::yylex()
  * another input file, and scanning continues. If it returns true (non-zero),
  * then the scanner terminates, returning 0 to its caller. */
 
-int FlexLexer::yywrap()
+int RoflanFlexLexer::yywrap()
 {
     return 1;
 }
