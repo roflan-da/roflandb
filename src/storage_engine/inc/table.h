@@ -66,6 +66,11 @@ public:
 
     Table build();
 
+private:
+    std::vector<std::shared_ptr<Column>> getColumns(){
+        return std::move(columns_);
+    }
+  
     std::string getTableName(){
         return table_name_;
     }
