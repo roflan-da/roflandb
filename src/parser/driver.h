@@ -23,6 +23,7 @@ public:
 
     /// enable debug output in the flex scanner
     bool trace_scanning;
+    std::string result;
 
     /// enable debug output in the bison parser
     bool trace_parsing;

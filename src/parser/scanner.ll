@@ -55,7 +55,8 @@
  /*** LEXER RULES ***/
 
 
- /*CREATE   { return token::CREATE; } */
+CREATE  { return token::CREATE; }
+TABLE  { return token::TABLE; }
 
 [0-9]+ {
     yylval->integerVal = atoi(yytext);

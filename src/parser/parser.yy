@@ -56,11 +56,15 @@
     std::string*		stringVal;
 }
 
+
 %token			END	     0	"end of file"
 %token			EOL		"end of line"
 %token <integerVal> 	INTEGER		"integer"
 %token <doubleVal> 	DOUBLE		"double"
 %token <stringVal> 	STRING		"string"
+
+%token CREATE
+%token TABLE
 
 %type <int>	expr create_table
 
@@ -83,7 +87,14 @@
 
 %% /*** Grammar Rules ***/
 
-start	: /* empty */
+start	: create_table
+        | STRING
+        {}
+
+create_table : CREATE TABLE STRING
+            {
+                driver.result = "really wanna crate table " + *$3 + "?";
+            }
 
 %% /*** Additional Code ***/
 

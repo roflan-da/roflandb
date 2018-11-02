@@ -55,7 +55,7 @@
 #include "parser.h"
 
 // User implementation prologue.
-#line 71 "parser.yy" // lalr1.cc:415
+#line 75 "parser.yy" // lalr1.cc:415
 
 
 #include "driver.h"
@@ -392,7 +392,7 @@ namespace RoflanParser {
     {
             case 6: // "string"
 
-#line 67 "parser.yy" // lalr1.cc:622
+#line 71 "parser.yy" // lalr1.cc:622
         { delete (yysym.value.stringVal); }
 #line 398 "parser.cc" // lalr1.cc:622
         break;
@@ -642,8 +642,22 @@ namespace RoflanParser {
         {
           switch (yyn)
             {
+  case 3:
+#line 92 "parser.yy" // lalr1.cc:870
+    {}
+#line 649 "parser.cc" // lalr1.cc:870
+    break;
 
-#line 647 "parser.cc" // lalr1.cc:870
+  case 4:
+#line 95 "parser.yy" // lalr1.cc:870
+    {
+                driver.result = "really wanna crate table " + *(yystack_[0].value.stringVal) + "?";
+            }
+#line 657 "parser.cc" // lalr1.cc:870
+    break;
+
+
+#line 661 "parser.cc" // lalr1.cc:870
             default:
               break;
             }
@@ -901,62 +915,62 @@ namespace RoflanParser {
   }
 
 
-  const signed char Parser::yypact_ninf_ = -1;
+  const signed char Parser::yypact_ninf_ = -7;
 
   const signed char Parser::yytable_ninf_ = -1;
 
   const signed char
   Parser::yypact_[] =
   {
-      -1,     0,    -1
+      -6,    -7,    -5,     2,    -7,    -2,    -7,    -7
   };
 
   const unsigned char
   Parser::yydefact_[] =
   {
-       2,     0,     1
+       0,     3,     0,     0,     2,     0,     1,     4
   };
 
   const signed char
   Parser::yypgoto_[] =
   {
-      -1,    -1
+      -7,    -7,    -7
   };
 
   const signed char
   Parser::yydefgoto_[] =
   {
-      -1,     1
+      -1,     3,     4
   };
 
   const unsigned char
   Parser::yytable_[] =
   {
-       2
+       1,     2,     6,     5,     7
   };
 
   const unsigned char
   Parser::yycheck_[] =
   {
-       0
+       6,     7,     0,     8,     6
   };
 
   const unsigned char
   Parser::yystos_[] =
   {
-       0,     8,     0
+       0,     6,     7,    10,    11,     8,     0,     6
   };
 
   const unsigned char
   Parser::yyr1_[] =
   {
-       0,     7,     8
+       0,     9,    10,    10,    11
   };
 
   const unsigned char
   Parser::yyr2_[] =
   {
-       0,     2,     0
+       0,     2,     1,     1,     3
   };
 
 
@@ -967,14 +981,15 @@ namespace RoflanParser {
   const Parser::yytname_[] =
   {
   "\"end of file\"", "error", "$undefined", "\"end of line\"",
-  "\"integer\"", "\"double\"", "\"string\"", "$accept", "start", YY_NULLPTR
+  "\"integer\"", "\"double\"", "\"string\"", "CREATE", "TABLE", "$accept",
+  "start", "create_table", YY_NULLPTR
   };
 
 #if ROFLANPARSERDEBUG
   const unsigned char
   Parser::yyrline_[] =
   {
-       0,    86,    86
+       0,    90,    90,    91,    94
   };
 
   // Print the state stack on the debug stream.
@@ -1040,9 +1055,9 @@ namespace RoflanParser {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6
+       5,     6,     7,     8
     };
-    const unsigned user_token_number_max_ = 261;
+    const unsigned user_token_number_max_ = 263;
     const token_number_type undef_token_ = 2;
 
     if (static_cast<int> (t) <= yyeof_)
@@ -1055,8 +1070,8 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 1059 "parser.cc" // lalr1.cc:1181
-#line 88 "parser.yy" // lalr1.cc:1182
+#line 1074 "parser.cc" // lalr1.cc:1181
+#line 99 "parser.yy" // lalr1.cc:1182
  /*** Additional Code ***/
 
 void RoflanParser::Parser::error(const Parser::location_type& l,

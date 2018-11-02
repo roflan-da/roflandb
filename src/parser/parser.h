@@ -169,7 +169,9 @@ namespace RoflanParser {
         EOL = 258,
         INTEGER = 259,
         DOUBLE = 260,
-        STRING = 261
+        STRING = 261,
+        CREATE = 262,
+        TABLE = 263
       };
     };
 
@@ -479,12 +481,12 @@ namespace RoflanParser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 0,     ///< Last index in yytable_.
-      yynnts_ = 2,  ///< Number of nonterminal symbols.
-      yyfinal_ = 2, ///< Termination state number.
+      yylast_ = 4,     ///< Last index in yytable_.
+      yynnts_ = 3,  ///< Number of nonterminal symbols.
+      yyfinal_ = 6, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 7  ///< Number of tokens.
+      yyntokens_ = 9  ///< Number of tokens.
     };
 
 
@@ -495,7 +497,7 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 499 "parser.h" // lalr1.cc:380
+#line 501 "parser.h" // lalr1.cc:380
 
 
 
