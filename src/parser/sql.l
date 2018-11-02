@@ -3,7 +3,7 @@
 %{
 	#include "sql_parser.tab.hpp"
 	#include <stdarg.h>
-	#include <string.h>
+	#include <string>
 %}
 
 %%
