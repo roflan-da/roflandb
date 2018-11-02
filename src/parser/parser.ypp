@@ -49,7 +49,7 @@ create_table:
 	;
 
 col_list : create_def {}
-        | col_def  ',' create_def {}
+        | col_list  ',' create_def {}
         ;
 
 create_def : NAME NAME {}
