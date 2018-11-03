@@ -18,6 +18,8 @@ public:
     bool isValid() const;
     void isValid(bool isValid);
     void addStatement(std::shared_ptr<cmd::SQLStatement> statement);
+
+    std::vector<std::shared_ptr<cmd::SQLStatement>> getStatements() { return statements_;};
 private:
     bool isValid_;
     std::vector<std::shared_ptr<cmd::SQLStatement>> statements_;

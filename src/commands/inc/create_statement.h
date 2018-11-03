@@ -23,16 +23,16 @@ public:
     explicit CreateStatement(std::string table_name);
 
     explicit CreateStatement(std::string table_name,
-                             std::shared_ptr<std::vector<std::shared_ptr<Column>>> n_columns);
+                             std::vector<std::shared_ptr<Column>> n_columns);
 
     void add_column(std::shared_ptr<Column> column);
 
-    std::shared_ptr<std::vector<std::shared_ptr<Column>>> get_columns() const;
+    std::vector<std::shared_ptr<Column>> get_columns() const;
     std::string get_table_name() const;
 
 private:
     std::string table_name_;
-    std::shared_ptr<std::vector<std::shared_ptr<Column>>> columns_;
+    std::vector<std::shared_ptr<Column>> columns_;
 
 };
 } //namespace prs

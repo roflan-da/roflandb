@@ -15,17 +15,17 @@ TEST_CASE("Constructor tests") {
         cmd::CreateStatement create_statement;
         std::string name = "table_name";
         cmd::Command ex1(std::make_shared<cmd::SQLStatement>(sql_satement));
-        cmd::Command ex2(std::make_shared<cmd::SQLStatement>(create_statement));
+        cmd::Command ex2(std::make_shared<cmd::CreateStatement>(create_statement));
         REQUIRE_FALSE(ex1.isValid());
         REQUIRE_FALSE(ex2.isValid());
     }
 
     SECTION("add statements"){
         cmd::CreateStatement create_statement;
-        cmd::Command ex2(std::make_shared<cmd::SQLStatement>(create_statement));
-        ex2.addStatement(std::make_shared<cmd::SQLStatement>(create_statement));
+        cmd::Command ex2(std::make_shared<cmd::CreateStatement>(create_statement));
+        ex2.addStatement(std::make_shared<cmd::CreateStatement>(create_statement));
         for (int i = 0; i < 10; ++i) {
-            ex2.addStatement(std::make_shared<cmd::SQLStatement>(create_statement));
+            ex2.addStatement(std::make_shared<cmd::CreateStatement>(create_statement));
         }
     }
 
@@ -48,7 +48,7 @@ TEST_CASE("Constructor tests") {
 
     SECTION("get statement"){
         cmd::CreateStatement create_statement;
-        cmd::Command ex2(std::make_shared<cmd::SQLStatement>(create_statement));
+        cmd::Command ex2(std::make_shared<cmd::CreateStatement>(create_statement));
         ex2.isValid(true);
         REQUIRE(ex2.isValid());
     }

@@ -6,8 +6,10 @@ namespace cmd{
 enum StatementType{
     NONE,
     CREATE_TABLE,
-    SHOW_CREATE_TABLE,
-    DROP_TABLE
+    SHOW,
+    DROP,
+    SELECT,
+    INSERT,
 };
 
 class SQLStatement {
