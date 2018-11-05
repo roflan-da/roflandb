@@ -550,7 +550,7 @@ static const flex_int16_t yy_rule_linenum[9] =
 #include <unistd.h>
 /* %endif */
 #endif
-
+    
 #ifndef YY_EXTRA_TYPE
 #define YY_EXTRA_TYPE void *
 #endif

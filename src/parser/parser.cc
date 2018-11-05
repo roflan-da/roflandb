@@ -1,4 +1,4 @@
-// A Bison parser, made by GNU Bison 3.1.
+// A Bison parser, made by GNU Bison 3.0.5.
 
 // Skeleton implementation for Bison LALR(1) parsers in C++
 
@@ -34,7 +34,7 @@
 #define yylex   RoflanParserlex
 
 // First part of user declarations.
-#line 1 "parser.yy" // lalr1.cc:407
+#line 1 "parser.yy" // lalr1.cc:406
  /*** C/C++ Declarations ***/
 
 #include <stdio.h>
@@ -42,7 +42,7 @@
 #include <vector>
 
 
-#line 46 "parser.cc" // lalr1.cc:407
+#line 46 "parser.cc" // lalr1.cc:406
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -55,7 +55,7 @@
 #include "parser.h"
 
 // User implementation prologue.
-#line 75 "parser.yy" // lalr1.cc:415
+#line 77 "parser.yy" // lalr1.cc:414
 
 
 #include "driver.h"
@@ -68,7 +68,7 @@
 #define yylex driver.lexer->lex
 
 
-#line 72 "parser.cc" // lalr1.cc:415
+#line 72 "parser.cc" // lalr1.cc:414
 
 
 #ifndef YY_
@@ -80,15 +80,6 @@
 # endif
 # ifndef YY_
 #  define YY_(msgid) msgid
-# endif
-#endif
-
-// Whether we are compiled with exception support.
-#ifndef YY_EXCEPTIONS
-# if defined __GNUC__ && !defined __EXCEPTIONS
-#  define YY_EXCEPTIONS 0
-# else
-#  define YY_EXCEPTIONS 1
 # endif
 #endif
 
@@ -128,7 +119,7 @@
     {                                           \
       *yycdebug_ << Title << ' ';               \
       yy_print_ (*yycdebug_, Symbol);           \
-      *yycdebug_ << '\n';                       \
+      *yycdebug_ << std::endl;                  \
     }                                           \
   } while (false)
 
@@ -163,7 +154,7 @@
 
 
 namespace RoflanParser {
-#line 167 "parser.cc" // lalr1.cc:491
+#line 158 "parser.cc" // lalr1.cc:481
 
   /* Return YYSTR after stripping away unnecessary quotes and
      backslashes, so that it's suitable for yyerror.  The heuristic is
@@ -230,15 +221,15 @@ namespace RoflanParser {
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol ()
     : value ()
-    , location ()
   {}
 
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (const basic_symbol& other)
     : Base (other)
-    , value (other.value)
+    , value ()
     , location (other.location)
   {
+    value = other.value;
   }
 
   template <typename Base>
@@ -364,8 +355,9 @@ namespace RoflanParser {
   }
 
   Parser::stack_symbol_type::stack_symbol_type (state_type s, symbol_type& that)
-    : super_type (s, that.value, that.location)
+    : super_type (s, that.location)
   {
+    value = that.value;
     // that is emptied.
     that.type = empty_symbol;
   }
@@ -392,9 +384,9 @@ namespace RoflanParser {
     {
             case 6: // "string"
 
-#line 71 "parser.yy" // lalr1.cc:622
+#line 73 "parser.yy" // lalr1.cc:613
         { delete (yysym.value.stringVal); }
-#line 398 "parser.cc" // lalr1.cc:622
+#line 390 "parser.cc" // lalr1.cc:613
         break;
 
 
@@ -515,21 +507,21 @@ namespace RoflanParser {
     /// The return value of parse ().
     int yyresult;
 
-#if YY_EXCEPTIONS
+    // FIXME: This shoud be completely indented.  It is not yet to
+    // avoid gratuitous conflicts when merging into the master branch.
     try
-#endif // YY_EXCEPTIONS
       {
-    YYCDEBUG << "Starting parse\n";
+    YYCDEBUG << "Starting parse" << std::endl;
 
 
     // User initialization code.
-    #line 37 "parser.yy" // lalr1.cc:746
+    #line 37 "parser.yy" // lalr1.cc:737
 {
     // initialize the initial location object
     yyla.location.begin.filename = yyla.location.end.filename = &driver.streamname;
 }
 
-#line 533 "parser.cc" // lalr1.cc:746
+#line 525 "parser.cc" // lalr1.cc:737
 
     /* Initialize the stack.  The initial state will be set in
        yynewstate, since the latter expects the semantical and the
@@ -540,7 +532,7 @@ namespace RoflanParser {
 
     // A new symbol was pushed on the stack.
   yynewstate:
-    YYCDEBUG << "Entering state " << yystack_[0].state << '\n';
+    YYCDEBUG << "Entering state " << yystack_[0].state << std::endl;
 
     // Accept?
     if (yystack_[0].state == yyfinal_)
@@ -550,6 +542,7 @@ namespace RoflanParser {
 
     // Backup.
   yybackup:
+
     // Try to take a decision without lookahead.
     yyn = yypact_[yystack_[0].state];
     if (yy_pact_value_is_default_ (yyn))
@@ -559,19 +552,15 @@ namespace RoflanParser {
     if (yyla.empty ())
       {
         YYCDEBUG << "Reading a token: ";
-#if YY_EXCEPTIONS
         try
-#endif // YY_EXCEPTIONS
           {
             yyla.type = yytranslate_ (yylex (&yyla.value, &yyla.location));
           }
-#if YY_EXCEPTIONS
         catch (const syntax_error& yyexc)
           {
             error (yyexc);
             goto yyerrlab1;
           }
-#endif // YY_EXCEPTIONS
       }
     YY_SYMBOL_PRINT ("Next token is", yyla);
 
@@ -636,39 +625,35 @@ namespace RoflanParser {
 
       // Perform the reduction.
       YY_REDUCE_PRINT (yyn);
-#if YY_EXCEPTIONS
       try
-#endif // YY_EXCEPTIONS
         {
           switch (yyn)
             {
   case 3:
-#line 92 "parser.yy" // lalr1.cc:870
+#line 95 "parser.yy" // lalr1.cc:856
     {}
-#line 649 "parser.cc" // lalr1.cc:870
+#line 636 "parser.cc" // lalr1.cc:856
     break;
 
   case 4:
-#line 95 "parser.yy" // lalr1.cc:870
+#line 98 "parser.yy" // lalr1.cc:856
     {
-                driver.result = "really wanna crate table " + *(yystack_[0].value.stringVal) + "?";
+                driver.result = "really wanna crate table " + *(yystack_[1].value.stringVal) + "?";
             }
-#line 657 "parser.cc" // lalr1.cc:870
+#line 644 "parser.cc" // lalr1.cc:856
     break;
 
 
-#line 661 "parser.cc" // lalr1.cc:870
+#line 648 "parser.cc" // lalr1.cc:856
             default:
               break;
             }
         }
-#if YY_EXCEPTIONS
       catch (const syntax_error& yyexc)
         {
           error (yyexc);
           YYERROR;
         }
-#endif // YY_EXCEPTIONS
       YY_SYMBOL_PRINT ("-> $$ =", yylhs);
       yypop_ (yylen);
       yylen = 0;
@@ -792,12 +777,12 @@ namespace RoflanParser {
 
     return yyresult;
   }
-#if YY_EXCEPTIONS
     catch (...)
       {
-        YYCDEBUG << "Exception caught: cleaning lookahead and stack\n";
+        YYCDEBUG << "Exception caught: cleaning lookahead and stack"
+                 << std::endl;
         // Do not try to display the values of the reclaimed symbols,
-        // as their printers might throw an exception.
+        // as their printer might throw an exception.
         if (!yyla.empty ())
           yy_destroy_ (YY_NULLPTR, yyla);
 
@@ -808,7 +793,6 @@ namespace RoflanParser {
           }
         throw;
       }
-#endif // YY_EXCEPTIONS
   }
 
   void
@@ -922,13 +906,13 @@ namespace RoflanParser {
   const signed char
   Parser::yypact_[] =
   {
-      -6,    -7,    -5,     2,    -7,    -2,    -7,    -7
+      -6,    -7,    -5,     2,    -7,    -2,    -7,    -4,    -7
   };
 
   const unsigned char
   Parser::yydefact_[] =
   {
-       0,     3,     0,     0,     2,     0,     1,     4
+       0,     3,     0,     0,     2,     0,     1,     0,     4
   };
 
   const signed char
@@ -946,31 +930,31 @@ namespace RoflanParser {
   const unsigned char
   Parser::yytable_[] =
   {
-       1,     2,     6,     5,     7
+       1,     2,     6,     5,     7,     0,     0,     8
   };
 
-  const unsigned char
+  const signed char
   Parser::yycheck_[] =
   {
-       6,     7,     0,     8,     6
+       6,     7,     0,     8,     6,    -1,    -1,    11
   };
 
   const unsigned char
   Parser::yystos_[] =
   {
-       0,     6,     7,    10,    11,     8,     0,     6
+       0,     6,     7,    13,    14,     8,     0,     6,    11
   };
 
   const unsigned char
   Parser::yyr1_[] =
   {
-       0,     9,    10,    10,    11
+       0,    12,    13,    13,    14
   };
 
   const unsigned char
   Parser::yyr2_[] =
   {
-       0,     2,     1,     1,     3
+       0,     2,     1,     1,     4
   };
 
 
@@ -981,15 +965,15 @@ namespace RoflanParser {
   const Parser::yytname_[] =
   {
   "\"end of file\"", "error", "$undefined", "\"end of line\"",
-  "\"integer\"", "\"double\"", "\"string\"", "CREATE", "TABLE", "$accept",
-  "start", "create_table", YY_NULLPTR
+  "\"integer\"", "\"double\"", "\"string\"", "CREATE", "TABLE", "SHOW",
+  "DROP", "';'", "$accept", "start", "create_table", YY_NULLPTR
   };
 
 #if ROFLANPARSERDEBUG
   const unsigned char
   Parser::yyrline_[] =
   {
-       0,    90,    90,    91,    94
+       0,    93,    93,    94,    97
   };
 
   // Print the state stack on the debug stream.
@@ -1002,7 +986,7 @@ namespace RoflanParser {
            i_end = yystack_.end ();
          i != i_end; ++i)
       *yycdebug_ << ' ' << i->state;
-    *yycdebug_ << '\n';
+    *yycdebug_ << std::endl;
   }
 
   // Report on the debug stream that the rule \a yyrule is going to be reduced.
@@ -1013,7 +997,7 @@ namespace RoflanParser {
     int yynrhs = yyr2_[yyrule];
     // Print the symbols being reduced, and their result.
     *yycdebug_ << "Reducing stack by rule " << yyrule - 1
-               << " (line " << yylno << "):\n";
+               << " (line " << yylno << "):" << std::endl;
     // The symbols being reduced.
     for (int yyi = 0; yyi < yynrhs; yyi++)
       YY_SYMBOL_PRINT ("   $" << yyi + 1 << " =",
@@ -1034,7 +1018,7 @@ namespace RoflanParser {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    11,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1055,9 +1039,9 @@ namespace RoflanParser {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8
+       5,     6,     7,     8,     9,    10
     };
-    const unsigned user_token_number_max_ = 263;
+    const unsigned user_token_number_max_ = 265;
     const token_number_type undef_token_ = 2;
 
     if (static_cast<int> (t) <= yyeof_)
@@ -1070,8 +1054,8 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 1074 "parser.cc" // lalr1.cc:1181
-#line 99 "parser.yy" // lalr1.cc:1182
+#line 1058 "parser.cc" // lalr1.cc:1164
+#line 103 "parser.yy" // lalr1.cc:1165
  /*** Additional Code ***/
 
 void RoflanParser::Parser::error(const Parser::location_type& l,
@@ -1079,3 +1063,7 @@ void RoflanParser::Parser::error(const Parser::location_type& l,
 {
     driver.error(l, m);
 }
+'_m4eof'
+_m4eof
+'_m4eof'
+_m4eof

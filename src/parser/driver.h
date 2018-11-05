@@ -1,4 +1,7 @@
 #pragma once
+#include <fstream>
+#include <sstream>
+#include "command.h"
 
 
 // forward declaration
@@ -24,6 +27,8 @@ public:
     /// enable debug output in the flex scanner
     bool trace_scanning;
     std::string result;
+
+    cmd::Command SQLParseResult;
 
     /// enable debug output in the bison parser
     bool trace_parsing;

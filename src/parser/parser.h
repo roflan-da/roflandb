@@ -1,4 +1,4 @@
-// A Bison parser, made by GNU Bison 3.1.
+// A Bison parser, made by GNU Bison 3.0.5.
 
 // Skeleton interface for Bison LALR(1) parsers in C++
 
@@ -84,7 +84,7 @@
 # define YYUSE(E) /* empty */
 #endif
 
-#if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
+#if defined __GNUC__ && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
 # define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN \
     _Pragma ("GCC diagnostic push") \
@@ -103,13 +103,6 @@
 # define YY_INITIAL_VALUE(Value) /* Nothing. */
 #endif
 
-# ifndef YY_NULLPTR
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULLPTR nullptr
-#  else
-#   define YY_NULLPTR 0
-#  endif
-# endif
 /* Debug traces.  */
 #ifndef ROFLANPARSERDEBUG
 # if defined YYDEBUG
@@ -125,7 +118,7 @@
 
 
 namespace RoflanParser {
-#line 129 "parser.h" // lalr1.cc:380
+#line 122 "parser.h" // lalr1.cc:379
 
 
 
@@ -139,13 +132,13 @@ namespace RoflanParser {
     /// Symbol semantic values.
     union semantic_type
     {
-    #line 53 "parser.yy" // lalr1.cc:380
+    #line 53 "parser.yy" // lalr1.cc:379
 
     int  			integerVal;
     double 			doubleVal;
-    std::string*		stringVal;
+    std::string*	stringVal;
 
-#line 149 "parser.h" // lalr1.cc:380
+#line 142 "parser.h" // lalr1.cc:379
     };
 #else
     typedef ROFLANPARSERSTYPE semantic_type;
@@ -171,7 +164,9 @@ namespace RoflanParser {
         DOUBLE = 260,
         STRING = 261,
         CREATE = 262,
-        TABLE = 263
+        TABLE = 263,
+        SHOW = 264,
+        DROP = 265
       };
     };
 
@@ -359,7 +354,7 @@ namespace RoflanParser {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const unsigned char yycheck_[];
+  static const signed char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -445,7 +440,7 @@ namespace RoflanParser {
       typedef basic_symbol<by_state> super_type;
       /// Construct an empty symbol.
       stack_symbol_type ();
-      /// Copy construct (for efficiency).
+      /// Copy construct.
       stack_symbol_type (const stack_symbol_type& that);
       /// Steal the contents from \a sym to build this.
       stack_symbol_type (state_type s, symbol_type& sym);
@@ -481,12 +476,12 @@ namespace RoflanParser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 4,     ///< Last index in yytable_.
+      yylast_ = 7,     ///< Last index in yytable_.
       yynnts_ = 3,  ///< Number of nonterminal symbols.
       yyfinal_ = 6, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 9  ///< Number of tokens.
+      yyntokens_ = 12  ///< Number of tokens.
     };
 
 
@@ -497,7 +492,7 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 501 "parser.h" // lalr1.cc:380
+#line 496 "parser.h" // lalr1.cc:379
 
 
 
