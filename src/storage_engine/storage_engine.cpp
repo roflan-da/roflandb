@@ -4,22 +4,22 @@
 
 namespace st_e {
 
-    void StorageEngine::addTable(std::shared_ptr<Table> table) {
-        tables_[table->getName()] = table;
+    void StorageEngine::add_table(std::shared_ptr<Table> table) {
+        tables_[table->get_name()] = table;
     }
 
-    void StorageEngine::deleteTable(std::string table_name) {
+    void StorageEngine::delete_table(std::string table_name) {
         auto it = tables_.find(table_name);
         if (it != tables_.end()) {
             tables_.erase(it);
         }
     }
 
-    std::shared_ptr<Table> st_e::StorageEngine::getTableByName(std::string table_name) {
+    std::shared_ptr<Table> st_e::StorageEngine::get_table_by_name(std::string table_name) {
         return tables_.find(table_name)->second;
     }
 
-    void StorageEngine::Save() {
+    void StorageEngine::save() {
         std::string tables_string;
         tables_string = std::to_string(tables_.size()) + " ";
         for (auto it = tables_.begin(); it != tables_.end(); it++) {
@@ -29,7 +29,7 @@ namespace st_e {
         out << tables_string;
     }
 
-    void StorageEngine::Load() {
+    void StorageEngine::load() {
         std::ifstream in("My_db.txt");
         int count;
         in >> count;
@@ -43,10 +43,10 @@ namespace st_e {
                 std::string column_name;
                 int type;
                 in >> column_name >> type;
-                tableBuilder.addColumn(static_cast<ColumnType>(type), column_name);
+                tableBuilder.add_column(static_cast<ColumnType>(type), column_name);
             }
             Table table = tableBuilder.build();
-            addTable(std::make_shared<Table>(table));
+            add_table(std::make_shared<Table>(table));
         }
     }
 
