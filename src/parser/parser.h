@@ -149,7 +149,9 @@ namespace RoflanParser {
     cmd::CreateStatement* create_stmt;
     cmd::Column*    column_t;
 
-#line 153 "parser.h" // lalr1.cc:379
+    std::vector<cmd::Column*>* column_vector_t;
+
+#line 155 "parser.h" // lalr1.cc:379
     };
 #else
     typedef ROFLANPARSERSTYPE semantic_type;
@@ -489,12 +491,12 @@ namespace RoflanParser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 10,     ///< Last index in yytable_.
-      yynnts_ = 5,  ///< Number of nonterminal symbols.
+      yylast_ = 11,     ///< Last index in yytable_.
+      yynnts_ = 6,  ///< Number of nonterminal symbols.
       yyfinal_ = 6, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 15  ///< Number of tokens.
+      yyntokens_ = 16  ///< Number of tokens.
     };
 
 
@@ -505,7 +507,7 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 509 "parser.h" // lalr1.cc:379
+#line 511 "parser.h" // lalr1.cc:379
 
 
 

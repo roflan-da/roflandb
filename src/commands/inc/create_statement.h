@@ -26,9 +26,9 @@ public:
     explicit CreateStatement(std::string table_name,
                              std::vector<std::shared_ptr<Column>> n_columns);
 
-    void add_column(Column* column);
+//    void add_column(Column* column);
     void add_column(std::shared_ptr<Column> column);
-    void set_columns(std::vector<std::shared_ptr<Column>> columns);
+    void set_columns(std::vector<cmd::Column*> columns);
 
     std::vector<std::shared_ptr<Column>> get_columns() const;
     std::string get_table_name() const;

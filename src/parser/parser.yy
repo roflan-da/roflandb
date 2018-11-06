@@ -65,6 +65,8 @@
     ColumnType      column_type_t;
     cmd::CreateStatement* create_stmt;
     cmd::Column*    column_t;
+
+    std::vector<cmd::Column*>* column_vector_t;
 }
 
 
@@ -84,6 +86,7 @@
 %type <create_stmt> create_statement
 %type <column_type_t>       column_type
 %type <column_t> column_def
+%type <column_vector_t> column_def_list
 
 %destructor { delete $$; } STRING
 %destructor { } <column_type_t>
@@ -110,13 +113,26 @@
 start	:  STRING {}
         | create_statement {}
 
-create_statement : CREATE TABLE '(' column_def ')' STRING
-                {
-                    cmd::CreateStatement stmt($6->c_str());
-                    stmt.add_column($4);
-                    driver.create_statement = stmt;
+create_statement :
+        CREATE TABLE '(' column_def_list ')' STRING{
+            cmd::CreateStatement* stmt = new cmd::CreateStatement($6->c_str());
+            //stmt.add_column(std::make_shared<cmd::Column>(*$4));
+            stmt->set_columns(*$4);
+            driver.create_statement = *stmt;
+        }
 
-                }
+
+
+column_def_list:
+        column_def{
+            $$ = new std::vector<cmd::Column*>();
+            $$->emplace_back($1);
+        }
+    |   column_def_list ',' column_def{
+            $1->emplace_back($3);
+            $$ = $1;
+        }
+
 
 column_def:
 		STRING column_type {
