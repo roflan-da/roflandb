@@ -55,7 +55,7 @@
 #include "parser.h"
 
 // User implementation prologue.
-#line 77 "parser.yy" // lalr1.cc:414
+#line 93 "parser.yy" // lalr1.cc:414
 
 
 #include "driver.h"
@@ -382,11 +382,18 @@ namespace RoflanParser {
     // User destructor.
     switch (yysym.type_get ())
     {
-            case 6: // "string"
+            case 6: // STRING
 
-#line 73 "parser.yy" // lalr1.cc:613
+#line 88 "parser.yy" // lalr1.cc:613
         { delete (yysym.value.stringVal); }
 #line 390 "parser.cc" // lalr1.cc:613
+        break;
+
+      case 19: // column_type
+
+#line 89 "parser.yy" // lalr1.cc:613
+        { }
+#line 397 "parser.cc" // lalr1.cc:613
         break;
 
 
@@ -515,13 +522,13 @@ namespace RoflanParser {
 
 
     // User initialization code.
-    #line 37 "parser.yy" // lalr1.cc:737
+    #line 44 "parser.yy" // lalr1.cc:737
 {
     // initialize the initial location object
     yyla.location.begin.filename = yyla.location.end.filename = &driver.streamname;
 }
 
-#line 525 "parser.cc" // lalr1.cc:737
+#line 532 "parser.cc" // lalr1.cc:737
 
     /* Initialize the stack.  The initial state will be set in
        yynewstate, since the latter expects the semantical and the
@@ -629,22 +636,46 @@ namespace RoflanParser {
         {
           switch (yyn)
             {
-  case 3:
-#line 95 "parser.yy" // lalr1.cc:856
+  case 2:
+#line 110 "parser.yy" // lalr1.cc:856
     {}
-#line 636 "parser.cc" // lalr1.cc:856
+#line 643 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 3:
+#line 111 "parser.yy" // lalr1.cc:856
+    {}
+#line 649 "parser.cc" // lalr1.cc:856
     break;
 
   case 4:
-#line 98 "parser.yy" // lalr1.cc:856
+#line 114 "parser.yy" // lalr1.cc:856
     {
-                driver.result = "really wanna crate table " + *(yystack_[1].value.stringVal) + "?";
-            }
-#line 644 "parser.cc" // lalr1.cc:856
+                    cmd::CreateStatement stmt((yystack_[0].value.stringVal)->c_str());
+                    stmt.add_column(std::make_shared<cmd::Column>(*(yystack_[2].value.column_t)));
+                    driver.create_statement = stmt;
+
+                }
+#line 660 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 5:
+#line 122 "parser.yy" // lalr1.cc:856
+    {
+		    cmd::Column new_col((yystack_[0].value.column_type_t), (yystack_[1].value.stringVal)->c_str());
+		    (yylhs.value.column_t) = &new_col;
+		}
+#line 669 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 6:
+#line 130 "parser.yy" // lalr1.cc:856
+    { (yylhs.value.column_type_t) = ColumnType::INT; }
+#line 675 "parser.cc" // lalr1.cc:856
     break;
 
 
-#line 648 "parser.cc" // lalr1.cc:856
+#line 679 "parser.cc" // lalr1.cc:856
             default:
               break;
             }
@@ -899,62 +930,67 @@ namespace RoflanParser {
   }
 
 
-  const signed char Parser::yypact_ninf_ = -7;
+  const signed char Parser::yypact_ninf_ = -10;
 
   const signed char Parser::yytable_ninf_ = -1;
 
   const signed char
   Parser::yypact_[] =
   {
-      -6,    -7,    -5,     2,    -7,    -2,    -7,    -4,    -7
+      -6,   -10,    -8,     3,   -10,    -9,   -10,    -1,    -5,    -4,
+     -10,   -10,     0,   -10
   };
 
   const unsigned char
   Parser::yydefact_[] =
   {
-       0,     3,     0,     0,     2,     0,     1,     0,     4
+       0,     2,     0,     0,     3,     0,     1,     0,     0,     0,
+       6,     5,     0,     4
   };
 
   const signed char
   Parser::yypgoto_[] =
   {
-      -7,    -7,    -7
+     -10,   -10,   -10,   -10,   -10
   };
 
   const signed char
   Parser::yydefgoto_[] =
   {
-      -1,     3,     4
+      -1,     3,     4,     9,    11
   };
 
   const unsigned char
   Parser::yytable_[] =
   {
-       1,     2,     6,     5,     7,     0,     0,     8
+       1,     5,     2,     6,     7,     8,    13,    10,     0,     0,
+      12
   };
 
   const signed char
   Parser::yycheck_[] =
   {
-       6,     7,     0,     8,     6,    -1,    -1,    11
+       6,     9,     8,     0,    13,     6,     6,    12,    -1,    -1,
+      14
   };
 
   const unsigned char
   Parser::yystos_[] =
   {
-       0,     6,     7,    13,    14,     8,     0,     6,    11
+       0,     6,     8,    16,    17,     9,     0,    13,     6,    18,
+      12,    19,    14,     6
   };
 
   const unsigned char
   Parser::yyr1_[] =
   {
-       0,    12,    13,    13,    14
+       0,    15,    16,    16,    17,    18,    19
   };
 
   const unsigned char
   Parser::yyr2_[] =
   {
-       0,     2,     1,     1,     4
+       0,     2,     1,     1,     6,     2,     1
   };
 
 
@@ -965,15 +1001,16 @@ namespace RoflanParser {
   const Parser::yytname_[] =
   {
   "\"end of file\"", "error", "$undefined", "\"end of line\"",
-  "\"integer\"", "\"double\"", "\"string\"", "CREATE", "TABLE", "SHOW",
-  "DROP", "';'", "$accept", "start", "create_table", YY_NULLPTR
+  "\"integer\"", "\"double\"", "STRING", "\"string\"", "CREATE", "TABLE",
+  "SHOW", "DROP", "INT_TYPE", "'('", "')'", "$accept", "start",
+  "create_statement", "column_def", "column_type", YY_NULLPTR
   };
 
 #if ROFLANPARSERDEBUG
   const unsigned char
   Parser::yyrline_[] =
   {
-       0,    93,    93,    94,    97
+       0,   110,   110,   111,   113,   122,   130
   };
 
   // Print the state stack on the debug stream.
@@ -1017,8 +1054,8 @@ namespace RoflanParser {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      13,    14,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    11,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1039,9 +1076,9 @@ namespace RoflanParser {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10
+       5,     6,     7,     8,     9,    10,    11,    12
     };
-    const unsigned user_token_number_max_ = 265;
+    const unsigned user_token_number_max_ = 267;
     const token_number_type undef_token_ = 2;
 
     if (static_cast<int> (t) <= yyeof_)
@@ -1054,8 +1091,8 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 1058 "parser.cc" // lalr1.cc:1164
-#line 103 "parser.yy" // lalr1.cc:1165
+#line 1095 "parser.cc" // lalr1.cc:1164
+#line 136 "parser.yy" // lalr1.cc:1165
  /*** Additional Code ***/
 
 void RoflanParser::Parser::error(const Parser::location_type& l,
@@ -1063,7 +1100,3 @@ void RoflanParser::Parser::error(const Parser::location_type& l,
 {
     driver.error(l, m);
 }
-'_m4eof'
-_m4eof
-'_m4eof'
-_m4eof

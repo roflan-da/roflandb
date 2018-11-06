@@ -32,7 +32,15 @@ std::vector<std::shared_ptr<cmd::Column>> cmd::CreateStatement::get_columns() co
 
 cmd::CreateStatement::CreateStatement(std::string table_name) :
     SQLStatement(CREATE_TABLE),
-    table_name_(std::move(table_name)) {};
+    table_name_(std::move(table_name)) {}
+
+void cmd::CreateStatement::set_columns(std::vector<std::shared_ptr<cmd::Column>> columns) {
+    columns_ = columns;
+}
+
+void cmd::CreateStatement::add_column(cmd::Column *column) {
+    columns_.emplace_back(std::make_shared<cmd::Column>(column->type, column->name));
+};
 
 cmd::Column::Column(ColumnType type, std::string name) :
     type(type),

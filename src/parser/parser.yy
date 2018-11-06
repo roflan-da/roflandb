@@ -107,21 +107,16 @@
 
 
 
-start	: create_table {}
-        | STRING {}
+start	:  STRING {}
         | create_statement {}
 
 create_statement : CREATE TABLE '(' column_def ')' STRING
                 {
                     cmd::CreateStatement stmt($6->c_str());
-                    stmt.add_column(std::make_shared<cmd::Column>(*($4->getObj())));
+                    stmt.add_column(std::make_shared<cmd::Column>(*$4));
                     driver.create_statement = stmt;
 
                 }
-
-column_type:
-		INT_TYPE { $$ = ColumnType::INT; }
-	;
 
 column_def:
 		STRING column_type {
@@ -130,10 +125,12 @@ column_def:
 		}
 	;
 
-create_table : CREATE TABLE STRING';'
-            {
-                driver.result = "really wanna crate table " + *$3 + "?";
-            }
+
+column_type:
+        INT_TYPE { $$ = ColumnType::INT; }
+    ;
+
+
 
 
 %% /*** Additional Code ***/

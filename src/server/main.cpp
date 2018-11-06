@@ -12,12 +12,12 @@ int main() {
 //    std::cout << driver.result;
 
     while (true) {
-        std::string command;
+        std::string sql_query;
         std::cout << "Enter query \n";
 
-        std::getline(std::cin, command);
-        driver.parse_string(command, answer);
-        std::cout << driver.result;
+        std::getline(std::cin, sql_query);
+        driver.parse_string(sql_query, answer);
+        std::cout << driver.result << "\n";
 //        std::cout << command << " SQL \n";
     }
 
