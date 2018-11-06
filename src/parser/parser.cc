@@ -662,8 +662,8 @@ namespace RoflanParser {
   case 5:
 #line 122 "parser.yy" // lalr1.cc:856
     {
-		    cmd::Column new_col((yystack_[0].value.column_type_t), (yystack_[1].value.stringVal)->c_str());
-		    (yylhs.value.column_t) = &new_col;
+		    cmd::Column* col = new cmd::Column((yystack_[0].value.column_type_t), (yystack_[1].value.stringVal)->c_str());
+		    (yylhs.value.column_t) = col;
 		}
 #line 669 "parser.cc" // lalr1.cc:856
     break;

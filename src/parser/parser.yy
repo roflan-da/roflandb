@@ -120,8 +120,8 @@ create_statement : CREATE TABLE '(' column_def ')' STRING
 
 column_def:
 		STRING column_type {
-		    cmd::Column new_col($2, $1->c_str());
-		    $$ = &new_col;
+		    cmd::Column* col = new cmd::Column($2, $1->c_str());
+		    $$ = col;
 		}
 	;
 
