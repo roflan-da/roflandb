@@ -652,7 +652,7 @@ namespace RoflanParser {
 #line 114 "parser.yy" // lalr1.cc:856
     {
                     cmd::CreateStatement stmt((yystack_[0].value.stringVal)->c_str());
-                    stmt.add_column(std::make_shared<cmd::Column>(*(yystack_[2].value.column_t)));
+                    stmt.add_column((yystack_[2].value.column_t));
                     driver.create_statement = stmt;
 
                 }

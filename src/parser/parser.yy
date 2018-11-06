@@ -113,7 +113,7 @@ start	:  STRING {}
 create_statement : CREATE TABLE '(' column_def ')' STRING
                 {
                     cmd::CreateStatement stmt($6->c_str());
-                    stmt.add_column(std::make_shared<cmd::Column>(*$4));
+                    stmt.add_column($4);
                     driver.create_statement = stmt;
 
                 }
