@@ -6,6 +6,13 @@
 
 %}
 
+
+%code requires{
+    #include "command.h"
+    #include "statements.h"
+}
+
+
 /*** yacc/bison Declarations ***/
 %require "3.0"
 
@@ -53,7 +60,11 @@
 %union {
     int  			integerVal;
     double 			doubleVal;
-    std::string*	stringVal;
+    std::string* 	stringVal;
+
+    ColumnType      column_type_t;
+    cmd::CreateStatement* create_stmt;
+    cmd::Column*    column_t;
 }
 
 
@@ -61,16 +72,21 @@
 %token			EOL		    "end of line"
 %token <integerVal> INTEGER		"integer"
 %token <doubleVal> 	DOUBLE		"double"
-%token <stringVal> 	STRING		"string"
+%token <stringVal> 	STRING COLUMN_NAME		"string"
 
 %token CREATE
 %token TABLE
 %token SHOW
 %token DROP
+%token INT_TYPE
 
 %type <int>	expr create_table
+%type <create_stmt> create_statement
+%type <column_type_t>       column_type
+%type <column_t> column_def
 
 %destructor { delete $$; } STRING
+%destructor { } <column_type_t>
 
  /*** END TOKENS ***/
 
@@ -90,9 +106,29 @@
 %% /*** Grammar Rules ***/
 
 
-start	: create_table
-        | STRING
-        {}
+
+start	: create_table {}
+        | STRING {}
+        | create_statement {}
+
+create_statement : CREATE TABLE '(' column_def ')' STRING
+                {
+                    cmd::CreateStatement stmt($6->c_str());
+                    stmt.add_column(std::make_shared<cmd::Column>(*($4->getObj())));
+                    driver.create_statement = stmt;
+
+                }
+
+column_type:
+		INT_TYPE { $$ = ColumnType::INT; }
+	;
+
+column_def:
+		STRING column_type {
+		    cmd::Column new_col($2, $1->c_str());
+		    $$ = &new_col;
+		}
+	;
 
 create_table : CREATE TABLE STRING';'
             {

@@ -58,6 +58,12 @@
 CREATE  { return token::CREATE; }
 TABLE  { return token::TABLE; }
 
+
+INT     { return token::INT_TYPE; }
+TEXT    { return token::TEXT; }
+FLOAT   { return token::FLOAT; }
+
+
 [0-9]+ {
     yylval->integerVal = atoi(yytext);
     return token::INTEGER;

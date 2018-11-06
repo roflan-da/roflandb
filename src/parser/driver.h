@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include "command.h"
-
+#include "statements.h"
 
 // forward declaration
 //class CalcContext;
@@ -28,7 +28,10 @@ public:
     bool trace_scanning;
     std::string result;
 
+
+    //Parser result object
     cmd::Command SQLParseResult;
+    cmd::CreateStatement create_statement;
 
     /// enable debug output in the bison parser
     bool trace_parsing;
