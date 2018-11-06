@@ -8,9 +8,9 @@
 namespace cmd{
 
 struct Column{
-    Column(ColumnType type, std::string name);
+    Column(st_e::ColumnType type, std::string name);
 
-    ColumnType type;
+    st_e::ColumnType type;
     std::string name;
 };
 

@@ -6,6 +6,10 @@
 #include <string>
 #include <vector>    //юзать вектор или нет?
 
+namespace st_e {
+
+#define ENUM_TO_STR(ENUM) std::string(#ENUM)
+
 class Table;
 
 class Column;
@@ -86,3 +90,5 @@ private:
     std::string table_name_;
     std::vector<std::shared_ptr<Column>> columns_;
 };
+
+}//namespace st_e

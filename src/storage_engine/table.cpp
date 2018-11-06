@@ -2,6 +2,8 @@
 
 #include "inc/table.h"
 
+namespace st_e {
+
 //IntegerColumn
 IntegerColumn::IntegerColumn(std::string name) {
     name_ = std::move(name);
@@ -27,7 +29,7 @@ std::string Table::getSql() {
         if (i > 0){
             answer += ", ";
         }
-        answer += "\'" + columns_[i]->getName() + "\' " + std::to_string(columns_[i]->getTypeName());
+        answer += "\'" + columns_[i]->getName() + "\' " + ENUM_TO_STR(columns_[i]->getTypeName());
     }
     answer += ");";
     return answer;
@@ -52,3 +54,5 @@ void TableBuilder::addColumn(ColumnType column_type, std::string column_name) {
         columns_.push_back(std::make_shared<IntegerColumn>(IntegerColumn(std::move(column_name))));
     }
 }
+
+}//namespace st_e

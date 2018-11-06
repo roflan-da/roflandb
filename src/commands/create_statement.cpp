@@ -21,7 +21,7 @@ void cmd::CreateStatement::add_column(std::shared_ptr<cmd::Column> column) {
 }
 
 void cmd::CreateStatement::execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) {
-    TableBuilder table_builder(this->get_table_name());
+    st_e::TableBuilder table_builder(this->get_table_name());
     auto mem = this->get_columns();
     //table_builder.addColumn(INT, "krkcolumn");
 }
@@ -34,6 +34,6 @@ cmd::CreateStatement::CreateStatement(std::string table_name) :
     SQLStatement(CREATE_TABLE),
     table_name_(std::move(table_name)) {};
 
-cmd::Column::Column(ColumnType type, std::string name) :
+cmd::Column::Column(st_e::ColumnType type, std::string name) :
     type(type),
     name(std::move(name)) {}
