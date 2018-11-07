@@ -19,16 +19,15 @@ enum ConditionType{
     LESS_EQUAL
 };
     //HOW TO USE DIS SHIT
-    //auto condOR = cond::Condition(cond::OR);
+    //auto condOR = cond::Condition();
     //auto cond = cond::Condition(cond::AND, "ababaca", 12);
     //std::cout << std::get<int>(cond.value());
 
 class Condition {
 public:
-
-    explicit Condition(ConditionType type) : type_(type) {}
+    Condition() = default;
     Condition(ConditionType type, std::string col_name, std::variant<int, std::string, std::shared_ptr<Condition>> value) :
-    type_(type), column_name_(std::move(col_name)), value_(std::move(value)) {}
+        type_(type), column_name_(std::move(col_name)), value_(std::move(value)) {}
 
     void column_name(std::string name) { column_name_ = name; }
     std::string column_name() const { return column_name_; }

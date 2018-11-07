@@ -1,5 +1,6 @@
 #include "main.h"
 #include "driver.h"
+//#include "../query_conditions/inc/condition.h"     why no see:??/??/by mup0c 08.11
 
 int main() {
     std::cout << "Hello, world!" << std::endl;
@@ -10,6 +11,7 @@ int main() {
     std::string answer;
 //    driver.parse_string("create", answer);
 //    std::cout << driver.result;
+//    auto condOR = cond::Condition();       by mup0c 08.11
 
     while (true) {
         std::string sql_query;
