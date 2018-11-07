@@ -9,7 +9,7 @@ enum StatementType{
     SHOW,
     DROP,
     SELECT,
-    INSERT,
+    INSERT
 };
 
 class SQLStatement {
