@@ -835,7 +835,7 @@ YY_RULE_SETUP
 #line 65 "scanner.ll"
 {
     //yylval->int = atoi(yytext);
-    yylval = new RoflanParser::Parser::semantic_type(atoi(yytext));
+    yylval = new RoflanParser::Parser::semantic_type(new std::string(yytext));
     return token::INTEGER;
 }
 	YY_BREAK
@@ -844,7 +844,7 @@ YY_RULE_SETUP
 #line 72 "scanner.ll"
 {
     //yylval = yylval(yytext);
-    yylval = new RoflanParser::Parser::semantic_type(yytext);
+    yylval = new RoflanParser::Parser::semantic_type(new std::string(yytext));
     return token::STRING;
 }
 	YY_BREAK
