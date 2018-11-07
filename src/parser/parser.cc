@@ -812,11 +812,11 @@ namespace RoflanParser {
   case 4:
 #line 103 "parser.yy" // lalr1.cc:856
     {
-            driver.result = "CREATE TABLE '(' column_def_list ')' STRING";
-            /*cmd::CreateStatement* stmt = new cmd::CreateStatement($6->c_str());
+            driver.result = "Works";
+            //cmd::CreateStatement* stmt = new cmd::CreateStatement($6->c_str());
             //stmt.add_column(std::make_shared<cmd::Column>(*$4));
             //stmt->set_columns(*$4);
-            //driver.create_statement = *stmt;*/
+            //driver.create_statement = *stmt;
         }
 #line 822 "parser.cc" // lalr1.cc:856
     break;
