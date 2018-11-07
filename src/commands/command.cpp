@@ -27,6 +27,6 @@ void cmd::Command::execute(std::shared_ptr<st_e::IEngineStorage> engine_storage)
     }
 }
 
-void cmd::Command::addStatement(cmd::SQLStatement *statement) {
-    statements_.emplace_back(std::make_shared<cmd::SQLStatement>(*statement));
+cmd::Command::Command(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> statements) {
+    statements_ = *statements.get();
 }

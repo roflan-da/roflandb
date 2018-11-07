@@ -29,13 +29,11 @@ public:
     void add_column(std::shared_ptr<cmd::Column> column);
     void set_columns(std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> columns);
 
-
     std::vector<std::shared_ptr<cmd::Column>> get_columns() const;
     std::string get_table_name() const;
 
 private:
     std::string table_name_;
     std::vector<std::shared_ptr<cmd::Column>> columns_;
-
 };
 } //namespace prs

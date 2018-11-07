@@ -54,10 +54,10 @@
  /*** TOKENS ***/
 %define api.value.type variant
 
-%token			END	     0	"end of file"
-%token			EOL		    "end of line"
-%token <int>    INTEGER		"integer"
-%token <std::string> 	    STRING "string"
+%token			        END	     0	"end of file"
+%token			        EOL		    "end of line"
+%token <int>            INTEGER		"integer"
+%token <std::string>    STRING      "string"
 
 %token CREATE
 %token TABLE
@@ -65,11 +65,14 @@
 %token DROP
 %token INT_TYPE
 
-/*%type <int>	expr create_table*/
-%type <std::shared_ptr<cmd::CreateStatement>> create_statement
-%type <ColumnType>       column_type
-%type <std::shared_ptr<cmd::Column>> column_def
-%type <std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>>> column_def_list
+%type <std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>>>    statement_list
+%type <std::shared_ptr<cmd::SQLStatement>>                                  statement
+
+%type <std::shared_ptr<cmd::CreateStatement>>                               create_statement
+%type <ColumnType>                                                          column_type
+%type <std::shared_ptr<cmd::Column>>                                        column_def
+%type <std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>>>          column_def_list
+
 
  /*** END TOKENS ***/
 
@@ -87,14 +90,25 @@
 %}
 
 %% /*** Grammar Rules ***/
-start	: STRING {}
-        | create_statement {}
+start : statement_list{
+            std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>($1);
+            driver.SQLParseResult = result;
+            driver.SQLParseResult.get()->isValid(true);
+        }
+
+statement_list : statement {
+            $$ = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
+            $$.get()->emplace_back($1);
+        }
+
+statement : create_statement{
+            $$ = $1;
+        }
 
 create_statement :
         CREATE TABLE STRING '(' column_def_list ')'';' {
             $$ = std::make_shared<cmd::CreateStatement>($3.c_str());
             $$.get()->set_columns($5);
-            driver.create_statement_shared = $$;
         }
 
 column_def_list:

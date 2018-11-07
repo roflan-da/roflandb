@@ -38,7 +38,6 @@ void cmd::CreateStatement::set_columns(std::shared_ptr<std::vector<std::shared_p
     columns_ = *columns.get();
 }
 
-
 cmd::Column::Column(ColumnType type, std::string name) :
     type(type),
     name(std::move(name)) {}

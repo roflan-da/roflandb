@@ -28,11 +28,8 @@ public:
     bool trace_scanning;
     std::string result;
 
-
-    //Parser result object
-    cmd::Command SQLParseResult;
-    cmd::CreateStatement create_statement;
-    std::shared_ptr<cmd::CreateStatement> create_statement_shared;
+    //shared_ptr to Parser result object
+    std::shared_ptr<cmd::Command> SQLParseResult;
 
     /// enable debug output in the bison parser
     bool trace_parsing;
