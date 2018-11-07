@@ -65,13 +65,11 @@
 %token DROP
 %token INT_TYPE
 
-%type <std::shared_ptr<cmd::CreateStatement>> create_shared
-/*%type <int>	expr create_table
-%type <<std::shared_ptr<cmd::CreateStatement>>> create_statement
+/*%type <int>	expr create_table*/
+%type <std::shared_ptr<cmd::CreateStatement>> create_statement
 %type <ColumnType>       column_type
-%type <std::shared_ptr<Column>> column_def
-%type <std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>>> column_def_list*/
-
+%type <std::shared_ptr<cmd::Column>> column_def
+%type <std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>>> column_def_list
 
  /*** END TOKENS ***/
 
@@ -92,26 +90,17 @@
 start	: STRING {}
         | create_statement {}
 
-/*create_shared :
-        CREATE STRING{
-            std::shared_ptr<cmd::CreateStatement> stmm = std::make_shared<cmd::CreateStatement>($2->c_str());
-            $$ = stmm;
-            //driver.create_statement_shared = $$;
-        }*/
-
 create_statement :
-        CREATE TABLE STRING{
-            driver.result = "Works";
-            //cmd::CreateStatement* stmt = new cmd::CreateStatement($6->c_str());
-            //stmt.add_column(std::make_shared<cmd::Column>(*$4));
-            //stmt->set_columns(*$4);
-            //driver.create_statement = *stmt;
+        CREATE TABLE STRING '(' column_def_list ')' {
+            $$ = std::make_shared<cmd::CreateStatement>($3.c_str());
+            $$.get()->set_columns($5);
+            driver.create_statement_shared = $$;
         }
 
-/*column_def_list:
+column_def_list:
         column_def{
-            $$ = new std::vector<cmd::Column*>();
-            $$->emplace_back($1);
+            $$ = std::make_shared<std::vector<std::shared_ptr<cmd::Column>>>();
+            $$.get()->emplace_back($1);
         }
     |   column_def_list ',' column_def{
             $1->emplace_back($3);
@@ -120,15 +109,14 @@ create_statement :
 
 column_def:
 		STRING column_type {
-		    cmd::Column* col = new cmd::Column($2, $1->c_str());
-		    $$ = col;
+		    $$ = std::make_shared<cmd::Column>($2, $1.c_str());
 		}
 	;
 
 column_type:
         INT_TYPE { $$ = ColumnType::INT; }
     ;
-*/
+
 %% /*** Additional Code ***/
 
 void RoflanParser::Parser::error(const Parser::location_type& l,

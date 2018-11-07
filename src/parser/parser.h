@@ -277,11 +277,23 @@ namespace RoflanParser {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // column_type
+      char dummy1[sizeof(ColumnType)];
+
       // "integer"
-      char dummy1[sizeof(int)];
+      char dummy2[sizeof(int)];
+
+      // column_def
+      char dummy3[sizeof(std::shared_ptr<cmd::Column>)];
+
+      // create_statement
+      char dummy4[sizeof(std::shared_ptr<cmd::CreateStatement>)];
+
+      // column_def_list
+      char dummy5[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>>)];
 
       // "string"
-      char dummy2[sizeof(std::string)];
+      char dummy6[sizeof(std::string)];
 };
 
     /// Symbol semantic values.
@@ -350,7 +362,15 @@ namespace RoflanParser {
 
   basic_symbol (typename Base::kind_type t, const location_type& l);
 
+  basic_symbol (typename Base::kind_type t, const ColumnType v, const location_type& l);
+
   basic_symbol (typename Base::kind_type t, const int v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::Column> v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::CreateStatement> v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l);
 
@@ -542,7 +562,7 @@ namespace RoflanParser {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const unsigned char yycheck_[];
+  static const signed char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -664,12 +684,12 @@ namespace RoflanParser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 4,     ///< Last index in yytable_.
-      yynnts_ = 3,  ///< Number of nonterminal symbols.
+      yylast_ = 13,     ///< Last index in yytable_.
+      yynnts_ = 6,  ///< Number of nonterminal symbols.
       yyfinal_ = 6, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 11  ///< Number of tokens.
+      yyntokens_ = 14  ///< Number of tokens.
     };
 
 
@@ -680,7 +700,7 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 684 "parser.h" // lalr1.cc:379
+#line 704 "parser.h" // lalr1.cc:379
 
 
 
