@@ -496,7 +496,7 @@ static const flex_int16_t yy_chk[79] =
 
 static const flex_int16_t yy_rule_linenum[9] =
     {   0,
-       59,   60,   62,   65,   71,   77,   82,   88
+       59,   60,   62,   65,   72,   79,   84,   90
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -834,22 +834,24 @@ case 4:
 YY_RULE_SETUP
 #line 65 "scanner.ll"
 {
-    yylval->int = atoi(yytext);
+    //yylval->int = atoi(yytext);
+    yylval = new RoflanParser::Parser::semantic_type(atoi(yytext));
     return token::INTEGER;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 71 "scanner.ll"
+#line 72 "scanner.ll"
 {
-    yylval->string = new std::string(yytext, yyleng);
+    //yylval = yylval(yytext);
+    yylval = new RoflanParser::Parser::semantic_type(yytext);
     return token::STRING;
 }
 	YY_BREAK
 /* gobble up white-spaces */
 case 6:
 YY_RULE_SETUP
-#line 77 "scanner.ll"
+#line 79 "scanner.ll"
 {
     yylloc->step();
 }
@@ -858,7 +860,7 @@ YY_RULE_SETUP
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 82 "scanner.ll"
+#line 84 "scanner.ll"
 {
     yylloc->lines(yyleng); yylloc->step();
     return token::EOL;
@@ -867,7 +869,7 @@ YY_RULE_SETUP
 /* pass all other characters up to bison */
 case 8:
 YY_RULE_SETUP
-#line 88 "scanner.ll"
+#line 90 "scanner.ll"
 {
     return static_cast<token_type>(*yytext);
 }
@@ -875,10 +877,10 @@ YY_RULE_SETUP
 /*** END RULES ***/
 case 9:
 YY_RULE_SETUP
-#line 94 "scanner.ll"
+#line 96 "scanner.ll"
 ECHO;
 	YY_BREAK
-#line 881 "scanner.cc"
+#line 883 "scanner.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1997,7 +1999,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 94 "scanner.ll"
+#line 96 "scanner.ll"
 
 
 namespace RoflanParser {

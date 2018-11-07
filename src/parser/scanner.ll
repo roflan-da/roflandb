@@ -62,13 +62,15 @@ INT     { return token::INT_TYPE; }
 
 
 [0-9]+ {
-    yylval->int = atoi(yytext);
+    //yylval->int = atoi(yytext);
+    yylval = new RoflanParser::Parser::semantic_type(atoi(yytext));
     return token::INTEGER;
 }
 
 
 [A-Za-z][A-Za-z0-9_,.-]* {
-    yylval->string = new std::string(yytext, yyleng);
+    //yylval = yylval(yytext);
+    yylval = new RoflanParser::Parser::semantic_type(yytext);
     return token::STRING;
 }
 
