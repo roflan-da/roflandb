@@ -41,8 +41,20 @@
 #include <string>
 #include <vector>
 
+#line 78 "parser.yy" // lalr1.cc:406
 
-#line 46 "parser.cc" // lalr1.cc:406
+
+#include "driver.h"
+#include "scanner.h"
+
+/* this "connects" the bison parser in the driver to the flex scanner class
+ * object. it defines the yylex() function call to pull the next token from the
+ * current lexer object of the driver context. */
+#undef yylex
+#define yylex driver.lexer->lex
+
+
+#line 58 "parser.cc" // lalr1.cc:406
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -55,18 +67,6 @@
 #include "parser.h"
 
 // User implementation prologue.
-#line 96 "parser.yy" // lalr1.cc:414
-
-
-#include "driver.h"
-#include "scanner.h"
-
-/* this "connects" the bison parser in the driver to the flex scanner class
- * object. it defines the yylex() function call to pull the next token from the
- * current lexer object of the driver context. */
-#undef yylex
-#define yylex driver.lexer->lex
-
 
 #line 72 "parser.cc" // lalr1.cc:414
 
@@ -229,24 +229,68 @@ namespace RoflanParser {
     , value ()
     , location (other.location)
   {
-    value = other.value;
+    switch (other.type_get ())
+    {
+      case 4: // "integer"
+        value.copy< int > (other.value);
+        break;
+
+      case 5: // "string"
+        value.copy< std::string > (other.value);
+        break;
+
+      default:
+        break;
+    }
+
   }
 
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const semantic_type& v, const location_type& l)
     : Base (t)
-    , value (v)
+    , value ()
     , location (l)
-  {}
+  {
+    (void) v;
+    switch (this->type_get ())
+    {
+      case 4: // "integer"
+        value.copy< int > (v);
+        break;
+
+      case 5: // "string"
+        value.copy< std::string > (v);
+        break;
+
+      default:
+        break;
+    }
+}
 
 
-  /// Constructor for valueless symbols.
+  // Implementation of basic_symbol constructor for each type.
+
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const location_type& l)
     : Base (t)
     , value ()
     , location (l)
   {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const int v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
 
   template <typename Base>
   Parser::basic_symbol<Base>::~basic_symbol ()
@@ -258,6 +302,31 @@ namespace RoflanParser {
   void
   Parser::basic_symbol<Base>::clear ()
   {
+    // User destructor.
+    symbol_number_type yytype = this->type_get ();
+    basic_symbol<Base>& yysym = *this;
+    (void) yysym;
+    switch (yytype)
+    {
+   default:
+      break;
+    }
+
+    // Type destructor.
+  switch (yytype)
+    {
+      case 4: // "integer"
+        value.template destroy< int > ();
+        break;
+
+      case 5: // "string"
+        value.template destroy< std::string > ();
+        break;
+
+      default:
+        break;
+    }
+
     Base::clear ();
   }
 
@@ -273,7 +342,20 @@ namespace RoflanParser {
   Parser::basic_symbol<Base>::move (basic_symbol& s)
   {
     super_type::move (s);
-    value = s.value;
+    switch (this->type_get ())
+    {
+      case 4: // "integer"
+        value.move< int > (s.value);
+        break;
+
+      case 5: // "string"
+        value.move< std::string > (s.value);
+        break;
+
+      default:
+        break;
+    }
+
     location = s.location;
   }
 
@@ -308,6 +390,61 @@ namespace RoflanParser {
   {
     return type;
   }
+  // Implementation of make_symbol for each symbol type.
+  Parser::symbol_type
+  Parser::make_END (const location_type& l)
+  {
+    return symbol_type (token::END, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_EOL (const location_type& l)
+  {
+    return symbol_type (token::EOL, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_INTEGER (const int& v, const location_type& l)
+  {
+    return symbol_type (token::INTEGER, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_STRING (const std::string& v, const location_type& l)
+  {
+    return symbol_type (token::STRING, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_CREATE (const location_type& l)
+  {
+    return symbol_type (token::CREATE, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_TABLE (const location_type& l)
+  {
+    return symbol_type (token::TABLE, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_SHOW (const location_type& l)
+  {
+    return symbol_type (token::SHOW, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_DROP (const location_type& l)
+  {
+    return symbol_type (token::DROP, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_INT_TYPE (const location_type& l)
+  {
+    return symbol_type (token::INT_TYPE, l);
+  }
+
 
 
   // by_state.
@@ -351,13 +488,39 @@ namespace RoflanParser {
   Parser::stack_symbol_type::stack_symbol_type (const stack_symbol_type& that)
     : super_type (that.state, that.location)
   {
-    value = that.value;
+    switch (that.type_get ())
+    {
+      case 4: // "integer"
+        value.copy< int > (that.value);
+        break;
+
+      case 5: // "string"
+        value.copy< std::string > (that.value);
+        break;
+
+      default:
+        break;
+    }
+
   }
 
   Parser::stack_symbol_type::stack_symbol_type (state_type s, symbol_type& that)
     : super_type (s, that.location)
   {
-    value = that.value;
+    switch (that.type_get ())
+    {
+      case 4: // "integer"
+        value.move< int > (that.value);
+        break;
+
+      case 5: // "string"
+        value.move< std::string > (that.value);
+        break;
+
+      default:
+        break;
+    }
+
     // that is emptied.
     that.type = empty_symbol;
   }
@@ -366,7 +529,20 @@ namespace RoflanParser {
   Parser::stack_symbol_type::operator= (const stack_symbol_type& that)
   {
     state = that.state;
-    value = that.value;
+    switch (that.type_get ())
+    {
+      case 4: // "integer"
+        value.copy< int > (that.value);
+        break;
+
+      case 5: // "string"
+        value.copy< std::string > (that.value);
+        break;
+
+      default:
+        break;
+    }
+
     location = that.location;
     return *this;
   }
@@ -378,28 +554,6 @@ namespace RoflanParser {
   {
     if (yymsg)
       YY_SYMBOL_PRINT (yymsg, yysym);
-
-    // User destructor.
-    switch (yysym.type_get ())
-    {
-            case 6: // STRING
-
-#line 91 "parser.yy" // lalr1.cc:613
-        { delete (yysym.value.stringVal); }
-#line 390 "parser.cc" // lalr1.cc:613
-        break;
-
-      case 21: // column_type
-
-#line 92 "parser.yy" // lalr1.cc:613
-        { }
-#line 397 "parser.cc" // lalr1.cc:613
-        break;
-
-
-      default:
-        break;
-    }
   }
 
 #if ROFLANPARSERDEBUG
@@ -522,13 +676,13 @@ namespace RoflanParser {
 
 
     // User initialization code.
-    #line 44 "parser.yy" // lalr1.cc:737
+    #line 41 "parser.yy" // lalr1.cc:737
 {
     // initialize the initial location object
     yyla.location.begin.filename = yyla.location.end.filename = &driver.streamname;
 }
 
-#line 532 "parser.cc" // lalr1.cc:737
+#line 686 "parser.cc" // lalr1.cc:737
 
     /* Initialize the stack.  The initial state will be set in
        yynewstate, since the latter expects the semantical and the
@@ -612,16 +766,23 @@ namespace RoflanParser {
     {
       stack_symbol_type yylhs;
       yylhs.state = yy_lr_goto_state_ (yystack_[yylen].state, yyr1_[yyn]);
-      /* If YYLEN is nonzero, implement the default value of the
-         action: '$$ = $1'.  Otherwise, use the top of the stack.
+      /* Variants are always initialized to an empty instance of the
+         correct type. The default '$$ = $1' action is NOT applied
+         when using variants.  */
+      switch (yyr1_[yyn])
+    {
+      case 4: // "integer"
+        yylhs.value.build< int > ();
+        break;
 
-         Otherwise, the following line sets YYLHS.VALUE to garbage.
-         This behavior is undocumented and Bison users should not rely
-         upon it.  */
-      if (yylen)
-        yylhs.value = yystack_[yylen - 1].value;
-      else
-        yylhs.value = yystack_[0].value;
+      case 5: // "string"
+        yylhs.value.build< std::string > ();
+        break;
+
+      default:
+        break;
+    }
+
 
       // Default location.
       {
@@ -637,63 +798,31 @@ namespace RoflanParser {
           switch (yyn)
             {
   case 2:
-#line 113 "parser.yy" // lalr1.cc:856
+#line 92 "parser.yy" // lalr1.cc:856
     {}
-#line 643 "parser.cc" // lalr1.cc:856
+#line 804 "parser.cc" // lalr1.cc:856
     break;
 
   case 3:
-#line 114 "parser.yy" // lalr1.cc:856
+#line 93 "parser.yy" // lalr1.cc:856
     {}
-#line 649 "parser.cc" // lalr1.cc:856
+#line 810 "parser.cc" // lalr1.cc:856
     break;
 
   case 4:
-#line 117 "parser.yy" // lalr1.cc:856
+#line 103 "parser.yy" // lalr1.cc:856
     {
-            cmd::CreateStatement* stmt = new cmd::CreateStatement((yystack_[0].value.stringVal)->c_str());
+            driver.result = "CREATE TABLE '(' column_def_list ')' STRING";
+            /*cmd::CreateStatement* stmt = new cmd::CreateStatement($6->c_str());
             //stmt.add_column(std::make_shared<cmd::Column>(*$4));
-            stmt->set_columns(*(yystack_[2].value.column_vector_t));
-            driver.create_statement = *stmt;
+            //stmt->set_columns(*$4);
+            //driver.create_statement = *stmt;*/
         }
-#line 660 "parser.cc" // lalr1.cc:856
-    break;
-
-  case 5:
-#line 127 "parser.yy" // lalr1.cc:856
-    {
-            (yylhs.value.column_vector_t) = new std::vector<cmd::Column*>();
-            (yylhs.value.column_vector_t)->emplace_back((yystack_[0].value.column_t));
-        }
-#line 669 "parser.cc" // lalr1.cc:856
-    break;
-
-  case 6:
-#line 131 "parser.yy" // lalr1.cc:856
-    {
-            (yystack_[2].value.column_vector_t)->emplace_back((yystack_[0].value.column_t));
-            (yylhs.value.column_vector_t) = (yystack_[2].value.column_vector_t);
-        }
-#line 678 "parser.cc" // lalr1.cc:856
-    break;
-
-  case 7:
-#line 138 "parser.yy" // lalr1.cc:856
-    {
-		    cmd::Column* col = new cmd::Column((yystack_[0].value.column_type_t), (yystack_[1].value.stringVal)->c_str());
-		    (yylhs.value.column_t) = col;
-		}
-#line 687 "parser.cc" // lalr1.cc:856
-    break;
-
-  case 8:
-#line 146 "parser.yy" // lalr1.cc:856
-    { (yylhs.value.column_type_t) = ColumnType::INT; }
-#line 693 "parser.cc" // lalr1.cc:856
+#line 822 "parser.cc" // lalr1.cc:856
     break;
 
 
-#line 697 "parser.cc" // lalr1.cc:856
+#line 826 "parser.cc" // lalr1.cc:856
             default:
               break;
             }
@@ -948,67 +1077,62 @@ namespace RoflanParser {
   }
 
 
-  const signed char Parser::yypact_ninf_ = -12;
+  const signed char Parser::yypact_ninf_ = -6;
 
   const signed char Parser::yytable_ninf_ = -1;
 
   const signed char
   Parser::yypact_[] =
   {
-      -6,   -12,    -8,     5,   -12,    -7,   -12,     1,    -4,   -11,
-     -12,   -12,   -12,     3,     1,   -12,   -12
+      -5,    -6,    -4,     2,    -6,    -1,    -6,    -6
   };
 
   const unsigned char
   Parser::yydefact_[] =
   {
-       0,     2,     0,     0,     3,     0,     1,     0,     0,     0,
-       5,     8,     7,     0,     0,     4,     6
+       0,     2,     0,     0,     3,     0,     1,     4
   };
 
   const signed char
   Parser::yypgoto_[] =
   {
-     -12,   -12,   -12,   -12,    -3,   -12
+      -6,    -6,    -6
   };
 
   const signed char
   Parser::yydefgoto_[] =
   {
-      -1,     3,     4,     9,    10,    12
+      -1,     3,     4
   };
 
   const unsigned char
   Parser::yytable_[] =
   {
-       1,     5,     2,    13,    14,     6,     7,     8,    11,    15,
-       0,    16
+       1,     2,     6,     5,     7
   };
 
-  const signed char
+  const unsigned char
   Parser::yycheck_[] =
   {
-       6,     9,     8,    14,    15,     0,    13,     6,    12,     6,
-      -1,    14
+       5,     6,     0,     7,     5
   };
 
   const unsigned char
   Parser::yystos_[] =
   {
-       0,     6,     8,    17,    18,     9,     0,    13,     6,    19,
-      20,    12,    21,    14,    15,     6,    20
+       0,     5,     6,    12,    13,     7,     0,     5
   };
 
   const unsigned char
   Parser::yyr1_[] =
   {
-       0,    16,    17,    17,    18,    19,    19,    20,    21
+       0,    11,    12,    12,    13
   };
 
   const unsigned char
   Parser::yyr2_[] =
   {
-       0,     2,     1,     1,     6,     1,     3,     2,     1
+       0,     2,     1,     1,     3
   };
 
 
@@ -1019,16 +1143,15 @@ namespace RoflanParser {
   const Parser::yytname_[] =
   {
   "\"end of file\"", "error", "$undefined", "\"end of line\"",
-  "\"integer\"", "\"double\"", "STRING", "\"string\"", "CREATE", "TABLE",
-  "SHOW", "DROP", "INT_TYPE", "'('", "')'", "','", "$accept", "start",
-  "create_statement", "column_def_list", "column_def", "column_type", YY_NULLPTR
+  "\"integer\"", "\"string\"", "CREATE", "TABLE", "SHOW", "DROP",
+  "INT_TYPE", "$accept", "start", "create_statement", YY_NULLPTR
   };
 
 #if ROFLANPARSERDEBUG
   const unsigned char
   Parser::yyrline_[] =
   {
-       0,   113,   113,   114,   117,   127,   131,   138,   146
+       0,    92,    92,    93,   103
   };
 
   // Print the state stack on the debug stream.
@@ -1072,7 +1195,7 @@ namespace RoflanParser {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      13,    14,     2,     2,    15,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1094,9 +1217,9 @@ namespace RoflanParser {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11,    12
+       5,     6,     7,     8,     9,    10
     };
-    const unsigned user_token_number_max_ = 267;
+    const unsigned user_token_number_max_ = 265;
     const token_number_type undef_token_ = 2;
 
     if (static_cast<int> (t) <= yyeof_)
@@ -1109,8 +1232,8 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 1113 "parser.cc" // lalr1.cc:1164
-#line 152 "parser.yy" // lalr1.cc:1165
+#line 1236 "parser.cc" // lalr1.cc:1164
+#line 132 "parser.yy" // lalr1.cc:1165
  /*** Additional Code ***/
 
 void RoflanParser::Parser::error(const Parser::location_type& l,

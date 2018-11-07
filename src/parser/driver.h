@@ -32,6 +32,7 @@ public:
     //Parser result object
     cmd::Command SQLParseResult;
     cmd::CreateStatement create_statement;
+    std::shared_ptr<cmd::CreateStatement> create_statement_shared;
 
     /// enable debug output in the bison parser
     bool trace_parsing;

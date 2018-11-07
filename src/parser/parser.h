@@ -40,7 +40,7 @@
 #ifndef YY_ROFLANPARSER_PARSER_H_INCLUDED
 # define YY_ROFLANPARSER_PARSER_H_INCLUDED
 // //                    "%code requires" blocks.
-#line 10 "parser.yy" // lalr1.cc:379
+#line 9 "parser.yy" // lalr1.cc:379
 
     #include "command.h"
     #include "statements.h"
@@ -55,6 +55,11 @@
 # include <vector>
 # include "stack.hh"
 # include "location.hh"
+
+#ifndef YYASSERT
+# include <cassert>
+# define YYASSERT assert
+#endif
 
 
 #ifndef YY_ATTRIBUTE
@@ -125,10 +130,143 @@
 
 
 namespace RoflanParser {
-#line 129 "parser.h" // lalr1.cc:379
+#line 134 "parser.h" // lalr1.cc:379
 
 
 
+  /// A char[S] buffer to store and retrieve objects.
+  ///
+  /// Sort of a variant, but does not keep track of the nature
+  /// of the stored data, since that knowledge is available
+  /// via the current state.
+  template <size_t S>
+  struct variant
+  {
+    /// Type of *this.
+    typedef variant<S> self_type;
+
+    /// Empty construction.
+    variant ()
+    {}
+
+    /// Construct and fill.
+    template <typename T>
+    variant (const T& t)
+    {
+      YYASSERT (sizeof (T) <= S);
+      new (yyas_<T> ()) T (t);
+    }
+
+    /// Destruction, allowed only if empty.
+    ~variant ()
+    {}
+
+    /// Instantiate an empty \a T in here.
+    template <typename T>
+    T&
+    build ()
+    {
+      return *new (yyas_<T> ()) T;
+    }
+
+    /// Instantiate a \a T in here from \a t.
+    template <typename T>
+    T&
+    build (const T& t)
+    {
+      return *new (yyas_<T> ()) T (t);
+    }
+
+    /// Accessor to a built \a T.
+    template <typename T>
+    T&
+    as ()
+    {
+      return *yyas_<T> ();
+    }
+
+    /// Const accessor to a built \a T (for %printer).
+    template <typename T>
+    const T&
+    as () const
+    {
+      return *yyas_<T> ();
+    }
+
+    /// Swap the content with \a other, of same type.
+    ///
+    /// Both variants must be built beforehand, because swapping the actual
+    /// data requires reading it (with as()), and this is not possible on
+    /// unconstructed variants: it would require some dynamic testing, which
+    /// should not be the variant's responsability.
+    /// Swapping between built and (possibly) non-built is done with
+    /// variant::move ().
+    template <typename T>
+    void
+    swap (self_type& other)
+    {
+      std::swap (as<T> (), other.as<T> ());
+    }
+
+    /// Move the content of \a other to this.
+    ///
+    /// Destroys \a other.
+    template <typename T>
+    void
+    move (self_type& other)
+    {
+      build<T> ();
+      swap<T> (other);
+      other.destroy<T> ();
+    }
+
+    /// Copy the content of \a other to this.
+    template <typename T>
+    void
+    copy (const self_type& other)
+    {
+      build<T> (other.as<T> ());
+    }
+
+    /// Destroy the stored \a T.
+    template <typename T>
+    void
+    destroy ()
+    {
+      as<T> ().~T ();
+    }
+
+  private:
+    /// Prohibit blind copies.
+    self_type& operator=(const self_type&);
+    variant (const self_type&);
+
+    /// Accessor to raw memory as \a T.
+    template <typename T>
+    T*
+    yyas_ ()
+    {
+      void *yyp = yybuffer_.yyraw;
+      return static_cast<T*> (yyp);
+     }
+
+    /// Const accessor to raw memory as \a T.
+    template <typename T>
+    const T*
+    yyas_ () const
+    {
+      const void *yyp = yybuffer_.yyraw;
+      return static_cast<const T*> (yyp);
+     }
+
+    union
+    {
+      /// Strongest alignment constraints.
+      long double yyalign_me;
+      /// A buffer large enough to store any of the semantic values.
+      char yyraw[S];
+    } yybuffer_;
+  };
 
 
   /// A Bison parser.
@@ -136,23 +274,18 @@ namespace RoflanParser {
   {
   public:
 #ifndef ROFLANPARSERSTYPE
-    /// Symbol semantic values.
-    union semantic_type
+    /// An auxiliary type to compute the largest semantic type.
+    union union_type
     {
-    #line 60 "parser.yy" // lalr1.cc:379
+      // "integer"
+      char dummy1[sizeof(int)];
 
-    int  			integerVal;
-    double 			doubleVal;
-    std::string* 	stringVal;
+      // "string"
+      char dummy2[sizeof(std::string)];
+};
 
-    ColumnType      column_type_t;
-    cmd::CreateStatement* create_stmt;
-    cmd::Column*    column_t;
-
-    std::vector<cmd::Column*>* column_vector_t;
-
-#line 155 "parser.h" // lalr1.cc:379
-    };
+    /// Symbol semantic values.
+    typedef variant<sizeof(union_type)> semantic_type;
 #else
     typedef ROFLANPARSERSTYPE semantic_type;
 #endif
@@ -174,14 +307,12 @@ namespace RoflanParser {
         END = 0,
         EOL = 258,
         INTEGER = 259,
-        DOUBLE = 260,
-        STRING = 261,
-        COLUMN_NAME = 262,
-        CREATE = 263,
-        TABLE = 264,
-        SHOW = 265,
-        DROP = 266,
-        INT_TYPE = 267
+        STRING = 260,
+        CREATE = 261,
+        TABLE = 262,
+        SHOW = 263,
+        DROP = 264,
+        INT_TYPE = 265
       };
     };
 
@@ -215,9 +346,14 @@ namespace RoflanParser {
       /// Copy constructor.
       basic_symbol (const basic_symbol& other);
 
-      /// Constructor for valueless symbols.
-      basic_symbol (typename Base::kind_type t,
-                    const location_type& l);
+      /// Constructor for valueless symbols, and symbols from each type.
+
+  basic_symbol (typename Base::kind_type t, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const int v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l);
+
 
       /// Constructor for symbols with semantic value.
       basic_symbol (typename Base::kind_type t,
@@ -283,6 +419,43 @@ namespace RoflanParser {
 
     /// "External" symbols: returned by the scanner.
     typedef basic_symbol<by_type> symbol_type;
+
+    // Symbol constructors declarations.
+    static inline
+    symbol_type
+    make_END (const location_type& l);
+
+    static inline
+    symbol_type
+    make_EOL (const location_type& l);
+
+    static inline
+    symbol_type
+    make_INTEGER (const int& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_STRING (const std::string& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_CREATE (const location_type& l);
+
+    static inline
+    symbol_type
+    make_TABLE (const location_type& l);
+
+    static inline
+    symbol_type
+    make_SHOW (const location_type& l);
+
+    static inline
+    symbol_type
+    make_DROP (const location_type& l);
+
+    static inline
+    symbol_type
+    make_INT_TYPE (const location_type& l);
 
 
     /// Build a parser object.
@@ -369,7 +542,7 @@ namespace RoflanParser {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const signed char yycheck_[];
+  static const unsigned char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -491,12 +664,12 @@ namespace RoflanParser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 11,     ///< Last index in yytable_.
-      yynnts_ = 6,  ///< Number of nonterminal symbols.
+      yylast_ = 4,     ///< Last index in yytable_.
+      yynnts_ = 3,  ///< Number of nonterminal symbols.
       yyfinal_ = 6, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 16  ///< Number of tokens.
+      yyntokens_ = 11  ///< Number of tokens.
     };
 
 
@@ -507,7 +680,7 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 511 "parser.h" // lalr1.cc:379
+#line 684 "parser.h" // lalr1.cc:379
 
 
 

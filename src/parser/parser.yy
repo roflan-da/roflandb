@@ -6,12 +6,10 @@
 
 %}
 
-
 %code requires{
     #include "command.h"
     #include "statements.h"
 }
-
 
 /*** yacc/bison Declarations ***/
 %require "3.0"
@@ -37,7 +35,6 @@
 /* set the parser's class identifier */
 %define "parser_class_name" "Parser"
 
-
 /* keep track of the current position within the input */
 %locations
 %initial-action
@@ -45,7 +42,6 @@
     // initialize the initial location object
     @$.begin.filename = @$.end.filename = &driver.streamname;
 };
-
 
 /* The driver is passed by reference to the parser and to the scanner. This
  * provides a simple but effective pure interface, not relying on global
@@ -56,25 +52,12 @@
 %error-verbose
 
  /*** TOKENS ***/
-
-%union {
-    int  			integerVal;
-    double 			doubleVal;
-    std::string* 	stringVal;
-
-    ColumnType      column_type_t;
-    cmd::CreateStatement* create_stmt;
-    cmd::Column*    column_t;
-
-    std::vector<cmd::Column*>* column_vector_t;
-}
-
+%define api.value.type variant
 
 %token			END	     0	"end of file"
 %token			EOL		    "end of line"
-%token <integerVal> INTEGER		"integer"
-%token <doubleVal> 	DOUBLE		"double"
-%token <stringVal> 	STRING COLUMN_NAME		"string"
+%token <int>    INTEGER		"integer"
+%token <std::string> 	    STRING "string"
 
 %token CREATE
 %token TABLE
@@ -82,14 +65,13 @@
 %token DROP
 %token INT_TYPE
 
-%type <int>	expr create_table
-%type <create_stmt> create_statement
-%type <column_type_t>       column_type
-%type <column_t> column_def
-%type <column_vector_t> column_def_list
+%type <std::shared_ptr<cmd::CreateStatement>> create_shared
+/*%type <int>	expr create_table
+%type <<std::shared_ptr<cmd::CreateStatement>>> create_statement
+%type <ColumnType>       column_type
+%type <std::shared_ptr<Column>> column_def
+%type <std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>>> column_def_list*/
 
-%destructor { delete $$; } STRING
-%destructor { } <column_type_t>
 
  /*** END TOKENS ***/
 
@@ -107,23 +89,26 @@
 %}
 
 %% /*** Grammar Rules ***/
-
-
-
-start	:  STRING {}
+start	: STRING {}
         | create_statement {}
 
+/*create_shared :
+        CREATE STRING{
+            std::shared_ptr<cmd::CreateStatement> stmm = std::make_shared<cmd::CreateStatement>($2->c_str());
+            $$ = stmm;
+            //driver.create_statement_shared = $$;
+        }*/
+
 create_statement :
-        CREATE TABLE '(' column_def_list ')' STRING{
-            cmd::CreateStatement* stmt = new cmd::CreateStatement($6->c_str());
+        CREATE TABLE STRING{
+            driver.result = "CREATE TABLE '(' column_def_list ')' STRING";
+            /*cmd::CreateStatement* stmt = new cmd::CreateStatement($6->c_str());
             //stmt.add_column(std::make_shared<cmd::Column>(*$4));
-            stmt->set_columns(*$4);
-            driver.create_statement = *stmt;
+            //stmt->set_columns(*$4);
+            //driver.create_statement = *stmt;*/
         }
 
-
-
-column_def_list:
+/*column_def_list:
         column_def{
             $$ = new std::vector<cmd::Column*>();
             $$->emplace_back($1);
@@ -133,7 +118,6 @@ column_def_list:
             $$ = $1;
         }
 
-
 column_def:
 		STRING column_type {
 		    cmd::Column* col = new cmd::Column($2, $1->c_str());
@@ -141,14 +125,10 @@ column_def:
 		}
 	;
 
-
 column_type:
         INT_TYPE { $$ = ColumnType::INT; }
     ;
-
-
-
-
+*/
 %% /*** Additional Code ***/
 
 void RoflanParser::Parser::error(const Parser::location_type& l,

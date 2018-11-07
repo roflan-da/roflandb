@@ -58,22 +58,17 @@
 CREATE  { return token::CREATE; }
 TABLE  { return token::TABLE; }
 
-
 INT     { return token::INT_TYPE; }
 
 
 [0-9]+ {
-    yylval->integerVal = atoi(yytext);
+    yylval->int = atoi(yytext);
     return token::INTEGER;
 }
 
-[0-9]+"."[0-9]* {
-    yylval->doubleVal = atof(yytext);
-    return token::DOUBLE;
-}
 
 [A-Za-z][A-Za-z0-9_,.-]* {
-    yylval->stringVal = new std::string(yytext, yyleng);
+    yylval->stirng = new std::string(yytext, yyleng);
     return token::STRING;
 }
 
