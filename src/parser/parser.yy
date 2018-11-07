@@ -91,7 +91,7 @@ start	: STRING {}
         | create_statement {}
 
 create_statement :
-        CREATE TABLE STRING '(' column_def_list ')' {
+        CREATE TABLE STRING '(' column_def_list ')'';' {
             $$ = std::make_shared<cmd::CreateStatement>($3.c_str());
             $$.get()->set_columns($5);
             driver.create_statement_shared = $$;

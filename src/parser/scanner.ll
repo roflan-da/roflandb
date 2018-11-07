@@ -67,7 +67,7 @@ INT     { return token::INT_TYPE; }
 }
 
 
-[A-Za-z][A-Za-z0-9_,.-]* {
+[A-Za-z][A-Za-z0-9_.-]* {
     yylval->build(std::string(yytext));
     return token::STRING;
 }
