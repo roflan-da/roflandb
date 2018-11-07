@@ -1,7 +1,9 @@
 #include <utility>
-
-#include <utility>
 #include <create_statement.h>
+#include "../../storage_engine/inc/table.h"
+//#include "../../storage_engine/table.cpp"   //МОГИЛА RIP UMER ROFLAN POMINKI ACHTUNG!! UWAGA!!
+
+
 
 std::string cmd::CreateStatement::get_table_name() const{
     return table_name_;
@@ -22,8 +24,12 @@ void cmd::CreateStatement::add_column(std::shared_ptr<cmd::Column> column) {
 
 void cmd::CreateStatement::execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) {
     st_e::TableBuilder table_builder(this->get_table_name());
-    auto mem = this->get_columns();
-    //table_builder.addColumn(INT, "krkcolumn");
+    auto cols = this->get_columns();
+    for (auto col : cols) {
+        table_builder.add_column(col->type, col->name);
+    }
+    auto table = table_builder.build();
+    table.Save();
 }
 
 std::vector<std::shared_ptr<cmd::Column>> cmd::CreateStatement::get_columns() const {
