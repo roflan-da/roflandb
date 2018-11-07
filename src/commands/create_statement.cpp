@@ -1,7 +1,8 @@
 #include <utility>
-
-#include <utility>
 #include <create_statement.h>
+
+
+
 
 std::string cmd::CreateStatement::get_table_name() const{
     return table_name_;
@@ -21,9 +22,13 @@ void cmd::CreateStatement::add_column(std::shared_ptr<cmd::Column> column) {
 }
 
 void cmd::CreateStatement::execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) {
-    TableBuilder table_builder(this->get_table_name());
-    auto mem = this->get_columns();
-    //table_builder.addColumn(INT, "krkcolumn");
+  /*  st_e::TableBuilder table_builder(this->get_table_name());
+    auto cols = this->get_columns();
+    for (auto col : cols) {
+        table_builder.add_column(col->type, col->name);
+    }
+    auto table = table_builder.build();
+    table.Save(); */
 }
 
 std::vector<std::shared_ptr<cmd::Column>> cmd::CreateStatement::get_columns() const {
@@ -38,6 +43,6 @@ void cmd::CreateStatement::set_columns(std::shared_ptr<std::vector<std::shared_p
     columns_ = *columns.get();
 }
 
-cmd::Column::Column(ColumnType type, std::string name) :
+cmd::Column::Column(st_e::ColumnType type, std::string name) :
     type(type),
     name(std::move(name)) {}

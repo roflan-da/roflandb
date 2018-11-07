@@ -277,11 +277,11 @@ namespace RoflanParser {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
-      // column_type
-      char dummy1[sizeof(ColumnType)];
-
       // "integer"
-      char dummy2[sizeof(int)];
+      char dummy1[sizeof(int)];
+
+      // column_type
+      char dummy2[sizeof(st_e::ColumnType)];
 
       // column_def
       char dummy3[sizeof(std::shared_ptr<cmd::Column>)];
@@ -368,9 +368,9 @@ namespace RoflanParser {
 
   basic_symbol (typename Base::kind_type t, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const ColumnType v, const location_type& l);
-
   basic_symbol (typename Base::kind_type t, const int v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const st_e::ColumnType v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::Column> v, const location_type& l);
 

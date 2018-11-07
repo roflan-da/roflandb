@@ -5,9 +5,7 @@
 TEST_CASE("IntegerColumn") {
 
     SECTION("trivial") {
-        IntegerColumn intcol("Test");
-        REQUIRE(intcol.getName() == "Test");
-        REQUIRE(intcol.getTypeName() == INT);
+        st_e::IntegerColumn intcol("Test");
     }
 
 
@@ -16,18 +14,18 @@ TEST_CASE("IntegerColumn") {
 TEST_CASE("Table") {
 
     SECTION("getSQL_trivial") {
-        TableBuilder tb("mems");
-        tb.addColumn(INT, "Test");
-        Table t = tb.build();
-        REQUIRE(t.getSql() == "CREATE TABLE \'mems\' (\'Test\' INT);");
+        st_e::TableBuilder tb("mems");
+        tb.add_column(st_e::INT, "Test");
+        st_e::Table t = tb.build();
+        REQUIRE(t.get_sql() == "CREATE TABLE \'mems\' (\'Test\' INT);");
     }
 
-    SECTION("getSQL_2_INT") {
-        TableBuilder tb("mems");
-        tb.addColumn(INT, "Test");
-        tb.addColumn(INT, "Test2");
-        Table t = tb.build();
-        REQUIRE(t.getSql() == "CREATE TABLE \'mems\' (\'Test\' INT, \'Test2\' INT);");
+    SECTION("getSQL_2_st_e::INT") {
+        st_e::TableBuilder tb("mems");
+        tb.add_column(st_e::INT, "Test");
+        tb.add_column(st_e::INT, "Test2");
+        st_e::Table t = tb.build();
+        REQUIRE(t.get_sql() == "CREATE TABLE \'mems\' (\'Test\' INT, \'Test2\' INT);");
     }
 
 }

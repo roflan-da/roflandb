@@ -6,6 +6,10 @@
 #include <string>
 #include <vector>    //юзать вектор или нет?
 
+namespace st_e {
+
+#define ENUM_TO_STR(ENUM) std::string(#ENUM)
+
 class Table;
 
 class Column;
@@ -23,15 +27,15 @@ enum ColumnType{
 
 class Column {
 public:
-    std::string getName(){
+    std::string get_name(){
         return name_;
     }
 
-    ColumnType getTypeName(){
+    ColumnType get_type_name(){
         return type_name_;
     }
 
-    virtual std::string Save() = 0;
+    virtual std::string save() = 0;
     //virtual void Load(std::ostream in) = 0;
 
 protected:
@@ -42,7 +46,7 @@ protected:
 class IntegerColumn : public Column {
 public:
     explicit IntegerColumn(std::string name);
-    std::string Save() override;
+    std::string save() override;
     // Load(std::ostream in) override;
 
 private:
@@ -52,8 +56,8 @@ private:
 class Table {
 public:
     friend TableBuilder;
-    std::string getSql();
-    std::string getName(){
+    std::string get_sql();
+    std::string get_name(){
         return name_;
     }
     std::string Save();
@@ -70,19 +74,21 @@ public:
     explicit TableBuilder(std::string table_name) :
             table_name_(std::move(table_name)) {}
 
-    void addColumn(ColumnType column_type, std::string column_name);
+    void add_column(ColumnType column_type, std::string column_name);
 
     Table build();
 
 private:
-    std::vector<std::shared_ptr<Column>> getColumns(){
+    std::vector<std::shared_ptr<Column>> get_columns(){
         return std::move(columns_);
     }
   
-    std::string getTableName(){
+    std::string get_table_name(){
         return table_name_;
     }
 
     std::string table_name_;
     std::vector<std::shared_ptr<Column>> columns_;
 };
+
+}//namespace st_e

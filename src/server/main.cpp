@@ -16,9 +16,30 @@ int main() {
         std::cout << "Enter query \n";
 
         std::getline(std::cin, sql_query);
-        driver.parse_string(sql_query, answer);
-        std::cout << driver.result << "\n";
-//        std::cout << command << " SQL \n";
+        if ((sql_query.length() >= 2) && (sql_query[0] == '\\')){
+            switch (sql_query[1]){
+                case 'q':{
+                    //save work
+                }
+                case 'e':{
+                    std::cout << "Exiting" << std::endl;
+                    return 0;
+                }
+                case ('?'):
+                case ('h'):{
+                    std::cout << "There will be help!" << std::endl;
+                }
+                default:break;
+            }
+        } else{
+            try{
+                driver.parse_string(sql_query, answer);
+                std::cout << driver.result;
+            } catch (std::exception& e){
+                std::cout << "Unknown error!";
+            }
+        }
+//        std::cout << sql_query << " SQL \n";
     }
 
 

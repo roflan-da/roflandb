@@ -12,11 +12,11 @@ namespace st_e {
 
     class StorageEngine : public IEngineStorage {
     public:
-        void addTable(std::shared_ptr<Table> table) override;
-        void deleteTable(std::string table_name) override;
-        std::shared_ptr<Table> getTableByName(std::string table_name) override;
-        void Save() override;
-        void Load() override;
+        void add_table(std::shared_ptr<Table> table) override;
+        void delete_table(std::string table_name) override;
+        std::shared_ptr<Table> get_table_by_name(std::string table_name) override;
+        void save() override;
+        void load() override;
 
     private:
         std::map<std::string, std::shared_ptr<Table>> tables_;

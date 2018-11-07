@@ -231,12 +231,12 @@ namespace RoflanParser {
   {
     switch (other.type_get ())
     {
-      case 22: // column_type
-        value.copy< ColumnType > (other.value);
-        break;
-
       case 4: // "integer"
         value.copy< int > (other.value);
+        break;
+
+      case 22: // column_type
+        value.copy< st_e::ColumnType > (other.value);
         break;
 
       case 21: // column_def
@@ -278,12 +278,12 @@ namespace RoflanParser {
     (void) v;
     switch (this->type_get ())
     {
-      case 22: // column_type
-        value.copy< ColumnType > (v);
-        break;
-
       case 4: // "integer"
         value.copy< int > (v);
+        break;
+
+      case 22: // column_type
+        value.copy< st_e::ColumnType > (v);
         break;
 
       case 21: // column_def
@@ -326,14 +326,14 @@ namespace RoflanParser {
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const ColumnType v, const location_type& l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const int v, const location_type& l)
     : Base (t)
     , value (v)
     , location (l)
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const int v, const location_type& l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const st_e::ColumnType v, const location_type& l)
     : Base (t)
     , value (v)
     , location (l)
@@ -405,12 +405,12 @@ namespace RoflanParser {
     // Type destructor.
   switch (yytype)
     {
-      case 22: // column_type
-        value.template destroy< ColumnType > ();
-        break;
-
       case 4: // "integer"
         value.template destroy< int > ();
+        break;
+
+      case 22: // column_type
+        value.template destroy< st_e::ColumnType > ();
         break;
 
       case 21: // column_def
@@ -458,12 +458,12 @@ namespace RoflanParser {
     super_type::move (s);
     switch (this->type_get ())
     {
-      case 22: // column_type
-        value.move< ColumnType > (s.value);
-        break;
-
       case 4: // "integer"
         value.move< int > (s.value);
+        break;
+
+      case 22: // column_type
+        value.move< st_e::ColumnType > (s.value);
         break;
 
       case 21: // column_def
@@ -628,12 +628,12 @@ namespace RoflanParser {
   {
     switch (that.type_get ())
     {
-      case 22: // column_type
-        value.copy< ColumnType > (that.value);
-        break;
-
       case 4: // "integer"
         value.copy< int > (that.value);
+        break;
+
+      case 22: // column_type
+        value.copy< st_e::ColumnType > (that.value);
         break;
 
       case 21: // column_def
@@ -671,12 +671,12 @@ namespace RoflanParser {
   {
     switch (that.type_get ())
     {
-      case 22: // column_type
-        value.move< ColumnType > (that.value);
-        break;
-
       case 4: // "integer"
         value.move< int > (that.value);
+        break;
+
+      case 22: // column_type
+        value.move< st_e::ColumnType > (that.value);
         break;
 
       case 21: // column_def
@@ -717,12 +717,12 @@ namespace RoflanParser {
     state = that.state;
     switch (that.type_get ())
     {
-      case 22: // column_type
-        value.copy< ColumnType > (that.value);
-        break;
-
       case 4: // "integer"
         value.copy< int > (that.value);
+        break;
+
+      case 22: // column_type
+        value.copy< st_e::ColumnType > (that.value);
         break;
 
       case 21: // column_def
@@ -981,12 +981,12 @@ namespace RoflanParser {
          when using variants.  */
       switch (yyr1_[yyn])
     {
-      case 22: // column_type
-        yylhs.value.build< ColumnType > ();
-        break;
-
       case 4: // "integer"
         yylhs.value.build< int > ();
+        break;
+
+      case 22: // column_type
+        yylhs.value.build< st_e::ColumnType > ();
         break;
 
       case 21: // column_def
@@ -1088,14 +1088,14 @@ namespace RoflanParser {
   case 8:
 #line 125 "parser.yy" // lalr1.cc:856
     {
-		    yylhs.value.as< std::shared_ptr<cmd::Column> > () = std::make_shared<cmd::Column>(yystack_[0].value.as< ColumnType > (), yystack_[1].value.as< std::string > ().c_str());
+		    yylhs.value.as< std::shared_ptr<cmd::Column> > () = std::make_shared<cmd::Column>(yystack_[0].value.as< st_e::ColumnType > (), yystack_[1].value.as< std::string > ().c_str());
 		}
 #line 1094 "parser.cc" // lalr1.cc:856
     break;
 
   case 9:
 #line 131 "parser.yy" // lalr1.cc:856
-    { yylhs.value.as< ColumnType > () = ColumnType::INT; }
+    { yylhs.value.as< st_e::ColumnType > () = st_e::ColumnType::INT; }
 #line 1100 "parser.cc" // lalr1.cc:856
     break;
 

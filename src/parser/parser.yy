@@ -69,7 +69,7 @@
 %type <std::shared_ptr<cmd::SQLStatement>>                                  statement
 
 %type <std::shared_ptr<cmd::CreateStatement>>                               create_statement
-%type <ColumnType>                                                          column_type
+%type <st_e::ColumnType>                                                          column_type
 %type <std::shared_ptr<cmd::Column>>                                        column_def
 %type <std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>>>          column_def_list
 
@@ -128,7 +128,7 @@ column_def:
 	;
 
 column_type:
-        INT_TYPE { $$ = ColumnType::INT; }
+        INT_TYPE { $$ = st_e::ColumnType::INT; }
     ;
 
 %% /*** Additional Code ***/
