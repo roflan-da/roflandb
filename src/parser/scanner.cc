@@ -834,7 +834,7 @@ case 4:
 YY_RULE_SETUP
 #line 65 "scanner.ll"
 {
-    yylval->integerVal = atoi(yytext);
+    yylval->int = atoi(yytext);
     return token::INTEGER;
 }
 	YY_BREAK
@@ -842,7 +842,7 @@ case 5:
 YY_RULE_SETUP
 #line 71 "scanner.ll"
 {
-    yylval->stringVal = new std::string(yytext, yyleng);
+    yylval->string = new std::string(yytext, yyleng);
     return token::STRING;
 }
 	YY_BREAK

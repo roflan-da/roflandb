@@ -62,13 +62,13 @@ INT     { return token::INT_TYPE; }
 
 
 [0-9]+ {
-    yylval->integerVal = atoi(yytext);
+    yylval->int = atoi(yytext);
     return token::INTEGER;
 }
 
 
 [A-Za-z][A-Za-z0-9_,.-]* {
-    yylval->stringVal = new std::string(yytext, yyleng);
+    yylval->string = new std::string(yytext, yyleng);
     return token::STRING;
 }
 
