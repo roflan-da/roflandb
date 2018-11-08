@@ -63,6 +63,9 @@ SHOW    { return token::SHOW; }
 SELECT  { return token::SELECT; }
 FROM    { return token::FROM; }
 
+INSERT  { return token::INSERT; }
+VALUES  { return token::VALUES; }
+
 INT     { return token::INT_TYPE; }
 
 

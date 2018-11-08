@@ -14,11 +14,11 @@ namespace cmd{
 
         std::string get_table_name();
 
-        void set_columns_types(std::shared_ptr<std::vector<st_e::ColumnType>> columns_types);
-        void set_columns_names(std::shared_ptr<std::vector<std::string>> columns_types);
+        void set_columns_vals(std::shared_ptr<std::vector<std::string>> columns_vals);
+        void set_columns_names(std::shared_ptr<std::vector<std::string>> columns_names);
     private:
         std::string table_name_;
-        std::vector<st_e::ColumnType> columns_types_;
-        std::vector<std::string> columns_name_;
+        std::vector<std::string> columns_names_;
+        std::vector<std::string> columns_vals_;
     };
 } //namespace cmd

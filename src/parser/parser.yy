@@ -66,6 +66,8 @@
 %token FROM
 %token DROP
 %token INT_TYPE
+%token INSERT
+%token VALUES
 
 %type <std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>>>    statement_list
 %type <std::shared_ptr<cmd::SQLStatement>>                                  statement
@@ -73,10 +75,11 @@
 %type <std::shared_ptr<cmd::CreateStatement>>                               create_statement
 %type <std::shared_ptr<cmd::ShowStatement>>                                 show_statement
 %type <std::shared_ptr<cmd::SelectStatement>>                               select_statement
+%type <std::shared_ptr<cmd::InsertStatement>>                               insert_statement
 
 %type <st_e::ColumnType>                                                    column_type
-%type <std::shared_ptr<st_e::Column>>                                        column_def
-%type <std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>>          column_def_list
+%type <std::shared_ptr<st_e::Column>>                                       column_def
+%type <std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>>         column_def_list
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_names_list
 
  /*** END TOKENS ***/
@@ -119,6 +122,9 @@ statement : create_statement{
     |   select_statement{
             $$ = $1;
         }
+    |   insert_statement{
+            $$ = $1;
+        }
 
 create_statement :
         CREATE TABLE STRING '(' column_def_list ')' {
@@ -140,6 +146,13 @@ select_statement :
             $$.get()->set_col_names($2);
         }
 
+insert_statement :
+        INSERT STRING '(' cols_names_list ')' VALUES '(' cols_names_list ')' {
+            $$ = std::make_shared<cmd::InsertStatement>($2.c_str());
+            $$.get()->set_columns_names($4);
+            $$.get()->set_columns_vals($8);
+        }
+
 cols_names_list :
         STRING {
             $$ = std::make_shared<std::vector<std::string>>();
@@ -149,7 +162,6 @@ cols_names_list :
             $1.get()->emplace_back($3.c_str());
             $$ = $1;
         }
-
 
 column_def_list:
         column_def{

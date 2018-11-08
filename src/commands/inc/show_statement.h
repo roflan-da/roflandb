@@ -9,9 +9,7 @@
 namespace cmd{
 
     enum ShowType{
-//        COLUMN,
         TABLE
-//        DATABASE
     };
 
     class ShowStatement : public SQLStatement{
