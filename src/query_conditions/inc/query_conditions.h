@@ -9,7 +9,8 @@ namespace cond {
     enum ComplexConditionType{
         AND,
         OR,
-        NOT
+        NOT,
+        SINGLE
     };
 
 
