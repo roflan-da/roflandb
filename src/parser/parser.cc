@@ -1215,8 +1215,8 @@ namespace RoflanParser {
   case 8:
 #line 124 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::CreateStatement> > () = std::make_shared<cmd::CreateStatement>(yystack_[4].value.as< std::string > ().c_str());
-            yylhs.value.as< std::shared_ptr<cmd::CreateStatement> > ().get()->set_columns(yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > ());
+            yylhs.value.as< std::shared_ptr<cmd::CreateStatement> > () = std::make_shared<cmd::CreateStatement>(yystack_[3].value.as< std::string > ().c_str());
+            yylhs.value.as< std::shared_ptr<cmd::CreateStatement> > ().get()->set_columns(yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > ());
         }
 #line 1222 "parser.cc" // lalr1.cc:856
     break;
@@ -1224,7 +1224,7 @@ namespace RoflanParser {
   case 9:
 #line 130 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::ShowStatement> > () = std::make_shared<cmd::ShowStatement>(cmd::TABLE, yystack_[1].value.as< std::string > ().c_str());
+            yylhs.value.as< std::shared_ptr<cmd::ShowStatement> > () = std::make_shared<cmd::ShowStatement>(cmd::TABLE, yystack_[0].value.as< std::string > ().c_str());
         }
 #line 1230 "parser.cc" // lalr1.cc:856
     break;
@@ -1232,7 +1232,7 @@ namespace RoflanParser {
   case 10:
 #line 135 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > () = std::make_shared<cmd::SelectStatement>(yystack_[1].value.as< std::string > ().c_str());
+            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > () = std::make_shared<cmd::SelectStatement>(yystack_[0].value.as< std::string > ().c_str());
         }
 #line 1238 "parser.cc" // lalr1.cc:856
     break;
@@ -1240,8 +1240,8 @@ namespace RoflanParser {
   case 11:
 #line 138 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > () = std::make_shared<cmd::SelectStatement>(yystack_[1].value.as< std::string > ().c_str(), cmd::VARIABLE);
-            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > ().get()->set_col_names(yystack_[3].value.as< std::shared_ptr<std::vector<std::string>> > ());
+            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > () = std::make_shared<cmd::SelectStatement>(yystack_[0].value.as< std::string > ().c_str(), cmd::VARIABLE);
+            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > ().get()->set_col_names(yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ());
         }
 #line 1247 "parser.cc" // lalr1.cc:856
     break;
@@ -1552,17 +1552,17 @@ namespace RoflanParser {
   }
 
 
-  const signed char Parser::yypact_ninf_ = -14;
+  const signed char Parser::yypact_ninf_ = -11;
 
   const signed char Parser::yytable_ninf_ = -1;
 
   const signed char
   Parser::yypact_[] =
   {
-      -4,     1,     4,    -5,    11,   -12,   -14,   -14,   -14,   -14,
-       8,     7,   -14,     5,    -7,   -14,    -4,     2,    12,    13,
-      14,    15,   -14,    16,     6,     9,    10,   -14,    17,    -6,
-     -14,   -14,   -14,   -14,   -14,   -14,    16,    18,   -14,   -14
+      -4,    -1,    -3,    -5,    10,     0,   -11,   -11,   -11,   -11,
+       7,     8,   -11,     4,    -9,   -11,    -4,     2,    12,    13,
+      14,    15,   -11,    16,   -11,   -11,   -11,   -11,    11,    -8,
+     -11,   -11,   -11,   -11,    16,   -11
   };
 
   const unsigned char
@@ -1570,49 +1570,47 @@ namespace RoflanParser {
   {
        0,     0,     0,     0,     0,     2,     3,     5,     6,     7,
        0,     0,    12,     0,     0,     1,     0,     0,     0,     0,
-       0,     0,     4,     0,     0,     0,     0,    13,     0,     0,
-      14,     9,    10,    11,    17,    16,     0,     0,    15,     8
+       0,     0,     4,     0,     9,    10,    11,    13,     0,     0,
+      14,    17,    16,     8,     0,    15
   };
 
   const signed char
   Parser::yypgoto_[] =
   {
-     -14,   -14,   -14,    19,   -14,   -14,   -14,   -14,   -14,   -13,
-     -14
+     -11,   -11,   -11,     6,   -11,   -11,   -11,   -11,   -11,   -10,
+     -11
   };
 
   const signed char
   Parser::yydefgoto_[] =
   {
       -1,     4,     5,     6,     7,     8,     9,    14,    29,    30,
-      35
+      32
   };
 
   const unsigned char
   Parser::yytable_[] =
   {
-      12,    16,     1,    20,     2,     3,    21,    36,    10,    37,
-      11,    15,    13,    17,    18,    19,    23,    24,    25,    26,
-      27,    28,    31,    38,     0,    32,    33,     0,     0,    34,
-       0,     0,     0,     0,    39,    22
+      12,    20,     1,    11,     2,     3,    10,    33,    21,    34,
+      15,    13,    17,    16,    19,    18,    23,    24,    25,    26,
+      27,    28,    22,    31,    35
   };
 
-  const signed char
+  const unsigned char
   Parser::yycheck_[] =
   {
-       5,    13,     6,    10,     8,     9,    13,    13,     7,    15,
-       6,     0,    17,     5,     7,    10,    14,     5,     5,     5,
-       5,     5,    16,    36,    -1,    16,    16,    -1,    -1,    12,
-      -1,    -1,    -1,    -1,    16,    16
+       5,    10,     6,     6,     8,     9,     7,    15,    17,    17,
+       0,    16,     5,    13,    10,     7,    14,     5,     5,     5,
+       5,     5,    16,    12,    34
   };
 
   const unsigned char
   Parser::yystos_[] =
   {
        0,     6,     8,     9,    19,    20,    21,    22,    23,    24,
-       7,     6,     5,    17,    25,     0,    13,     5,     7,    10,
-      10,    13,    21,    14,     5,     5,     5,     5,     5,    26,
-      27,    16,    16,    16,    12,    28,    13,    15,    27,    16
+       7,     6,     5,    16,    25,     0,    13,     5,     7,    10,
+      10,    17,    21,    14,     5,     5,     5,     5,     5,    26,
+      27,    12,    28,    15,    17,    27
   };
 
   const unsigned char
@@ -1625,8 +1623,8 @@ namespace RoflanParser {
   const unsigned char
   Parser::yyr2_[] =
   {
-       0,     2,     1,     1,     3,     1,     1,     1,     7,     5,
-       5,     5,     1,     3,     1,     3,     2,     1
+       0,     2,     1,     1,     3,     1,     1,     1,     6,     4,
+       4,     4,     1,     3,     1,     3,     2,     1
   };
 
 
@@ -1638,7 +1636,7 @@ namespace RoflanParser {
   {
   "\"end of file\"", "error", "$undefined", "\"end of line\"",
   "\"integer\"", "\"string\"", "CREATE", "TABLE", "SHOW", "SELECT", "FROM",
-  "DROP", "INT_TYPE", "','", "'('", "')'", "';'", "'*'", "$accept",
+  "DROP", "INT_TYPE", "';'", "'('", "')'", "'*'", "','", "$accept",
   "start", "statement_list", "statement", "create_statement",
   "show_statement", "select_statement", "cols_names_list",
   "column_def_list", "column_def", "column_type", YY_NULLPTR
@@ -1693,8 +1691,8 @@ namespace RoflanParser {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      14,    15,    17,     2,    13,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    16,
+      14,    15,    16,     2,    17,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    13,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1730,7 +1728,7 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 1734 "parser.cc" // lalr1.cc:1164
+#line 1732 "parser.cc" // lalr1.cc:1164
 #line 174 "parser.yy" // lalr1.cc:1165
  /*** Additional Code ***/
 

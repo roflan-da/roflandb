@@ -105,7 +105,7 @@ statement_list : statement {
             $$ = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
             $$.get()->emplace_back($1);
         }
-    |   statement_list ',' statement{
+    |   statement_list ';' statement{
             $1.get()->emplace_back($3);
             $$ = $1;
         }
@@ -121,21 +121,21 @@ statement : create_statement{
         }
 
 create_statement :
-        CREATE TABLE STRING '(' column_def_list ')'';' {
+        CREATE TABLE STRING '(' column_def_list ')' {
             $$ = std::make_shared<cmd::CreateStatement>($3.c_str());
             $$.get()->set_columns($5);
         }
 
 show_statement :
-        SHOW CREATE TABLE STRING';' {
+        SHOW CREATE TABLE STRING {
             $$ = std::make_shared<cmd::ShowStatement>(cmd::TABLE, $4.c_str());
         }
 
 select_statement :
-        SELECT '*' FROM STRING';' {
+        SELECT '*' FROM STRING {
             $$ = std::make_shared<cmd::SelectStatement>($4.c_str());
         }
-    |   SELECT cols_names_list FROM STRING';' {
+    |   SELECT cols_names_list FROM STRING {
             $$ = std::make_shared<cmd::SelectStatement>($4.c_str(), cmd::VARIABLE);
             $$.get()->set_col_names($2);
         }

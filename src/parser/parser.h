@@ -597,7 +597,7 @@ namespace RoflanParser {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const signed char yycheck_[];
+  static const unsigned char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -719,7 +719,7 @@ namespace RoflanParser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 35,     ///< Last index in yytable_.
+      yylast_ = 24,     ///< Last index in yytable_.
       yynnts_ = 11,  ///< Number of nonterminal symbols.
       yyfinal_ = 15, ///< Termination state number.
       yyterror_ = 1,
