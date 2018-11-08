@@ -5,7 +5,7 @@ cmd::ShowStatement::ShowStatement() : type_(cmd::TABLE){};
 
 cmd::ShowStatement::ShowStatement(cmd::ShowType type) : type_(type){};
 
-void cmd::ShowStatement::execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) {
+void cmd::ShowStatement::execute(st_e::IEngineStorage& storage_engine) {
 
 }
 

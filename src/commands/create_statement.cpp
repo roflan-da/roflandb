@@ -19,10 +19,10 @@ void cmd::CreateStatement::add_column(std::shared_ptr<cmd::Column> column) {
     columns_.emplace_back(column);
 }
 
-void cmd::CreateStatement::execute(std::shared_ptr<st_e::IEngineStorage> storage_engine) {
+void cmd::CreateStatement::execute(st_e::IEngineStorage& storage_engine) {
     st_e::TableBuilder table_builder(this->get_table_name());
     auto cols = this->get_columns();
-    for (auto col : cols) {
+    for (const auto& col : cols) {
         table_builder.add_column(col->type, col->name);
     }
     auto table = table_builder.build();

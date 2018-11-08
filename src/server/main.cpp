@@ -2,18 +2,18 @@
 #include "driver.h"
 #include "storage_engine.h"
 
-//#include "../query_conditions/inc/condition.h"     why no see:??/??/by mup0c 08.11
 
 int main() {
     std::cout << "Hello, world!" << std::endl;
     std::cout << "My name is RoflanDB." << std::endl;
     std::cout << "RoflanDB strong!" << std::endl;
 
-    RoflanParser::Driver driver;
+    RoflanParser::Driver parserDriver;
     std::string answer;
-    auto storageEngine = new std::shared_ptr<st_e::StorageEngine>();
-//    driver.parse_string("create", answer);
-//    std::cout << driver.result;
+    st_e::StorageEngine storageEngine;
+
+//    parserDriver.parse_string("create", answer);
+//    std::cout << parserDriver.result;
 //    auto condOR = cond::Condition();       by mup0c 08.11
 
     while (true) {
@@ -38,9 +38,9 @@ int main() {
             }
         } else{
             try{
-                driver.parse_string(sql_query, answer);
-                driver.SQLParseResult->execute(storageEngine);
-                std::cout << driver.result;
+                parserDriver.parse_string(sql_query, answer);
+                parserDriver.SQLParseResult->execute(storageEngine);
+                std::cout << parserDriver.result;
             } catch (std::exception& e){
                 std::cout << "Unknown error!";
             }

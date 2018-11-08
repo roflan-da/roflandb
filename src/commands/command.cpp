@@ -22,8 +22,8 @@ void cmd::Command::isValid(bool isValid) {
 }
 
 void cmd::Command::execute(st_e::IEngineStorage& engine_storage) {
-    for (auto statement : statements_){
-        statement.get()->execute(engine_storage);
+    for (const auto& statement : statements_){
+        statement->execute(engine_storage);
     }
 }
 

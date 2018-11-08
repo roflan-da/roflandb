@@ -4,11 +4,6 @@
 #include "command.h"
 #include "statements.h"
 
-// forward declaration
-//class CalcContext;
-
-/** The example namespace is used to encapsulate the three parser classes
- * example::Parser, example::Scanner and example::Driver */
 namespace RoflanParser {
 
 /** The Driver class brings together all components. It creates an instance of

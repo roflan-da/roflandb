@@ -11,7 +11,7 @@ cmd::SelectStatement::SelectStatement(std::string table_name, SelectType type) :
     table_name_(std::move(table_name)),
     type_(type) {}
 
-void cmd::SelectStatement::execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) {
+void cmd::SelectStatement::execute(st_e::IEngineStorage& storage_engine) {
     //
 }
 

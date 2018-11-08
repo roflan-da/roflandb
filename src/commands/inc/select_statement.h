@@ -17,7 +17,7 @@ namespace cmd {
     public:
         SelectStatement();
 
-        void execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) override;
+        void execute(st_e::IEngineStorage& storage_engine) override;
 
         explicit SelectStatement(std::string table_name, SelectType type = ALL);
 
