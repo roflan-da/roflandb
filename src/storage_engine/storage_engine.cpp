@@ -39,7 +39,7 @@ namespace st_e {
             int columns_count;
             in >> columns_count;
 
-            std::vector<std::pair<ColumnType, std::string>> columns;
+            std::vector<Column> columns;
             for (int j = 0; j < columns_count; j++){
                 std::string column_name;
                 int type;
