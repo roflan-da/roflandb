@@ -38,8 +38,8 @@ public:
 
 
 private:
-    std::string column_name_;
     SimpleConditionType type_;
+    std::string column_name_;
     std::variant<int, std::string> value_;
 
 };
