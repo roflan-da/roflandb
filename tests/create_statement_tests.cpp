@@ -25,12 +25,12 @@ TEST_CASE("create_statements tests") {
         REQUIRE(create_statement.type() == cmd::CREATE_TABLE);
         REQUIRE(create_statement.get_columns().size() == 0);
 
-        cmd::Column col1(st_e::INT, "col_name1");
-        cmd::Column col2(st_e::INT, "col_name2");
-        cmd::Column col3(st_e::INT, "col_name3");
-        create_statement.add_column(std::make_shared<cmd::Column>(col1));
-        create_statement.add_column(std::make_shared<cmd::Column>(col2));
-        create_statement.add_column(std::make_shared<cmd::Column>(col3));
+        st_e::Column col1(st_e::INT, "col_name1");
+        st_e::Column col2(st_e::INT, "col_name2");
+        st_e::Column col3(st_e::INT, "col_name3");
+        create_statement.add_column(std::make_shared<st_e::Column>(col1));
+        create_statement.add_column(std::make_shared<st_e::Column>(col2));
+        create_statement.add_column(std::make_shared<st_e::Column>(col3));
 
         REQUIRE(create_statement.get_columns().size() == 3);
         auto mem = create_statement.get_columns();
