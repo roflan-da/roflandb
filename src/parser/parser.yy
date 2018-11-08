@@ -98,7 +98,7 @@
 %}
 
 %% /*** Grammar Rules ***/
-start : statement_list{
+start : statement_list {
             std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>($1);
             driver.SQLParseResult = result;
             driver.SQLParseResult.get()->is_valid(true);
@@ -108,21 +108,21 @@ statement_list : statement {
             $$ = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
             $$.get()->emplace_back($1);
         }
-    |   statement_list ';' statement{
-            $1.get()->emplace_back($3);
+    |   statement_list statement {
+            $1.get()->emplace_back($2);
             $$ = $1;
         }
 
-statement : create_statement{
+statement : create_statement ';' {
             $$ = $1;
         }
-    |   show_statement{
+    |   show_statement ';' {
             $$ = $1;
         }
-    |   select_statement{
+    |   select_statement ';' {
             $$ = $1;
         }
-    |   insert_statement{
+    |   insert_statement ';' {
             $$ = $1;
         }
 
@@ -158,17 +158,17 @@ cols_names_list :
             $$ = std::make_shared<std::vector<std::string>>();
             $$.get()->emplace_back($1.c_str());
         }
-    |   cols_names_list ',' STRING{
+    |   cols_names_list ',' STRING {
             $1.get()->emplace_back($3.c_str());
             $$ = $1;
         }
 
 column_def_list:
-        column_def{
+        column_def {
             $$ = std::make_shared<std::vector<std::shared_ptr<st_e::Column>>>();
             $$.get()->emplace_back($1);
         }
-    |   column_def_list ',' column_def{
+    |   column_def_list ',' column_def {
             $1->emplace_back($3);
             $$ = $1;
         }

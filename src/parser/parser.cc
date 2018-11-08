@@ -1233,8 +1233,8 @@ namespace RoflanParser {
   case 4:
 #line 111 "parser.yy" // lalr1.cc:856
     {
-            yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ().get()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SQLStatement> > ());
-            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > () = yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ();
+            yystack_[1].value.as< std::shared_ptr<cmd::SQLStatement> > ().get()->emplace_back(yystack_[0].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > () = yystack_[1].value.as< std::shared_ptr<cmd::SQLStatement> > ();
         }
 #line 1240 "parser.cc" // lalr1.cc:856
     break;
@@ -1242,7 +1242,7 @@ namespace RoflanParser {
   case 5:
 #line 116 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[0].value.as< std::shared_ptr<cmd::CreateStatement> > ();
+            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::CreateStatement> > ();
         }
 #line 1248 "parser.cc" // lalr1.cc:856
     break;
@@ -1250,7 +1250,7 @@ namespace RoflanParser {
   case 6:
 #line 119 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[0].value.as< std::shared_ptr<cmd::ShowStatement> > ();
+            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::ShowStatement> > ();
         }
 #line 1256 "parser.cc" // lalr1.cc:856
     break;
@@ -1258,7 +1258,7 @@ namespace RoflanParser {
   case 7:
 #line 122 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[0].value.as< std::shared_ptr<cmd::SelectStatement> > ();
+            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::SelectStatement> > ();
         }
 #line 1264 "parser.cc" // lalr1.cc:856
     break;
@@ -1266,7 +1266,7 @@ namespace RoflanParser {
   case 8:
 #line 125 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[0].value.as< std::shared_ptr<cmd::InsertStatement> > ();
+            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::InsertStatement> > ();
         }
 #line 1272 "parser.cc" // lalr1.cc:856
     break;
@@ -1621,72 +1621,72 @@ namespace RoflanParser {
   }
 
 
-  const signed char Parser::yypact_ninf_ = -26;
+  const signed char Parser::yypact_ninf_ = -30;
 
   const signed char Parser::yytable_ninf_ = -1;
 
   const signed char
   Parser::yypact_[] =
   {
-      -3,     1,     6,    -4,    -1,    13,     5,   -26,   -26,   -26,
-     -26,   -26,    11,    15,   -26,    14,    -8,     7,   -26,    -3,
-       9,    21,    22,    23,    24,    25,   -26,    26,   -26,   -26,
-     -26,   -26,   -10,    20,    -2,   -26,    19,   -26,   -26,   -26,
-      26,    18,   -26,    25,     2,   -26
+      -3,     1,    -2,    -4,     7,    13,   -30,    -3,     0,     5,
+       8,     9,    17,    18,   -30,    16,    -8,    11,   -30,   -30,
+     -30,   -30,   -30,   -30,    12,    24,    25,    26,    27,    28,
+      29,   -30,   -30,   -30,   -30,   -10,    23,    -1,   -30,    22,
+     -30,   -30,   -30,    29,    21,   -30,    28,     2,   -30
   };
 
   const unsigned char
   Parser::yydefact_[] =
   {
-       0,     0,     0,     0,     0,     0,     2,     3,     5,     6,
-       7,     8,     0,     0,    14,     0,     0,     0,     1,     0,
-       0,     0,     0,     0,     0,     0,     4,     0,    10,    11,
-      12,    15,     0,     0,     0,    16,     0,    19,    18,     9,
-       0,     0,    17,     0,     0,    13
+       0,     0,     0,     0,     0,     0,     2,     3,     0,     0,
+       0,     0,     0,     0,    14,     0,     0,     0,     1,     4,
+       5,     6,     7,     8,     0,     0,     0,     0,     0,     0,
+       0,    10,    11,    12,    15,     0,     0,     0,    16,     0,
+      19,    18,     9,     0,     0,    17,     0,     0,    13
   };
 
   const signed char
   Parser::yypgoto_[] =
   {
-     -26,   -26,   -26,    16,   -26,   -26,   -26,   -26,   -25,   -26,
-       0,   -26
+     -30,   -30,    31,   -30,   -30,   -30,   -30,   -30,   -29,   -30,
+       3,   -30
   };
 
   const signed char
   Parser::yydefgoto_[] =
   {
-      -1,     5,     6,     7,     8,     9,    10,    11,    16,    34,
-      35,    38
+      -1,     5,     6,     7,     8,     9,    10,    11,    16,    37,
+      38,    41
   };
 
   const unsigned char
   Parser::yytable_[] =
   {
-      32,    14,    23,     1,    17,     2,     3,    36,    12,    24,
-       4,    24,    13,    18,    15,    39,    20,    40,    44,    45,
-      19,    24,    21,    25,    22,    27,    28,    29,    30,    31,
-      14,    33,    37,    41,    43,    26,     0,     0,     0,     0,
-      42
+      35,    14,    27,     1,    13,     2,     3,    39,    12,    28,
+       4,    28,    17,    18,    15,    20,    42,    47,    43,    48,
+      21,    28,    24,    22,    23,    25,    26,    29,    30,    31,
+      32,    33,    34,    14,    36,    40,    44,    46,    19,     0,
+       0,     0,     0,     0,     0,     0,    45
   };
 
   const signed char
   Parser::yycheck_[] =
   {
-      25,     5,    10,     6,     5,     8,     9,    17,     7,    19,
-      13,    19,     6,     0,    18,    17,     5,    19,    43,    17,
-      15,    19,     7,    16,    10,    16,     5,     5,     5,     5,
-       5,     5,    12,    14,    16,    19,    -1,    -1,    -1,    -1,
-      40
+      29,     5,    10,     6,     6,     8,     9,    17,     7,    19,
+      13,    19,     5,     0,    18,    15,    17,    46,    19,    17,
+      15,    19,     5,    15,    15,     7,    10,    16,    16,     5,
+       5,     5,     5,     5,     5,    12,    14,    16,     7,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    43
   };
 
   const unsigned char
   Parser::yystos_[] =
   {
        0,     6,     8,     9,    13,    21,    22,    23,    24,    25,
-      26,    27,     7,     6,     5,    18,    28,     5,     0,    15,
-       5,     7,    10,    10,    19,    16,    23,    16,     5,     5,
-       5,     5,    28,     5,    29,    30,    17,    12,    31,    17,
-      19,    14,    30,    16,    28,    17
+      26,    27,     7,     6,     5,    18,    28,     5,     0,    22,
+      15,    15,    15,    15,     5,     7,    10,    10,    19,    16,
+      16,     5,     5,     5,     5,    28,     5,    29,    30,    17,
+      12,    31,    17,    19,    14,    30,    16,    28,    17
   };
 
   const unsigned char
@@ -1699,7 +1699,7 @@ namespace RoflanParser {
   const unsigned char
   Parser::yyr2_[] =
   {
-       0,     2,     1,     1,     3,     1,     1,     1,     1,     6,
+       0,     2,     1,     1,     2,     2,     2,     2,     2,     6,
        4,     4,     4,     9,     1,     3,     1,     3,     2,     1
   };
 
