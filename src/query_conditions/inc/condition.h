@@ -25,7 +25,7 @@ class Condition {
 public:
     Condition() = default;
     Condition(SimpleConditionType type, std::string col_name, std::variant<int, std::string> value) :
-            column_name_(std::move(col_name)), type_(type), value_(std::move(value)) {}
+            type_(type), column_name_(std::move(col_name)), value_(std::move(value)) {}
 
     void column_name(std::string name) { column_name_ = name; }
     std::string column_name() const { return column_name_; }
