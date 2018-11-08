@@ -64,8 +64,7 @@ public:
 private:
     explicit Table(TableBuilder builder);
     std::string name_;
-    std::vector<ColumnType> columns_types_;
-    std::vector<std::string> columns_names_;
+    std::vector<std::pair<ColumnType, std::string>> columns_;
     std::vector<std::shared_ptr<TableRaw>> raws_;
 };
 
@@ -75,12 +74,8 @@ public:
     explicit TableBuilder(std::string table_name) :
             table_name_(std::move(table_name)) {}
 
-    void set_columns_types(std::vector<ColumnType> column_types){
-        column_types_ = std::move(column_types);
-    }
-
-    void set_columns_names(std::vector<std::string> column_names){
-        column_names_ = std::move(column_names);
+    void set_columns(std::vector<std::pair<ColumnType, std::string>> columns){
+        columns_ = std::move(columns);
     }
 
     Table build() {
@@ -88,12 +83,9 @@ public:
     }
 
 private:
-    std::vector<ColumnType> get_columns_types(){
-        return std::move(column_types_);
-    }
 
-    std::vector<std::string> get_columns_names(){
-        return std::move(column_names_);
+    std::vector<std::pair<ColumnType, std::string>> get_columns(){
+        return std::move(columns_);
     }
   
     std::string get_table_name(){
@@ -101,8 +93,8 @@ private:
     }
 
     std::string table_name_;
-    std::vector<ColumnType> column_types_;
-    std::vector<std::string> column_names_;
+
+    std::vector<std::pair<ColumnType, std::string>> columns_;
 
 };
 
