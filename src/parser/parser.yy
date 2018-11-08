@@ -81,6 +81,7 @@
 %type <std::shared_ptr<st_e::Column>>                                       column_def
 %type <std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>>         column_def_list
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_names_list
+%type <std::shared_ptr<std::vector<std::string>>>                           cols_values_list
 
  /*** END TOKENS ***/
 
@@ -147,10 +148,28 @@ select_statement :
         }
 
 insert_statement :
-        INSERT STRING '(' cols_names_list ')' VALUES '(' cols_names_list ')' {
+        INSERT STRING '(' cols_names_list ')' VALUES '(' cols_values_list ')' {
             $$ = std::make_shared<cmd::InsertStatement>($2.c_str());
             $$->set_columns_names($4);
             $$->set_columns_vals($8);
+        }
+
+cols_values_list :
+        INTEGER {
+            $$ = std::make_shared<std::vector<std::string>>();
+            $$->emplace_back(std::to_string($1));
+        }
+    |   cols_values_list ',' INTEGER {
+            $1->emplace_back(std::to_string($3));
+            $$ = $1;
+        }
+    |    STRING {
+            $$ = std::make_shared<std::vector<std::string>>();
+            $$->emplace_back($1.c_str());
+        }
+    |   cols_values_list ',' STRING {
+            $1->emplace_back($3.c_str());
+            $$ = $1;
         }
 
 cols_names_list :

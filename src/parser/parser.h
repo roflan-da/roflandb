@@ -307,6 +307,7 @@ namespace RoflanParser {
       // column_def_list
       char dummy10[sizeof(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>)];
 
+      // cols_values_list
       // cols_names_list
       char dummy11[sizeof(std::shared_ptr<std::vector<std::string>>)];
 
@@ -612,7 +613,7 @@ namespace RoflanParser {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const signed char yycheck_[];
+  static const unsigned char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -734,8 +735,8 @@ namespace RoflanParser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 46,     ///< Last index in yytable_.
-      yynnts_ = 12,  ///< Number of nonterminal symbols.
+      yylast_ = 42,     ///< Last index in yytable_.
+      yynnts_ = 13,  ///< Number of nonterminal symbols.
       yyfinal_ = 18, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
@@ -750,7 +751,7 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 754 "parser.h" // lalr1.cc:379
+#line 755 "parser.h" // lalr1.cc:379
 
 
 
