@@ -14,7 +14,7 @@ public:
     explicit Command(std::shared_ptr<cmd::SQLStatement> statement);
     explicit Command(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> statements);
 
-    void execute(std::shared_ptr<st_e::IEngineStorage> engine_storage);
+    void execute(st_e::IEngineStorage& engine_storage);
 
     bool isValid() const;
     void isValid(bool isValid);

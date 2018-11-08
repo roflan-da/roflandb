@@ -21,7 +21,7 @@ void cmd::Command::isValid(bool isValid) {
     isValid_ = isValid;
 }
 
-void cmd::Command::execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) {
+void cmd::Command::execute(st_e::IEngineStorage& engine_storage) {
     for (auto statement : statements_){
         statement.get()->execute(engine_storage);
     }

@@ -1,5 +1,7 @@
 #include "main.h"
 #include "driver.h"
+#include "storage_engine.h"
+
 //#include "../query_conditions/inc/condition.h"     why no see:??/??/by mup0c 08.11
 
 int main() {
@@ -9,6 +11,7 @@ int main() {
 
     RoflanParser::Driver driver;
     std::string answer;
+    auto storageEngine = new std::shared_ptr<st_e::StorageEngine>();
 //    driver.parse_string("create", answer);
 //    std::cout << driver.result;
 //    auto condOR = cond::Condition();       by mup0c 08.11
@@ -36,6 +39,7 @@ int main() {
         } else{
             try{
                 driver.parse_string(sql_query, answer);
+                driver.SQLParseResult->execute(storageEngine);
                 std::cout << driver.result;
             } catch (std::exception& e){
                 std::cout << "Unknown error!";
