@@ -13,6 +13,10 @@ add_library(roflandb_testlib SHARED ${SRC})
 target_include_directories(roflandb_testlib PUBLIC inc/)
 target_link_libraries(roflandb_testlib PUBLIC ${LIBS})
 
+target_compile_options(roflandb PRIVATE -g3 -fsanitize=address -O0 -coverage)
+set_target_properties(roflandb  PROPERTIES LINK_FLAGS "${LINK_FLAGS} -coverage -fsanitize=address")
+
+
 if (MINGW)
     get_filename_component( Mingw_Path ${CMAKE_CXX_COMPILER} PATH )
     set(MINGW_RUNTIME_LIBS ${Mingw_Path}/libgcc_s_seh-1.dll ${Mingw_Path}/libstdc++-6.dll)
