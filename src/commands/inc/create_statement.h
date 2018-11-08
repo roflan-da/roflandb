@@ -36,4 +36,4 @@ private:
     std::string table_name_;
     std::vector<std::shared_ptr<cmd::Column>> columns_;
 };
-} //namespace prs
+} //namespace cmd
