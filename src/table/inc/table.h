@@ -83,7 +83,6 @@ public:
     }
 
 private:
-
     std::vector<std::pair<ColumnType, std::string>> get_columns(){
         return std::move(columns_);
     }
@@ -93,7 +92,6 @@ private:
     }
 
     std::string table_name_;
-
     std::vector<std::pair<ColumnType, std::string>> columns_;
 
 };

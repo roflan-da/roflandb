@@ -3,11 +3,9 @@
 #include <string>
 #include <variant>
 #include <utility>
-#include <memory>
 
 
 namespace cond{
-
 
 enum SimpleConditionType{
     EQUAl,
@@ -17,17 +15,17 @@ enum SimpleConditionType{
     MORE_EQUAL,
     LESS_EQUAL
 };
-    //HOW TO USE DIS SHIT
-    //auto condOR = cond::Condition();
-    //auto cond = cond::Condition(cond::AND, "ababaca", 12);
-    //std::cout << std::get<int>(cond.value());
+//HOW TO USE DIS SHIT
+//auto condOR = cond::Condition();
+//auto cond = cond::Condition(cond::AND, "ababaca", 12);
+//std::cout << std::get<int>(cond.value());
 
 //between column and value
 class Condition {
 public:
     Condition() = default;
     Condition(SimpleConditionType type, std::string col_name, std::variant<int, std::string> value) :
-        type_(type), column_name_(std::move(col_name)), value_(std::move(value)) {}
+            column_name_(std::move(col_name)), type_(type), value_(std::move(value)) {}
 
     void column_name(std::string name) { column_name_ = name; }
     std::string column_name() const { return column_name_; }

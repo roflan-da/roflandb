@@ -44,7 +44,6 @@ namespace st_e {
                 std::string column_name;
                 int type;
                 in >> column_name >> type;
-
                 columns.push_back({static_cast<ColumnType>(type), column_name});
             }
             tableBuilder.set_columns(columns);
