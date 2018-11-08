@@ -1216,7 +1216,7 @@ namespace RoflanParser {
     {
             std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>(yystack_[0].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ());
             driver.SQLParseResult = result;
-            driver.SQLParseResult.get()->is_valid(true);
+            driver.SQLParseResult->is_valid(true);
         }
 #line 1222 "parser.cc" // lalr1.cc:856
     break;
@@ -1225,7 +1225,7 @@ namespace RoflanParser {
 #line 107 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > () = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
-            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ().get()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SQLStatement> > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SQLStatement> > ());
         }
 #line 1231 "parser.cc" // lalr1.cc:856
     break;
@@ -1233,8 +1233,8 @@ namespace RoflanParser {
   case 4:
 #line 111 "parser.yy" // lalr1.cc:856
     {
-            yystack_[1].value.as< std::shared_ptr<cmd::SQLStatement> > ().get()->emplace_back(yystack_[0].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ());
-            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > () = yystack_[1].value.as< std::shared_ptr<cmd::SQLStatement> > ();
+            yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SQLStatement> > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > () = yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ();
         }
 #line 1240 "parser.cc" // lalr1.cc:856
     break;
@@ -1275,7 +1275,7 @@ namespace RoflanParser {
 #line 130 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<cmd::CreateStatement> > () = std::make_shared<cmd::CreateStatement>(yystack_[3].value.as< std::string > ().c_str());
-            yylhs.value.as< std::shared_ptr<cmd::CreateStatement> > ().get()->set_columns(yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ());
+            yylhs.value.as< std::shared_ptr<cmd::CreateStatement> > ()->set_columns(yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ());
         }
 #line 1281 "parser.cc" // lalr1.cc:856
     break;
@@ -1300,7 +1300,7 @@ namespace RoflanParser {
 #line 144 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > () = std::make_shared<cmd::SelectStatement>(yystack_[0].value.as< std::string > ().c_str(), cmd::VARIABLE);
-            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > ().get()->set_col_names(yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ());
+            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > ()->set_col_names(yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ());
         }
 #line 1306 "parser.cc" // lalr1.cc:856
     break;
@@ -1309,8 +1309,8 @@ namespace RoflanParser {
 #line 150 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<cmd::InsertStatement> > () = std::make_shared<cmd::InsertStatement>(yystack_[7].value.as< std::string > ().c_str());
-            yylhs.value.as< std::shared_ptr<cmd::InsertStatement> > ().get()->set_columns_names(yystack_[5].value.as< std::shared_ptr<std::vector<std::string>> > ());
-            yylhs.value.as< std::shared_ptr<cmd::InsertStatement> > ().get()->set_columns_vals(yystack_[1].value.as< std::shared_ptr<std::vector<std::string>> > ());
+            yylhs.value.as< std::shared_ptr<cmd::InsertStatement> > ()->set_columns_names(yystack_[5].value.as< std::shared_ptr<std::vector<std::string>> > ());
+            yylhs.value.as< std::shared_ptr<cmd::InsertStatement> > ()->set_columns_vals(yystack_[1].value.as< std::shared_ptr<std::vector<std::string>> > ());
         }
 #line 1316 "parser.cc" // lalr1.cc:856
     break;
@@ -1319,7 +1319,7 @@ namespace RoflanParser {
 #line 157 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = std::make_shared<std::vector<std::string>>();
-            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > ().get()->emplace_back(yystack_[0].value.as< std::string > ().c_str());
+            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > ()->emplace_back(yystack_[0].value.as< std::string > ().c_str());
         }
 #line 1325 "parser.cc" // lalr1.cc:856
     break;
@@ -1327,7 +1327,7 @@ namespace RoflanParser {
   case 15:
 #line 161 "parser.yy" // lalr1.cc:856
     {
-            yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ().get()->emplace_back(yystack_[0].value.as< std::string > ().c_str());
+            yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ()->emplace_back(yystack_[0].value.as< std::string > ().c_str());
             yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ();
         }
 #line 1334 "parser.cc" // lalr1.cc:856
@@ -1337,7 +1337,7 @@ namespace RoflanParser {
 #line 167 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > () = std::make_shared<std::vector<std::shared_ptr<st_e::Column>>>();
-            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ().get()->emplace_back(yystack_[0].value.as< std::shared_ptr<st_e::Column> > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<st_e::Column> > ());
         }
 #line 1343 "parser.cc" // lalr1.cc:856
     break;
@@ -1628,7 +1628,7 @@ namespace RoflanParser {
   const signed char
   Parser::yypact_[] =
   {
-      -3,     1,    -2,    -4,     7,    13,   -30,    -3,     0,     5,
+      -3,     1,    -2,    -4,     7,    13,    -3,   -30,     0,     5,
        8,     9,    17,    18,   -30,    16,    -8,    11,   -30,   -30,
      -30,   -30,   -30,   -30,    12,    24,    25,    26,    27,    28,
       29,   -30,   -30,   -30,   -30,   -10,    23,    -1,   -30,    22,
@@ -1648,7 +1648,7 @@ namespace RoflanParser {
   const signed char
   Parser::yypgoto_[] =
   {
-     -30,   -30,    31,   -30,   -30,   -30,   -30,   -30,   -29,   -30,
+     -30,   -30,   -30,    32,   -30,   -30,   -30,   -30,   -29,   -30,
        3,   -30
   };
 
@@ -1675,7 +1675,7 @@ namespace RoflanParser {
       29,     5,    10,     6,     6,     8,     9,    17,     7,    19,
       13,    19,     5,     0,    18,    15,    17,    46,    19,    17,
       15,    19,     5,    15,    15,     7,    10,    16,    16,     5,
-       5,     5,     5,     5,     5,    12,    14,    16,     7,    -1,
+       5,     5,     5,     5,     5,    12,    14,    16,     6,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    43
   };
 
@@ -1683,7 +1683,7 @@ namespace RoflanParser {
   Parser::yystos_[] =
   {
        0,     6,     8,     9,    13,    21,    22,    23,    24,    25,
-      26,    27,     7,     6,     5,    18,    28,     5,     0,    22,
+      26,    27,     7,     6,     5,    18,    28,     5,     0,    23,
       15,    15,    15,    15,     5,     7,    10,    10,    19,    16,
       16,     5,     5,     5,     5,    28,     5,    29,    30,    17,
       12,    31,    17,    19,    14,    30,    16,    28,    17

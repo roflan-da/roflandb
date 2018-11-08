@@ -101,15 +101,15 @@
 start : statement_list {
             std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>($1);
             driver.SQLParseResult = result;
-            driver.SQLParseResult.get()->is_valid(true);
+            driver.SQLParseResult->is_valid(true);
         }
 
 statement_list : statement {
             $$ = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
-            $$.get()->emplace_back($1);
+            $$->emplace_back($1);
         }
     |   statement_list statement {
-            $1.get()->emplace_back($2);
+            $1->emplace_back($2);
             $$ = $1;
         }
 
@@ -129,7 +129,7 @@ statement : create_statement ';' {
 create_statement :
         CREATE TABLE STRING '(' column_def_list ')' {
             $$ = std::make_shared<cmd::CreateStatement>($3.c_str());
-            $$.get()->set_columns($5);
+            $$->set_columns($5);
         }
 
 show_statement :
@@ -143,30 +143,30 @@ select_statement :
         }
     |   SELECT cols_names_list FROM STRING {
             $$ = std::make_shared<cmd::SelectStatement>($4.c_str(), cmd::VARIABLE);
-            $$.get()->set_col_names($2);
+            $$->set_col_names($2);
         }
 
 insert_statement :
         INSERT STRING '(' cols_names_list ')' VALUES '(' cols_names_list ')' {
             $$ = std::make_shared<cmd::InsertStatement>($2.c_str());
-            $$.get()->set_columns_names($4);
-            $$.get()->set_columns_vals($8);
+            $$->set_columns_names($4);
+            $$->set_columns_vals($8);
         }
 
 cols_names_list :
         STRING {
             $$ = std::make_shared<std::vector<std::string>>();
-            $$.get()->emplace_back($1.c_str());
+            $$->emplace_back($1.c_str());
         }
     |   cols_names_list ',' STRING {
-            $1.get()->emplace_back($3.c_str());
+            $1->emplace_back($3.c_str());
             $$ = $1;
         }
 
 column_def_list:
         column_def {
             $$ = std::make_shared<std::vector<std::shared_ptr<st_e::Column>>>();
-            $$.get()->emplace_back($1);
+            $$->emplace_back($1);
         }
     |   column_def_list ',' column_def {
             $1->emplace_back($3);
