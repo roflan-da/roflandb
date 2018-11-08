@@ -39,6 +39,12 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
     switch (columnType){
         case INT:
             return "INT";
+        case STRING:
+            return "STRING";
+        case CHAR:
+            return "CHAR";
+        case TEXT:
+            return "TEXT";
         default:
             return "";
     }

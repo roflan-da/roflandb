@@ -1,18 +1,6 @@
 #include "catch.hpp"
 #include "table.h"
 
-TEST_CASE("EnumToString") {
-
-    SECTION("INT") {
-        REQUIRE(st_e::EnumToString(st_e::INT) == "INT");
-    }
-
-    SECTION("Other") {
-        REQUIRE(st_e::EnumToString(st_e::STRING) == "");
-    }
-
-
-}
 
 TEST_CASE("structColumn") {
 
@@ -40,40 +28,57 @@ TEST_CASE("Integer Table Cell") {
 
 }
 
-TEST_CASE("Table") {
+TEST_CASE("TableBuilder") {
 
-//    SECTION("getSQL_trivial") {
-//        st_e::TableBuilder tb("mems");
-//        tb.add_column(st_e::INT, "Test");
-//        st_e::Table t = tb.build();
-//        REQUIRE(t.get_sql() == "CREATE TABLE \'mems\' (\'Test\' INT);");
-//    }
-//
-//    SECTION("getSQL_2_st_e::INT") {
-//        st_e::TableBuilder tb("mems");
-//        tb.add_column(st_e::INT, "Test");
-//        tb.add_column(st_e::INT, "Test2");
-//        st_e::Table t = tb.build();
-//        REQUIRE(t.get_sql() == "CREATE TABLE \'mems\' (\'Test\' INT, \'Test2\' INT);");
-//    }
+    SECTION("trivial") {
+        st_e::TableBuilder tb("ababaca");
+        std::vector<std::shared_ptr<st_e::Column>> cols;
+        cols.emplace_back(std::make_shared<st_e::Column>(st_e::INT, "intcol"));
+        cols.emplace_back(std::make_shared<st_e::Column>(st_e::STRING, "strcol"));
+        tb.set_columns(cols);
+        auto table = tb.build();
+
+    }
 
 }
 
 TEST_CASE("Table") {
 
-//    SECTION("getSQL_trivial") {
-//        st_e::TableBuilder tb("mems");
-//        tb.add_column(st_e::INT, "Test");
-//        st_e::Table t = tb.build();
-//        REQUIRE(t.get_sql() == "CREATE TABLE \'mems\' (\'Test\' INT);");
-//    }
-//
-//    SECTION("getSQL_2_st_e::INT") {
-//        st_e::TableBuilder tb("mems");
-//        tb.add_column(st_e::INT, "Test");
-//        tb.add_column(st_e::INT, "Test2");
-//        st_e::Table t = tb.build();
-//        REQUIRE(t.get_sql() == "CREATE TABLE \'mems\' (\'Test\' INT, \'Test2\' INT);");
-//    }
+    st_e::TableBuilder tb("ababaca");
+    std::vector<std::shared_ptr<st_e::Column>> cols;
+    cols.emplace_back(std::make_shared<st_e::Column>(st_e::INT, "intcol"));
+    cols.emplace_back(std::make_shared<st_e::Column>(st_e::STRING, "strcol"));
+    tb.set_columns(cols);
+    auto table = tb.build();
 
+    SECTION("get_sql") {
+        REQUIRE(table->get_sql() == "CREATE TABLE \'ababaca\' (\'intcol\' INT, \'strcol\' STRING);");
+    }
+
+    SECTION("get_name") {
+        REQUIRE(table->get_name() == "ababaca");
+    }
+
+    SECTION("EnumToString") {
+        REQUIRE(table->EnumToString(st_e::INT) == "INT");
+        REQUIRE(table->EnumToString(st_e::STRING) == "STRING");
+        REQUIRE(table->EnumToString(st_e::CHAR) == "CHAR");
+        REQUIRE(table->EnumToString(st_e::TEXT) == "TEXT");
+    }
+
+    SECTION("create_cell") {
+
+    }
+
+    SECTION("insert") {
+
+    }
+
+    SECTION("save") {
+
+    }
+
+    SECTION("load") {
+
+    }
 }
