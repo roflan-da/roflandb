@@ -2,8 +2,6 @@
 #include <create_statement.h>
 
 
-
-
 std::string cmd::CreateStatement::get_table_name() const{
     return table_name_;
 }

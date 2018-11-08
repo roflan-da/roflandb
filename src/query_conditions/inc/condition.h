@@ -3,6 +3,7 @@
 #include <string>
 #include <variant>
 #include <utility>
+#include <memory>
 
 
 namespace cond{

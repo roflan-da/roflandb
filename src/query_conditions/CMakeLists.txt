@@ -1,5 +1,5 @@
 FILE(GLOB SRC "./*.cpp")
 
-add_library(commands SHARED ${SRC})
+add_library(query_conditions SHARED ${SRC})
 
-target_include_directories(commands PUBLIC inc)
+target_include_directories(query_conditions PUBLIC inc)

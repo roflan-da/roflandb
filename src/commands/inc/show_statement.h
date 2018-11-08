@@ -19,6 +19,7 @@ namespace cmd{
         ShowStatement();
 
         explicit ShowStatement(ShowType type);
+        explicit ShowStatement(ShowType type, std::string name);
 
         void execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) override;
 

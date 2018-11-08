@@ -17,4 +17,6 @@ std::string cmd::ShowStatement::get_name() {
     return name_;
 }
 
+cmd::ShowStatement::ShowStatement(cmd::ShowType type, std::string name) : type_(type), name_(name){}
+
 
