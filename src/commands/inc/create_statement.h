@@ -18,7 +18,7 @@ class CreateStatement : public SQLStatement{
 public:
     CreateStatement();
 
-    void execute(std::shared_ptr<st_e::IEngineStorage> engine_storage) override;
+    void execute(st_e::IEngineStorage& storage_engine) override;
 
     //table_name_ptr_->c_str() for convert ptr to string
     explicit CreateStatement(std::string table_name);
@@ -36,4 +36,4 @@ private:
     std::string table_name_;
     std::vector<std::shared_ptr<cmd::Column>> columns_;
 };
-} //namespace prs
+} //namespace cmd

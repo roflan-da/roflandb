@@ -56,7 +56,12 @@
 
 
 CREATE  { return token::CREATE; }
-TABLE  { return token::TABLE; }
+TABLE   { return token::TABLE; }
+
+SHOW    { return token::SHOW; }
+
+SELECT  { return token::SELECT; }
+FROM    { return token::FROM; }
 
 INT     { return token::INT_TYPE; }
 

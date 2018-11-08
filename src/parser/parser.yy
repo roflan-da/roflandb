@@ -16,7 +16,7 @@
 
 /* add debug output code to generated parser. disable this for release
  * versions. */
-%debug
+/*%debug*/
 
 /* start symbol is named "start" */
 %start start
@@ -62,6 +62,8 @@
 %token CREATE
 %token TABLE
 %token SHOW
+%token SELECT
+%token FROM
 %token DROP
 %token INT_TYPE
 
@@ -69,10 +71,13 @@
 %type <std::shared_ptr<cmd::SQLStatement>>                                  statement
 
 %type <std::shared_ptr<cmd::CreateStatement>>                               create_statement
-%type <st_e::ColumnType>                                                          column_type
+%type <std::shared_ptr<cmd::ShowStatement>>                                 show_statement
+%type <std::shared_ptr<cmd::SelectStatement>>                               select_statement
+
+%type <st_e::ColumnType>                                                    column_type
 %type <std::shared_ptr<cmd::Column>>                                        column_def
 %type <std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>>>          column_def_list
-
+%type <std::shared_ptr<std::vector<std::string>>>                           cols_names_list
 
  /*** END TOKENS ***/
 
@@ -93,15 +98,25 @@
 start : statement_list{
             std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>($1);
             driver.SQLParseResult = result;
-            driver.SQLParseResult.get()->isValid(true);
+            driver.SQLParseResult.get()->is_valid(true);
         }
 
 statement_list : statement {
             $$ = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
             $$.get()->emplace_back($1);
         }
+    |   statement_list ',' statement{
+            $1.get()->emplace_back($3);
+            $$ = $1;
+        }
 
 statement : create_statement{
+            $$ = $1;
+        }
+    |   show_statement{
+            $$ = $1;
+        }
+    |   select_statement{
             $$ = $1;
         }
 
@@ -110,6 +125,31 @@ create_statement :
             $$ = std::make_shared<cmd::CreateStatement>($3.c_str());
             $$.get()->set_columns($5);
         }
+
+show_statement :
+        SHOW CREATE TABLE STRING';' {
+            $$ = std::make_shared<cmd::ShowStatement>(cmd::TABLE, $4.c_str());
+        }
+
+select_statement :
+        SELECT '*' FROM STRING';' {
+            $$ = std::make_shared<cmd::SelectStatement>($4.c_str());
+        }
+    |   SELECT cols_names_list FROM STRING';' {
+            $$ = std::make_shared<cmd::SelectStatement>($4.c_str(), cmd::VARIABLE);
+            $$.get()->set_col_names($2);
+        }
+
+cols_names_list :
+        STRING {
+            $$ = std::make_shared<std::vector<std::string>>();
+            $$.get()->emplace_back($1.c_str());
+        }
+    |   cols_names_list ',' STRING{
+            $1.get()->emplace_back($3.c_str());
+            $$ = $1;
+        }
+
 
 column_def_list:
         column_def{

@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include <table.h>
+#include "table.h"
 
 
 TEST_CASE("IntegerColumn") {
