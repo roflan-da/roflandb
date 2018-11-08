@@ -19,13 +19,12 @@ void cmd::CreateStatement::add_column(std::shared_ptr<st_e::Column> column) {
 }
 
 void cmd::CreateStatement::execute(st_e::IEngineStorage& storage_engine) {
-//    st_e::TableBuilder table_builder(this->get_table_name());
-//    auto cols = this->get_columns();
-//    for (const auto& col : cols) {
-//        table_builder.add_column(col->type, col->name);
-//    }
-//    auto table = table_builder.build();
-//    table.Save();
+    st_e::TableBuilder table_builder(this->get_table_name());
+    auto cols = this->get_columns();
+    table_builder.set_columns(columns_);
+    auto table = table_builder.build();
+    storage_engine.add_table(table);
+    storage_engine.save();
 }
 
 std::vector<std::shared_ptr<st_e::Column>> cmd::CreateStatement::get_columns() const {

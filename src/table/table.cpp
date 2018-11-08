@@ -18,7 +18,7 @@ std::string Table::get_sql() {
         if (i > 0){
             answer += ", ";
         }
-        answer += "\'" + columns_[i].name + "\' " + ENUM_TO_STR(columns_[i].first);
+        answer += "\'" + columns_[i]->name + "\' " + ENUM_TO_STR(columns_[i]->type);
     }
     answer += ");";
     return answer;
@@ -28,7 +28,7 @@ std::string Table::Save() {
     std::string table_string;
     table_string = name_ + " " + std::to_string(columns_.size()) + " ";
     for (int i = 0; i < (int) columns_.size(); i++){
-        table_string += std::to_string(columns_[i].type) + " " + columns_[i].name + " ";
+        table_string += std::to_string(columns_[i]->type) + " " + columns_[i]->name + " ";
     }
     return table_string;
 }
