@@ -1,4 +1,4 @@
-// A Bison parser, made by GNU Bison 3.1.
+// A Bison parser, made by GNU Bison 3.0.5.
 
 // Skeleton implementation for Bison LALR(1) parsers in C++
 
@@ -34,28 +34,14 @@
 #define yylex   RoflanParserlex
 
 // First part of user declarations.
-#line 1 "parser.yy" // lalr1.cc:407
+#line 1 "parser.yy" // lalr1.cc:406
  /*** C/C++ Declarations ***/
 
 #include <stdio.h>
 #include <string>
 #include <vector>
 
-
-#line 46 "parser.cc" // lalr1.cc:407
-
-# ifndef YY_NULLPTR
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULLPTR nullptr
-#  else
-#   define YY_NULLPTR 0
-#  endif
-# endif
-
-#include "parser.h"
-
-// User implementation prologue.
-#line 75 "parser.yy" // lalr1.cc:415
+#line 84 "parser.yy" // lalr1.cc:406
 
 
 #include "driver.h"
@@ -68,7 +54,21 @@
 #define yylex driver.lexer->lex
 
 
-#line 72 "parser.cc" // lalr1.cc:415
+#line 58 "parser.cc" // lalr1.cc:406
+
+# ifndef YY_NULLPTR
+#  if defined __cplusplus && 201103L <= __cplusplus
+#   define YY_NULLPTR nullptr
+#  else
+#   define YY_NULLPTR 0
+#  endif
+# endif
+
+#include "parser.h"
+
+// User implementation prologue.
+
+#line 72 "parser.cc" // lalr1.cc:414
 
 
 #ifndef YY_
@@ -80,15 +80,6 @@
 # endif
 # ifndef YY_
 #  define YY_(msgid) msgid
-# endif
-#endif
-
-// Whether we are compiled with exception support.
-#ifndef YY_EXCEPTIONS
-# if defined __GNUC__ && !defined __EXCEPTIONS
-#  define YY_EXCEPTIONS 0
-# else
-#  define YY_EXCEPTIONS 1
 # endif
 #endif
 
@@ -128,7 +119,7 @@
     {                                           \
       *yycdebug_ << Title << ' ';               \
       yy_print_ (*yycdebug_, Symbol);           \
-      *yycdebug_ << '\n';                       \
+      *yycdebug_ << std::endl;                  \
     }                                           \
   } while (false)
 
@@ -163,7 +154,7 @@
 
 
 namespace RoflanParser {
-#line 167 "parser.cc" // lalr1.cc:491
+#line 158 "parser.cc" // lalr1.cc:481
 
   /* Return YYSTR after stripping away unnecessary quotes and
      backslashes, so that it's suitable for yyerror.  The heuristic is
@@ -230,32 +221,211 @@ namespace RoflanParser {
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol ()
     : value ()
-    , location ()
   {}
 
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (const basic_symbol& other)
     : Base (other)
-    , value (other.value)
+    , value ()
     , location (other.location)
   {
+    switch (other.type_get ())
+    {
+      case 4: // "integer"
+        value.copy< int > (other.value);
+        break;
+
+      case 28: // column_type
+        value.copy< st_e::ColumnType > (other.value);
+        break;
+
+      case 27: // column_def
+        value.copy< std::shared_ptr<cmd::Column> > (other.value);
+        break;
+
+      case 22: // create_statement
+        value.copy< std::shared_ptr<cmd::CreateStatement> > (other.value);
+        break;
+
+      case 21: // statement
+        value.copy< std::shared_ptr<cmd::SQLStatement> > (other.value);
+        break;
+
+      case 24: // select_statement
+        value.copy< std::shared_ptr<cmd::SelectStatement> > (other.value);
+        break;
+
+      case 23: // show_statement
+        value.copy< std::shared_ptr<cmd::ShowStatement> > (other.value);
+        break;
+
+      case 26: // column_def_list
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > (other.value);
+        break;
+
+      case 20: // statement_list
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (other.value);
+        break;
+
+      case 25: // cols_names_list
+        value.copy< std::shared_ptr<std::vector<std::string>> > (other.value);
+        break;
+
+      case 5: // "string"
+        value.copy< std::string > (other.value);
+        break;
+
+      default:
+        break;
+    }
+
   }
 
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const semantic_type& v, const location_type& l)
     : Base (t)
-    , value (v)
+    , value ()
     , location (l)
-  {}
+  {
+    (void) v;
+    switch (this->type_get ())
+    {
+      case 4: // "integer"
+        value.copy< int > (v);
+        break;
+
+      case 28: // column_type
+        value.copy< st_e::ColumnType > (v);
+        break;
+
+      case 27: // column_def
+        value.copy< std::shared_ptr<cmd::Column> > (v);
+        break;
+
+      case 22: // create_statement
+        value.copy< std::shared_ptr<cmd::CreateStatement> > (v);
+        break;
+
+      case 21: // statement
+        value.copy< std::shared_ptr<cmd::SQLStatement> > (v);
+        break;
+
+      case 24: // select_statement
+        value.copy< std::shared_ptr<cmd::SelectStatement> > (v);
+        break;
+
+      case 23: // show_statement
+        value.copy< std::shared_ptr<cmd::ShowStatement> > (v);
+        break;
+
+      case 26: // column_def_list
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > (v);
+        break;
+
+      case 20: // statement_list
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (v);
+        break;
+
+      case 25: // cols_names_list
+        value.copy< std::shared_ptr<std::vector<std::string>> > (v);
+        break;
+
+      case 5: // "string"
+        value.copy< std::string > (v);
+        break;
+
+      default:
+        break;
+    }
+}
 
 
-  /// Constructor for valueless symbols.
+  // Implementation of basic_symbol constructor for each type.
+
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const location_type& l)
     : Base (t)
     , value ()
     , location (l)
   {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const int v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const st_e::ColumnType v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::Column> v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::CreateStatement> v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SQLStatement> v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SelectStatement> v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::ShowStatement> v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::string>> v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
 
   template <typename Base>
   Parser::basic_symbol<Base>::~basic_symbol ()
@@ -267,6 +437,67 @@ namespace RoflanParser {
   void
   Parser::basic_symbol<Base>::clear ()
   {
+    // User destructor.
+    symbol_number_type yytype = this->type_get ();
+    basic_symbol<Base>& yysym = *this;
+    (void) yysym;
+    switch (yytype)
+    {
+   default:
+      break;
+    }
+
+    // Type destructor.
+  switch (yytype)
+    {
+      case 4: // "integer"
+        value.template destroy< int > ();
+        break;
+
+      case 28: // column_type
+        value.template destroy< st_e::ColumnType > ();
+        break;
+
+      case 27: // column_def
+        value.template destroy< std::shared_ptr<cmd::Column> > ();
+        break;
+
+      case 22: // create_statement
+        value.template destroy< std::shared_ptr<cmd::CreateStatement> > ();
+        break;
+
+      case 21: // statement
+        value.template destroy< std::shared_ptr<cmd::SQLStatement> > ();
+        break;
+
+      case 24: // select_statement
+        value.template destroy< std::shared_ptr<cmd::SelectStatement> > ();
+        break;
+
+      case 23: // show_statement
+        value.template destroy< std::shared_ptr<cmd::ShowStatement> > ();
+        break;
+
+      case 26: // column_def_list
+        value.template destroy< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > ();
+        break;
+
+      case 20: // statement_list
+        value.template destroy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ();
+        break;
+
+      case 25: // cols_names_list
+        value.template destroy< std::shared_ptr<std::vector<std::string>> > ();
+        break;
+
+      case 5: // "string"
+        value.template destroy< std::string > ();
+        break;
+
+      default:
+        break;
+    }
+
     Base::clear ();
   }
 
@@ -282,7 +513,56 @@ namespace RoflanParser {
   Parser::basic_symbol<Base>::move (basic_symbol& s)
   {
     super_type::move (s);
-    value = s.value;
+    switch (this->type_get ())
+    {
+      case 4: // "integer"
+        value.move< int > (s.value);
+        break;
+
+      case 28: // column_type
+        value.move< st_e::ColumnType > (s.value);
+        break;
+
+      case 27: // column_def
+        value.move< std::shared_ptr<cmd::Column> > (s.value);
+        break;
+
+      case 22: // create_statement
+        value.move< std::shared_ptr<cmd::CreateStatement> > (s.value);
+        break;
+
+      case 21: // statement
+        value.move< std::shared_ptr<cmd::SQLStatement> > (s.value);
+        break;
+
+      case 24: // select_statement
+        value.move< std::shared_ptr<cmd::SelectStatement> > (s.value);
+        break;
+
+      case 23: // show_statement
+        value.move< std::shared_ptr<cmd::ShowStatement> > (s.value);
+        break;
+
+      case 26: // column_def_list
+        value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > (s.value);
+        break;
+
+      case 20: // statement_list
+        value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (s.value);
+        break;
+
+      case 25: // cols_names_list
+        value.move< std::shared_ptr<std::vector<std::string>> > (s.value);
+        break;
+
+      case 5: // "string"
+        value.move< std::string > (s.value);
+        break;
+
+      default:
+        break;
+    }
+
     location = s.location;
   }
 
@@ -317,6 +597,73 @@ namespace RoflanParser {
   {
     return type;
   }
+  // Implementation of make_symbol for each symbol type.
+  Parser::symbol_type
+  Parser::make_END (const location_type& l)
+  {
+    return symbol_type (token::END, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_EOL (const location_type& l)
+  {
+    return symbol_type (token::EOL, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_INTEGER (const int& v, const location_type& l)
+  {
+    return symbol_type (token::INTEGER, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_STRING (const std::string& v, const location_type& l)
+  {
+    return symbol_type (token::STRING, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_CREATE (const location_type& l)
+  {
+    return symbol_type (token::CREATE, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_TABLE (const location_type& l)
+  {
+    return symbol_type (token::TABLE, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_SHOW (const location_type& l)
+  {
+    return symbol_type (token::SHOW, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_SELECT (const location_type& l)
+  {
+    return symbol_type (token::SELECT, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_FROM (const location_type& l)
+  {
+    return symbol_type (token::FROM, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_DROP (const location_type& l)
+  {
+    return symbol_type (token::DROP, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_INT_TYPE (const location_type& l)
+  {
+    return symbol_type (token::INT_TYPE, l);
+  }
+
 
 
   // by_state.
@@ -360,12 +707,111 @@ namespace RoflanParser {
   Parser::stack_symbol_type::stack_symbol_type (const stack_symbol_type& that)
     : super_type (that.state, that.location)
   {
-    value = that.value;
+    switch (that.type_get ())
+    {
+      case 4: // "integer"
+        value.copy< int > (that.value);
+        break;
+
+      case 28: // column_type
+        value.copy< st_e::ColumnType > (that.value);
+        break;
+
+      case 27: // column_def
+        value.copy< std::shared_ptr<cmd::Column> > (that.value);
+        break;
+
+      case 22: // create_statement
+        value.copy< std::shared_ptr<cmd::CreateStatement> > (that.value);
+        break;
+
+      case 21: // statement
+        value.copy< std::shared_ptr<cmd::SQLStatement> > (that.value);
+        break;
+
+      case 24: // select_statement
+        value.copy< std::shared_ptr<cmd::SelectStatement> > (that.value);
+        break;
+
+      case 23: // show_statement
+        value.copy< std::shared_ptr<cmd::ShowStatement> > (that.value);
+        break;
+
+      case 26: // column_def_list
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > (that.value);
+        break;
+
+      case 20: // statement_list
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (that.value);
+        break;
+
+      case 25: // cols_names_list
+        value.copy< std::shared_ptr<std::vector<std::string>> > (that.value);
+        break;
+
+      case 5: // "string"
+        value.copy< std::string > (that.value);
+        break;
+
+      default:
+        break;
+    }
+
   }
 
   Parser::stack_symbol_type::stack_symbol_type (state_type s, symbol_type& that)
-    : super_type (s, that.value, that.location)
+    : super_type (s, that.location)
   {
+    switch (that.type_get ())
+    {
+      case 4: // "integer"
+        value.move< int > (that.value);
+        break;
+
+      case 28: // column_type
+        value.move< st_e::ColumnType > (that.value);
+        break;
+
+      case 27: // column_def
+        value.move< std::shared_ptr<cmd::Column> > (that.value);
+        break;
+
+      case 22: // create_statement
+        value.move< std::shared_ptr<cmd::CreateStatement> > (that.value);
+        break;
+
+      case 21: // statement
+        value.move< std::shared_ptr<cmd::SQLStatement> > (that.value);
+        break;
+
+      case 24: // select_statement
+        value.move< std::shared_ptr<cmd::SelectStatement> > (that.value);
+        break;
+
+      case 23: // show_statement
+        value.move< std::shared_ptr<cmd::ShowStatement> > (that.value);
+        break;
+
+      case 26: // column_def_list
+        value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > (that.value);
+        break;
+
+      case 20: // statement_list
+        value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (that.value);
+        break;
+
+      case 25: // cols_names_list
+        value.move< std::shared_ptr<std::vector<std::string>> > (that.value);
+        break;
+
+      case 5: // "string"
+        value.move< std::string > (that.value);
+        break;
+
+      default:
+        break;
+    }
+
     // that is emptied.
     that.type = empty_symbol;
   }
@@ -374,7 +820,56 @@ namespace RoflanParser {
   Parser::stack_symbol_type::operator= (const stack_symbol_type& that)
   {
     state = that.state;
-    value = that.value;
+    switch (that.type_get ())
+    {
+      case 4: // "integer"
+        value.copy< int > (that.value);
+        break;
+
+      case 28: // column_type
+        value.copy< st_e::ColumnType > (that.value);
+        break;
+
+      case 27: // column_def
+        value.copy< std::shared_ptr<cmd::Column> > (that.value);
+        break;
+
+      case 22: // create_statement
+        value.copy< std::shared_ptr<cmd::CreateStatement> > (that.value);
+        break;
+
+      case 21: // statement
+        value.copy< std::shared_ptr<cmd::SQLStatement> > (that.value);
+        break;
+
+      case 24: // select_statement
+        value.copy< std::shared_ptr<cmd::SelectStatement> > (that.value);
+        break;
+
+      case 23: // show_statement
+        value.copy< std::shared_ptr<cmd::ShowStatement> > (that.value);
+        break;
+
+      case 26: // column_def_list
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > (that.value);
+        break;
+
+      case 20: // statement_list
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (that.value);
+        break;
+
+      case 25: // cols_names_list
+        value.copy< std::shared_ptr<std::vector<std::string>> > (that.value);
+        break;
+
+      case 5: // "string"
+        value.copy< std::string > (that.value);
+        break;
+
+      default:
+        break;
+    }
+
     location = that.location;
     return *this;
   }
@@ -386,21 +881,6 @@ namespace RoflanParser {
   {
     if (yymsg)
       YY_SYMBOL_PRINT (yymsg, yysym);
-
-    // User destructor.
-    switch (yysym.type_get ())
-    {
-            case 6: // "string"
-
-#line 71 "parser.yy" // lalr1.cc:622
-        { delete (yysym.value.stringVal); }
-#line 398 "parser.cc" // lalr1.cc:622
-        break;
-
-
-      default:
-        break;
-    }
   }
 
 #if ROFLANPARSERDEBUG
@@ -515,21 +995,21 @@ namespace RoflanParser {
     /// The return value of parse ().
     int yyresult;
 
-#if YY_EXCEPTIONS
+    // FIXME: This shoud be completely indented.  It is not yet to
+    // avoid gratuitous conflicts when merging into the master branch.
     try
-#endif // YY_EXCEPTIONS
       {
-    YYCDEBUG << "Starting parse\n";
+    YYCDEBUG << "Starting parse" << std::endl;
 
 
     // User initialization code.
-    #line 37 "parser.yy" // lalr1.cc:746
+    #line 41 "parser.yy" // lalr1.cc:737
 {
     // initialize the initial location object
     yyla.location.begin.filename = yyla.location.end.filename = &driver.streamname;
 }
 
-#line 533 "parser.cc" // lalr1.cc:746
+#line 1013 "parser.cc" // lalr1.cc:737
 
     /* Initialize the stack.  The initial state will be set in
        yynewstate, since the latter expects the semantical and the
@@ -540,7 +1020,7 @@ namespace RoflanParser {
 
     // A new symbol was pushed on the stack.
   yynewstate:
-    YYCDEBUG << "Entering state " << yystack_[0].state << '\n';
+    YYCDEBUG << "Entering state " << yystack_[0].state << std::endl;
 
     // Accept?
     if (yystack_[0].state == yyfinal_)
@@ -550,6 +1030,7 @@ namespace RoflanParser {
 
     // Backup.
   yybackup:
+
     // Try to take a decision without lookahead.
     yyn = yypact_[yystack_[0].state];
     if (yy_pact_value_is_default_ (yyn))
@@ -559,19 +1040,15 @@ namespace RoflanParser {
     if (yyla.empty ())
       {
         YYCDEBUG << "Reading a token: ";
-#if YY_EXCEPTIONS
         try
-#endif // YY_EXCEPTIONS
           {
             yyla.type = yytranslate_ (yylex (&yyla.value, &yyla.location));
           }
-#if YY_EXCEPTIONS
         catch (const syntax_error& yyexc)
           {
             error (yyexc);
             goto yyerrlab1;
           }
-#endif // YY_EXCEPTIONS
       }
     YY_SYMBOL_PRINT ("Next token is", yyla);
 
@@ -616,16 +1093,59 @@ namespace RoflanParser {
     {
       stack_symbol_type yylhs;
       yylhs.state = yy_lr_goto_state_ (yystack_[yylen].state, yyr1_[yyn]);
-      /* If YYLEN is nonzero, implement the default value of the
-         action: '$$ = $1'.  Otherwise, use the top of the stack.
+      /* Variants are always initialized to an empty instance of the
+         correct type. The default '$$ = $1' action is NOT applied
+         when using variants.  */
+      switch (yyr1_[yyn])
+    {
+      case 4: // "integer"
+        yylhs.value.build< int > ();
+        break;
 
-         Otherwise, the following line sets YYLHS.VALUE to garbage.
-         This behavior is undocumented and Bison users should not rely
-         upon it.  */
-      if (yylen)
-        yylhs.value = yystack_[yylen - 1].value;
-      else
-        yylhs.value = yystack_[0].value;
+      case 28: // column_type
+        yylhs.value.build< st_e::ColumnType > ();
+        break;
+
+      case 27: // column_def
+        yylhs.value.build< std::shared_ptr<cmd::Column> > ();
+        break;
+
+      case 22: // create_statement
+        yylhs.value.build< std::shared_ptr<cmd::CreateStatement> > ();
+        break;
+
+      case 21: // statement
+        yylhs.value.build< std::shared_ptr<cmd::SQLStatement> > ();
+        break;
+
+      case 24: // select_statement
+        yylhs.value.build< std::shared_ptr<cmd::SelectStatement> > ();
+        break;
+
+      case 23: // show_statement
+        yylhs.value.build< std::shared_ptr<cmd::ShowStatement> > ();
+        break;
+
+      case 26: // column_def_list
+        yylhs.value.build< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > ();
+        break;
+
+      case 20: // statement_list
+        yylhs.value.build< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ();
+        break;
+
+      case 25: // cols_names_list
+        yylhs.value.build< std::shared_ptr<std::vector<std::string>> > ();
+        break;
+
+      case 5: // "string"
+        yylhs.value.build< std::string > ();
+        break;
+
+      default:
+        break;
+    }
+
 
       // Default location.
       {
@@ -636,39 +1156,157 @@ namespace RoflanParser {
 
       // Perform the reduction.
       YY_REDUCE_PRINT (yyn);
-#if YY_EXCEPTIONS
       try
-#endif // YY_EXCEPTIONS
         {
           switch (yyn)
             {
+  case 2:
+#line 98 "parser.yy" // lalr1.cc:856
+    {
+            std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>(yystack_[0].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ());
+            driver.SQLParseResult = result;
+            driver.SQLParseResult.get()->is_valid(true);
+        }
+#line 1171 "parser.cc" // lalr1.cc:856
+    break;
+
   case 3:
-#line 92 "parser.yy" // lalr1.cc:870
-    {}
-#line 649 "parser.cc" // lalr1.cc:870
+#line 104 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > () = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ().get()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SQLStatement> > ());
+        }
+#line 1180 "parser.cc" // lalr1.cc:856
     break;
 
   case 4:
-#line 95 "parser.yy" // lalr1.cc:870
+#line 108 "parser.yy" // lalr1.cc:856
     {
-                driver.result = "really wanna crate table " + *(yystack_[0].value.stringVal) + "?";
-            }
-#line 657 "parser.cc" // lalr1.cc:870
+            yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ().get()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SQLStatement> > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > () = yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ();
+        }
+#line 1189 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 5:
+#line 113 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[0].value.as< std::shared_ptr<cmd::CreateStatement> > ();
+        }
+#line 1197 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 6:
+#line 116 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[0].value.as< std::shared_ptr<cmd::ShowStatement> > ();
+        }
+#line 1205 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 7:
+#line 119 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[0].value.as< std::shared_ptr<cmd::SelectStatement> > ();
+        }
+#line 1213 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 8:
+#line 124 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<cmd::CreateStatement> > () = std::make_shared<cmd::CreateStatement>(yystack_[4].value.as< std::string > ().c_str());
+            yylhs.value.as< std::shared_ptr<cmd::CreateStatement> > ().get()->set_columns(yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > ());
+        }
+#line 1222 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 9:
+#line 130 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<cmd::ShowStatement> > () = std::make_shared<cmd::ShowStatement>(cmd::TABLE, yystack_[1].value.as< std::string > ().c_str());
+        }
+#line 1230 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 10:
+#line 135 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > () = std::make_shared<cmd::SelectStatement>(yystack_[1].value.as< std::string > ().c_str());
+        }
+#line 1238 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 11:
+#line 138 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > () = std::make_shared<cmd::SelectStatement>(yystack_[1].value.as< std::string > ().c_str(), cmd::VARIABLE);
+            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > ().get()->set_col_names(yystack_[3].value.as< std::shared_ptr<std::vector<std::string>> > ());
+        }
+#line 1247 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 12:
+#line 144 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = std::make_shared<std::vector<std::string>>();
+            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > ().get()->emplace_back(yystack_[0].value.as< std::string > ().c_str());
+        }
+#line 1256 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 13:
+#line 148 "parser.yy" // lalr1.cc:856
+    {
+            yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ().get()->emplace_back(yystack_[0].value.as< std::string > ().c_str());
+            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ();
+        }
+#line 1265 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 14:
+#line 155 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > () = std::make_shared<std::vector<std::shared_ptr<cmd::Column>>>();
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > ().get()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::Column> > ());
+        }
+#line 1274 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 15:
+#line 159 "parser.yy" // lalr1.cc:856
+    {
+            yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::Column> > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > () = yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> > ();
+        }
+#line 1283 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 16:
+#line 165 "parser.yy" // lalr1.cc:856
+    {
+		    yylhs.value.as< std::shared_ptr<cmd::Column> > () = std::make_shared<cmd::Column>(yystack_[0].value.as< st_e::ColumnType > (), yystack_[1].value.as< std::string > ().c_str());
+		}
+#line 1291 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 17:
+#line 171 "parser.yy" // lalr1.cc:856
+    { yylhs.value.as< st_e::ColumnType > () = st_e::ColumnType::INT; }
+#line 1297 "parser.cc" // lalr1.cc:856
     break;
 
 
-#line 661 "parser.cc" // lalr1.cc:870
+#line 1301 "parser.cc" // lalr1.cc:856
             default:
               break;
             }
         }
-#if YY_EXCEPTIONS
       catch (const syntax_error& yyexc)
         {
           error (yyexc);
           YYERROR;
         }
-#endif // YY_EXCEPTIONS
       YY_SYMBOL_PRINT ("-> $$ =", yylhs);
       yypop_ (yylen);
       yylen = 0;
@@ -792,12 +1430,12 @@ namespace RoflanParser {
 
     return yyresult;
   }
-#if YY_EXCEPTIONS
     catch (...)
       {
-        YYCDEBUG << "Exception caught: cleaning lookahead and stack\n";
+        YYCDEBUG << "Exception caught: cleaning lookahead and stack"
+                 << std::endl;
         // Do not try to display the values of the reclaimed symbols,
-        // as their printers might throw an exception.
+        // as their printer might throw an exception.
         if (!yyla.empty ())
           yy_destroy_ (YY_NULLPTR, yyla);
 
@@ -808,7 +1446,6 @@ namespace RoflanParser {
           }
         throw;
       }
-#endif // YY_EXCEPTIONS
   }
 
   void
@@ -915,62 +1552,81 @@ namespace RoflanParser {
   }
 
 
-  const signed char Parser::yypact_ninf_ = -7;
+  const signed char Parser::yypact_ninf_ = -14;
 
   const signed char Parser::yytable_ninf_ = -1;
 
   const signed char
   Parser::yypact_[] =
   {
-      -6,    -7,    -5,     2,    -7,    -2,    -7,    -7
+      -4,     1,     4,    -5,    11,   -12,   -14,   -14,   -14,   -14,
+       8,     7,   -14,     5,    -7,   -14,    -4,     2,    12,    13,
+      14,    15,   -14,    16,     6,     9,    10,   -14,    17,    -6,
+     -14,   -14,   -14,   -14,   -14,   -14,    16,    18,   -14,   -14
   };
 
   const unsigned char
   Parser::yydefact_[] =
   {
-       0,     3,     0,     0,     2,     0,     1,     4
+       0,     0,     0,     0,     0,     2,     3,     5,     6,     7,
+       0,     0,    12,     0,     0,     1,     0,     0,     0,     0,
+       0,     0,     4,     0,     0,     0,     0,    13,     0,     0,
+      14,     9,    10,    11,    17,    16,     0,     0,    15,     8
   };
 
   const signed char
   Parser::yypgoto_[] =
   {
-      -7,    -7,    -7
+     -14,   -14,   -14,    19,   -14,   -14,   -14,   -14,   -14,   -13,
+     -14
   };
 
   const signed char
   Parser::yydefgoto_[] =
   {
-      -1,     3,     4
+      -1,     4,     5,     6,     7,     8,     9,    14,    29,    30,
+      35
   };
 
   const unsigned char
   Parser::yytable_[] =
   {
-       1,     2,     6,     5,     7
+      12,    16,     1,    20,     2,     3,    21,    36,    10,    37,
+      11,    15,    13,    17,    18,    19,    23,    24,    25,    26,
+      27,    28,    31,    38,     0,    32,    33,     0,     0,    34,
+       0,     0,     0,     0,    39,    22
   };
 
-  const unsigned char
+  const signed char
   Parser::yycheck_[] =
   {
-       6,     7,     0,     8,     6
+       5,    13,     6,    10,     8,     9,    13,    13,     7,    15,
+       6,     0,    17,     5,     7,    10,    14,     5,     5,     5,
+       5,     5,    16,    36,    -1,    16,    16,    -1,    -1,    12,
+      -1,    -1,    -1,    -1,    16,    16
   };
 
   const unsigned char
   Parser::yystos_[] =
   {
-       0,     6,     7,    10,    11,     8,     0,     6
+       0,     6,     8,     9,    19,    20,    21,    22,    23,    24,
+       7,     6,     5,    17,    25,     0,    13,     5,     7,    10,
+      10,    13,    21,    14,     5,     5,     5,     5,     5,    26,
+      27,    16,    16,    16,    12,    28,    13,    15,    27,    16
   };
 
   const unsigned char
   Parser::yyr1_[] =
   {
-       0,     9,    10,    10,    11
+       0,    18,    19,    20,    20,    21,    21,    21,    22,    23,
+      24,    24,    25,    25,    26,    26,    27,    28
   };
 
   const unsigned char
   Parser::yyr2_[] =
   {
-       0,     2,     1,     1,     3
+       0,     2,     1,     1,     3,     1,     1,     1,     7,     5,
+       5,     5,     1,     3,     1,     3,     2,     1
   };
 
 
@@ -981,15 +1637,19 @@ namespace RoflanParser {
   const Parser::yytname_[] =
   {
   "\"end of file\"", "error", "$undefined", "\"end of line\"",
-  "\"integer\"", "\"double\"", "\"string\"", "CREATE", "TABLE", "$accept",
-  "start", "create_table", YY_NULLPTR
+  "\"integer\"", "\"string\"", "CREATE", "TABLE", "SHOW", "SELECT", "FROM",
+  "DROP", "INT_TYPE", "','", "'('", "')'", "';'", "'*'", "$accept",
+  "start", "statement_list", "statement", "create_statement",
+  "show_statement", "select_statement", "cols_names_list",
+  "column_def_list", "column_def", "column_type", YY_NULLPTR
   };
 
 #if ROFLANPARSERDEBUG
   const unsigned char
   Parser::yyrline_[] =
   {
-       0,    90,    90,    91,    94
+       0,    98,    98,   104,   108,   113,   116,   119,   124,   130,
+     135,   138,   144,   148,   155,   159,   165,   171
   };
 
   // Print the state stack on the debug stream.
@@ -1002,7 +1662,7 @@ namespace RoflanParser {
            i_end = yystack_.end ();
          i != i_end; ++i)
       *yycdebug_ << ' ' << i->state;
-    *yycdebug_ << '\n';
+    *yycdebug_ << std::endl;
   }
 
   // Report on the debug stream that the rule \a yyrule is going to be reduced.
@@ -1013,7 +1673,7 @@ namespace RoflanParser {
     int yynrhs = yyr2_[yyrule];
     // Print the symbols being reduced, and their result.
     *yycdebug_ << "Reducing stack by rule " << yyrule - 1
-               << " (line " << yylno << "):\n";
+               << " (line " << yylno << "):" << std::endl;
     // The symbols being reduced.
     for (int yyi = 0; yyi < yynrhs; yyi++)
       YY_SYMBOL_PRINT ("   $" << yyi + 1 << " =",
@@ -1033,8 +1693,8 @@ namespace RoflanParser {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      14,    15,    17,     2,    13,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    16,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1055,9 +1715,9 @@ namespace RoflanParser {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8
+       5,     6,     7,     8,     9,    10,    11,    12
     };
-    const unsigned user_token_number_max_ = 263;
+    const unsigned user_token_number_max_ = 267;
     const token_number_type undef_token_ = 2;
 
     if (static_cast<int> (t) <= yyeof_)
@@ -1070,8 +1730,8 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 1074 "parser.cc" // lalr1.cc:1181
-#line 99 "parser.yy" // lalr1.cc:1182
+#line 1734 "parser.cc" // lalr1.cc:1164
+#line 174 "parser.yy" // lalr1.cc:1165
  /*** Additional Code ***/
 
 void RoflanParser::Parser::error(const Parser::location_type& l,

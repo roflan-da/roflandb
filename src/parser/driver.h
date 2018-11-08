@@ -1,11 +1,10 @@
 #pragma once
+#include <fstream>
+#include <sstream>
+#include "command.h"
+#include "statements.h"
+#include "scanner.h"
 
-
-// forward declaration
-//class CalcContext;
-
-/** The example namespace is used to encapsulate the three parser classes
- * example::Parser, example::Scanner and example::Driver */
 namespace RoflanParser {
 
 /** The Driver class brings together all components. It creates an instance of
@@ -27,6 +26,9 @@ public:
 
     /// enable debug output in the bison parser
     bool trace_parsing;
+
+    //shared_ptr to Parser result object
+    std::shared_ptr<cmd::Command> SQLParseResult;
 
     /// stream name (file or input stream) used for error messages.
     std::string streamname;
@@ -68,11 +70,7 @@ public:
 
     /** Pointer to the current lexer instance, this is used to connect the
      * parser to the scanner. It is used in the yylex macro. */
-    class Scanner* lexer;
-
-    /** Reference to the calculator context filled during parsing of the
-     * expressions. */
-//    class CalcContext& calc;
+    std::unique_ptr<Scanner> lexer;
 };
 
 } // namespace RoflanParser

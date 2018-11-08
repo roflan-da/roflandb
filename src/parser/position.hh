@@ -1,4 +1,4 @@
-// A Bison parser, made by GNU Bison 3.1.
+// A Bison parser, made by GNU Bison 3.0.5.
 
 // Positions for Bison parsers in C++
 
@@ -52,7 +52,7 @@
 
 
 namespace RoflanParser {
-#line 56 "position.hh" // location.cc:290
+#line 56 "position.hh" // location.cc:292
   /// Abstract a position.
   class position
   {
@@ -104,10 +104,12 @@ namespace RoflanParser {
     unsigned column;
 
   private:
-    /// Compute max(min, lhs+rhs).
-    static unsigned add_ (unsigned lhs, int rhs, int min)
+    /// Compute max(min, lhs+rhs) (provided min <= lhs).
+    static unsigned add_ (unsigned lhs, int rhs, unsigned min)
     {
-      return static_cast<unsigned>(std::max(min, static_cast<int>(lhs) + rhs));
+      return (0 < rhs || -static_cast<unsigned>(rhs) < lhs
+              ? rhs + lhs
+              : min);
     }
   };
 
@@ -163,7 +165,7 @@ namespace RoflanParser {
    ** \param pos a reference to the position to redirect
    */
   template <typename YYChar>
-  std::basic_ostream<YYChar>&
+  inline std::basic_ostream<YYChar>&
   operator<< (std::basic_ostream<YYChar>& ostr, const position& pos)
   {
     if (pos.filename)
@@ -173,5 +175,5 @@ namespace RoflanParser {
 
 
 } // RoflanParser
-#line 177 "position.hh" // location.cc:290
+#line 179 "position.hh" // location.cc:292
 #endif // !YY_ROFLANPARSER_POSITION_HH_INCLUDED

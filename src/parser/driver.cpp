@@ -1,5 +1,3 @@
-#include <fstream>
-#include <sstream>
 
 #include "driver.h"
 #include "scanner.h"
@@ -8,8 +6,8 @@ namespace RoflanParser {
 
 Driver::Driver()
         : trace_scanning(false),
-          trace_parsing(false)
-//          calc(_calc)
+          trace_parsing(false),
+          SQLParseResult(new cmd::Command())
 {
 }
 
@@ -17,12 +15,10 @@ bool Driver::parse_stream(std::istream& in, const std::string& sname)
 {
     streamname = sname;
 
-    Scanner scanner(&in);
-    scanner.set_debug(trace_scanning);
-    this->lexer = &scanner;
-
+    lexer = std::make_unique<Scanner>(&in);
+    lexer->set_debug(trace_scanning);
     Parser parser(*this);
-    parser.set_debug_level(trace_parsing);
+    //parser.set_debug_level(trace_parsing);
     return (parser.parse() == 0);
 }
 

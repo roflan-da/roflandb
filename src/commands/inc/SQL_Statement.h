@@ -9,7 +9,7 @@ enum StatementType{
     SHOW,
     DROP,
     SELECT,
-    INSERT,
+    INSERT
 };
 
 class SQLStatement {
@@ -17,7 +17,7 @@ public:
     SQLStatement();
     explicit SQLStatement(StatementType type);
 
-    virtual void execute(std::shared_ptr<st_e::IEngineStorage> engine_storage){};
+    virtual void execute(st_e::IEngineStorage& engine_storage){};
 
     StatementType type() const;
 private:

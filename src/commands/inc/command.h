@@ -12,16 +12,17 @@ public:
     Command();
 
     explicit Command(std::shared_ptr<cmd::SQLStatement> statement);
+    explicit Command(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> statements);
 
-    void execute(std::shared_ptr<st_e::IEngineStorage> engine_storage);
+    void execute(st_e::IEngineStorage& engine_storage);
 
-    bool isValid() const;
-    void isValid(bool isValid);
-    void addStatement(std::shared_ptr<cmd::SQLStatement> statement);
+    bool is_valid() const;
+    void is_valid(bool isValid);
+    void add_statement(std::shared_ptr<cmd::SQLStatement> statement);
 
-    std::vector<std::shared_ptr<cmd::SQLStatement>> getStatements() { return statements_;};
+    std::vector<std::shared_ptr<cmd::SQLStatement>> get_statements() { return statements_;};
 private:
-    bool isValid_;
+    bool is_valid_;
     std::vector<std::shared_ptr<cmd::SQLStatement>> statements_;
 };
 

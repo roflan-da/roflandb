@@ -15,7 +15,7 @@ Table::Table(TableBuilder builder) {
 std::string Table::get_sql() {
     std::string answer;
     answer = "CREATE TABLE \'" + name_ + "\' (";
-    for (int i = 0; i < columns_types_.size(); i++){
+    for (int i = 0; i < (int) columns_types_.size(); i++){
         if (i > 0){
             answer += ", ";
         }
@@ -28,7 +28,7 @@ std::string Table::get_sql() {
 std::string Table::Save() {
     std::string table_string;
     table_string = name_ + " " + std::to_string(raws_.size()) + " ";
-    for (int i = 0; i < columns_types_.size(); i++){
+    for (int i = 0; i < (int) columns_types_.size(); i++){
         table_string += columns_types_[i] + " " + columns_names_[i] + " ";
     }
     return table_string;
