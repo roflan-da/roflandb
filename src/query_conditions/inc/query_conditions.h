@@ -1,6 +1,7 @@
 #pragma once
 
 #include "condition.h"
+#include <memory>
 
 namespace cond {
 enum ComplexConditionType{
