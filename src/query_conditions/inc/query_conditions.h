@@ -3,6 +3,7 @@
 #include "condition.h"
 
 namespace cond {
+
 enum ComplexConditionType{
     AND,
     OR,
@@ -11,11 +12,22 @@ enum ComplexConditionType{
 
 
 
-    class QueryConditions {
+class QueryConditions {
 public:
 
+    QueryConditions() = default;
+    //QueryConditions()
+
+    void type(ComplexConditionType type) { type_ = type; }
+    ComplexConditionType type() const { return type_; }
+
+    //void first()
+
 private:
-    std::string table_name_;
+
+    ComplexConditionType type_;
+    std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> first_, second_;
+
 };
 
 }//namespace cond
