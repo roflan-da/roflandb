@@ -3,7 +3,11 @@
 #include "condition.h"
 
 namespace cond {
-
+enum ComplexConditionType{
+    AND,
+    OR,
+    NOT
+};
 
 
 
