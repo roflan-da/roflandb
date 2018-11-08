@@ -1,4 +1,10 @@
+#include <utility>
+
+#include <utility>
+
 #include <string>
+#include <storage_engine.h>
+
 #include "storage_engine.h"
 
 namespace st_e {
@@ -22,7 +28,7 @@ namespace st_e {
         std::string tables_string;
         tables_string = std::to_string(tables_.size()) + " ";
         for (auto it = tables_.begin(); it != tables_.end(); it++) {
-            tables_string += it->second->Save();
+            tables_string += it->second->save();
         }
         std::ofstream out("My_db.txt");
         out << tables_string;
@@ -50,6 +56,11 @@ namespace st_e {
             auto table = tableBuilder.build();
             add_table(table);
         }
+    }
+
+    void StorageEngine::insert(std::string table_name, std::vector<std::pair<std::string, std::string>> raw) {
+        std::shared_ptr<Table> table = get_table_by_name(std::move(table_name));   //добавить проверку на существование
+        table->insert(std::move(raw));
     }
 
 }//namespace st_e

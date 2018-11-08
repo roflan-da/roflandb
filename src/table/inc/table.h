@@ -19,15 +19,6 @@ enum ColumnType{
     TEXT
 };
 
-static std::string EnumToString(ColumnType columnType){   //мб заменить на map | static?
-    switch (columnType){
-        case INT:
-            return "INT";
-        default:
-            return "";
-    }
-}
-
 struct Column{
     Column(st_e::ColumnType type, std::string name);
 
@@ -56,7 +47,9 @@ private:
 
 class TableRaw{
 public:
-    //добавление мб в конструкторе, мб методом, мб надо еще и удалять
+    explicit TableRaw(std::vector<std::shared_ptr<TableCell>> cells){
+        cells_ = std::move(cells);
+    }
 
 private:
     std::vector<std::shared_ptr<TableCell>> cells_;
@@ -66,12 +59,14 @@ class Table {
 public:
     friend TableBuilder;
 
-
     std::string get_sql();
     std::string get_name(){
         return name_;
     }
-    std::string Save();
+    std::string save();
+    std::string EnumToString(ColumnType columnType);//мб заменить на map
+    std::shared_ptr<TableCell> create_cell(std::pair<std::string, std::string> cell);
+    void insert(std::vector<std::pair<std::string, std::string>> raw);
     //void Load(std::ostream in);
     //todo: fix;
     explicit Table(TableBuilder builder);
