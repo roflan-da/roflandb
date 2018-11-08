@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 #include <SQL_Statement.h>
-//#include "queryc"
+#include "condition.h"
 
 namespace cmd {
 

@@ -98,7 +98,7 @@
 start : statement_list{
             std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>($1);
             driver.SQLParseResult = result;
-            driver.SQLParseResult.get()->isValid(true);
+            driver.SQLParseResult.get()->is_valid(true);
         }
 
 statement_list : statement {
