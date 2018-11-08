@@ -18,7 +18,7 @@ std::string Table::get_sql() {
         if (i > 0){
             answer += ", ";
         }
-        answer += "\'" + columns_[i]->name + "\' " + ENUM_TO_STR(columns_[i]->type);
+        answer += "\'" + columns_[i]->name + "\' " + EnumToString(columns_[i]->type);
     }
     answer += ");";
     return answer;

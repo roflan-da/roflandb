@@ -7,13 +7,8 @@
 #include <vector>    //юзать вектор или нет?
 
 namespace st_e {
-#define ENUM_TO_STR(ENUM) std::string(#ENUM)
 
 class Table;
-
-//class Column;
-
-//class IntegerColumn;
 
 class TableBuilder;
 
@@ -23,6 +18,15 @@ enum ColumnType{
     CHAR,
     TEXT
 };
+
+static std::string EnumToString(ColumnType columnType){   //мб заменить на map | static?
+    switch (columnType){
+        case INT:
+            return "INT";
+        default:
+            return "";
+    }
+}
 
 struct Column{
     Column(st_e::ColumnType type, std::string name);
