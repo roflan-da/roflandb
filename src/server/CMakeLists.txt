@@ -27,3 +27,12 @@ if (MINGW)
 
     add_dependencies(roflandb copyDLL)
 endif (MINGW)
+
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_options(roflandb PUBLIC -g3 -O0 -coverage)
+    set_target_properties(roflandb PROPERTIES LINK_FLAGS "${LINK_FLAGS} -coverage")
+
+    target_compile_options(roflandb_testlib PUBLIC -g3 -O0 -coverage)
+    set_target_properties(roflandb_testlib PROPERTIES LINK_FLAGS "${LINK_FLAGS} -coverage")
+endif()

@@ -11,3 +11,8 @@ target_include_directories(parser PUBLIC ".")
 #target_include_directories(parser_exe PUBLIC ".")
 #target_include_directories(parser_exe PUBLIC inc)
 target_link_libraries(parser PUBLIC commands)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_options(parser PUBLIC -g3 -O0 -coverage)
+    set_target_properties(parser PROPERTIES LINK_FLAGS "${LINK_FLAGS} -coverage")
+endif()
