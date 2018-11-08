@@ -1,6 +1,9 @@
 #FILE(GLOB SRC "./*.cpp")
 SET(SRC driver.cpp parser.cc scanner.cc)
 
+SET(GCC_COMPILE_FLAGS "-Wall -pedantic")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COMPILE_FLAGS}")
+
 add_library(parser SHARED ${SRC})
 #add_executable(parser_exe ${SRC})
 

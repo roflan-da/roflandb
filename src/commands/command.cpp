@@ -3,11 +3,11 @@
 #include <command.h>
 #include "iostream"
 
-cmd::Command::Command() : is_valid_(false){};
+cmd::Command::Command() : is_valid_(false) {}
 
 cmd::Command::Command(std::shared_ptr<cmd::SQLStatement> statement) : is_valid_(false) {
     add_statement(std::move(statement));
-};
+}
 
 bool cmd::Command::is_valid() const {
     return is_valid_;

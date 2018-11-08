@@ -8,11 +8,11 @@ std::string cmd::CreateStatement::get_table_name() const{
 cmd::CreateStatement::CreateStatement(std::string table_name, std::vector<std::shared_ptr<Column>> n_columns) :
     SQLStatement(CREATE_TABLE),
     table_name_(std::move(table_name)),
-    columns_(std::move(n_columns)) {};
+    columns_(std::move(n_columns)) {}
 
 cmd::CreateStatement::CreateStatement() :
         SQLStatement(CREATE_TABLE),
-        table_name_("") {};
+        table_name_("") {}
 
 void cmd::CreateStatement::add_column(std::shared_ptr<cmd::Column> column) {
     columns_.emplace_back(column);

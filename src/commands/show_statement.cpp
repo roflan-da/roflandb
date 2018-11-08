@@ -1,9 +1,9 @@
 #include <utility>
 #include <show_statement.h>
 
-cmd::ShowStatement::ShowStatement() : type_(cmd::TABLE){};
+cmd::ShowStatement::ShowStatement() : type_(cmd::TABLE) {}
 
-cmd::ShowStatement::ShowStatement(cmd::ShowType type) : type_(type){};
+cmd::ShowStatement::ShowStatement(cmd::ShowType type) : type_(type) {}
 
 void cmd::ShowStatement::execute(st_e::IEngineStorage& storage_engine) {
 
