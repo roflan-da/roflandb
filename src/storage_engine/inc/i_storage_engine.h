@@ -1,6 +1,6 @@
 #pragma once
 
-#include "table.h"
+#include <table.h>
 
 namespace st_e {
 
