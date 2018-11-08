@@ -70,7 +70,7 @@ public:
 private:
     explicit Table(TableBuilder builder);
     std::string name_;
-    std::vector<std::pair<ColumnType, std::string>> columns_;
+    std::vector<Column> columns_;
     std::vector<std::shared_ptr<TableRaw>> raws_;
 };
 
@@ -80,7 +80,7 @@ public:
     explicit TableBuilder(std::string table_name) :
             table_name_(std::move(table_name)) {}
 
-    void set_columns(std::vector<std::pair<ColumnType, std::string>> columns){
+    void set_columns(std::vector<Column> columns){
         columns_ = std::move(columns);
     }
 
@@ -89,7 +89,7 @@ public:
     }
 
 private:
-    std::vector<std::pair<ColumnType, std::string>> get_columns(){
+    std::vector<Column> get_columns(){
         return std::move(columns_);
     }
   
@@ -98,7 +98,7 @@ private:
     }
 
     std::string table_name_;
-    std::vector<std::pair<ColumnType, std::string>> columns_;
+    std::vector<Column> columns_;
 
 };
 
