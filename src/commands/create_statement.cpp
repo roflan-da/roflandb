@@ -5,7 +5,7 @@ std::string cmd::CreateStatement::get_table_name() const{
     return table_name_;
 }
 
-cmd::CreateStatement::CreateStatement(std::string table_name, std::vector<std::shared_ptr<Column>> n_columns) :
+cmd::CreateStatement::CreateStatement(std::string table_name, std::vector<std::shared_ptr<st_e::Column>> n_columns) :
     SQLStatement(CREATE_TABLE),
     table_name_(std::move(table_name)),
     columns_(std::move(n_columns)) {}
@@ -14,7 +14,7 @@ cmd::CreateStatement::CreateStatement() :
         SQLStatement(CREATE_TABLE),
         table_name_("") {}
 
-void cmd::CreateStatement::add_column(std::shared_ptr<cmd::Column> column) {
+void cmd::CreateStatement::add_column(std::shared_ptr<st_e::Column> column) {
     columns_.emplace_back(column);
 }
 
@@ -28,7 +28,7 @@ void cmd::CreateStatement::execute(st_e::IEngineStorage& storage_engine) {
 //    table.Save();
 }
 
-std::vector<std::shared_ptr<cmd::Column>> cmd::CreateStatement::get_columns() const {
+std::vector<std::shared_ptr<st_e::Column>> cmd::CreateStatement::get_columns() const {
     return columns_;
 }
 
@@ -36,10 +36,6 @@ cmd::CreateStatement::CreateStatement(std::string table_name) :
     SQLStatement(CREATE_TABLE),
     table_name_(std::move(table_name)) {}
 
-void cmd::CreateStatement::set_columns(std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> columns) {
+void cmd::CreateStatement::set_columns(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> columns) {
     columns_ = *columns.get();
 }
-
-cmd::Column::Column(st_e::ColumnType type, std::string name) :
-    type(type),
-    name(std::move(name)) {}

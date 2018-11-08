@@ -1,8 +1,3 @@
-#include <utility>
-
-#include <utility>
-
-#include <utility>
 #include <select_statement.h>
 
 cmd::SelectStatement::SelectStatement() = default;

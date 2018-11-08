@@ -75,8 +75,8 @@
 %type <std::shared_ptr<cmd::SelectStatement>>                               select_statement
 
 %type <st_e::ColumnType>                                                    column_type
-%type <std::shared_ptr<cmd::Column>>                                        column_def
-%type <std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>>>          column_def_list
+%type <std::shared_ptr<st_e::Column>>                                        column_def
+%type <std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>>          column_def_list
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_names_list
 
  /*** END TOKENS ***/
@@ -153,7 +153,7 @@ cols_names_list :
 
 column_def_list:
         column_def{
-            $$ = std::make_shared<std::vector<std::shared_ptr<cmd::Column>>>();
+            $$ = std::make_shared<std::vector<std::shared_ptr<st_e::Column>>>();
             $$.get()->emplace_back($1);
         }
     |   column_def_list ',' column_def{
@@ -163,7 +163,7 @@ column_def_list:
 
 column_def:
 		STRING column_type {
-		    $$ = std::make_shared<cmd::Column>($2, $1.c_str());
+		    $$ = std::make_shared<st_e::Column>($2, $1.c_str());
 		}
 	;
 

@@ -33,4 +33,10 @@ std::string Table::Save() {
     return table_string;
 }
 
+
+st_e::Column::Column(st_e::ColumnType type, std::string name) :
+        type(type),
+        name(std::move(name)) {}
+
+
 }//namespace st_e

@@ -7,7 +7,6 @@
 #include <vector>    //юзать вектор или нет?
 
 namespace st_e {
-
 #define ENUM_TO_STR(ENUM) std::string(#ENUM)
 
 class Table;
@@ -23,6 +22,13 @@ enum ColumnType{
     STRING,
     CHAR,
     TEXT
+};
+
+struct Column{
+    Column(st_e::ColumnType type, std::string name);
+
+    st_e::ColumnType type;
+    std::string name;
 };
 
 class TableCell{

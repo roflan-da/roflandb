@@ -283,26 +283,26 @@ namespace RoflanParser {
       // column_type
       char dummy2[sizeof(st_e::ColumnType)];
 
-      // column_def
-      char dummy3[sizeof(std::shared_ptr<cmd::Column>)];
-
       // create_statement
-      char dummy4[sizeof(std::shared_ptr<cmd::CreateStatement>)];
+      char dummy3[sizeof(std::shared_ptr<cmd::CreateStatement>)];
 
       // statement
-      char dummy5[sizeof(std::shared_ptr<cmd::SQLStatement>)];
+      char dummy4[sizeof(std::shared_ptr<cmd::SQLStatement>)];
 
       // select_statement
-      char dummy6[sizeof(std::shared_ptr<cmd::SelectStatement>)];
+      char dummy5[sizeof(std::shared_ptr<cmd::SelectStatement>)];
 
       // show_statement
-      char dummy7[sizeof(std::shared_ptr<cmd::ShowStatement>)];
+      char dummy6[sizeof(std::shared_ptr<cmd::ShowStatement>)];
 
-      // column_def_list
-      char dummy8[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>>)];
+      // column_def
+      char dummy7[sizeof(std::shared_ptr<st_e::Column>)];
 
       // statement_list
-      char dummy9[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>>)];
+      char dummy8[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>>)];
+
+      // column_def_list
+      char dummy9[sizeof(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>)];
 
       // cols_names_list
       char dummy10[sizeof(std::shared_ptr<std::vector<std::string>>)];
@@ -383,8 +383,6 @@ namespace RoflanParser {
 
   basic_symbol (typename Base::kind_type t, const st_e::ColumnType v, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::Column> v, const location_type& l);
-
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::CreateStatement> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SQLStatement> v, const location_type& l);
@@ -393,9 +391,11 @@ namespace RoflanParser {
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::ShowStatement> v, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::shared_ptr<cmd::Column>>> v, const location_type& l);
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<st_e::Column> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::string>> v, const location_type& l);
 
