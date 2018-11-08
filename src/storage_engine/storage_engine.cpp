@@ -39,12 +39,17 @@ namespace st_e {
             TableBuilder tableBuilder(table_name);
             int columns_count;
             in >> columns_count;
+            std::vector<ColumnType> columns_types;
+            std::vector<std::string> columns_names;
             for (int j = 0; j < columns_count; j++){
                 std::string column_name;
                 int type;
                 in >> column_name >> type;
-                tableBuilder.add_column(static_cast<ColumnType>(type), column_name);
+                columns_types.push_back(static_cast<ColumnType>(type));
+                columns_names.push_back(column_name);
             }
+            tableBuilder.set_columns_names(columns_names);
+            tableBuilder.set_columns_types(columns_types);
             Table table = tableBuilder.build();
             add_table(std::make_shared<Table>(table));
         }
