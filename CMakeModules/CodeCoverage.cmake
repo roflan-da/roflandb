@@ -16,5 +16,4 @@ if (UNIX)
             COMMAND ${LCOV_PATH} --directory ${CMAKE_BINARY_DIR} --capture --output-file ${CMAKE_BINARY_DIR}/coverage.info
             COMMAND ${GENHTML_PATH} -o ${CMAKE_BINARY_DIR}/coverage/ ${CMAKE_BINARY_DIR}/coverage.info
             )
-
 endif (UNIX)
