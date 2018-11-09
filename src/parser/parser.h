@@ -286,35 +286,38 @@ namespace roflan_parser {
       // create_statement
       char dummy3[sizeof(std::shared_ptr<cmd::CreateStatement>)];
 
+      // drop_statement
+      char dummy4[sizeof(std::shared_ptr<cmd::DropStatement>)];
+
       // insert_statement
-      char dummy4[sizeof(std::shared_ptr<cmd::InsertStatement>)];
+      char dummy5[sizeof(std::shared_ptr<cmd::InsertStatement>)];
 
       // statement
-      char dummy5[sizeof(std::shared_ptr<cmd::SQLStatement>)];
+      char dummy6[sizeof(std::shared_ptr<cmd::SQLStatement>)];
 
       // select_statement
-      char dummy6[sizeof(std::shared_ptr<cmd::SelectStatement>)];
+      char dummy7[sizeof(std::shared_ptr<cmd::SelectStatement>)];
 
       // show_statement
-      char dummy7[sizeof(std::shared_ptr<cmd::ShowStatement>)];
+      char dummy8[sizeof(std::shared_ptr<cmd::ShowStatement>)];
 
       // column_def
-      char dummy8[sizeof(std::shared_ptr<st_e::Column>)];
+      char dummy9[sizeof(std::shared_ptr<st_e::Column>)];
 
       // statement_list
-      char dummy9[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>>)];
+      char dummy10[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>>)];
 
       // column_def_list
-      char dummy10[sizeof(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>)];
+      char dummy11[sizeof(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>)];
 
       // cols_values_list
       // cols_names_list
-      char dummy11[sizeof(std::shared_ptr<std::vector<std::string>>)];
+      char dummy12[sizeof(std::shared_ptr<std::vector<std::string>>)];
 
       // "string"
       // col_value
       // string_val
-      char dummy12[sizeof(std::string)];
+      char dummy13[sizeof(std::string)];
 };
 
     /// Symbol semantic values.
@@ -392,6 +395,8 @@ namespace roflan_parser {
   basic_symbol (typename Base::kind_type t, const st_e::ColumnType v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::CreateStatement> v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::DropStatement> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::InsertStatement> v, const location_type& l);
 
@@ -737,9 +742,9 @@ namespace roflan_parser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 54,     ///< Last index in yytable_.
-      yynnts_ = 15,  ///< Number of nonterminal symbols.
-      yyfinal_ = 20, ///< Termination state number.
+      yylast_ = 59,     ///< Last index in yytable_.
+      yynnts_ = 16,  ///< Number of nonterminal symbols.
+      yyfinal_ = 23, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
       yyntokens_ = 21  ///< Number of tokens.
@@ -753,7 +758,7 @@ namespace roflan_parser {
 
 
 } // roflan_parser
-#line 757 "parser.h" // lalr1.cc:379
+#line 762 "parser.h" // lalr1.cc:379
 
 
 

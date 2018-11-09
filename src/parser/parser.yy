@@ -76,6 +76,7 @@
 %type <std::shared_ptr<cmd::ShowStatement>>                                 show_statement
 %type <std::shared_ptr<cmd::SelectStatement>>                               select_statement
 %type <std::shared_ptr<cmd::InsertStatement>>                               insert_statement
+%type <std::shared_ptr<cmd::DropStatement>>                                 drop_statement
 
 %type <st_e::ColumnType>                                                    column_type
 %type <std::shared_ptr<st_e::Column>>                                       column_def
@@ -131,6 +132,9 @@ statement : create_statement ';' {
     |   insert_statement ';' {
             $$ = $1;
         }
+    |   drop_statement ';' {
+            $$ = $1;
+        }
     ;
 
 create_statement :
@@ -161,6 +165,12 @@ insert_statement :
             $$ = std::make_shared<cmd::InsertStatement>($2.c_str());
             $$->set_columns_names($4);
             $$->set_columns_vals($8);
+        }
+    ;
+
+drop_statement :
+        DROP TABLE string_val {
+            $$ = std::make_shared<cmd::DropStatement>($3.c_str());
         }
     ;
 
