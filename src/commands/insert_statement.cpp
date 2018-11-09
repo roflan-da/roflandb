@@ -26,7 +26,7 @@ std::vector<std::pair<std::string, std::string>> cmd::InsertStatement::get_name_
     if (columns_names_.size() != columns_vals_.size()){
         return result;
     }
-    for (int i = 0; i < columns_vals_.size(); ++i) {
+    for (size_t i = 0; i < columns_vals_.size(); ++i) {
         result.emplace_back(std::make_pair(columns_names_[i], columns_vals_[i]));
     }
     return result;
@@ -34,7 +34,7 @@ std::vector<std::pair<std::string, std::string>> cmd::InsertStatement::get_name_
 
 void cmd::InsertStatement::execute(st_e::IEngineStorage& engine_storage) {
     std::vector<std::pair<std::string, std::string>> raw;
-    for (int i = 0; i < columns_names_.size(); i++) {
+    for (size_t i = 0; i < columns_names_.size(); i++) {
         raw.emplace_back(columns_names_[i], columns_vals_[i]);
     }
     engine_storage.insert(table_name_, raw);

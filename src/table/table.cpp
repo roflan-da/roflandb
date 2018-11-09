@@ -52,8 +52,8 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
 
     void Table::insert(std::vector<std::pair<std::string, std::string>> raw) {
         std::vector<std::shared_ptr<TableCell>> cells;
-        for (int i = 0; i < raw.size(); i++){
-            cells.push_back(create_cell(raw[i]));
+        for (const auto& i : raw) {
+            cells.push_back(create_cell(i));
         }
         std::shared_ptr<TableRaw> tableRaw(new TableRaw(cells));
         raws_.push_back(tableRaw);
@@ -61,9 +61,9 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
 
     std::shared_ptr<TableCell> Table::create_cell(std::pair<std::string, std::string> cell) {
         ColumnType type;
-        for (int i = 0; i < columns_.size(); i++){
-            if (columns_[i]->name == cell.first){        //добавить проверку на существование
-                type = columns_[i]->type;
+        for (auto& column : columns_) {
+            if (column->name == cell.first){        //добавить проверку на существование
+                type = column->type;
             }
         }
         switch (type){
