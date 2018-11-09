@@ -49,6 +49,8 @@ public:
         cells_ = std::move(cells);
     }
 
+    std::string to_string();
+
 private:
     std::vector<std::shared_ptr<TableCell>> cells_;
 };
@@ -61,10 +63,12 @@ public:
     std::string get_name(){
         return name_;
     }
-    std::string save();
+    std::string to_string();
     std::string EnumToString(ColumnType columnType);//мб заменить на map
     std::shared_ptr<TableCell> create_cell(std::pair<std::string, std::string> cell);
+    std::shared_ptr<TableCell> create_cell(std::pair<ColumnType, std::string> cell);
     void insert(std::vector<std::pair<std::string, std::string>> raw);
+    void insert(std::vector<std::pair<ColumnType, std::string>> raw);
     //void Load(std::ostream in);
     //todo: fix;
     explicit Table(TableBuilder builder);

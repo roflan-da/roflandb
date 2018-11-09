@@ -28,7 +28,7 @@ namespace st_e {
         std::string tables_string;
         tables_string = std::to_string(tables_.size()) + " ";
         for (auto it = tables_.begin(); it != tables_.end(); it++) {
-            tables_string += it->second->save();
+            tables_string += it->second->to_string();
         }
         std::ofstream out("My_db.txt");
         out << tables_string;
@@ -44,7 +44,6 @@ namespace st_e {
             TableBuilder tableBuilder(table_name);
             int columns_count;
             in >> columns_count;
-
             std::vector<std::shared_ptr<Column>> columns;
             for (int j = 0; j < columns_count; j++){
                 std::string column_name;
@@ -54,6 +53,17 @@ namespace st_e {
             }
             tableBuilder.set_columns(columns);
             auto table = tableBuilder.build();
+            size_t raws_count;
+            in >> raws_count;
+            for (size_t i = 0; i < raws_count; i++){
+                std::vector<std::pair<ColumnType, std::string>> raw;
+                for (size_t j = 0; j < columns_count; j++) {
+                    std::string data;
+                    in >> data;
+                    raw.emplace_back(columns[j]->type, data);
+                }
+                table->insert(raw);
+            }
             add_table(table);
         }
     }
@@ -61,6 +71,7 @@ namespace st_e {
     void StorageEngine::insert(std::string table_name, std::vector<std::pair<std::string, std::string>> raw) {
         std::shared_ptr<Table> table = get_table_by_name(std::move(table_name));   //добавить проверку на существование
         table->insert(std::move(raw));
+        save();
     }
 
 }//namespace st_e
