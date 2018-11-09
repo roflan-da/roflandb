@@ -18,9 +18,9 @@ enum ColumnType{
 };
 
 struct Column{
-    Column(st_e::ColumnType type, std::string name);
+    Column(ColumnType type, std::string name);
 
-    st_e::ColumnType type;
+    ColumnType type;
     std::string name;
 };
 

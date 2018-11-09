@@ -73,7 +73,7 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
         }
     }
 
-st_e::Column::Column(st_e::ColumnType type, std::string name) :
+Column::Column(ColumnType type, std::string name) :
         type(type),
         name(std::move(name)) {}
 

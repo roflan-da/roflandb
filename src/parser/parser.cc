@@ -41,7 +41,7 @@
 #include <string>
 #include <vector>
 
-#line 91 "parser.yy" // lalr1.cc:406
+#line 93 "parser.yy" // lalr1.cc:406
 
 
 #include "driver.h"
@@ -235,12 +235,16 @@ namespace roflan_parser {
         value.copy< int > (other.value);
         break;
 
-      case 35: // column_type
+      case 36: // column_type
         value.copy< st_e::ColumnType > (other.value);
         break;
 
       case 25: // create_statement
         value.copy< std::shared_ptr<cmd::CreateStatement> > (other.value);
+        break;
+
+      case 29: // drop_statement
+        value.copy< std::shared_ptr<cmd::DropStatement> > (other.value);
         break;
 
       case 28: // insert_statement
@@ -259,7 +263,7 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::ShowStatement> > (other.value);
         break;
 
-      case 33: // column_def
+      case 34: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (other.value);
         break;
 
@@ -267,18 +271,18 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (other.value);
         break;
 
-      case 32: // column_def_list
+      case 33: // column_def_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (other.value);
         break;
 
-      case 29: // cols_values_list
-      case 31: // cols_names_list
+      case 30: // cols_values_list
+      case 32: // cols_names_list
         value.copy< std::shared_ptr<std::vector<std::string>> > (other.value);
         break;
 
       case 5: // "string"
-      case 30: // col_value
-      case 34: // string_val
+      case 31: // col_value
+      case 35: // string_val
         value.copy< std::string > (other.value);
         break;
 
@@ -301,12 +305,16 @@ namespace roflan_parser {
         value.copy< int > (v);
         break;
 
-      case 35: // column_type
+      case 36: // column_type
         value.copy< st_e::ColumnType > (v);
         break;
 
       case 25: // create_statement
         value.copy< std::shared_ptr<cmd::CreateStatement> > (v);
+        break;
+
+      case 29: // drop_statement
+        value.copy< std::shared_ptr<cmd::DropStatement> > (v);
         break;
 
       case 28: // insert_statement
@@ -325,7 +333,7 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::ShowStatement> > (v);
         break;
 
-      case 33: // column_def
+      case 34: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (v);
         break;
 
@@ -333,18 +341,18 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (v);
         break;
 
-      case 32: // column_def_list
+      case 33: // column_def_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (v);
         break;
 
-      case 29: // cols_values_list
-      case 31: // cols_names_list
+      case 30: // cols_values_list
+      case 32: // cols_names_list
         value.copy< std::shared_ptr<std::vector<std::string>> > (v);
         break;
 
       case 5: // "string"
-      case 30: // col_value
-      case 34: // string_val
+      case 31: // col_value
+      case 35: // string_val
         value.copy< std::string > (v);
         break;
 
@@ -379,6 +387,13 @@ namespace roflan_parser {
 
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::CreateStatement> v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::DropStatement> v, const location_type& l)
     : Base (t)
     , value (v)
     , location (l)
@@ -475,12 +490,16 @@ namespace roflan_parser {
         value.template destroy< int > ();
         break;
 
-      case 35: // column_type
+      case 36: // column_type
         value.template destroy< st_e::ColumnType > ();
         break;
 
       case 25: // create_statement
         value.template destroy< std::shared_ptr<cmd::CreateStatement> > ();
+        break;
+
+      case 29: // drop_statement
+        value.template destroy< std::shared_ptr<cmd::DropStatement> > ();
         break;
 
       case 28: // insert_statement
@@ -499,7 +518,7 @@ namespace roflan_parser {
         value.template destroy< std::shared_ptr<cmd::ShowStatement> > ();
         break;
 
-      case 33: // column_def
+      case 34: // column_def
         value.template destroy< std::shared_ptr<st_e::Column> > ();
         break;
 
@@ -507,18 +526,18 @@ namespace roflan_parser {
         value.template destroy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ();
         break;
 
-      case 32: // column_def_list
+      case 33: // column_def_list
         value.template destroy< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ();
         break;
 
-      case 29: // cols_values_list
-      case 31: // cols_names_list
+      case 30: // cols_values_list
+      case 32: // cols_names_list
         value.template destroy< std::shared_ptr<std::vector<std::string>> > ();
         break;
 
       case 5: // "string"
-      case 30: // col_value
-      case 34: // string_val
+      case 31: // col_value
+      case 35: // string_val
         value.template destroy< std::string > ();
         break;
 
@@ -547,12 +566,16 @@ namespace roflan_parser {
         value.move< int > (s.value);
         break;
 
-      case 35: // column_type
+      case 36: // column_type
         value.move< st_e::ColumnType > (s.value);
         break;
 
       case 25: // create_statement
         value.move< std::shared_ptr<cmd::CreateStatement> > (s.value);
+        break;
+
+      case 29: // drop_statement
+        value.move< std::shared_ptr<cmd::DropStatement> > (s.value);
         break;
 
       case 28: // insert_statement
@@ -571,7 +594,7 @@ namespace roflan_parser {
         value.move< std::shared_ptr<cmd::ShowStatement> > (s.value);
         break;
 
-      case 33: // column_def
+      case 34: // column_def
         value.move< std::shared_ptr<st_e::Column> > (s.value);
         break;
 
@@ -579,18 +602,18 @@ namespace roflan_parser {
         value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (s.value);
         break;
 
-      case 32: // column_def_list
+      case 33: // column_def_list
         value.move< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (s.value);
         break;
 
-      case 29: // cols_values_list
-      case 31: // cols_names_list
+      case 30: // cols_values_list
+      case 32: // cols_names_list
         value.move< std::shared_ptr<std::vector<std::string>> > (s.value);
         break;
 
       case 5: // "string"
-      case 30: // col_value
-      case 34: // string_val
+      case 31: // col_value
+      case 35: // string_val
         value.move< std::string > (s.value);
         break;
 
@@ -760,12 +783,16 @@ namespace roflan_parser {
         value.copy< int > (that.value);
         break;
 
-      case 35: // column_type
+      case 36: // column_type
         value.copy< st_e::ColumnType > (that.value);
         break;
 
       case 25: // create_statement
         value.copy< std::shared_ptr<cmd::CreateStatement> > (that.value);
+        break;
+
+      case 29: // drop_statement
+        value.copy< std::shared_ptr<cmd::DropStatement> > (that.value);
         break;
 
       case 28: // insert_statement
@@ -784,7 +811,7 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::ShowStatement> > (that.value);
         break;
 
-      case 33: // column_def
+      case 34: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (that.value);
         break;
 
@@ -792,18 +819,18 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (that.value);
         break;
 
-      case 32: // column_def_list
+      case 33: // column_def_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (that.value);
         break;
 
-      case 29: // cols_values_list
-      case 31: // cols_names_list
+      case 30: // cols_values_list
+      case 32: // cols_names_list
         value.copy< std::shared_ptr<std::vector<std::string>> > (that.value);
         break;
 
       case 5: // "string"
-      case 30: // col_value
-      case 34: // string_val
+      case 31: // col_value
+      case 35: // string_val
         value.copy< std::string > (that.value);
         break;
 
@@ -822,12 +849,16 @@ namespace roflan_parser {
         value.move< int > (that.value);
         break;
 
-      case 35: // column_type
+      case 36: // column_type
         value.move< st_e::ColumnType > (that.value);
         break;
 
       case 25: // create_statement
         value.move< std::shared_ptr<cmd::CreateStatement> > (that.value);
+        break;
+
+      case 29: // drop_statement
+        value.move< std::shared_ptr<cmd::DropStatement> > (that.value);
         break;
 
       case 28: // insert_statement
@@ -846,7 +877,7 @@ namespace roflan_parser {
         value.move< std::shared_ptr<cmd::ShowStatement> > (that.value);
         break;
 
-      case 33: // column_def
+      case 34: // column_def
         value.move< std::shared_ptr<st_e::Column> > (that.value);
         break;
 
@@ -854,18 +885,18 @@ namespace roflan_parser {
         value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (that.value);
         break;
 
-      case 32: // column_def_list
+      case 33: // column_def_list
         value.move< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (that.value);
         break;
 
-      case 29: // cols_values_list
-      case 31: // cols_names_list
+      case 30: // cols_values_list
+      case 32: // cols_names_list
         value.move< std::shared_ptr<std::vector<std::string>> > (that.value);
         break;
 
       case 5: // "string"
-      case 30: // col_value
-      case 34: // string_val
+      case 31: // col_value
+      case 35: // string_val
         value.move< std::string > (that.value);
         break;
 
@@ -887,12 +918,16 @@ namespace roflan_parser {
         value.copy< int > (that.value);
         break;
 
-      case 35: // column_type
+      case 36: // column_type
         value.copy< st_e::ColumnType > (that.value);
         break;
 
       case 25: // create_statement
         value.copy< std::shared_ptr<cmd::CreateStatement> > (that.value);
+        break;
+
+      case 29: // drop_statement
+        value.copy< std::shared_ptr<cmd::DropStatement> > (that.value);
         break;
 
       case 28: // insert_statement
@@ -911,7 +946,7 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::ShowStatement> > (that.value);
         break;
 
-      case 33: // column_def
+      case 34: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (that.value);
         break;
 
@@ -919,18 +954,18 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (that.value);
         break;
 
-      case 32: // column_def_list
+      case 33: // column_def_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (that.value);
         break;
 
-      case 29: // cols_values_list
-      case 31: // cols_names_list
+      case 30: // cols_values_list
+      case 32: // cols_names_list
         value.copy< std::shared_ptr<std::vector<std::string>> > (that.value);
         break;
 
       case 5: // "string"
-      case 30: // col_value
-      case 34: // string_val
+      case 31: // col_value
+      case 35: // string_val
         value.copy< std::string > (that.value);
         break;
 
@@ -1077,7 +1112,7 @@ namespace roflan_parser {
     yyla.location.begin.filename = yyla.location.end.filename = &driver.streamname;
 }
 
-#line 1081 "parser.cc" // lalr1.cc:737
+#line 1116 "parser.cc" // lalr1.cc:737
 
     /* Initialize the stack.  The initial state will be set in
        yynewstate, since the latter expects the semantical and the
@@ -1170,12 +1205,16 @@ namespace roflan_parser {
         yylhs.value.build< int > ();
         break;
 
-      case 35: // column_type
+      case 36: // column_type
         yylhs.value.build< st_e::ColumnType > ();
         break;
 
       case 25: // create_statement
         yylhs.value.build< std::shared_ptr<cmd::CreateStatement> > ();
+        break;
+
+      case 29: // drop_statement
+        yylhs.value.build< std::shared_ptr<cmd::DropStatement> > ();
         break;
 
       case 28: // insert_statement
@@ -1194,7 +1233,7 @@ namespace roflan_parser {
         yylhs.value.build< std::shared_ptr<cmd::ShowStatement> > ();
         break;
 
-      case 33: // column_def
+      case 34: // column_def
         yylhs.value.build< std::shared_ptr<st_e::Column> > ();
         break;
 
@@ -1202,18 +1241,18 @@ namespace roflan_parser {
         yylhs.value.build< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ();
         break;
 
-      case 32: // column_def_list
+      case 33: // column_def_list
         yylhs.value.build< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ();
         break;
 
-      case 29: // cols_values_list
-      case 31: // cols_names_list
+      case 30: // cols_values_list
+      case 32: // cols_names_list
         yylhs.value.build< std::shared_ptr<std::vector<std::string>> > ();
         break;
 
       case 5: // "string"
-      case 30: // col_value
-      case 34: // string_val
+      case 31: // col_value
+      case 35: // string_val
         yylhs.value.build< std::string > ();
         break;
 
@@ -1236,219 +1275,235 @@ namespace roflan_parser {
           switch (yyn)
             {
   case 2:
-#line 105 "parser.yy" // lalr1.cc:856
+#line 107 "parser.yy" // lalr1.cc:856
     {
             std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>(yystack_[0].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ());
             driver.sql_parser_result = result;
             driver.sql_parser_result->is_valid(true);
         }
-#line 1246 "parser.cc" // lalr1.cc:856
+#line 1285 "parser.cc" // lalr1.cc:856
     break;
 
   case 3:
-#line 112 "parser.yy" // lalr1.cc:856
+#line 114 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > () = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
             yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SQLStatement> > ());
         }
-#line 1255 "parser.cc" // lalr1.cc:856
+#line 1294 "parser.cc" // lalr1.cc:856
     break;
 
   case 4:
-#line 116 "parser.yy" // lalr1.cc:856
+#line 118 "parser.yy" // lalr1.cc:856
     {
             yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SQLStatement> > ());
             yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > () = yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ();
         }
-#line 1264 "parser.cc" // lalr1.cc:856
+#line 1303 "parser.cc" // lalr1.cc:856
     break;
 
   case 5:
-#line 122 "parser.yy" // lalr1.cc:856
+#line 124 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::CreateStatement> > ();
         }
-#line 1272 "parser.cc" // lalr1.cc:856
+#line 1311 "parser.cc" // lalr1.cc:856
     break;
 
   case 6:
-#line 125 "parser.yy" // lalr1.cc:856
+#line 127 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::ShowStatement> > ();
         }
-#line 1280 "parser.cc" // lalr1.cc:856
+#line 1319 "parser.cc" // lalr1.cc:856
     break;
 
   case 7:
-#line 128 "parser.yy" // lalr1.cc:856
+#line 130 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::SelectStatement> > ();
         }
-#line 1288 "parser.cc" // lalr1.cc:856
+#line 1327 "parser.cc" // lalr1.cc:856
     break;
 
   case 8:
-#line 131 "parser.yy" // lalr1.cc:856
+#line 133 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::InsertStatement> > ();
         }
-#line 1296 "parser.cc" // lalr1.cc:856
+#line 1335 "parser.cc" // lalr1.cc:856
     break;
 
   case 9:
-#line 137 "parser.yy" // lalr1.cc:856
+#line 136 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::DropStatement> > ();
+        }
+#line 1343 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 10:
+#line 142 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<cmd::CreateStatement> > () = std::make_shared<cmd::CreateStatement>(yystack_[3].value.as< std::string > ().c_str());
             yylhs.value.as< std::shared_ptr<cmd::CreateStatement> > ()->set_columns(yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ());
         }
-#line 1305 "parser.cc" // lalr1.cc:856
-    break;
-
-  case 10:
-#line 144 "parser.yy" // lalr1.cc:856
-    {
-            yylhs.value.as< std::shared_ptr<cmd::ShowStatement> > () = std::make_shared<cmd::ShowStatement>(cmd::TABLE, yystack_[0].value.as< std::string > ().c_str());
-        }
-#line 1313 "parser.cc" // lalr1.cc:856
+#line 1352 "parser.cc" // lalr1.cc:856
     break;
 
   case 11:
-#line 150 "parser.yy" // lalr1.cc:856
+#line 149 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > () = std::make_shared<cmd::SelectStatement>(yystack_[0].value.as< std::string > ().c_str());
+            yylhs.value.as< std::shared_ptr<cmd::ShowStatement> > () = std::make_shared<cmd::ShowStatement>(cmd::TABLE, yystack_[0].value.as< std::string > ().c_str());
         }
-#line 1321 "parser.cc" // lalr1.cc:856
+#line 1360 "parser.cc" // lalr1.cc:856
     break;
 
   case 12:
-#line 153 "parser.yy" // lalr1.cc:856
+#line 155 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > () = std::make_shared<cmd::SelectStatement>(yystack_[0].value.as< std::string > ().c_str());
+        }
+#line 1368 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 13:
+#line 158 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > () = std::make_shared<cmd::SelectStatement>(yystack_[0].value.as< std::string > ().c_str(), cmd::VARIABLE);
             yylhs.value.as< std::shared_ptr<cmd::SelectStatement> > ()->set_col_names(yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ());
         }
-#line 1330 "parser.cc" // lalr1.cc:856
+#line 1377 "parser.cc" // lalr1.cc:856
     break;
 
-  case 13:
-#line 160 "parser.yy" // lalr1.cc:856
+  case 14:
+#line 165 "parser.yy" // lalr1.cc:856
     {
             yylhs.value.as< std::shared_ptr<cmd::InsertStatement> > () = std::make_shared<cmd::InsertStatement>(yystack_[7].value.as< std::string > ().c_str());
             yylhs.value.as< std::shared_ptr<cmd::InsertStatement> > ()->set_columns_names(yystack_[5].value.as< std::shared_ptr<std::vector<std::string>> > ());
             yylhs.value.as< std::shared_ptr<cmd::InsertStatement> > ()->set_columns_vals(yystack_[1].value.as< std::shared_ptr<std::vector<std::string>> > ());
         }
-#line 1340 "parser.cc" // lalr1.cc:856
-    break;
-
-  case 14:
-#line 168 "parser.yy" // lalr1.cc:856
-    {
-            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = std::make_shared<std::vector<std::string>>();
-            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > ()->emplace_back(yystack_[0].value.as< std::string > ());
-        }
-#line 1349 "parser.cc" // lalr1.cc:856
+#line 1387 "parser.cc" // lalr1.cc:856
     break;
 
   case 15:
-#line 172 "parser.yy" // lalr1.cc:856
+#line 173 "parser.yy" // lalr1.cc:856
     {
-            yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ()->emplace_back(yystack_[0].value.as< std::string > ());
-            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ();
+            yylhs.value.as< std::shared_ptr<cmd::DropStatement> > () = std::make_shared<cmd::DropStatement>(yystack_[0].value.as< std::string > ().c_str());
         }
-#line 1358 "parser.cc" // lalr1.cc:856
+#line 1395 "parser.cc" // lalr1.cc:856
     break;
 
   case 16:
 #line 179 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::string > () = std::to_string(yystack_[0].value.as< int > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = std::make_shared<std::vector<std::string>>();
+            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > ()->emplace_back(yystack_[0].value.as< std::string > ());
         }
-#line 1366 "parser.cc" // lalr1.cc:856
+#line 1404 "parser.cc" // lalr1.cc:856
     break;
 
   case 17:
-#line 182 "parser.yy" // lalr1.cc:856
+#line 183 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::string > () = yystack_[0].value.as< std::string > ();
+            yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ()->emplace_back(yystack_[0].value.as< std::string > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ();
         }
-#line 1374 "parser.cc" // lalr1.cc:856
+#line 1413 "parser.cc" // lalr1.cc:856
     break;
 
   case 18:
-#line 185 "parser.yy" // lalr1.cc:856
+#line 190 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::string > () = std::to_string(yystack_[1].value.as< int > ());
+            yylhs.value.as< std::string > () = std::to_string(yystack_[0].value.as< int > ());
         }
-#line 1382 "parser.cc" // lalr1.cc:856
+#line 1421 "parser.cc" // lalr1.cc:856
     break;
 
   case 19:
-#line 191 "parser.yy" // lalr1.cc:856
+#line 193 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = std::make_shared<std::vector<std::string>>();
-            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > ()->emplace_back(yystack_[0].value.as< std::string > ().c_str());
+            yylhs.value.as< std::string > () = yystack_[0].value.as< std::string > ();
         }
-#line 1391 "parser.cc" // lalr1.cc:856
+#line 1429 "parser.cc" // lalr1.cc:856
     break;
 
   case 20:
-#line 195 "parser.yy" // lalr1.cc:856
+#line 196 "parser.yy" // lalr1.cc:856
     {
-            yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ()->emplace_back(yystack_[0].value.as< std::string > ().c_str());
-            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ();
+            yylhs.value.as< std::string > () = std::to_string(yystack_[1].value.as< int > ());
         }
-#line 1400 "parser.cc" // lalr1.cc:856
+#line 1437 "parser.cc" // lalr1.cc:856
     break;
 
   case 21:
 #line 202 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > () = std::make_shared<std::vector<std::shared_ptr<st_e::Column>>>();
-            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<st_e::Column> > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = std::make_shared<std::vector<std::string>>();
+            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > ()->emplace_back(yystack_[0].value.as< std::string > ().c_str());
         }
-#line 1409 "parser.cc" // lalr1.cc:856
+#line 1446 "parser.cc" // lalr1.cc:856
     break;
 
   case 22:
 #line 206 "parser.yy" // lalr1.cc:856
     {
-            yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<st_e::Column> > ());
-            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > () = yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ();
+            yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ()->emplace_back(yystack_[0].value.as< std::string > ().c_str());
+            yylhs.value.as< std::shared_ptr<std::vector<std::string>> > () = yystack_[2].value.as< std::shared_ptr<std::vector<std::string>> > ();
         }
-#line 1418 "parser.cc" // lalr1.cc:856
+#line 1455 "parser.cc" // lalr1.cc:856
     break;
 
   case 23:
 #line 213 "parser.yy" // lalr1.cc:856
     {
-		    yylhs.value.as< std::shared_ptr<st_e::Column> > () = std::make_shared<st_e::Column>(yystack_[0].value.as< st_e::ColumnType > (), yystack_[1].value.as< std::string > ().c_str());
-		}
-#line 1426 "parser.cc" // lalr1.cc:856
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > () = std::make_shared<std::vector<std::shared_ptr<st_e::Column>>>();
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<st_e::Column> > ());
+        }
+#line 1464 "parser.cc" // lalr1.cc:856
     break;
 
   case 24:
-#line 219 "parser.yy" // lalr1.cc:856
+#line 217 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::string > () = yystack_[0].value.as< std::string > ();
+            yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<st_e::Column> > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > () = yystack_[2].value.as< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ();
         }
-#line 1434 "parser.cc" // lalr1.cc:856
+#line 1473 "parser.cc" // lalr1.cc:856
     break;
 
   case 25:
-#line 222 "parser.yy" // lalr1.cc:856
+#line 224 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::string > () = yystack_[1].value.as< std::string > ();
-        }
-#line 1442 "parser.cc" // lalr1.cc:856
+		    yylhs.value.as< std::shared_ptr<st_e::Column> > () = std::make_shared<st_e::Column>(yystack_[0].value.as< st_e::ColumnType > (), yystack_[1].value.as< std::string > ().c_str());
+		}
+#line 1481 "parser.cc" // lalr1.cc:856
     break;
 
   case 26:
-#line 227 "parser.yy" // lalr1.cc:856
+#line 230 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::string > () = yystack_[0].value.as< std::string > ();
+        }
+#line 1489 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 27:
+#line 233 "parser.yy" // lalr1.cc:856
+    {
+            yylhs.value.as< std::string > () = yystack_[1].value.as< std::string > ();
+        }
+#line 1497 "parser.cc" // lalr1.cc:856
+    break;
+
+  case 28:
+#line 238 "parser.yy" // lalr1.cc:856
     { yylhs.value.as< st_e::ColumnType > () = st_e::ColumnType::INT; }
-#line 1448 "parser.cc" // lalr1.cc:856
+#line 1503 "parser.cc" // lalr1.cc:856
     break;
 
 
-#line 1452 "parser.cc" // lalr1.cc:856
+#line 1507 "parser.cc" // lalr1.cc:856
             default:
               break;
             }
@@ -1703,96 +1758,96 @@ namespace roflan_parser {
   }
 
 
-  const signed char Parser::yypact_ninf_ = -15;
+  const signed char Parser::yypact_ninf_ = -12;
 
   const signed char Parser::yytable_ninf_ = -1;
 
   const signed char
   Parser::yypact_[] =
   {
-      22,     8,     0,    -2,    -1,    25,    22,   -15,     7,    17,
-      18,    19,    -1,    29,   -15,    27,    33,    -5,   -15,    23,
-     -15,   -15,   -15,   -15,   -15,   -15,    24,    -1,    -1,    28,
-      -1,    -1,    -1,    -1,   -15,   -15,   -15,   -15,   -15,   -10,
-      -7,   -15,    30,    31,   -15,    -1,   -15,   -15,    34,   -15,
-      -3,   -15,    16,    -6,   -15,   -15,    32,   -15,    -3,   -15,
-     -15
+       2,     7,     1,     0,    18,    -1,     6,     2,   -12,    13,
+      16,    22,    23,    24,    -1,    33,   -12,    32,    36,    -7,
+     -12,    -1,    27,   -12,   -12,   -12,   -12,   -12,   -12,   -12,
+      28,    -1,    -1,    26,    -1,    -1,   -12,    -1,    -1,   -12,
+     -12,   -12,   -12,   -12,     4,     5,   -12,    35,    34,   -12,
+      -1,   -12,   -12,    37,   -12,    -3,   -12,    31,    15,   -12,
+     -12,    29,   -12,    -3,   -12,   -12
   };
 
   const unsigned char
   Parser::yydefact_[] =
   {
-       0,     0,     0,     0,     0,     0,     2,     3,     0,     0,
-       0,     0,     0,     0,    24,     0,     0,     0,    19,     0,
-       1,     4,     5,     6,     7,     8,     0,     0,     0,     0,
-       0,     0,     0,     0,    10,    11,    25,    12,    20,     0,
-       0,    21,     0,     0,     9,     0,    26,    23,     0,    22,
-       0,    16,     0,     0,    14,    17,     0,    13,     0,    18,
-      15
+       0,     0,     0,     0,     0,     0,     0,     2,     3,     0,
+       0,     0,     0,     0,     0,     0,    26,     0,     0,     0,
+      21,     0,     0,     1,     4,     5,     6,     7,     8,     9,
+       0,     0,     0,     0,     0,     0,    15,     0,     0,    11,
+      12,    27,    13,    22,     0,     0,    23,     0,     0,    10,
+       0,    28,    25,     0,    24,     0,    18,     0,     0,    16,
+      19,     0,    14,     0,    20,    17
   };
 
   const signed char
   Parser::yypgoto_[] =
   {
-     -15,   -15,   -15,    37,   -15,   -15,   -15,   -15,   -15,   -14,
-      15,   -15,     4,    -4,   -15
+     -12,   -12,   -12,    44,   -12,   -12,   -12,   -12,   -12,   -12,
+     -11,    17,   -12,     9,    -5,   -12
   };
 
   const signed char
   Parser::yydefgoto_[] =
   {
-      -1,     5,     6,     7,     8,     9,    10,    11,    53,    54,
-      17,    40,    41,    18,    47
+      -1,     6,     7,     8,     9,    10,    11,    12,    13,    58,
+      59,    19,    45,    46,    20,    52
   };
 
   const unsigned char
   Parser::yytable_[] =
   {
-      19,    51,    14,    14,    14,    30,    13,    43,    26,    31,
-      44,    57,    45,    58,    31,    12,    15,    52,    16,    16,
-      56,    29,    22,    34,    35,    20,    37,    38,     1,    42,
-       2,     3,    23,    24,    25,     4,    27,    28,    29,    32,
-      33,    42,    46,    21,    60,    48,    55,    39,    36,    49,
-      50,     0,    59,     0,    55
+      22,    56,    16,    34,    16,    16,    23,    15,     1,    30,
+       2,     3,    35,     4,    14,     5,    36,    57,    17,    18,
+      18,    48,    49,    35,    50,    21,    39,    40,    25,    42,
+      43,    26,    62,    47,    63,    61,    33,    27,    28,    29,
+      31,    33,    32,    37,    38,    47,    41,    51,    53,    64,
+      60,    24,    65,    55,    44,     0,     0,     0,    60,    54
   };
 
   const signed char
   Parser::yycheck_[] =
   {
-       4,     4,     5,     5,     5,    10,     6,    17,    12,    19,
-      17,    17,    19,    19,    19,     7,    18,    20,    20,    20,
-       4,     5,    15,    27,    28,     0,    30,    31,     6,    33,
-       8,     9,    15,    15,    15,    13,     7,    10,     5,    16,
-      16,    45,    12,     6,    58,    14,    50,    32,    20,    45,
-      16,    -1,    20,    -1,    58
+       5,     4,     5,    10,     5,     5,     0,     6,     6,    14,
+       8,     9,    19,    11,     7,    13,    21,    20,    18,    20,
+      20,    17,    17,    19,    19,     7,    31,    32,    15,    34,
+      35,    15,    17,    38,    19,     4,     5,    15,    15,    15,
+       7,     5,    10,    16,    16,    50,    20,    12,    14,    20,
+      55,     7,    63,    16,    37,    -1,    -1,    -1,    63,    50
   };
 
   const unsigned char
   Parser::yystos_[] =
   {
-       0,     6,     8,     9,    13,    22,    23,    24,    25,    26,
-      27,    28,     7,     6,     5,    18,    20,    31,    34,    34,
-       0,    24,    15,    15,    15,    15,    34,     7,    10,     5,
-      10,    19,    16,    16,    34,    34,    20,    34,    34,    31,
-      32,    33,    34,    17,    17,    19,    12,    35,    14,    33,
-      16,     4,    20,    29,    30,    34,     4,    17,    19,    20,
-      30
+       0,     6,     8,     9,    11,    13,    22,    23,    24,    25,
+      26,    27,    28,    29,     7,     6,     5,    18,    20,    32,
+      35,     7,    35,     0,    24,    15,    15,    15,    15,    15,
+      35,     7,    10,     5,    10,    19,    35,    16,    16,    35,
+      35,    20,    35,    35,    32,    33,    34,    35,    17,    17,
+      19,    12,    36,    14,    34,    16,     4,    20,    30,    31,
+      35,     4,    17,    19,    20,    31
   };
 
   const unsigned char
   Parser::yyr1_[] =
   {
-       0,    21,    22,    23,    23,    24,    24,    24,    24,    25,
-      26,    27,    27,    28,    29,    29,    30,    30,    30,    31,
-      31,    32,    32,    33,    34,    34,    35
+       0,    21,    22,    23,    23,    24,    24,    24,    24,    24,
+      25,    26,    27,    27,    28,    29,    30,    30,    31,    31,
+      31,    32,    32,    33,    33,    34,    35,    35,    36
   };
 
   const unsigned char
   Parser::yyr2_[] =
   {
-       0,     2,     1,     1,     2,     2,     2,     2,     2,     6,
-       4,     4,     4,     9,     1,     3,     1,     1,     3,     1,
-       3,     1,     3,     2,     1,     3,     1
+       0,     2,     1,     1,     2,     2,     2,     2,     2,     2,
+       6,     4,     4,     4,     9,     3,     1,     3,     1,     1,
+       3,     1,     3,     1,     3,     2,     1,     3,     1
   };
 
 
@@ -1807,17 +1862,18 @@ namespace roflan_parser {
   "DROP", "INT_TYPE", "INSERT", "VALUES", "';'", "'('", "')'", "'*'",
   "','", "'`'", "$accept", "start", "statement_list", "statement",
   "create_statement", "show_statement", "select_statement",
-  "insert_statement", "cols_values_list", "col_value", "cols_names_list",
-  "column_def_list", "column_def", "string_val", "column_type", YY_NULLPTR
+  "insert_statement", "drop_statement", "cols_values_list", "col_value",
+  "cols_names_list", "column_def_list", "column_def", "string_val",
+  "column_type", YY_NULLPTR
   };
 
 #if ROFLAN_PARSERDEBUG
   const unsigned char
   Parser::yyrline_[] =
   {
-       0,   105,   105,   112,   116,   122,   125,   128,   131,   137,
-     144,   150,   153,   160,   168,   172,   179,   182,   185,   191,
-     195,   202,   206,   213,   219,   222,   227
+       0,   107,   107,   114,   118,   124,   127,   130,   133,   136,
+     142,   149,   155,   158,   165,   173,   179,   183,   190,   193,
+     196,   202,   206,   213,   217,   224,   230,   233,   238
   };
 
   // Print the state stack on the debug stream.
@@ -1898,8 +1954,8 @@ namespace roflan_parser {
 
 
 } // roflan_parser
-#line 1902 "parser.cc" // lalr1.cc:1164
-#line 230 "parser.yy" // lalr1.cc:1165
+#line 1958 "parser.cc" // lalr1.cc:1164
+#line 241 "parser.yy" // lalr1.cc:1165
  /*** Additional Code ***/
 
 void roflan_parser::Parser::error(const Parser::location_type& l,

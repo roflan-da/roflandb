@@ -59,6 +59,7 @@ CREATE  { return token::CREATE; }
 TABLE   { return token::TABLE; }
 
 SHOW    { return token::SHOW; }
+DROP    { return token::DROP; }
 
 SELECT  { return token::SELECT; }
 FROM    { return token::FROM; }
