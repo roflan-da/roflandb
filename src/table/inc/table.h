@@ -1,7 +1,5 @@
 #pragma once
 
-#include <utility>
-
 #include <memory>
 #include <string>
 #include <vector>    //юзать вектор или нет?
@@ -73,7 +71,7 @@ public:
 private:
 
     std::string name_;
-    std::vector<std::shared_ptr<Column>> columns_;
+    std::vector<std::shared_ptr<Column>> columns_;  //заменить на map
     std::vector<std::shared_ptr<TableRaw>> raws_;
 };
 

@@ -1,6 +1,4 @@
-#include <utility>
 #include <table.h>
-
 
 #include "inc/table.h"
 

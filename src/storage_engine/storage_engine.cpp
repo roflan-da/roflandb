@@ -1,13 +1,11 @@
-#include <utility>
-
-#include <utility>
-
-#include <string>
-#include <storage_engine.h>
-
 #include "storage_engine.h"
+#include <string>
 
 namespace st_e {
+
+    StorageEngine::StorageEngine() {
+        load();
+    }
 
     void StorageEngine::add_table(std::shared_ptr<Table> table) {
         tables_[table->get_name()] = table;
@@ -51,7 +49,7 @@ namespace st_e {
             for (int j = 0; j < columns_count; j++){
                 std::string column_name;
                 int type;
-                in >> column_name >> type;
+                in >> type >> column_name;
                 columns.emplace_back(std::make_shared<Column>(static_cast<ColumnType>(type), column_name));
             }
             tableBuilder.set_columns(columns);
