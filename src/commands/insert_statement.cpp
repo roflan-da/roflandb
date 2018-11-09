@@ -31,3 +31,12 @@ std::vector<std::pair<std::string, std::string>> cmd::InsertStatement::get_name_
     }
     return result;
 }
+
+void cmd::InsertStatement::execute(st_e::IEngineStorage& engine_storage) {
+    std::vector<std::pair<std::string, std::string>> raw;
+    for (int i = 0; i < columns_names_.size(); i++) {
+        raw.emplace_back(columns_names_[i], columns_vals_[i]);
+    }
+    engine_storage.insert(table_name_, raw);
+//    engine_storage.save();
+}

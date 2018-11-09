@@ -17,6 +17,8 @@ namespace cmd{
         void set_columns_vals(std::shared_ptr<std::vector<std::string>> columns_vals);
         void set_columns_names(std::shared_ptr<std::vector<std::string>> columns_names);
 
+        void execute(st_e::IEngineStorage &engine_storage) override;
+
         std::vector<std::pair<std::string, std::string>> get_name_val();
     private:
         std::string table_name_;
