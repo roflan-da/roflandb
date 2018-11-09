@@ -1,6 +1,3 @@
-
-#include <cli_texts.h>
-
 #include "cli_texts.h"
 
 void roflan_cli::CliTexts::print_help(std::ostream& output_steam) {
