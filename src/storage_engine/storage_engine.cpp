@@ -20,7 +20,7 @@ namespace st_e {
         return false;
     }
 
-    std::shared_ptr<Table> st_e::StorageEngine::get_table_by_name(std::string table_name) {
+    std::shared_ptr<Table> StorageEngine::get_table_by_name(std::string table_name) {
         return tables_.find(table_name)->second;
     }
 
