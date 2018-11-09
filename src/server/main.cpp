@@ -17,7 +17,17 @@ public:
                "COMMANDS\n"
                "\\q - save work\n"
                "\\e - exit CLI\n"
-               "\\?, \\h - show this help\n";
+               "\\?, \\h - show this help\n"
+               "\\a - show authors\n";
+    }
+
+    std::string get_authors(){
+        return "RoflanDB is proudly brought to you by:\n"
+               "-Alexey Mogilevkin\n"
+               "-Artyom Sityaev\n"
+               "-Sergey Zinkovich\n"
+               "-Boris Timofeenko\n"
+               "Miroslav Koberskij\n";
     }
 
 private:
@@ -31,7 +41,10 @@ private:
 
 int main() {
     CLITexts& cli_texts = CLITexts::Instance();
-
+    std::cout << " ____  _____  ____  __      __    _  _  ____   ____" << std::endl;
+    std::cout << "(  _ \\(  _  )( ___)(  )    /__\\  ( \\( )(  _ \\ (  _ \\" << std::endl;
+    std::cout << " )   / )(_)(  )__)  )(__  /(__)\\  )  (  )(_) ) ) _ <" << std::endl;
+    std::cout << "(_)\\_)(_____)(__)  (____)(__)(__)(_)\\_)(____/ (____/" << std::endl;
     std::cout << "RoflanDB command line" << std::endl;
     std::cout << "Enter \\h for help" << std::endl;
 
@@ -61,6 +74,9 @@ int main() {
                 case ('?'):
                 case ('h'):{
                     std::cout << cli_texts.get_gelp();
+                }
+                case ('a'):{
+                    std::cout << cli_texts.get_authors();
                 }
                 default:break;
             }
