@@ -79,6 +79,8 @@
 
 %type <st_e::ColumnType>                                                    column_type
 %type <std::shared_ptr<st_e::Column>>                                       column_def
+%type <std::string>                                                         col_value
+
 %type <std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>>         column_def_list
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_names_list
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_values_list
@@ -155,22 +157,29 @@ insert_statement :
         }
 
 cols_values_list :
+        col_value {
+            $$ = std::make_shared<std::vector<std::string>>();
+            $$->emplace_back($1);
+        }
+    |   cols_values_list ',' col_value {
+            $1->emplace_back($3);
+            $$ = $1;
+        }
+
+col_value :
         INTEGER {
-            $$ = std::make_shared<std::vector<std::string>>();
-            $$->emplace_back(std::to_string($1));
+            $$ = std::to_string($1);
         }
-    |   cols_values_list ',' INTEGER {
-            $1->emplace_back(std::to_string($3));
+    |   STRING {
             $$ = $1;
         }
-    |    STRING {
-            $$ = std::make_shared<std::vector<std::string>>();
-            $$->emplace_back($1.c_str());
+    |   '"' INTEGER '"' {
+            $$ = std::to_string($2);
         }
-    |   cols_values_list ',' STRING {
-            $1->emplace_back($3.c_str());
-            $$ = $1;
+    |   '"' STRING '"' {
+            $$ = $2;
         }
+    ;
 
 cols_names_list :
         STRING {
@@ -181,6 +190,15 @@ cols_names_list :
             $1->emplace_back($3.c_str());
             $$ = $1;
         }
+    |   '"' STRING '"' {
+                $$ = std::make_shared<std::vector<std::string>>();
+                $$->emplace_back($2.c_str());
+            }
+    |   cols_names_list ',' '"' STRING '"' {
+            $1->emplace_back($4.c_str());
+            $$ = $1;
+        }
+    ;
 
 column_def_list:
         column_def {
@@ -191,11 +209,15 @@ column_def_list:
             $1->emplace_back($3);
             $$ = $1;
         }
+    ;
 
 column_def:
 		STRING column_type {
 		    $$ = std::make_shared<st_e::Column>($2, $1.c_str());
 		}
+    |   '"' STRING '"' column_type {
+        		    $$ = std::make_shared<st_e::Column>($4, $2.c_str());
+        		}
 	;
 
 column_type:
