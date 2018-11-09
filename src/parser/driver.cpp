@@ -7,7 +7,7 @@ namespace roflan_parser {
 Driver::Driver()
         : trace_scanning(false),
           trace_parsing(false),
-          SQLParseResult(new cmd::Command())
+          sql_parser_result(new cmd::Command())
 {
 }
 

@@ -104,8 +104,8 @@
 %% /*** Grammar Rules ***/
 start : statement_list {
             std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>($1);
-            driver.SQLParseResult = result;
-            driver.SQLParseResult->is_valid(true);
+            driver.sql_parser_result = result;
+            driver.sql_parser_result->is_valid(true);
         }
     ;
 

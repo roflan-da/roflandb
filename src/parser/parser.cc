@@ -1239,8 +1239,8 @@ namespace roflan_parser {
 #line 105 "parser.yy" // lalr1.cc:856
     {
             std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>(yystack_[0].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ());
-            driver.SQLParseResult = result;
-            driver.SQLParseResult->is_valid(true);
+            driver.sql_parser_result = result;
+            driver.sql_parser_result->is_valid(true);
         }
 #line 1246 "parser.cc" // lalr1.cc:856
     break;

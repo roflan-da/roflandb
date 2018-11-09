@@ -28,7 +28,7 @@ public:
     bool trace_parsing;
 
     //shared_ptr to Parser result object
-    std::shared_ptr<cmd::Command> SQLParseResult;
+    std::shared_ptr<cmd::Command> sql_parser_result;
 
     /// stream name (file or input stream) used for error messages.
     std::string streamname;
