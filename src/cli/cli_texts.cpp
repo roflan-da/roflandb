@@ -24,10 +24,10 @@ void roflan_cli::CliTexts::print_authors(std::ostream& output_steam) {
 }
 
 void roflan_cli::CliTexts::print_startup_message(std::ostream& output_stream) {
-    std::cout <<  " ____  _____  ____  __      __    _  _  ____   ____"       << std::endl;
+    std::cout <<  " ____  _____  ____  __      __    _  _  ____   ____"    << std::endl;
     std::cout << R"((  _ \(  _  )( ___)(  )    /__\  ( \( )(  _ \ (  _ \)" << std::endl;
-    std::cout << R"( )   / )(_)(  )__)  )(__  /(__)\  )  (  )(_) ) ) _ <)"     << std::endl;
-    std::cout << R"((_)\_)(_____)(__)  (____)(__)(__)(_)\_)(____/ (____/)"    << std::endl;
-    std::cout << "RoflanDB command line"                                     << std::endl;
-    std::cout << "Enter \\h for help"                                        << std::endl;
+    std::cout << R"( )   / )(_)(  )__)  )(__  /(__)\  )  (  )(_) ) ) _ <)" << std::endl;
+    std::cout << R"((_)\_)(_____)(__)  (____)(__)(__)(_)\_)(____/ (____/)" << std::endl;
+    std::cout << "RoflanDB command line"                                   << std::endl;
+    std::cout << "Enter \\h for help"                                      << std::endl;
 }
