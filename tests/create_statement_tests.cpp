@@ -1,6 +1,8 @@
 #include "catch.hpp"
 #include <statements.h>
 #include <string>
+#include "driver.h"
+
 
 TEST_CASE("create_statements tests") {
 
@@ -42,4 +44,24 @@ TEST_CASE("create_statements tests") {
         REQUIRE(mem[2].get()->name == "col_name3");
     }
 
+}
+
+TEST_CASE("create statement using parser"){
+
+    SECTION("case sensivity"){
+        std::string query = "CREATE TABLE a(col1 INT);";
+        roflan_parser::Driver parser_driver;
+        std::string error_message;
+        REQUIRE (parser_driver.parse_string(query, error_message));
+        auto res = parser_driver.sql_parser_result.get();
+        REQUIRE(res->is_valid());
+        REQUIRE(res->get_statements().size() == 1);
+        REQUIRE(res->get_statements()[0].get()->type() == cmd::CREATE_TABLE);
+//        REQUIRE(parser_driver.sql_parser_result.get()->get_statements()[0].get()->get_table_name() == "a");
+        //no getter for table_name and columns
+    }
+
+    SECTION("table with 1 column"){
+
+    }
 }
