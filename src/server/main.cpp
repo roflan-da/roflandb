@@ -66,6 +66,7 @@ int main() {
                     //save work
                     st_e::StorageEngine e;
                     e.save();
+                    return 0;
                 }
                 case 'e':{
                     std::cout << "Exiting" << std::endl;
