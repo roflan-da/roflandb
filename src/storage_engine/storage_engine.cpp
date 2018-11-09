@@ -13,11 +13,13 @@ namespace st_e {
         tables_[table->get_name()] = table;
     }
 
-    void StorageEngine::delete_table(std::string table_name) {
+    bool StorageEngine::delete_table(std::string table_name) {
         auto it = tables_.find(table_name);
         if (it != tables_.end()) {
             tables_.erase(it);
+            return true;
         }
+        return false;
     }
 
     std::shared_ptr<Table> st_e::StorageEngine::get_table_by_name(std::string table_name) {
