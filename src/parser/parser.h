@@ -32,13 +32,13 @@
 
 /**
  ** \file parser.h
- ** Define the RoflanParser::parser class.
+ ** Define the roflan_parser::parser class.
  */
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
-#ifndef YY_ROFLANPARSER_PARSER_H_INCLUDED
-# define YY_ROFLANPARSER_PARSER_H_INCLUDED
+#ifndef YY_ROFLAN_PARSER_PARSER_H_INCLUDED
+# define YY_ROFLAN_PARSER_PARSER_H_INCLUDED
 // //                    "%code requires" blocks.
 #line 9 "parser.yy" // lalr1.cc:379
 
@@ -116,20 +116,20 @@
 #endif
 
 /* Debug traces.  */
-#ifndef ROFLANPARSERDEBUG
+#ifndef ROFLAN_PARSERDEBUG
 # if defined YYDEBUG
 #if YYDEBUG
-#   define ROFLANPARSERDEBUG 1
+#   define ROFLAN_PARSERDEBUG 1
 #  else
-#   define ROFLANPARSERDEBUG 0
+#   define ROFLAN_PARSERDEBUG 0
 #  endif
 # else /* ! defined YYDEBUG */
-#  define ROFLANPARSERDEBUG 0
+#  define ROFLAN_PARSERDEBUG 0
 # endif /* ! defined YYDEBUG */
-#endif  /* ! defined ROFLANPARSERDEBUG */
+#endif  /* ! defined ROFLAN_PARSERDEBUG */
 
 
-namespace RoflanParser {
+namespace roflan_parser {
 #line 134 "parser.h" // lalr1.cc:379
 
 
@@ -273,7 +273,7 @@ namespace RoflanParser {
   class Parser
   {
   public:
-#ifndef ROFLANPARSERSTYPE
+#ifndef ROFLAN_PARSERSTYPE
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
@@ -320,7 +320,7 @@ namespace RoflanParser {
     /// Symbol semantic values.
     typedef variant<sizeof(union_type)> semantic_type;
 #else
-    typedef ROFLANPARSERSTYPE semantic_type;
+    typedef ROFLAN_PARSERSTYPE semantic_type;
 #endif
     /// Symbol locations.
     typedef location location_type;
@@ -539,7 +539,7 @@ namespace RoflanParser {
     /// \returns  0 iff parsing succeeded.
     virtual int parse ();
 
-#if ROFLANPARSERDEBUG
+#if ROFLAN_PARSERDEBUG
     /// The current debugging stream.
     std::ostream& debug_stream () const YY_ATTRIBUTE_PURE;
     /// Set the current debugging stream.
@@ -634,7 +634,7 @@ namespace RoflanParser {
 
     /// For a symbol, its name in clear.
     static const char* const yytname_[];
-#if ROFLANPARSERDEBUG
+#if ROFLAN_PARSERDEBUG
   // YYRLINE[YYN] -- Source line where rule number YYN was defined.
   static const unsigned char yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
@@ -752,10 +752,10 @@ namespace RoflanParser {
 
 
 
-} // RoflanParser
+} // roflan_parser
 #line 757 "parser.h" // lalr1.cc:379
 
 
 
 
-#endif // !YY_ROFLANPARSER_PARSER_H_INCLUDED
+#endif // !YY_ROFLAN_PARSER_PARSER_H_INCLUDED

@@ -32,16 +32,16 @@
 
 /**
  ** \file location.hh
- ** Define the RoflanParser::location class.
+ ** Define the roflan_parser::location class.
  */
 
-#ifndef YY_ROFLANPARSER_LOCATION_HH_INCLUDED
-# define YY_ROFLANPARSER_LOCATION_HH_INCLUDED
+#ifndef YY_ROFLAN_PARSER_LOCATION_HH_INCLUDED
+# define YY_ROFLAN_PARSER_LOCATION_HH_INCLUDED
 
 # include "position.hh"
 
 
-namespace RoflanParser {
+namespace roflan_parser {
 #line 46 "location.hh" // location.cc:292
   /// Abstract a location.
   class location
@@ -184,6 +184,6 @@ namespace RoflanParser {
   }
 
 
-} // RoflanParser
+} // roflan_parser
 #line 189 "location.hh" // location.cc:292
-#endif // !YY_ROFLANPARSER_LOCATION_HH_INCLUDED
+#endif // !YY_ROFLAN_PARSER_LOCATION_HH_INCLUDED

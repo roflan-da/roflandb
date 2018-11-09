@@ -31,7 +31,7 @@
 // version 2.2 of Bison.
 
 // Take the name prefix into account.
-#define yylex   RoflanParserlex
+#define yylex   roflan_parserlex
 
 // First part of user declarations.
 #line 1 "parser.yy" // lalr1.cc:406
@@ -108,7 +108,7 @@
 #define YYUSE(E) ((void) (E))
 
 // Enable debugging if requested.
-#if ROFLANPARSERDEBUG
+#if ROFLAN_PARSERDEBUG
 
 // A pseudo ostream that takes yydebug_ into account.
 # define YYCDEBUG if (yydebug_) (*yycdebug_)
@@ -135,14 +135,14 @@
       yystack_print_ ();                \
   } while (false)
 
-#else // !ROFLANPARSERDEBUG
+#else // !ROFLAN_PARSERDEBUG
 
 # define YYCDEBUG if (false) std::cerr
 # define YY_SYMBOL_PRINT(Title, Symbol)  YYUSE (Symbol)
 # define YY_REDUCE_PRINT(Rule)           static_cast<void> (0)
 # define YY_STACK_PRINT()                static_cast<void> (0)
 
-#endif // !ROFLANPARSERDEBUG
+#endif // !ROFLAN_PARSERDEBUG
 
 #define yyerrok         (yyerrstatus_ = 0)
 #define yyclearin       (yyla.clear ())
@@ -153,7 +153,7 @@
 #define YYRECOVERING()  (!!yyerrstatus_)
 
 
-namespace RoflanParser {
+namespace roflan_parser {
 #line 158 "parser.cc" // lalr1.cc:481
 
   /* Return YYSTR after stripping away unnecessary quotes and
@@ -197,7 +197,7 @@ namespace RoflanParser {
   /// Build a parser object.
   Parser::Parser (class Driver& driver_yyarg)
     :
-#if ROFLANPARSERDEBUG
+#if ROFLAN_PARSERDEBUG
       yydebug_ (false),
       yycdebug_ (&std::cerr),
 #endif
@@ -951,7 +951,7 @@ namespace RoflanParser {
       YY_SYMBOL_PRINT (yymsg, yysym);
   }
 
-#if ROFLANPARSERDEBUG
+#if ROFLAN_PARSERDEBUG
   template <typename Base>
   void
   Parser::yy_print_ (std::ostream& yyo,
@@ -993,7 +993,7 @@ namespace RoflanParser {
     yystack_.pop (n);
   }
 
-#if ROFLANPARSERDEBUG
+#if ROFLAN_PARSERDEBUG
   std::ostream&
   Parser::debug_stream () const
   {
@@ -1018,7 +1018,7 @@ namespace RoflanParser {
   {
     yydebug_ = l;
   }
-#endif // ROFLANPARSERDEBUG
+#endif // ROFLAN_PARSERDEBUG
 
   Parser::state_type
   Parser::yy_lr_goto_state_ (state_type yystate, int yysym)
@@ -1811,7 +1811,7 @@ namespace RoflanParser {
   "column_def_list", "column_def", "string_val", "column_type", YY_NULLPTR
   };
 
-#if ROFLANPARSERDEBUG
+#if ROFLAN_PARSERDEBUG
   const unsigned char
   Parser::yyrline_[] =
   {
@@ -1847,7 +1847,7 @@ namespace RoflanParser {
       YY_SYMBOL_PRINT ("   $" << yyi + 1 << " =",
                        yystack_[(yynrhs) - (yyi + 1)]);
   }
-#endif // ROFLANPARSERDEBUG
+#endif // ROFLAN_PARSERDEBUG
 
   // Symbol number corresponding to token number t.
   Parser::token_number_type
@@ -1897,12 +1897,12 @@ namespace RoflanParser {
   }
 
 
-} // RoflanParser
+} // roflan_parser
 #line 1902 "parser.cc" // lalr1.cc:1164
 #line 230 "parser.yy" // lalr1.cc:1165
  /*** Additional Code ***/
 
-void RoflanParser::Parser::error(const Parser::location_type& l,
+void roflan_parser::Parser::error(const Parser::location_type& l,
 			    const std::string& m)
 {
     driver.error(l, m);

@@ -30,7 +30,7 @@
 %skeleton "lalr1.cc"
 
 /* namespace to enclose parser in */
-%define api.prefix RoflanParser
+%define api.prefix roflan_parser
 
 /* set the parser's class identifier */
 %define "parser_class_name" "Parser"
@@ -229,7 +229,7 @@ column_type:
 
 %% /*** Additional Code ***/
 
-void RoflanParser::Parser::error(const Parser::location_type& l,
+void roflan_parser::Parser::error(const Parser::location_type& l,
 			    const std::string& m)
 {
     driver.error(l, m);

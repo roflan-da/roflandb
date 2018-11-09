@@ -32,11 +32,11 @@
 
 /**
  ** \file position.hh
- ** Define the RoflanParser::position class.
+ ** Define the roflan_parser::position class.
  */
 
-#ifndef YY_ROFLANPARSER_POSITION_HH_INCLUDED
-# define YY_ROFLANPARSER_POSITION_HH_INCLUDED
+#ifndef YY_ROFLAN_PARSER_POSITION_HH_INCLUDED
+# define YY_ROFLAN_PARSER_POSITION_HH_INCLUDED
 
 # include <algorithm> // std::max
 # include <iostream>
@@ -51,7 +51,7 @@
 # endif
 
 
-namespace RoflanParser {
+namespace roflan_parser {
 #line 56 "position.hh" // location.cc:292
   /// Abstract a position.
   class position
@@ -174,6 +174,6 @@ namespace RoflanParser {
   }
 
 
-} // RoflanParser
+} // roflan_parser
 #line 179 "position.hh" // location.cc:292
-#endif // !YY_ROFLANPARSER_POSITION_HH_INCLUDED
+#endif // !YY_ROFLAN_PARSER_POSITION_HH_INCLUDED

@@ -2,7 +2,7 @@
 #include "driver.h"
 #include "scanner.h"
 
-namespace RoflanParser {
+namespace roflan_parser {
 
 Driver::Driver()
         : trace_scanning(false),

@@ -32,16 +32,16 @@
 
 /**
  ** \file stack.hh
- ** Define the RoflanParser::stack class.
+ ** Define the roflan_parser::stack class.
  */
 
-#ifndef YY_ROFLANPARSER_STACK_HH_INCLUDED
-# define YY_ROFLANPARSER_STACK_HH_INCLUDED
+#ifndef YY_ROFLAN_PARSER_STACK_HH_INCLUDED
+# define YY_ROFLAN_PARSER_STACK_HH_INCLUDED
 
 # include <vector>
 
 
-namespace RoflanParser {
+namespace roflan_parser {
 #line 46 "stack.hh" // stack.hh:131
   /// A stack with random access from its top.
   template <class T, class S = std::vector<T> >
@@ -150,7 +150,7 @@ namespace RoflanParser {
   };
 
 
-} // RoflanParser
+} // roflan_parser
 #line 155 "stack.hh" // stack.hh:131
 
-#endif // !YY_ROFLANPARSER_STACK_HH_INCLUDED
+#endif // !YY_ROFLAN_PARSER_STACK_HH_INCLUDED

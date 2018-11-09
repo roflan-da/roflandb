@@ -3,8 +3,8 @@
     #include "scanner.h"
 
     /* import the parser's token type into a local typedef */
-    typedef RoflanParser::Parser::token token;
-    typedef RoflanParser::Parser::token_type token_type;
+    typedef roflan_parser::Parser::token token;
+    typedef roflan_parser::Parser::token_type token_type;
 
     #define yyterminate() return token::END
 
@@ -100,7 +100,7 @@ INT     { return token::INT_TYPE; }
 
 %% /*** Additional Code ***/
 
-namespace RoflanParser {
+namespace roflan_parser {
 
 Scanner::Scanner(std::istream* in,
 		 std::ostream* out)

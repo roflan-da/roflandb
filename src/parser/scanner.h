@@ -6,10 +6,10 @@
 #ifndef YY_DECL
 
 #define	YY_DECL						\
-    RoflanParser::Parser::token_type				\
-    RoflanParser::Scanner::lex(				\
-	RoflanParser::Parser::semantic_type* yylval,		\
-	RoflanParser::Parser::location_type* yylloc		\
+    roflan_parser::Parser::token_type				\
+    roflan_parser::Scanner::lex(				\
+	roflan_parser::Parser::semantic_type* yylval,		\
+	roflan_parser::Parser::location_type* yylloc		\
     )
 #endif
 
@@ -19,7 +19,7 @@
 
 #include "parser.h"
 
-namespace RoflanParser {
+namespace roflan_parser {
 
 /** Scanner is a derived class to add some extra function to the scanner
  * class. Flex itself creates a class named yyFlexLexer, which is renamed using

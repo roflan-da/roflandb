@@ -48,7 +48,7 @@ int main() {
     std::cout << "RoflanDB command line" << std::endl;
     std::cout << "Enter \\h for help" << std::endl;
 
-    RoflanParser::Driver parserDriver;
+    roflan_parser::Driver parserDriver;
     std::string answer;
     st_e::StorageEngine storageEngine;
 

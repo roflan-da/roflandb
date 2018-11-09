@@ -5,7 +5,7 @@
 #include "statements.h"
 #include "scanner.h"
 
-namespace RoflanParser {
+namespace roflan_parser {
 
 /** The Driver class brings together all components. It creates an instance of
  * the Parser and Scanner classes and connects them. Then the input stream is
@@ -73,4 +73,4 @@ public:
     std::unique_ptr<Scanner> lexer;
 };
 
-} // namespace RoflanParser
+} // namespace roflan_parser

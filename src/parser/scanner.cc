@@ -536,8 +536,8 @@ static const flex_int16_t yy_rule_linenum[14] =
     #include "scanner.h"
 
     /* import the parser's token type into a local typedef */
-    typedef RoflanParser::Parser::token token;
-    typedef RoflanParser::Parser::token_type token_type;
+    typedef roflan_parser::Parser::token token;
+    typedef roflan_parser::Parser::token_type token_type;
 
     #define yyterminate() return token::END
 
@@ -2049,7 +2049,7 @@ void yyfree (void * ptr )
 #line 102 "scanner.ll"
 
 
-namespace RoflanParser {
+namespace roflan_parser {
 
 Scanner::Scanner(std::istream* in,
 		 std::ostream* out)
