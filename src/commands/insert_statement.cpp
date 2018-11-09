@@ -3,11 +3,10 @@
 #include <insert_statement.h>
 
 
-cmd::InsertStatement::InsertStatement() = default;
+cmd::InsertStatement::InsertStatement() : SQLStatement(INSERT) {}
 
-cmd::InsertStatement::InsertStatement(std::string table_name) : table_name_(std::move(table_name)){
-
-}
+cmd::InsertStatement::InsertStatement(std::string table_name) :
+    SQLStatement(INSERT), table_name_(std::move(table_name)){}
 
 std::string cmd::InsertStatement::get_table_name() {
     return table_name_;

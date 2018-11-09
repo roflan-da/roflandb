@@ -13,7 +13,7 @@ namespace cmd{
 
     class DropStatement : public SQLStatement{
     public:
-        DropStatement() = default;
+        DropStatement();
 
         void execute(st_e::IEngineStorage& storage_engine) override;
 
