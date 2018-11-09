@@ -53,16 +53,16 @@ namespace st_e {
             }
             tableBuilder.set_columns(columns);
             auto table = tableBuilder.build();
-            size_t raws_count;
-            in >> raws_count;
-            for (size_t i = 0; i < raws_count; i++){
-                std::vector<std::pair<ColumnType, std::string>> raw;
+            size_t rows_count;
+            in >> rows_count;
+            for (size_t i = 0; i < rows_count; i++){
+                std::vector<std::pair<ColumnType, std::string>> row;
                 for (size_t j = 0; j < columns_count; j++) {
                     std::string data;
                     in >> data;
-                    raw.emplace_back(columns[j]->type, data);
+                    row.emplace_back(columns[j]->type, data);
                 }
-                table->insert(raw);
+                table->insert(row);
             }
             add_table(table);
         }

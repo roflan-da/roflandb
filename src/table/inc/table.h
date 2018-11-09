@@ -43,9 +43,9 @@ private:
     int data_;
 };
 
-class TableRaw{
+class TableRow{
 public:
-    explicit TableRaw(std::vector<std::shared_ptr<TableCell>> cells){
+    explicit TableRow(std::vector<std::shared_ptr<TableCell>> cells){
         cells_ = std::move(cells);
     }
 
@@ -67,8 +67,8 @@ public:
     std::string EnumToString(ColumnType columnType);//мб заменить на map
     std::shared_ptr<TableCell> create_cell(std::pair<std::string, std::string> cell);
     std::shared_ptr<TableCell> create_cell(std::pair<ColumnType, std::string> cell);
-    void insert(std::vector<std::pair<std::string, std::string>> raw);
-    void insert(std::vector<std::pair<ColumnType, std::string>> raw);
+    void insert(std::vector<std::pair<std::string, std::string>> row);
+    void insert(std::vector<std::pair<ColumnType, std::string>> row);
     //void Load(std::ostream in);
     //todo: fix;
     explicit Table(TableBuilder builder);
@@ -76,7 +76,7 @@ private:
 
     std::string name_;
     std::vector<std::shared_ptr<Column>> columns_;  //заменить на map
-    std::vector<std::shared_ptr<TableRaw>> raws_;
+    std::vector<std::shared_ptr<TableRow>> rows_;
 };
 
 class TableBuilder {
