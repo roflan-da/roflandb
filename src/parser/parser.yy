@@ -80,6 +80,7 @@
 %type <st_e::ColumnType>                                                    column_type
 %type <std::shared_ptr<st_e::Column>>                                       column_def
 %type <std::string>                                                         col_value
+%type <std::string>                                                         string_val
 
 %type <std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>>         column_def_list
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_names_list
@@ -106,6 +107,7 @@ start : statement_list {
             driver.SQLParseResult = result;
             driver.SQLParseResult->is_valid(true);
         }
+    ;
 
 statement_list : statement {
             $$ = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
@@ -115,6 +117,7 @@ statement_list : statement {
             $1->emplace_back($2);
             $$ = $1;
         }
+    ;
 
 statement : create_statement ';' {
             $$ = $1;
@@ -128,33 +131,38 @@ statement : create_statement ';' {
     |   insert_statement ';' {
             $$ = $1;
         }
+    ;
 
 create_statement :
-        CREATE TABLE STRING '(' column_def_list ')' {
+        CREATE TABLE string_val '(' column_def_list ')' {
             $$ = std::make_shared<cmd::CreateStatement>($3.c_str());
             $$->set_columns($5);
         }
+    ;
 
 show_statement :
-        SHOW CREATE TABLE STRING {
+        SHOW CREATE TABLE string_val {
             $$ = std::make_shared<cmd::ShowStatement>(cmd::TABLE, $4.c_str());
         }
+    ;
 
 select_statement :
-        SELECT '*' FROM STRING {
+        SELECT '*' FROM string_val {
             $$ = std::make_shared<cmd::SelectStatement>($4.c_str());
         }
-    |   SELECT cols_names_list FROM STRING {
+    |   SELECT cols_names_list FROM string_val {
             $$ = std::make_shared<cmd::SelectStatement>($4.c_str(), cmd::VARIABLE);
             $$->set_col_names($2);
         }
+    ;
 
 insert_statement :
-        INSERT STRING '(' cols_names_list ')' VALUES '(' cols_values_list ')' {
+        INSERT string_val '(' cols_names_list ')' VALUES '(' cols_values_list ')' {
             $$ = std::make_shared<cmd::InsertStatement>($2.c_str());
             $$->set_columns_names($4);
             $$->set_columns_vals($8);
         }
+    ;
 
 cols_values_list :
         col_value {
@@ -165,37 +173,27 @@ cols_values_list :
             $1->emplace_back($3);
             $$ = $1;
         }
+    ;
 
 col_value :
         INTEGER {
             $$ = std::to_string($1);
         }
-    |   STRING {
+    |   string_val {
             $$ = $1;
         }
-    |   '"' INTEGER '"' {
+    |   '`' INTEGER '`' {
             $$ = std::to_string($2);
-        }
-    |   '"' STRING '"' {
-            $$ = $2;
         }
     ;
 
 cols_names_list :
-        STRING {
+        string_val {
             $$ = std::make_shared<std::vector<std::string>>();
             $$->emplace_back($1.c_str());
         }
-    |   cols_names_list ',' STRING {
+    |   cols_names_list ',' string_val {
             $1->emplace_back($3.c_str());
-            $$ = $1;
-        }
-    |   '"' STRING '"' {
-                $$ = std::make_shared<std::vector<std::string>>();
-                $$->emplace_back($2.c_str());
-            }
-    |   cols_names_list ',' '"' STRING '"' {
-            $1->emplace_back($4.c_str());
             $$ = $1;
         }
     ;
@@ -212,13 +210,18 @@ column_def_list:
     ;
 
 column_def:
-		STRING column_type {
+		string_val column_type {
 		    $$ = std::make_shared<st_e::Column>($2, $1.c_str());
 		}
-    |   '"' STRING '"' column_type {
-        		    $$ = std::make_shared<st_e::Column>($4, $2.c_str());
-        		}
 	;
+
+string_val :
+        STRING {
+            $$ = $1;
+        }
+    |   '`' STRING '`' {
+            $$ = $2;
+        }
 
 column_type:
         INT_TYPE { $$ = st_e::ColumnType::INT; }
