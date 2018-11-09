@@ -69,7 +69,7 @@ public:
     std::shared_ptr<TableCell> create_cell(std::pair<ColumnType, std::string> cell);
     void insert(std::vector<std::pair<std::string, std::string>> row);
     void insert(std::vector<std::pair<ColumnType, std::string>> row);
-    //void Load(std::ostream in);
+    ColumnType get_column_type(std::string column_name);
     //todo: fix;
     explicit Table(TableBuilder builder);
 private:
