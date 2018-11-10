@@ -103,6 +103,27 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
         }
     }
 
+    SelectAnswer Table::select(std::vector<std::string> columns_names) {
+        SelectAnswer selectAnswer;
+        std::vector<int> needed_columns;
+        for (size_t i = 0; i < columns_.size(); i++){
+            for(size_t j = 0; j < columns_names.size(); j++) {
+                if (columns_names[j] == columns_[i]->name){
+                    needed_columns.push_back(i);
+                    break;
+                }
+            }
+        }
+        for (size_t i = 0; i < rows_.size(); i++){
+            selectAnswer.rows.emplace_back();
+            for (size_t j = 0; j < needed_columns.size(); j++){
+                selectAnswer.rows[i].push_back(rows_[needed_columns[j]]->to_string());
+            }
+        }
+        selectAnswer.columns_names = std::move(columns_names);
+        return selectAnswer;
+    }
+
     ColumnType Table::get_column_type(std::string column_name) {
         for (size_t i = 0; i < columns_.size(); i++){  //сделать нормальную проверку существования
             if (columns_[i]->name == column_name){

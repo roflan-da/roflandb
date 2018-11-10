@@ -24,6 +24,11 @@ struct Column{
     std::string name;
 };
 
+struct SelectAnswer{
+    std::vector<std::string> columns_names;
+    std::vector<std::vector<std::string>> rows;
+};
+
 class TableCell{
 public:
     virtual std::string get_data() = 0;
@@ -69,6 +74,7 @@ public:
     std::shared_ptr<TableCell> create_cell(std::pair<ColumnType, std::string> cell);
     void insert(std::vector<std::pair<std::string, std::string>> row);
     void insert(std::vector<std::pair<ColumnType, std::string>> row);
+    SelectAnswer select(std::vector<std::string> columns_names);
     ColumnType get_column_type(std::string column_name);
     //todo: fix;
     explicit Table(TableBuilder builder);

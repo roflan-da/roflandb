@@ -1,5 +1,7 @@
 #include "storage_engine.h"
 #include <string>
+#include <storage_engine.h>
+
 
 namespace st_e {
 
@@ -72,6 +74,10 @@ namespace st_e {
         std::shared_ptr<Table> table = get_table_by_name(std::move(table_name));   //добавить проверку на существование
         table->insert(std::move(raw));
         save();
+    }
+
+    SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names) {
+        return tables_.find(table_name)->second->select(columns_names);  //добавить проверку на существование
     }
 
 }//namespace st_e

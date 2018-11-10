@@ -17,6 +17,7 @@ namespace st_e {
         bool delete_table(std::string table_name) override;
         std::shared_ptr<Table> get_table_by_name(std::string table_name) override;
         void insert(std::string table_name, std::vector<std::pair<std::string, std::string>> raw) override;
+        SelectAnswer select(std::string table_name, std::vector<std::string> columns_names) override;
         void save() override;
         void load() override;
 
