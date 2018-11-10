@@ -10,17 +10,13 @@ namespace cmd{
     public:
         InsertStatement();
 
-        explicit InsertStatement(std::string table_name);
-
-        std::string get_table_name();
-
-        void set_columns_vals(std::shared_ptr<std::vector<std::string>> columns_vals);
-        void set_columns_names(std::shared_ptr<std::vector<std::string>> columns_names);
+        explicit InsertStatement(std::string table_name,
+                                 std::shared_ptr<std::vector<std::string>> cols_names,
+                                 std::shared_ptr<std::vector<std::string>> cols_values);
 
         void execute(st_e::IEngineStorage &engine_storage) override;
-
-        std::vector<std::pair<std::string, std::string>> get_name_val();
     private:
+        std::vector<std::pair<std::string, std::string>> get_name_val();
         std::string table_name_;
         std::vector<std::string> columns_names_;
         std::vector<std::string> columns_vals_;

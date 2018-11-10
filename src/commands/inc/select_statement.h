@@ -19,9 +19,11 @@ namespace cmd {
 
         void execute(st_e::IEngineStorage& storage_engine) override;
 
-        explicit SelectStatement(std::string table_name, SelectType type = ALL);
+        explicit SelectStatement(std::string table_name);
 
-        void set_col_names(std::shared_ptr<std::vector<std::string>> cols_names);
+        explicit SelectStatement(std::string table_name,
+                std::shared_ptr<std::vector<std::string>> cols_names,
+                SelectType type = ALL);
     private:
         std::string table_name_;
         SelectType type_;

@@ -17,14 +17,9 @@ namespace cmd{
         explicit CreateStatement(std::string table_name);
 
         explicit CreateStatement(std::string table_name,
-                                 std::vector<std::shared_ptr<st_e::Column>> n_columns);
+                                 std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> n_columns);
 
         void add_column(std::shared_ptr<st_e::Column> column);
-        void set_columns(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> columns);
-
-        std::vector<std::shared_ptr<st_e::Column>> get_columns() const;
-        std::string get_table_name() const;
-
     private:
         std::string table_name_;
         std::vector<std::shared_ptr<st_e::Column>> columns_;

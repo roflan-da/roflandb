@@ -106,7 +106,6 @@
 start : statement_list {
             std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>($1);
             driver.sql_parser_result = result;
-            driver.sql_parser_result->is_valid(true);
         }
     ;
 
@@ -139,8 +138,7 @@ statement : create_statement ';' {
 
 create_statement :
         CREATE TABLE string_val '(' column_def_list ')' {
-            $$ = std::make_shared<cmd::CreateStatement>($3.c_str());
-            $$->set_columns($5);
+            $$ = std::make_shared<cmd::CreateStatement>($3.c_str(), $5);
         }
     ;
 
@@ -155,16 +153,13 @@ select_statement :
             $$ = std::make_shared<cmd::SelectStatement>($4.c_str());
         }
     |   SELECT cols_names_list FROM string_val {
-            $$ = std::make_shared<cmd::SelectStatement>($4.c_str(), cmd::VARIABLE);
-            $$->set_col_names($2);
+            $$ = std::make_shared<cmd::SelectStatement>($4.c_str(), $2, cmd::VARIABLE);
         }
     ;
 
 insert_statement :
         INSERT string_val '(' cols_names_list ')' VALUES '(' cols_values_list ')' {
-            $$ = std::make_shared<cmd::InsertStatement>($2.c_str());
-            $$->set_columns_names($4);
-            $$->set_columns_vals($8);
+            $$ = std::make_shared<cmd::InsertStatement>($2.c_str(), $4, $8);
         }
     ;
 

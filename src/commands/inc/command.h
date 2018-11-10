@@ -9,19 +9,12 @@ namespace cmd{
 
     class Command {
     public:
-        Command();
+        Command() = default;
 
-        explicit Command(std::shared_ptr<cmd::SQLStatement> statement);
         explicit Command(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> statements);
 
         void execute(st_e::IEngineStorage& engine_storage);
-
-        bool is_valid() const;
-        void is_valid(bool isValid);
-        void add_statement(std::shared_ptr<cmd::SQLStatement> statement);
-
     private:
-        bool is_valid_;
         std::vector<std::shared_ptr<cmd::SQLStatement>> statements_;
     };
 
