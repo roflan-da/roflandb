@@ -1,3 +1,5 @@
+#include <driver.h>
+#include <storage_engine.h>
 #include "catch.hpp"
 #include "table.h"
 
@@ -81,4 +83,18 @@ TEST_CASE("Table") {
     SECTION("load") {
 
     }
+}
+
+TEST_CASE("Parser"){
+    roflan_parser::Driver parser_driver;
+    st_e::StorageEngine storage_engine;
+    std::string query = "CREATE TABLE a(col1 INT);"
+                        "INSERT INTO a VALUES(1488);"
+                        "INSERT INTO a VALUES(1337);"
+                        "SELECT * FROM a;";
+    std::string error_message;
+    REQUIRE(parser_driver.parse_string(query, error_message));
+    parser_driver.sql_parser_result->execute(storage_engine);
+
+
 }
