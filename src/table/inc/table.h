@@ -14,7 +14,8 @@ enum ColumnType{
     INT,
     STRING,
     CHAR,
-    TEXT
+    TEXT,
+    NONE
 };
 
 struct Column{

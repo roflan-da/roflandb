@@ -127,12 +127,12 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
     }
 
     ColumnType Table::get_column_type(std::string column_name) {
-        for (size_t i = 0; i < columns_.size(); i++){  //сделать нормальную проверку существования
+        for (size_t i = 0; i < columns_.size(); i++){
             if (columns_[i]->name == column_name){
                 return columns_[i]->type;
             }
         }
-        return INT;
+        return NONE;
     }
 
 
