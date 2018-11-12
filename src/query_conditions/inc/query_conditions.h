@@ -20,23 +20,23 @@ namespace cond {
 
         QueryConditions() = default;
         QueryConditions(ComplexConditionType type,
-                std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> first,
-                std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> second) :
-                type_(type), first_(std::move(first)), second_(std::move(second)) {}
+                std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> left,
+                std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> right) :
+                type_(type), left_(std::move(left)), right_(std::move(right)) {}
 
         void type(ComplexConditionType type) { type_ = type; }
         ComplexConditionType type() const { return type_; }
 
-        void first(std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> first) { first_ = std::move(first); }
-        std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> first() { return first_; }
+        void left(std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> left) { left_ = std::move(left); }
+        std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> left() { return left_; }
 
-        void second(std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> second) { second_ = std::move(second); }
-        std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> second() { return second_; }
+        void right(std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> right) { right_ = std::move(right); }
+        std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> right() { return right_; }
 
     private:
 
         ComplexConditionType type_ = SINGLE;
-        std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> first_, second_;
+        std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> left_, right_;
 
     };
 
