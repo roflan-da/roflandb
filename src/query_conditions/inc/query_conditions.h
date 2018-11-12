@@ -35,7 +35,7 @@ namespace cond {
 
     private:
 
-        ComplexConditionType type_;
+        ComplexConditionType type_ = SINGLE;
         std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> first_, second_;
 
     };
