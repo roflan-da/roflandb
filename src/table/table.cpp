@@ -126,6 +126,17 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
         return selectAnswer;
     }
 
+    SelectAnswer Table::selectAll() {
+        SelectAnswer selectAnswer;
+        selectAnswer.rows.resize(rows_.size());
+        for (size_t i = 0; i < rows_.size(); i++){
+            for (size_t j = 0; j < columns_.size(); i++){
+                selectAnswer.rows[i].push_back(rows_[i]->get_cell(j));
+            }
+        }
+        return selectAnswer;
+    }
+
     ColumnType Table::get_column_type(std::string column_name) {
         for (size_t i = 0; i < columns_.size(); i++){
             if (columns_[i]->name == column_name){
@@ -136,7 +147,7 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
     }
 
 
-Column::Column(ColumnType type, std::string name) :
+    Column::Column(ColumnType type, std::string name) :
         type(type),
         name(std::move(name)) {}
 }//namespace st_e

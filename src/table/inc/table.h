@@ -55,7 +55,7 @@ public:
         cells_ = std::move(cells);
     }
 
-    std::string get_cell(int number){
+    std::string get_cell(size_t number){
         return cells_[number]->get_data();
     }
 
@@ -80,6 +80,7 @@ public:
     void insert(std::vector<std::pair<std::string, std::string>> row);
     void insert(std::vector<std::pair<ColumnType, std::string>> row);
     SelectAnswer select(std::vector<std::string> columns_names);
+    SelectAnswer selectAll();
     ColumnType get_column_type(std::string column_name);
     //todo: fix;
     explicit Table(TableBuilder builder);

@@ -80,4 +80,8 @@ namespace st_e {
         return tables_.find(table_name)->second->select(columns_names);  //добавить проверку на существование
     }
 
+    SelectAnswer StorageEngine::selectAll(std::string table_name) {
+        return tables_.find(table_name)->second->selectAll();  //добавить проверку на существование
+    }
+
 }//namespace st_e

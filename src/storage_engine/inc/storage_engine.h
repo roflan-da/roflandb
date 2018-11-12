@@ -18,6 +18,7 @@ namespace st_e {
         std::shared_ptr<Table> get_table_by_name(std::string table_name) override;
         void insert(std::string table_name, std::vector<std::pair<std::string, std::string>> raw) override;
         SelectAnswer select(std::string table_name, std::vector<std::string> columns_names) override;
+        SelectAnswer selectAll(std::string table_name) override;
         void save() override;
         void load() override;
 
