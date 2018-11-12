@@ -8,11 +8,12 @@ cmd::SelectStatement::SelectStatement(std::string table_name,
         SelectType type) :
         SQLStatement(SELECT),
         table_name_(std::move(table_name)),
-        cols_names_(*cols_names.get()),
-        type_(type) {}
+        type_(type),
+        cols_names_(*cols_names.get()) {}
 
 void cmd::SelectStatement::execute(st_e::IEngineStorage& storage_engine) {
-   st_e::SelectAnswer t = storage_engine.select(table_name_,cols_names_);
+   st_e::SelectAnswer t = type_ == ALL ? storage_engine.select_all(table_name_) :
+           storage_engine.select(table_name_,cols_names_);
    for (int i = 0; i < t.columns_names.size(); ++i){
        std::cout << t.columns_names[i] << " ";
    }
