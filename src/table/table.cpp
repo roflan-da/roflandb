@@ -23,7 +23,7 @@ Table::Table(TableBuilder builder) {
 std::string Table::get_sql() {
     std::string answer;
     answer = "CREATE TABLE \'" + name_ + "\' (";
-    for (int i = 0; i < (int) columns_.size(); i++){
+    for (size_t i = 0; i < columns_.size(); i++){
         if (i > 0){
             answer += ", ";
         }
@@ -36,7 +36,7 @@ std::string Table::get_sql() {
 std::string Table::to_string() {
     std::string table_string;
     table_string = name_ + " " + std::to_string(columns_.size()) + " ";
-    for (int i = 0; i < (int) columns_.size(); i++){
+    for (size_t i = 0; i < columns_.size(); i++){
         table_string += std::to_string(columns_[i]->type) + " " + columns_[i]->name + " ";
     }
     table_string += std::to_string(rows_.size()) + " ";
@@ -63,6 +63,7 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
 
     void Table::insert(std::vector<std::pair<std::string, std::string>> row) {
         std::vector<std::shared_ptr<TableCell>> cells;
+        cells.reserve(row.size());
         for (const auto& i : row) {
             cells.push_back(create_cell(i));
         }
@@ -72,6 +73,7 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
 
     void Table::insert(std::vector<std::pair<ColumnType , std::string>> row) {
         std::vector<std::shared_ptr<TableCell>> cells;
+        cells.reserve(row.size());
         for (const auto& i : row) {
             cells.push_back(create_cell(i));
         }

@@ -38,16 +38,16 @@ namespace st_e {
 
     void StorageEngine::load() {
         std::ifstream in("My_db.txt");
-        int count;
+        size_t count;
         in >> count;
-        for (int i = 0; i < count; i++){
+        for (size_t i = 0; i < count; i++){
             std::string table_name;
             in >> table_name;
             TableBuilder tableBuilder(table_name);
-            int columns_count;
+            size_t columns_count;
             in >> columns_count;
             std::vector<std::shared_ptr<Column>> columns;
-            for (int j = 0; j < columns_count; j++){
+            for (size_t j = 0; j < columns_count; j++){
                 std::string column_name;
                 int type;
                 in >> type >> column_name;
