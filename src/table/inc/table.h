@@ -54,6 +54,10 @@ public:
         cells_ = std::move(cells);
     }
 
+    std::string get_cell(int number){
+        return cells_[number]->get_data();
+    }
+
     std::string to_string();
 
 private:

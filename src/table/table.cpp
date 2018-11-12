@@ -117,7 +117,7 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
         for (size_t i = 0; i < rows_.size(); i++){
             selectAnswer.rows.emplace_back();
             for (size_t j = 0; j < needed_columns.size(); j++){
-                selectAnswer.rows[i].push_back(rows_[needed_columns[j]]->to_string());
+                selectAnswer.rows[i].push_back(rows_[i]->get_cell(needed_columns[j]));
             }
         }
         selectAnswer.columns_names = std::move(columns_names);
