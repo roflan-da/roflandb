@@ -7,7 +7,7 @@ add_library(parser SHARED ${SRC})
 target_include_directories(parser PUBLIC ".")
 target_link_libraries(parser PUBLIC commands)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug" AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
     target_compile_options(parser PUBLIC -g3 -O0 -coverage)
     set_target_properties(parser PROPERTIES LINK_FLAGS "${LINK_FLAGS} -coverage")
 endif()

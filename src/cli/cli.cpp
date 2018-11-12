@@ -5,12 +5,14 @@
 #include "cli.h"
 #include "cli_texts.h"
 
-roflan_cli::Cli& roflan_cli::Cli::get_instance() {
+namespace roflan_cli {
+
+Cli& Cli::get_instance() {
     static Cli instance;
     return instance;
 }
 
-int roflan_cli::Cli::start() {
+int Cli::start() {
     // init section
     std::istream& input = std::cin;
     std::ostream& output = std::cout;
@@ -52,6 +54,8 @@ int roflan_cli::Cli::start() {
     return EXIT_SUCCESS;
 }
 
-bool roflan_cli::Cli::is_starts_with(const std::string& hay, const std::string& needle) const {
+bool Cli::is_starts_with(const std::string& hay, const std::string& needle) const {
     return hay.compare(0, needle.length(), needle) == 0;
 }
+
+} // namespace roflan_cli

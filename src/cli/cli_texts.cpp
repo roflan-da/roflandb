@@ -1,5 +1,7 @@
 #include "cli_texts.h"
 
+namespace roflan_cli {
+
 void roflan_cli::CliTexts::print_help(std::ostream& output_steam) {
     output_steam << "RoflanDB: a database better then mariadb" << std::endl;
     output_steam << "(C) 2018 by Roflan Digital Agency"        << std::endl;
@@ -28,3 +30,5 @@ void roflan_cli::CliTexts::print_startup_message(std::ostream& output_stream) {
     std::cout << "RoflanDB command line"                                   << std::endl;
     std::cout << "Enter \\h for help"                                      << std::endl;
 }
+
+} // roflan_cli

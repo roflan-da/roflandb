@@ -29,7 +29,7 @@ if (MINGW)
 endif (MINGW)
 
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug" AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
     target_compile_options(roflandb PUBLIC -g3 -O0 -coverage)
     set_target_properties(roflandb PROPERTIES LINK_FLAGS "${LINK_FLAGS} -coverage")
 
