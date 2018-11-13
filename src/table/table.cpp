@@ -107,7 +107,7 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
 
     SelectAnswer Table::select(std::vector<std::string> columns_names) {
         SelectAnswer selectAnswer;
-        std::vector<int> needed_columns;
+        std::vector<size_t> needed_columns;
         for (size_t i = 0; i < columns_.size(); i++){
             for(size_t j = 0; j < columns_names.size(); j++) {
                 if (columns_names[j] == columns_[i]->name){
