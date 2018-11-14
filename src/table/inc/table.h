@@ -80,7 +80,7 @@ public:
     void insert(std::vector<std::pair<std::string, std::string>> row);
     void insert(std::vector<std::pair<ColumnType, std::string>> row);
     SelectAnswer select(std::vector<std::string> columns_names);
-    SelectAnswer selectAll();
+    SelectAnswer select_all();
     ColumnType get_column_type(std::string column_name);
     //todo: fix;
     explicit Table(TableBuilder builder);

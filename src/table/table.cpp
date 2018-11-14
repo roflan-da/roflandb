@@ -126,7 +126,7 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
         return selectAnswer;
     }
 
-    SelectAnswer Table::selectAll() {
+    SelectAnswer Table::select_all() {
         SelectAnswer selectAnswer;
         selectAnswer.rows.resize(rows_.size());
         for (size_t i = 0; i < rows_.size(); i++){
