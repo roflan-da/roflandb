@@ -130,7 +130,7 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
         SelectAnswer selectAnswer;
         selectAnswer.rows.resize(rows_.size());
         for (size_t i = 0; i < rows_.size(); i++){
-            for (size_t j = 0; j < columns_.size(); i++){
+            for (size_t j = 0; j < columns_.size(); j++){
                 selectAnswer.rows[i].push_back(rows_[i]->get_cell(j));
             }
         }
