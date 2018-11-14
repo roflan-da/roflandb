@@ -16,6 +16,8 @@ namespace cmd{
 
         void execute(st_e::IEngineStorage &engine_storage) override;
     private:
+        friend void SQLStatement::set_message(std::string message);
+
         std::vector<std::pair<std::string, std::string>> get_name_val();
         std::string table_name_;
         std::vector<std::string> columns_names_;

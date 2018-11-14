@@ -12,18 +12,21 @@ cmd::SelectStatement::SelectStatement(std::string table_name,
         cols_names_(*cols_names.get()) {}
 
 void cmd::SelectStatement::execute(st_e::IEngineStorage& storage_engine) {
-   st_e::SelectAnswer t = type_ == ALL ? storage_engine.select_all(table_name_) :
+    st_e::SelectAnswer t = type_ == ALL ? storage_engine.select_all(table_name_) :
            storage_engine.select(table_name_,cols_names_);
-   for (int i = 0; i < t.columns_names.size(); ++i){
-       std::cout << t.columns_names[i] << " ";
-   }
-   std::cout << std::endl;
+    std::string message;
+    for (const auto& col_name : t.columns_names){
+       message += col_name + " ";
+    }
+    message += '\n';
     for (int i = 0; i < t.rows.size(); ++i){
         for (int j = 0; j < t.rows[i].size(); ++j){
-            std::cout << t.rows[i][j] << " ";
+            message += t.rows[i][j] + " ";
         }
-        std::cout << std::endl;
+        message += '\n';
     }
+    set_message(message);
 }
 
 cmd::SelectStatement::SelectStatement(std::string table_name) : table_name_(table_name), type_(ALL){}
+    

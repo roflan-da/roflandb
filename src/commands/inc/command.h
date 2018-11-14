@@ -14,6 +14,7 @@ namespace cmd{
         explicit Command(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> statements);
 
         void execute(st_e::IEngineStorage& engine_storage);
+        std::string get_messages();
     private:
         std::vector<std::shared_ptr<cmd::SQLStatement>> statements_;
     };

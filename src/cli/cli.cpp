@@ -49,6 +49,7 @@ int Cli::start() {
             continue;
         }
         parser_driver.sql_parser_result->execute(storage_engine);
+        output << parser_driver.sql_parser_result->get_messages();
         output << parser_driver.result;
     }
     return EXIT_SUCCESS;
