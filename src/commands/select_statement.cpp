@@ -19,14 +19,19 @@ void cmd::SelectStatement::execute(st_e::IEngineStorage& storage_engine) {
        message += col_name + " ";
     }
     message += '\n';
-    for (int i = 0; i < t.rows.size(); ++i){
-        for (int j = 0; j < t.rows[i].size(); ++j){
-            message += t.rows[i][j] + " ";
+    for (const auto row : t.rows){
+        for (const auto cell : row){
+            message += cell + " ";
         }
         message += '\n';
     }
+//    for (int i = 0; t.rows.size() > i; ++i){
+//        for (int j = 0; t.rows[i].size() > j; ++j){
+//            message += t.rows[i][j] + " ";
+//        }
+//        message += '\n';
+//    }
     set_message(message);
 }
 
 cmd::SelectStatement::SelectStatement(std::string table_name) : table_name_(table_name), type_(ALL){}
-    

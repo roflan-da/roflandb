@@ -352,7 +352,8 @@ namespace roflan_parser {
         DROP = 266,
         INT_TYPE = 267,
         INSERT = 268,
-        VALUES = 269
+        VALUES = 269,
+        INTO = 270
       };
     };
 
@@ -535,6 +536,10 @@ namespace roflan_parser {
     symbol_type
     make_VALUES (const location_type& l);
 
+    static inline
+    symbol_type
+    make_INTO (const location_type& l);
+
 
     /// Build a parser object.
     Parser (class Driver& driver_yyarg);
@@ -620,7 +625,7 @@ namespace roflan_parser {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const signed char yycheck_[];
+  static const unsigned char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -742,12 +747,12 @@ namespace roflan_parser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 59,     ///< Last index in yytable_.
+      yylast_ = 70,     ///< Last index in yytable_.
       yynnts_ = 16,  ///< Number of nonterminal symbols.
-      yyfinal_ = 23, ///< Termination state number.
+      yyfinal_ = 24, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 21  ///< Number of tokens.
+      yyntokens_ = 22  ///< Number of tokens.
     };
 
 
@@ -758,7 +763,7 @@ namespace roflan_parser {
 
 
 } // roflan_parser
-#line 762 "parser.h" // lalr1.cc:379
+#line 767 "parser.h" // lalr1.cc:379
 
 
 

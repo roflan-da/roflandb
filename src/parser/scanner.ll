@@ -66,6 +66,7 @@ FROM    { return token::FROM; }
 
 INSERT  { return token::INSERT; }
 VALUES  { return token::VALUES; }
+INTO    { return token::INTO; }
 
 INT     { return token::INT_TYPE; }
 

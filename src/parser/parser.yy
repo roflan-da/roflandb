@@ -68,6 +68,7 @@
 %token INT_TYPE
 %token INSERT
 %token VALUES
+%token INTO
 
 %type <std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>>>    statement_list
 %type <std::shared_ptr<cmd::SQLStatement>>                                  statement
@@ -160,6 +161,9 @@ select_statement :
 insert_statement :
         INSERT string_val '(' cols_names_list ')' VALUES '(' cols_values_list ')' {
             $$ = std::make_shared<cmd::InsertStatement>($2.c_str(), $4, $8);
+        }
+    |   INSERT INTO string_val '(' cols_names_list ')' VALUES '(' cols_values_list ')' {
+            $$ = std::make_shared<cmd::InsertStatement>($3.c_str(), $5, $9);
         }
     ;
 
