@@ -74,7 +74,7 @@ public:
         return name_;
     }
     std::string to_string();
-    std::string EnumToString(ColumnType columnType);//мб заменить на map
+    std::string enum_to_string(ColumnType columnType);//мб заменить на map
     std::shared_ptr<TableCell> create_cell(std::pair<std::string, std::string> cell);
     std::shared_ptr<TableCell> create_cell(std::pair<ColumnType, std::string> cell);
     void insert(std::vector<std::pair<std::string, std::string>> row);

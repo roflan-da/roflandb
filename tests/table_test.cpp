@@ -62,10 +62,10 @@ TEST_CASE("Table") {
     }
 
     SECTION("EnumToString") {
-        REQUIRE(table->EnumToString(st_e::INT) == "INT");
-        REQUIRE(table->EnumToString(st_e::STRING) == "STRING");
-        REQUIRE(table->EnumToString(st_e::CHAR) == "CHAR");
-        REQUIRE(table->EnumToString(st_e::TEXT) == "TEXT");
+        REQUIRE(table->enum_to_string(st_e::INT) == "INT");
+        REQUIRE(table->enum_to_string(st_e::STRING) == "STRING");
+        REQUIRE(table->enum_to_string(st_e::CHAR) == "CHAR");
+        REQUIRE(table->enum_to_string(st_e::TEXT) == "TEXT");
     }
 
     SECTION("create_cell") {

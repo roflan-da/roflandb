@@ -27,7 +27,7 @@ std::string Table::get_sql() {
         if (i > 0){
             answer += ", ";
         }
-        answer += "\'" + columns_[i]->name + "\' " + EnumToString(columns_[i]->type);
+        answer += "\'" + columns_[i]->name + "\' " + enum_to_string(columns_[i]->type);
     }
     answer += ");";
     return answer;
@@ -46,7 +46,7 @@ std::string Table::to_string() {
     return table_string;
 }
 
-std::string Table::EnumToString(ColumnType columnType){   //мб заменить на map
+std::string Table::enum_to_string(ColumnType columnType){   //мб заменить на map
     switch (columnType){
         case INT:
             return "INT";
@@ -133,6 +133,10 @@ std::string Table::EnumToString(ColumnType columnType){   //мб заменит�
             for (size_t j = 0; j < columns_.size(); j++){
                 selectAnswer.rows[i].push_back(rows_[i]->get_cell(j));
             }
+        }
+        selectAnswer.columns_names.reserve(columns_.size());
+        for (int i = 0; i < columns_.size(); i++) {
+            selectAnswer.columns_names.push_back(columns_[i]->name);
         }
         return selectAnswer;
     }
