@@ -38,37 +38,38 @@ namespace st_e {
 
     void StorageEngine::load() {
         std::ifstream in("My_db.txt");
-        if (in.is_open()) {
-            size_t count;
-            in >> count;
-            for (size_t i = 0; i < count; i++) {
-                std::string table_name;
-                in >> table_name;
-                TableBuilder tableBuilder(table_name);
-                size_t columns_count;
-                in >> columns_count;
-                std::vector<std::shared_ptr<Column>> columns;
-                for (size_t j = 0; j < columns_count; j++) {
-                    std::string column_name;
-                    int type;
-                    in >> type >> column_name;
-                    columns.emplace_back(std::make_shared<Column>(static_cast<ColumnType>(type), column_name));
-                }
-                tableBuilder.set_columns(columns);
-                auto table = tableBuilder.build();
-                size_t rows_count;
-                in >> rows_count;
-                for (size_t i = 0; i < rows_count; i++) {
-                    std::vector<std::pair<ColumnType, std::string>> row;
-                    for (size_t j = 0; j < columns_count; j++) {
-                        std::string data;
-                        in >> data;
-                        row.emplace_back(columns[j]->type, data);
-                    }
-                    table->insert(row);
-                }
-                add_table(table);
+        if (!in.is_open())
+            return;
+            
+        size_t count;
+        in >> count;
+        for (size_t i = 0; i < count; i++) {
+            std::string table_name;
+            in >> table_name;
+            TableBuilder tableBuilder(table_name);
+            size_t columns_count;
+            in >> columns_count;
+            std::vector<std::shared_ptr<Column>> columns;
+            for (size_t j = 0; j < columns_count; j++) {
+                std::string column_name;
+                int type;
+                in >> type >> column_name;
+                columns.emplace_back(std::make_shared<Column>(static_cast<ColumnType>(type), column_name));
             }
+            tableBuilder.set_columns(columns);
+            auto table = tableBuilder.build();
+            size_t rows_count;
+            in >> rows_count;
+            for (size_t i = 0; i < rows_count; i++) {
+                std::vector<std::pair<ColumnType, std::string>> row;
+                for (size_t j = 0; j < columns_count; j++) {
+                    std::string data;
+                    in >> data;
+                    row.emplace_back(columns[j]->type, data);
+                }
+                table->insert(row);
+            }
+            add_table(table);
         }
     }
 
