@@ -27,7 +27,7 @@ int Cli::start() {
 
     // main loop
     while (true) {
-        //print prompt
+        // print prompt
         output << "rdb> ";
 
         std::getline(input, query);

@@ -40,7 +40,7 @@ namespace st_e {
         std::ifstream in("My_db.txt");
         if (!in.is_open())
             return;
-            
+
         size_t count;
         in >> count;
         for (size_t i = 0; i < count; i++) {
