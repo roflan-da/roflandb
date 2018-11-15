@@ -2,7 +2,7 @@
 
 cmd::DropStatement::DropStatement() : SQLStatement(DROP) {}
 
-void cmd::DropStatement::execute(st_e::IEngineStorage &storage_engine) {
+void cmd::DropStatement::execute(st_e::IEngineStorage& storage_engine) {
     switch (type_){
         case DROP_TABLE :
             storage_engine.delete_table(name_);

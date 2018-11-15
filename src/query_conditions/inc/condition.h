@@ -4,7 +4,6 @@
 #include <variant>
 #include <utility>
 
-
 namespace cond{
 
 enum SimpleConditionType{

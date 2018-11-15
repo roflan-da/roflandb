@@ -13,11 +13,8 @@ namespace cond {
         SINGLE
     };
 
-
-
     class QueryConditions {
     public:
-
         QueryConditions() = default;
         QueryConditions(ComplexConditionType type,
                 std::variant<std::shared_ptr<Condition>, std::shared_ptr<QueryConditions>> left,
