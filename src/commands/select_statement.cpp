@@ -26,13 +26,15 @@ void cmd::SelectStatement::execute(st_e::IEngineStorage& storage_engine) {
             }
         }
     }
+    message_stream << "|";
     for (int i = 0; i < t.columns_names.size(); ++i){
-        message_stream << std::setw(maxwidth[i]) << t.columns_names[i];
+        message_stream << std::setw(maxwidth[i]) << t.columns_names[i]+"|";
     }
     message_stream << std::endl;
     for (auto &row : t.rows) {
+        message_stream << "|";
         for (auto cell = 0; cell < row.size(); ++cell) {
-            message_stream << std::setw(maxwidth[cell]) << row[cell];
+            message_stream << std::setw(maxwidth[cell]) << row[cell]+"|";
         }
         message_stream << std::endl;
     }
