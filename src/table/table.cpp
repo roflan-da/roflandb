@@ -1,30 +1,26 @@
 #include <table.h>
-
 #include "inc/table.h"
 
 namespace st_e {
 
-//TableRaw
 std::string TableRow::to_string() {
     std::string ans;
-    for (size_t i = 0; i < cells_.size(); i++) {
-        ans += cells_[i]->get_data() + " ";
+    for (const auto& cell : cells_) {
+        ans += cell->get_data() + " ";
     }
     return ans;
 }
 
-//Table
 Table::Table(TableBuilder builder) {
     name_ = builder.get_table_name();
     columns_ = builder.get_columns();
-
 }
 
 std::string Table::get_sql() {
     std::string answer;
     answer = "CREATE TABLE \'" + name_ + "\' (";
     for (size_t i = 0; i < columns_.size(); i++){
-        if (i > 0){
+        if (i > 0) {
             answer += ", ";
         }
         answer += "\'" + columns_[i]->name + "\' " + enum_to_string(columns_[i]->type);
@@ -36,12 +32,12 @@ std::string Table::get_sql() {
 std::string Table::to_string() {
     std::string table_string;
     table_string = name_ + " " + std::to_string(columns_.size()) + " ";
-    for (size_t i = 0; i < columns_.size(); i++){
-        table_string += std::to_string(columns_[i]->type) + " " + columns_[i]->name + " ";
+    for (auto& column : columns_) {
+        table_string += std::to_string(column->type) + " " + column->name + " ";
     }
     table_string += std::to_string(rows_.size()) + " ";
-    for (size_t i = 0; i < rows_.size(); i++){
-        table_string += rows_[i]->to_string();
+    for (auto& row : rows_) {
+        table_string += row->to_string();
     }
     return table_string;
 }
@@ -67,8 +63,8 @@ std::string Table::enum_to_string(ColumnType columnType){   //мб замени�
         for (const auto& i : row) {
             cells.push_back(create_cell(i));
         }
-        std::shared_ptr<TableRow> tableRow(new TableRow(cells));
-        rows_.push_back(tableRow);
+        std::shared_ptr<TableRow> table_row(new TableRow(cells));
+        rows_.push_back(table_row);
     }
 
     void Table::insert(std::vector<std::pair<ColumnType , std::string>> row) {
@@ -77,8 +73,8 @@ std::string Table::enum_to_string(ColumnType columnType){   //мб замени�
         for (const auto& i : row) {
             cells.push_back(create_cell(i));
         }
-        std::shared_ptr<TableRow> tableRow(new TableRow(cells));
-        rows_.push_back(tableRow);
+        std::shared_ptr<TableRow> table_row(new TableRow(cells));
+        rows_.push_back(table_row);
     }
 
     std::shared_ptr<TableCell> Table::create_cell(std::pair<std::string, std::string> cell) {
@@ -90,7 +86,7 @@ std::string Table::enum_to_string(ColumnType columnType){   //мб замени�
         }
         switch (type){
             case (INT):
-                std::shared_ptr<IntegerTableCell> c (new IntegerTableCell(std::stoi(cell.second)));
+                std::shared_ptr<IntegerTableCell> c(new IntegerTableCell(std::stoi(cell.second)));
                 std::shared_ptr<TableCell> cc = c;       //госпади спаси и сохрани эти костыли
                 return cc;
         }
@@ -99,7 +95,7 @@ std::string Table::enum_to_string(ColumnType columnType){   //мб замени�
     std::shared_ptr<TableCell> Table::create_cell(std::pair<ColumnType, std::string> cell) {
         switch (cell.first){
             case (INT):
-                std::shared_ptr<IntegerTableCell> c (new IntegerTableCell(std::stoi(cell.second)));
+                std::shared_ptr<IntegerTableCell> c(new IntegerTableCell(std::stoi(cell.second)));
                 std::shared_ptr<TableCell> cc = c;
                 return cc;
         }
@@ -109,8 +105,8 @@ std::string Table::enum_to_string(ColumnType columnType){   //мб замени�
         SelectAnswer selectAnswer;
         std::vector<size_t> needed_columns;
         for (size_t i = 0; i < columns_.size(); i++){
-            for(size_t j = 0; j < columns_names.size(); j++) {
-                if (columns_names[j] == columns_[i]->name){
+            for (const auto& columns_name : columns_names) {
+                if (columns_name == columns_[i]->name){
                     needed_columns.push_back(i);
                     break;
                 }
@@ -118,8 +114,8 @@ std::string Table::enum_to_string(ColumnType columnType){   //мб замени�
         }
         for (size_t i = 0; i < rows_.size(); i++){
             selectAnswer.rows.emplace_back();
-            for (size_t j = 0; j < needed_columns.size(); j++){
-                selectAnswer.rows[i].push_back(rows_[i]->get_cell(needed_columns[j]));
+            for (const auto& needed_column : needed_columns) {
+                selectAnswer.rows[i].push_back(rows_[i]->get_cell(needed_column));
             }
         }
         selectAnswer.columns_names = std::move(columns_names);
@@ -135,16 +131,16 @@ std::string Table::enum_to_string(ColumnType columnType){   //мб замени�
             }
         }
         selectAnswer.columns_names.reserve(columns_.size());
-        for (int i = 0; i < columns_.size(); i++) {
-            selectAnswer.columns_names.push_back(columns_[i]->name);
+        for (auto& column : columns_) {
+            selectAnswer.columns_names.push_back(column->name);
         }
         return selectAnswer;
     }
 
     ColumnType Table::get_column_type(std::string column_name) {
-        for (size_t i = 0; i < columns_.size(); i++){
-            if (columns_[i]->name == column_name){
-                return columns_[i]->type;
+        for (auto& column : columns_) {
+            if (column->name == column_name){
+                return column->type;
             }
         }
         return NONE;

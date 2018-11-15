@@ -29,8 +29,8 @@ namespace st_e {
     void StorageEngine::save() {
         std::string tables_string;
         tables_string = std::to_string(tables_.size()) + " ";
-        for (auto it = tables_.begin(); it != tables_.end(); it++) {
-            tables_string += it->second->to_string();
+        for (const auto& table : tables_) {
+            tables_string += table.second->to_string();
         }
         std::ofstream out("My_db.txt");
         out << tables_string;

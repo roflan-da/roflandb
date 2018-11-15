@@ -18,19 +18,19 @@ enum ColumnType{
     NONE
 };
 
-struct Column{
+struct Column {
     Column(ColumnType type, std::string name);
 
     ColumnType type;
     std::string name;
 };
 
-struct SelectAnswer{
+struct SelectAnswer {
     std::vector<std::string> columns_names;
     std::vector<std::vector<std::string>> rows;
 };
 
-class TableCell{
+class TableCell {
 public:
     virtual std::string get_data() = 0;
 };
