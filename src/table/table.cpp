@@ -84,7 +84,7 @@ std::string Table::enum_to_string(ColumnType columnType){   //мб замени�
                 type = column->type;
             }
         }
-        create_cell({type, cell.second});
+        return create_cell({type, cell.second});
     }
 
     std::shared_ptr<TableCell> Table::create_cell(std::pair<ColumnType, std::string> cell) {
