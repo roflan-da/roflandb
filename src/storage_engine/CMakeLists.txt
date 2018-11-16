@@ -1,13 +1,15 @@
-if (MINGW)
+set(Boost_ARCHITECTURE -x64)
+#if (MINGW)
     set(Boost_DEBUG ON)
-    set(Boost_USE_STATIC_LIBS        ON) # only find static libs
+#    set(Boost_USE_STATIC_LIBS        ON) # only find static libs
     set(BOOST_INCLUDEDIR C:/Users/Alexey/Desktop/boost_1_68_0)
 #    set(BOOST_ROOT C:/Users/Alexey/Desktop/boost_1_68_0/boost)
     set(BOOST_LIBRARYDIR "C:\\Users\\Alexey\\Desktop\\boost_1_68_0\\stage\\lib")
-endif (MINGW)
+    set(Boost_ARCHITECTURE -x64)
+#endif (MINGW)
 
 
-find_package(Boost REQUIRED COMPONENTS filesystem)
+find_package(Boost REQUIRED COMPONENTS filesystem system)
 message("${Boost_LIBRARIES} as" WARNING)
 FILE(GLOB SRC "./*.cpp")
 
