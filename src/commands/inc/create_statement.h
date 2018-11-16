@@ -19,10 +19,10 @@ public:
     explicit CreateStatement(std::string table_name,
                              std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> n_columns);
 
-    bool is_valid(st_e::IEngineStorage &storage_engine) override;
-
     void add_column(std::shared_ptr<st_e::Column> column);
+
 private:
+    bool is_valid(st_e::IEngineStorage &storage_engine) override;
     std::string table_name_;
     std::vector<std::shared_ptr<st_e::Column>> columns_;
 };

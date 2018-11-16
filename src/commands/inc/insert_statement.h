@@ -16,8 +16,8 @@ public:
                              std::shared_ptr<std::vector<std::string>> cols_values);
 
     void execute(st_e::IEngineStorage &storage_engine) override;
-    bool is_valid(st_e::IEngineStorage &storage_engine) override;
 private:
+    bool is_valid(st_e::IEngineStorage &storage_engine) override;
     friend void SQLStatement::set_message(std::string message);
 
     std::vector<std::pair<std::string, std::string>> get_name_val();

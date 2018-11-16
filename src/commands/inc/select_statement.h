@@ -26,8 +26,8 @@ public:
             std::shared_ptr<std::vector<std::string>> cols_names,
             SelectType type = ALL);
 
-    bool is_valid(st_e::IEngineStorage &storage_engine) override;
 private:
+    bool is_valid(st_e::IEngineStorage &storage_engine) override;
     std::string table_name_;
     SelectType type_;
     std::vector<std::string> cols_names_;

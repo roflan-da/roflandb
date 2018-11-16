@@ -21,11 +21,11 @@ public:
 
     void execute(st_e::IEngineStorage& storage_engine) override;
 
-    bool is_valid(st_e::IEngineStorage &storage_engine) override;
-
     ShowType get_type();
+
     std::string get_name();
 private:
+    bool is_valid(st_e::IEngineStorage &storage_engine) override;
     ShowType type_;
     std::string name_;
 };
