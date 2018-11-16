@@ -84,12 +84,7 @@ std::string Table::enum_to_string(ColumnType columnType){   //мб замени�
                 type = column->type;
             }
         }
-        switch (type){
-            case (INT):
-                std::shared_ptr<IntegerTableCell> c(new IntegerTableCell(std::stoi(cell.second)));
-                std::shared_ptr<TableCell> cc = c;       //госпади спаси и сохрани эти костыли
-                return cc;
-        }
+        create_cell({type, cell.second});
     }
 
     std::shared_ptr<TableCell> Table::create_cell(std::pair<ColumnType, std::string> cell) {
