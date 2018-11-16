@@ -20,6 +20,8 @@ public:
     explicit DropStatement(std::string table_name);
     explicit DropStatement(DropType type, std::string name);
 
+    bool is_valid(st_e::IEngineStorage &storage_engine) override;
+
     DropType get_type() const;
     std::string get_name() const;
 

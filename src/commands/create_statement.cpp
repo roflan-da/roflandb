@@ -26,3 +26,7 @@ void cmd::CreateStatement::execute(st_e::IEngineStorage& storage_engine) {
 cmd::CreateStatement::CreateStatement(std::string table_name) :
     SQLStatement(CREATE_TABLE),
     table_name_(std::move(table_name)) {}
+
+bool cmd::CreateStatement::is_valid(st_e::IEngineStorage &storage_engine) {
+    return false;
+}

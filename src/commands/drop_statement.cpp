@@ -26,3 +26,7 @@ cmd::DropType cmd::DropStatement::get_type() const {
 std::string cmd::DropStatement::get_name() const {
     return name_;
 }
+
+bool cmd::DropStatement::is_valid(st_e::IEngineStorage &storage_engine) {
+    return false;
+}
