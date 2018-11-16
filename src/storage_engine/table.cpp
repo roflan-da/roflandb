@@ -24,7 +24,7 @@ std::string Column::get_type_string() const {
 std::string Table::get_sql() const {
     std::string sql = "CREATE TABLE \'" + name_ + "\' (";
 
-    for (auto i = 0; i < columns_.size(); i++){
+    for (size_t i = 0; i < columns_.size(); i++){
         if (0 < i && i < columns_.size() - 1) {
             sql += ", ";
         }

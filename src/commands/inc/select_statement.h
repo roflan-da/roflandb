@@ -3,7 +3,7 @@
 #include "string"
 #include <vector>
 #include <memory>
-#include <SQL_Statement.h>
+#include <sql_statement.h>
 #include "condition.h"
 
 namespace cmd {
@@ -13,7 +13,7 @@ namespace cmd {
         VARIABLE
     };
 
-    class SelectStatement : public SQLStatement {
+    class SelectStatement : public SqlStatement {
     public:
         SelectStatement();
 

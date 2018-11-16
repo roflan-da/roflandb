@@ -70,8 +70,8 @@
 %token VALUES
 %token INTO
 
-%type <std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>>>    statement_list
-%type <std::shared_ptr<cmd::SQLStatement>>                                  statement
+%type <std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>>    statement_list
+%type <std::shared_ptr<cmd::SqlStatement>>                                  statement
 
 %type <std::shared_ptr<cmd::CreateStatement>>                               create_statement
 %type <std::shared_ptr<cmd::ShowStatement>>                                 show_statement
@@ -111,7 +111,7 @@ start : statement_list {
     ;
 
 statement_list : statement {
-            $$ = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
+            $$ = std::make_shared<std::vector<std::shared_ptr<cmd::SqlStatement>>>();
             $$->emplace_back($1);
         }
     |   statement_list statement {

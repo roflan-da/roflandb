@@ -3,7 +3,7 @@
 #include "string"
 #include <vector>
 #include <memory>
-#include <SQL_Statement.h>
+#include <sql_statement.h>
 
 
 namespace cmd{
@@ -12,7 +12,7 @@ namespace cmd{
         TABLE
     };
 
-    class ShowStatement : public SQLStatement{
+    class ShowStatement : public SqlStatement{
     public:
         ShowStatement();
 

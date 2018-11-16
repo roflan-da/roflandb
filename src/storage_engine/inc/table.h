@@ -36,7 +36,7 @@ public:
 
     TableBuilder& add_column(Column::Type type, const std::string& name);
     std::shared_ptr<Table> build() {
-        return std::make_shared<Table>(*this);
+        return std::make_shared<Table>(table_name_, columns_);
     }
 
 private:

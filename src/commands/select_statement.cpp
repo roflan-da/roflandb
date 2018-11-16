@@ -3,12 +3,12 @@
 #include <sstream>
 #include <iomanip>
 
-cmd::SelectStatement::SelectStatement() : SQLStatement(SELECT) {}
+cmd::SelectStatement::SelectStatement() : SqlStatement(SELECT) {}
 
 cmd::SelectStatement::SelectStatement(std::string table_name,
         std::shared_ptr<std::vector<std::string>> cols_names,
         SelectType type) :
-        SQLStatement(SELECT),
+        SqlStatement(SELECT),
         table_name_(std::move(table_name)),
         type_(type),
         cols_names_(*cols_names.get()) {}

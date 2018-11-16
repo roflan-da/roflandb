@@ -1,6 +1,6 @@
 #include <drop_statement.h>
 
-cmd::DropStatement::DropStatement() : SQLStatement(DROP) {}
+cmd::DropStatement::DropStatement() : SqlStatement(DROP) {}
 
 void cmd::DropStatement::execute(st_e::IEngineStorage& storage_engine) {
     switch (type_){
@@ -15,9 +15,9 @@ void cmd::DropStatement::execute(st_e::IEngineStorage& storage_engine) {
     }
 }
 
-cmd::DropStatement::DropStatement(std::string table_name) : SQLStatement(DROP), type_(DROP_TABLE), name_(table_name){}
+cmd::DropStatement::DropStatement(std::string table_name) : SqlStatement(DROP), type_(DROP_TABLE), name_(table_name){}
 
-cmd::DropStatement::DropStatement(cmd::DropType type, std::string name) : SQLStatement(DROP), type_(type), name_(name){}
+cmd::DropStatement::DropStatement(cmd::DropType type, std::string name) : SqlStatement(DROP), type_(type), name_(name){}
 
 cmd::DropType cmd::DropStatement::get_type() const {
     return type_;

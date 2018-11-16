@@ -3,10 +3,10 @@
 #include "string"
 #include <vector>
 #include <memory>
-#include <SQL_Statement.h>
+#include <sql_statement.h>
 
 namespace cmd{
-    class InsertStatement : public SQLStatement {
+    class InsertStatement : public SqlStatement {
     public:
         InsertStatement();
 
@@ -16,7 +16,7 @@ namespace cmd{
 
         void execute(st_e::IEngineStorage &engine_storage) override;
     private:
-        friend void SQLStatement::set_message(std::string message);
+        friend void SqlStatement::set_message(std::string message);
 
         std::vector<std::pair<std::string, std::string>> get_name_val();
         std::string table_name_;

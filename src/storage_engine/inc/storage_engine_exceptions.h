@@ -23,4 +23,10 @@ public:
         : StorageEngineException("Column type " + type + " doest not exist") {}
 };
 
+class TableNotExistException : public StorageEngineException {
+public:
+    explicit TableNotExistException(const std::string& name)
+        : StorageEngineException("Table " + name + " doesn't exist") {}
+};
+
 } // namespace st_e

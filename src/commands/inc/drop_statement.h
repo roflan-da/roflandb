@@ -2,7 +2,7 @@
 
 #include "string"
 #include <vector>
-#include <SQL_Statement.h>
+#include <sql_statement.h>
 
 namespace cmd{
 
@@ -11,7 +11,7 @@ namespace cmd{
         DROP_DATABASE
     };
 
-    class DropStatement : public SQLStatement{
+    class DropStatement : public SqlStatement{
     public:
         DropStatement();
 
