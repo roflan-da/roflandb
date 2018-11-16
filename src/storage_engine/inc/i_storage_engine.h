@@ -10,8 +10,8 @@ public:
     virtual void add_table(std::shared_ptr<Table> table) = 0;
     virtual bool delete_table(std::string table_name) = 0;
     virtual void insert(std::string table_name, std::vector<std::pair<std::string, std::string>> raw) = 0;
-    virtual SelectAnswer select(std::string table_name, std::vector<std::string> columns_names) = 0;
-    virtual SelectAnswer select_all(std::string table_name) = 0;
+//    virtual SelectAnswer select(std::string table_name, std::vector<std::string> columns_names) = 0;
+//    virtual SelectAnswer select_all(std::string table_name) = 0;
     virtual void save() = 0;
     virtual void load() = 0;
 };

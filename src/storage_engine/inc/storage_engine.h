@@ -23,8 +23,8 @@ public:
 
     void insert(std::string table_name, std::vector<std::pair<std::string, std::string>> row) override;
 
-    SelectAnswer select(std::string table_name, std::vector<std::string> columns_names) override;
-    SelectAnswer select_all(std::string table_name) override;
+//    SelectAnswer select(std::string table_name, std::vector<std::string> columns_names) override;
+//    SelectAnswer select_all(std::string table_name) override;
 
     void save() override;
     void load() override;

@@ -30,13 +30,13 @@ void StorageEngine::insert(std::string table_name, std::vector<std::pair<std::st
     save();
 }
 
-SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names) {
-    return tables_.find(table_name)->second->select(columns_names);  //добавить проверку на существование
-}
-
-SelectAnswer StorageEngine::select_all(std::string table_name) {
-    return tables_.find(table_name)->second->select_all();  //добавить проверку на существование
-}
+//SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names) {
+//    return tables_.find(table_name)->second->select(columns_names);  //добавить проверку на существование
+//}
+//
+//SelectAnswer StorageEngine::select_all(std::string table_name) {
+//    return tables_.find(table_name)->second->select_all();  //добавить проверку на существование
+//}
 
 void StorageEngine::save() {
     std::string tables_string;
