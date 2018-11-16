@@ -6,17 +6,15 @@
 #include "SQL_Statement.h"
 
 namespace cmd{
+class Command {
+public:
+    Command() = default;
 
-    class Command {
-    public:
-        Command() = default;
+    explicit Command(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> statements);
 
-        explicit Command(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> statements);
-
-        void execute(st_e::IEngineStorage& engine_storage);
-        std::string get_messages();
-    private:
-        std::vector<std::shared_ptr<cmd::SQLStatement>> statements_;
-    };
-
+    void execute(st_e::IEngineStorage& engine_storage);
+    std::string get_messages();
+private:
+    std::vector<std::shared_ptr<cmd::SQLStatement>> statements_;
+};
 } //namespace cmd
