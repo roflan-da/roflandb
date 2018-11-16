@@ -10,7 +10,7 @@ namespace cmd{
 class CreateStatement : public SQLStatement{
 public:
     CreateStatement();
-
+    ~CreateStatement() override = default;
     void execute(st_e::IEngineStorage& storage_engine) override;
 
     //table_name_ptr_->c_str() for convert ptr to string

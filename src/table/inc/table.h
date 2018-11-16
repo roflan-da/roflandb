@@ -32,18 +32,15 @@ struct SelectAnswer {
 
 class TableCell {
 public:
+    virtual ~TableCell() = default;
     virtual std::string get_data() = 0;
 };
 
 class IntegerTableCell : public TableCell{
 public:
-    explicit IntegerTableCell(int data){
-        data_ = data;
-    }
-
-    std::string get_data() override{
-        return std::to_string(data_);
-    }
+    explicit IntegerTableCell(int data) : data_(data) {}
+    ~IntegerTableCell() override = default;
+    std::string get_data() override{ return std::to_string(data_); }
 
 private:
     int data_;

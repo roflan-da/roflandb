@@ -9,6 +9,7 @@ namespace cmd{
 class InsertStatement : public SQLStatement {
 public:
     InsertStatement();
+    ~InsertStatement() override = default;
 
     explicit InsertStatement(std::string table_name,
                              std::shared_ptr<std::vector<std::string>> cols_names,

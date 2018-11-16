@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <SQL_Statement.h>
+#include <pthread/qos.h>
 #include "condition.h"
 
 namespace cmd {
@@ -16,6 +17,7 @@ enum SelectType{
 class SelectStatement : public SQLStatement {
 public:
     SelectStatement();
+    ~SelectStatement() override = default;
 
     void execute(st_e::IEngineStorage& storage_engine) override;
 

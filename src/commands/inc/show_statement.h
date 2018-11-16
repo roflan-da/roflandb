@@ -14,6 +14,7 @@ enum ShowType{
 class ShowStatement : public SQLStatement{
 public:
     ShowStatement();
+    ~ShowStatement() override = default;
 
     explicit ShowStatement(ShowType type);
     explicit ShowStatement(ShowType type, std::string name);

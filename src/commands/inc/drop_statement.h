@@ -13,6 +13,7 @@ enum DropType{
 class DropStatement : public SQLStatement{
 public:
     DropStatement();
+    ~DropStatement() override = default;
 
     void execute(st_e::IEngineStorage& storage_engine) override;
 
