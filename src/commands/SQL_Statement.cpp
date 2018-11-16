@@ -1,4 +1,6 @@
 #include <SQL_Statement.h>
+#include <insert_statement.h>
+
 
 cmd::SQLStatement::SQLStatement(cmd::StatementType type): type_(type) {}
 

@@ -20,7 +20,8 @@ public:
     std::string get_message();
     void set_message(std::string message);
 
-    virtual void execute(st_e::IEngineStorage& engine_storage) = 0;
+    virtual void execute(st_e::IEngineStorage& storage_engine) = 0;
+    virtual bool is_valid(st_e::IEngineStorage& storage_engine) = 0;
 private:
     std::string message_;
     StatementType type_;
