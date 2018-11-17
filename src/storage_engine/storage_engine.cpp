@@ -16,10 +16,9 @@ void StorageEngine::add_table(const Table& table) {
 //    return false;
 //}
 
-// Todo: remove
-//StorageEngine::TablePtr StorageEngine::get_table_by_name(std::string table_name) {
-//    return tables_.find(table_name)->second;
-//}
+const st_e::Table& StorageEngine::get_table_by_name(const std::string& table_name) {
+    return tables_.get_table(table_name);
+}
 
 //void StorageEngine::insert(std::string table_name, std::vector<std::pair<std::string, std::string>> row) {
 //    auto table = get_table_by_name(std::move(table_name));   //добавить проверку на существование

@@ -16,7 +16,7 @@ public:
     void add_table(const Table& table);
 //    bool delete_table(std::string table_name);
 
-//    TablePtr get_table_by_name(std::string table_name) override;
+    const Table& get_table_by_name(const std::string& table_name);
 
 //    void insert(const std::string& table_name, std::vector<std::pair<std::string, std::string>> row);
 
