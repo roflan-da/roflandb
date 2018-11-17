@@ -3,7 +3,7 @@
 #include <command.h>
 #include "iostream"
 
-void cmd::Command::execute(st_e::EngineStorage& engine_storage) {
+void cmd::Command::execute(st_e::StorageEngine& engine_storage) {
     for (const auto& statement : statements_){
         statement->execute(engine_storage);
     }

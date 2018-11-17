@@ -24,8 +24,8 @@ std::vector<std::pair<std::string, std::string>> cmd::InsertStatement::get_name_
     return result;
 }
 
-void cmd::InsertStatement::execute(st_e::IEngineStorage& engine_storage) {
-    engine_storage.insert(table_name_, this->get_name_val());
-    set_message("INSERT INTO " + table_name_ + " SUCCESSFUL.");
+void cmd::InsertStatement::execute(st_e::StorageEngine& engine_storage) {
+//    engine_storage.insert(table_name_, this->get_name_val());
+//    set_message("INSERT INTO " + table_name_ + " SUCCESSFUL.");
     //    engine_storage.save();
 }
