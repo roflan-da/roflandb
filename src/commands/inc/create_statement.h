@@ -22,6 +22,8 @@ public:
     void execute(st_e::StorageEngine& storage_engine) override;
     void add_column(std::shared_ptr<st_e::Column> column);
 private:
+   // virtual bool is_valid(st_e::StorageEngine& engine_storage) = 0;
+
     std::string table_name_;
     std::vector<std::shared_ptr<st_e::Column>> columns_;
 };

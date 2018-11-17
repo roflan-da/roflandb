@@ -11,7 +11,10 @@ namespace st_e {
 
 class StorageEngine {
 public:
-    StorageEngine() = default;
+    StorageEngine( const StorageEngine&) = delete;
+    StorageEngine& operator=(StorageEngine&) = delete;
+
+    static StorageEngine& get_instance();
 
     void add_table(const Table& table);
 //    bool delete_table(std::string table_name);
@@ -25,7 +28,8 @@ public:
 //
 
 private:
-    SharedTable& tables_ = SharedTable::get_instance();
+        StorageEngine() = default;
+        SharedTable& tables_ = SharedTable::get_instance();
 };
 
 }//namespace st_e

@@ -1,4 +1,6 @@
 #include <string>
+#include <storage_engine.h>
+
 #include "storage_engine.h"
 
 namespace st_e {
@@ -18,6 +20,11 @@ void StorageEngine::add_table(const Table& table) {
 
 const st_e::Table& StorageEngine::get_table_by_name(const std::string& table_name) {
     return tables_.get_table(table_name);
+}
+
+StorageEngine &StorageEngine::get_instance() {
+    static StorageEngine instance;
+    return instance;
 }
 
 //void StorageEngine::insert(std::string table_name, std::vector<std::pair<std::string, std::string>> row) {
