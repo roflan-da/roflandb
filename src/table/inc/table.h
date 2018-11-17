@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <algorithm>
 #include <string>
 #include <vector>    //юзать вектор или нет?
 
@@ -91,12 +92,9 @@ private:
 class TableBuilder {
 public:
     friend Table;
-    explicit TableBuilder(std::string table_name) :
-            table_name_(std::move(table_name)) {}
+    explicit TableBuilder(std::string table_name);
 
-    void set_columns(std::vector<std::shared_ptr<Column>> columns){
-        columns_ = std::move(columns);
-    }
+    void set_columns(std::vector<std::shared_ptr<Column>> columns);
 
     std::shared_ptr<Table> build() {
         return std::make_shared<Table>(*this);

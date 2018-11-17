@@ -88,6 +88,7 @@ std::shared_ptr<TableCell> Table::create_cell(std::pair<std::string, std::string
 }
 
 std::shared_ptr<TableCell> Table::create_cell(std::pair<ColumnType, std::string> cell) {
+    std::transform(cell.second.begin(), cell.second.end(), cell.second.begin(), tolower);
     switch (cell.first){
         case (INT): {
             auto c = std::make_shared<IntegerTableCell> (std::stoi(cell.second));
@@ -104,7 +105,8 @@ SelectAnswer Table::select(std::vector<std::string> columns_names) {
     SelectAnswer selectAnswer;
     std::vector<size_t> needed_columns;
     for (size_t i = 0; i < columns_.size(); i++){
-        for (const auto& columns_name : columns_names) {
+        for (auto& columns_name : columns_names) {
+            std::transform(columns_name.begin(), columns_name.end(), columns_name.begin(), tolower);
             if (columns_name == columns_[i]->name){
                 needed_columns.push_back(i);
                 break;
@@ -149,4 +151,15 @@ Column::Column(ColumnType type, std::string name) :
     type(type),
     name(std::move(name)) {}
 
+    TableBuilder::TableBuilder(std::string table_name) {
+        std::transform(table_name.begin(), table_name.end(), table_name.begin(), tolower);
+        table_name_ = std::move(table_name);
+    }
+
+    void TableBuilder::set_columns(std::vector<std::shared_ptr<Column>> columns) {
+        for (auto& column : columns){
+            std::transform(column->name.begin(), column->name.end(), column->name.begin(), tolower);
+        }
+        columns_ = std::move(columns);
+    }
 } // namespace st_e

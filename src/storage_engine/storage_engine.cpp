@@ -12,6 +12,7 @@ void StorageEngine::add_table(TablePtr table) {
 }
 
 bool StorageEngine::delete_table(std::string table_name) {
+    std::transform(table_name.begin(), table_name.end(), table_name.begin(), tolower);
     auto it = tables_.find(table_name);
     if (it != tables_.end()) {
         tables_.erase(it);
@@ -21,6 +22,7 @@ bool StorageEngine::delete_table(std::string table_name) {
 }
 
 StorageEngine::TablePtr StorageEngine::get_table_by_name(std::string table_name) {
+    std::transform(table_name.begin(), table_name.end(), table_name.begin(), tolower);
     return tables_.find(table_name)->second;
 }
 
@@ -31,10 +33,12 @@ void StorageEngine::insert(std::string table_name, std::vector<std::pair<std::st
 }
 
 SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names) {
+    std::transform(table_name.begin(), table_name.end(), table_name.begin(), tolower);
     return tables_.find(table_name)->second->select(columns_names);  //добавить проверку на существование
 }
 
 SelectAnswer StorageEngine::select_all(std::string table_name) {
+    std::transform(table_name.begin(), table_name.end(), table_name.begin(), tolower);
     return tables_.find(table_name)->second->select_all();  //добавить проверку на существование
 }
 
