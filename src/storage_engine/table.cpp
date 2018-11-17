@@ -21,6 +21,21 @@ std::string Column::get_type_string() const {
     }
 }
 
+Column::Type Column::get_type_from_string(std::string& type) {
+    if (type == "INT") {
+        return Type::INT;
+    } else if (type == "STRING") {
+        return Type::STRING;
+    } else if (type == "CHAR") {
+        return Type::CHAR;
+    } else if (type == "TEXT") {
+        return Type::TEXT;
+    }
+
+    throw std::range_error("Column string to type conversion doesn't exist");
+}
+
+
 std::string Table::get_sql() const {
     std::string sql = "CREATE TABLE \'" + name_ + "\' (";
 

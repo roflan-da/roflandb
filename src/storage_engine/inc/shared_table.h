@@ -3,6 +3,7 @@
 #include <map>
 #include <boost/filesystem.hpp>
 #include "table.h"
+
 namespace st_e {
 
 // singleton NOT thread safe
@@ -12,7 +13,7 @@ public:
     SharedTable& operator=(SharedTable&) = delete;
     static SharedTable& get_instance();
 
-//    std::shared_ptr<Table> get_table(const std::string& name);
+    const Table& get_table(const std::string& name);
     // rewrites existing table metadata
     void save_table(const Table& table);
 
@@ -21,8 +22,8 @@ private:
     std::map<std::string, Table> cached_tables_;
 
     Table& load_table(const std::string& name);
-    void save_to_disk(const Table& table);
-    boost::filesystem::path get_metadata_file_path(const Table&);
+    void save_to_disk(const Table& table) const;
+    boost::filesystem::path get_metadata_file_path(const std::string& table_name) const;
 };
 
 } // namespace st_e

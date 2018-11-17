@@ -15,6 +15,8 @@ public:
     Type type;
     std::string name;
     std::string get_type_string() const;
+    // Todo: remove copypaste
+    static Type get_type_from_string(std::string& type);
 };
 
 class Table {
@@ -36,8 +38,8 @@ public:
     explicit TableBuilder(const std::string& table_name) : table_name_(table_name) {}
 
     TableBuilder& add_column(Column::Type type, const std::string& name);
-    std::shared_ptr<Table> build() {
-        return std::make_shared<Table>(table_name_, columns_);
+    Table build() {
+        return Table(table_name_, columns_);
     }
 
     const std::vector<Column>& get_columns() const { return columns_; };
