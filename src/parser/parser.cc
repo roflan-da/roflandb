@@ -1980,3 +1980,7 @@ void roflan_parser::Parser::error(const Parser::location_type& l,
 {
     driver.error(l, m);
 }
+'_m4eof'
+_m4eof
+'_m4eof'
+_m4eof
