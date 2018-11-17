@@ -233,7 +233,7 @@ string_val :
         }
 
 column_type:
-        INT_TYPE { $$ = st_e::ColumnType::INT; }
+        INT_TYPE { $$ = st_e::Column::Type::INT; }
     ;
 
 %% /*** Additional Code ***/

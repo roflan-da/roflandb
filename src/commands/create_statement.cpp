@@ -3,15 +3,15 @@
 
 namespace cmd {
 
+CreateStatement::CreateStatement() :
+        SqlStatement(CREATE_TABLE),
+        table_name_("") {}
+
 CreateStatement::CreateStatement(std::string table_name,
                                       std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> n_columns) :
     SqlStatement(CREATE_TABLE),
     table_name_(std::move(table_name)),
     columns_(*n_columns.get()) {}
-
-CreateStatement::CreateStatement() :
-        SqlStatement(CREATE_TABLE),
-        table_name_("") {}
 
 void CreateStatement::add_column(std::shared_ptr<st_e::Column> column) {
     columns_.emplace_back(column);

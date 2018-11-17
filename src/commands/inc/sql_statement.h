@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../../storage_engine/inc/i_storage_engine.h"
+#include <string>
+#include <storage_engine.h>
 
 namespace cmd {
 
@@ -21,7 +22,7 @@ public:
     std::string get_message();
     void set_message(std::string message);
 
-    virtual void execute(st_e::IEngineStorage& engine_storage) = 0;
+    virtual void execute(st_e::StorageEngine& engine_storage) = 0;
 private:
     std::string message_;
     StatementType type_;

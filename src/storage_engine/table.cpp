@@ -35,7 +35,6 @@ Column::Type Column::get_type_from_string(std::string& type) {
     throw std::range_error("Column string to type conversion doesn't exist");
 }
 
-
 std::string Table::get_sql() const {
     std::string sql = "CREATE TABLE \'" + name_ + "\' (";
 
@@ -51,6 +50,11 @@ std::string Table::get_sql() const {
 
 TableBuilder& TableBuilder::add_column(Column::Type type, const std::string& name) {
     columns_.emplace_back(type, name);
+    return *this;
+}
+
+TableBuilder& TableBuilder::add_column(Column& column) {
+    columns_.emplace_back(column);
     return *this;
 }
 } // namespace st_e

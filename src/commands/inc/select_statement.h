@@ -17,7 +17,7 @@ namespace cmd {
     public:
         SelectStatement();
 
-        void execute(st_e::IEngineStorage& storage_engine) override;
+        void execute(st_e::StorageEngine& storage_engine) override;
 
         explicit SelectStatement(std::string table_name);
 

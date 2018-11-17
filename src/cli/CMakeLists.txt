@@ -5,11 +5,10 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COMPILE_FLAGS}")
 
 SET(LIBS storage_engine commands parser)
 
-#add_executable(roflandb ${SRC})
-add_executable(roflandb main.cpp)
+add_executable(roflandb ${SRC})
 target_include_directories(roflandb PUBLIC inc/)
 #target_link_libraries(roflandb PUBLIC ${LIBS})
-target_link_libraries(roflandb PUBLIC storage_engine)
+target_link_libraries(roflandb PUBLIC storage_engine commands parser)
 
 add_library(roflandb_testlib SHARED ${SRC})
 target_include_directories(roflandb_testlib PUBLIC inc/)

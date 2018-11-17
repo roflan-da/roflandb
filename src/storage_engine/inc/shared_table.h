@@ -6,7 +6,6 @@
 
 namespace st_e {
 
-// singleton NOT thread safe
 class SharedTable {
 public:
     SharedTable(const SharedTable&) = delete;

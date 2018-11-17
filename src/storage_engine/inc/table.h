@@ -38,6 +38,8 @@ public:
     explicit TableBuilder(const std::string& table_name) : table_name_(table_name) {}
 
     TableBuilder& add_column(Column::Type type, const std::string& name);
+    TableBuilder& add_column(Column& column);
+
     Table build() {
         return Table(table_name_, columns_);
     }

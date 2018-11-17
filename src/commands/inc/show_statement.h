@@ -19,7 +19,7 @@ namespace cmd{
         explicit ShowStatement(ShowType type);
         explicit ShowStatement(ShowType type, std::string name);
 
-        void execute(st_e::IEngineStorage& storage_engine) override;
+        void execute(st_e::StorageEngine& storage_engine) override;
 
         ShowType get_type();
         std::string get_name();

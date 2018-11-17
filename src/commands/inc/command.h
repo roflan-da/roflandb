@@ -1,7 +1,6 @@
 #pragma once
 
 // weird interface include
-#include "../../storage_engine/inc/i_storage_engine.h"
 #include <vector>
 #include "sql_statement.h"
 
@@ -13,7 +12,7 @@ namespace cmd{
 
         explicit Command(std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> statements);
 
-        void execute(st_e::IEngineStorage& engine_storage);
+        void execute(st_e::StorageEngine& engine_storage);
         std::string get_messages();
     private:
         std::vector<std::shared_ptr<cmd::SqlStatement>> statements_;

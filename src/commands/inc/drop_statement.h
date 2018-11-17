@@ -15,7 +15,7 @@ namespace cmd{
     public:
         DropStatement();
 
-        void execute(st_e::IEngineStorage& storage_engine) override;
+        void execute(st_e::StorageEngine& storage_engine) override;
 
         explicit DropStatement(std::string table_name);
         explicit DropStatement(DropType type, std::string name);

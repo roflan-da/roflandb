@@ -14,7 +14,7 @@ namespace cmd{
                                  std::shared_ptr<std::vector<std::string>> cols_names,
                                  std::shared_ptr<std::vector<std::string>> cols_values);
 
-        void execute(st_e::IEngineStorage &engine_storage) override;
+        void execute(st_e::StorageEngine &engine_storage) override;
     private:
         friend void SqlStatement::set_message(std::string message);
 
