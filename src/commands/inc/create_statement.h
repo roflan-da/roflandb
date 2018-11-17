@@ -3,7 +3,8 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <sql_statement.h>
+#include "sql_statement.h"
+#include "storage_engine.h"
 
 namespace cmd {
 
@@ -11,7 +12,7 @@ class CreateStatement : public SqlStatement {
 public:
     CreateStatement();
 
-    void execute(st_e::IEngineStorage& storage_engine) override;
+    void execute(st_e::StorageEngine& storage_engine);
 
     //table_name_ptr_->c_str() for convert ptr to string
     explicit CreateStatement(std::string table_name)

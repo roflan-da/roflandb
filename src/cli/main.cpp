@@ -3,7 +3,9 @@
 
 int main(int argc, char *argv[]) {
     auto& sharedTable = st_e::SharedTable::get_instance();
-    sharedTable.get_table("mem");
+    std::vector<st_e::Column> columns = {st_e::Column(st_e::Column::Type::INT, "id"), st_e::Column(st_e::Column::Type::INT, "NUMBER")};
+    st_e::Table t("sample table", columns);
+    sharedTable.save_table(t);
 //    auto& cli = roflan_cli::Cli::get_instance();
 //    return cli.start();
 }

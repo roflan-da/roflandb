@@ -24,6 +24,7 @@ public:
 
     std::string get_sql() const;
     std::string get_name() const { return name_; }
+    const std::vector<Column>& get_columns() const { return columns_; }
 
 private:
     std::string name_;
@@ -38,6 +39,8 @@ public:
     std::shared_ptr<Table> build() {
         return std::make_shared<Table>(table_name_, columns_);
     }
+
+    const std::vector<Column>& get_columns() const { return columns_; };
 
 private:
     std::string table_name_;

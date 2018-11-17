@@ -17,12 +17,13 @@ void CreateStatement::add_column(std::shared_ptr<st_e::Column> column) {
     columns_.emplace_back(column);
 }
 
-void CreateStatement::execute(st_e::IEngineStorage& storage_engine) {
+void CreateStatement::execute(st_e::StorageEngine& storage_engine) {
     st_e::TableBuilder table_builder(table_name_);
-    table_builder.set_columns(columns_);
-    auto table = table_builder.build();
-    storage_engine.add_table(table);
-    storage_engine.save();
+    for (const auto& column : columns_) {
+        // todo: consider remove shared_ptr
+        table_builder.add_column(*column);
+    }
+    storage_engine.add_table(table_builder.build());
 }
 
 
