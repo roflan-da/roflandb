@@ -281,7 +281,7 @@ namespace roflan_parser {
       char dummy1[sizeof(int)];
 
       // column_type
-      char dummy2[sizeof(st_e::ColumnType)];
+      char dummy2[sizeof(st_e:Column::Type)];
 
       // create_statement
       char dummy3[sizeof(std::shared_ptr<cmd::CreateStatement>)];
@@ -393,7 +393,7 @@ namespace roflan_parser {
 
   basic_symbol (typename Base::kind_type t, const int v, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const st_e::ColumnType v, const location_type& l);
+  basic_symbol (typename Base::kind_type t, const st_e:Column::Type v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::CreateStatement> v, const location_type& l);
 
