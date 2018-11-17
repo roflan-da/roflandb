@@ -27,11 +27,9 @@ StorageEngine &StorageEngine::get_instance() {
     return instance;
 }
 
-//void StorageEngine::insert(std::string table_name, std::vector<std::pair<std::string, std::string>> row) {
-//    auto table = get_table_by_name(std::move(table_name));   //добавить проверку на существование
-//    table->insert(std::move(row));
-//    save();
-//}
+void StorageEngine::insert(const std::string& table_name, std::vector<std::pair<std::string, std::string>> row) {
+//    dsa
+}
 
 //SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names) {
 //    return tables_.find(table_name)->second->select(columns_names);  //добавить проверку на существование

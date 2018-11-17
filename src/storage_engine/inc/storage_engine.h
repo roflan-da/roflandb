@@ -21,7 +21,7 @@ public:
 
     const Table& get_table_by_name(const std::string& table_name);
 
-//    void insert(const std::string& table_name, std::vector<std::pair<std::string, std::string>> row);
+    void insert(const std::string& table_name, std::vector<std::pair<std::string, std::string>> row);
 
 //    SelectAnswer select(std::string table_name, std::vector<std::string> columns_names) override;
 //    SelectAnswer select_all(std::string table_name) override;

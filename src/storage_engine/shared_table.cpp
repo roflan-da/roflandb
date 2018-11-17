@@ -3,6 +3,8 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
+#include <shared_table.h>
+
 
 #include "shared_table.h"
 #include "configuration.h"
@@ -67,20 +69,34 @@ void SharedTable::save_table(const Table& table) {
 }
 
 void SharedTable::save_to_disk(const Table& table) const {
+    auto data_dir = get_metadata_file_path(table.get_name()).parent_path();
+    // create metadata file
     auto metadata_file_path = get_metadata_file_path(table.get_name());
-    auto data_dir = metadata_file_path.parent_path();
     // Todo: try-catch
     if (!fs::exists(data_dir)) {
         fs::create_directories(data_dir);
     }
 
-    std::ofstream data_file;
-    data_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-    data_file.open(metadata_file_path.string());
+    std::ofstream metada_data_file;
+    metada_data_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+    metada_data_file.open(metadata_file_path.string());
 
     for (const auto& column : table.get_columns()) {
-        data_file << column.get_type_string() << " " << column.name << '\n';
+        metada_data_file << column.get_type_string() << " " << column.name << '\n';
     }
+    metada_data_file.close();
+
+    // create data file
+    std::ofstream data_file;
+    data_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+    data_file.open(get_data_file_path(table.get_name()).string(), std::ios::binary);
+
+    // see data_block.h for details
+    // set prev and next blocks to 0
+    uint32_t no_block_pointer = 0;
+    data_file.write(reinterpret_cast<char*>(&no_block_pointer), sizeof(uint32_t));
+    data_file.write(reinterpret_cast<char*>(&no_block_pointer), sizeof(uint32_t));
+
     data_file.close();
 }
 
@@ -90,6 +106,16 @@ fs::path SharedTable::get_metadata_file_path(const std::string& table_name) cons
     // **/{data_dir_path}/{table_name}/{table_name.meta}
     auto meta_data_file_path = fs::current_path() /= fs::path(DATA_DIR_PATH) /= fs::path(invariant_table_name)
             /= fs::path(table_name + ".meta");
+
+    return meta_data_file_path.string();
+}
+
+boost::filesystem::path SharedTable::get_data_file_path(const std::string& table_name) const {
+    auto invariant_table_name = boost::to_lower_copy(table_name);
+
+    // **/{data_dir_path}/{table_name}/{table_name.data}
+    auto meta_data_file_path = fs::current_path() /= fs::path(DATA_DIR_PATH) /= fs::path(invariant_table_name)
+            /= fs::path(table_name + ".data");
 
     return meta_data_file_path.string();
 }
