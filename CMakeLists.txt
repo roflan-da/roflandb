@@ -10,8 +10,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 include(CodeCoverage)
 
 if (MINGW)
-    set(Boost_DEBUG ON)
-    set(Boost_USE_STATIC_LIBS OFF) # only find static libs
+    # set(Boost_DEBUG ON)
     set(BOOST_INCLUDEDIR ${PROJECT_SOURCE_DIR}/boost/)
     set(BOOST_ROOT ${PROJECT_SOURCE_DIR}/boost/boost)
     set(BOOST_LIBRARYDIR ${PROJECT_SOURCE_DIR}/boost/lib)
