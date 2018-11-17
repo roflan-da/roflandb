@@ -3,3 +3,6 @@ cmake-build-*/
 
 # MacOS
 .DS_Store
+
+# Boost directory for windows
+boost/
