@@ -292,14 +292,14 @@ namespace roflan_parser {
       // insert_statement
       char dummy5[sizeof(std::shared_ptr<cmd::InsertStatement>)];
 
-      // statement
-      char dummy6[sizeof(std::shared_ptr<cmd::SqlStatement>)];
-
       // select_statement
-      char dummy7[sizeof(std::shared_ptr<cmd::SelectStatement>)];
+      char dummy6[sizeof(std::shared_ptr<cmd::SelectStatement>)];
 
       // show_statement
-      char dummy8[sizeof(std::shared_ptr<cmd::ShowStatement>)];
+      char dummy7[sizeof(std::shared_ptr<cmd::ShowStatement>)];
+
+      // statement
+      char dummy8[sizeof(std::shared_ptr<cmd::SqlStatement>)];
 
       // column_def
       char dummy9[sizeof(std::shared_ptr<st_e::Column>)];
@@ -401,11 +401,11 @@ namespace roflan_parser {
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::InsertStatement> v, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SqlStatement> v, const location_type& l);
-
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SelectStatement> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::ShowStatement> v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SqlStatement> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<st_e::Column> v, const location_type& l);
 

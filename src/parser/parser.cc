@@ -251,16 +251,16 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::InsertStatement> > (other.value);
         break;
 
-      case 25: // statement
-        value.copy< std::shared_ptr<cmd::SqlStatement> > (other.value);
-        break;
-
       case 28: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (other.value);
         break;
 
       case 27: // show_statement
         value.copy< std::shared_ptr<cmd::ShowStatement> > (other.value);
+        break;
+
+      case 25: // statement
+        value.copy< std::shared_ptr<cmd::SqlStatement> > (other.value);
         break;
 
       case 35: // column_def
@@ -321,16 +321,16 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::InsertStatement> > (v);
         break;
 
-      case 25: // statement
-        value.copy< std::shared_ptr<cmd::SqlStatement> > (v);
-        break;
-
       case 28: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (v);
         break;
 
       case 27: // show_statement
         value.copy< std::shared_ptr<cmd::ShowStatement> > (v);
+        break;
+
+      case 25: // statement
+        value.copy< std::shared_ptr<cmd::SqlStatement> > (v);
         break;
 
       case 35: // column_def
@@ -407,13 +407,6 @@ namespace roflan_parser {
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SqlStatement> v, const location_type& l)
-    : Base (t)
-    , value (v)
-    , location (l)
-  {}
-
-  template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SelectStatement> v, const location_type& l)
     : Base (t)
     , value (v)
@@ -422,6 +415,13 @@ namespace roflan_parser {
 
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::ShowStatement> v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SqlStatement> v, const location_type& l)
     : Base (t)
     , value (v)
     , location (l)
@@ -506,16 +506,16 @@ namespace roflan_parser {
         value.template destroy< std::shared_ptr<cmd::InsertStatement> > ();
         break;
 
-      case 25: // statement
-        value.template destroy< std::shared_ptr<cmd::SqlStatement> > ();
-        break;
-
       case 28: // select_statement
         value.template destroy< std::shared_ptr<cmd::SelectStatement> > ();
         break;
 
       case 27: // show_statement
         value.template destroy< std::shared_ptr<cmd::ShowStatement> > ();
+        break;
+
+      case 25: // statement
+        value.template destroy< std::shared_ptr<cmd::SqlStatement> > ();
         break;
 
       case 35: // column_def
@@ -582,16 +582,16 @@ namespace roflan_parser {
         value.move< std::shared_ptr<cmd::InsertStatement> > (s.value);
         break;
 
-      case 25: // statement
-        value.move< std::shared_ptr<cmd::SqlStatement> > (s.value);
-        break;
-
       case 28: // select_statement
         value.move< std::shared_ptr<cmd::SelectStatement> > (s.value);
         break;
 
       case 27: // show_statement
         value.move< std::shared_ptr<cmd::ShowStatement> > (s.value);
+        break;
+
+      case 25: // statement
+        value.move< std::shared_ptr<cmd::SqlStatement> > (s.value);
         break;
 
       case 35: // column_def
@@ -805,16 +805,16 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::InsertStatement> > (that.value);
         break;
 
-      case 25: // statement
-        value.copy< std::shared_ptr<cmd::SqlStatement> > (that.value);
-        break;
-
       case 28: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (that.value);
         break;
 
       case 27: // show_statement
         value.copy< std::shared_ptr<cmd::ShowStatement> > (that.value);
+        break;
+
+      case 25: // statement
+        value.copy< std::shared_ptr<cmd::SqlStatement> > (that.value);
         break;
 
       case 35: // column_def
@@ -871,16 +871,16 @@ namespace roflan_parser {
         value.move< std::shared_ptr<cmd::InsertStatement> > (that.value);
         break;
 
-      case 25: // statement
-        value.move< std::shared_ptr<cmd::SqlStatement> > (that.value);
-        break;
-
       case 28: // select_statement
         value.move< std::shared_ptr<cmd::SelectStatement> > (that.value);
         break;
 
       case 27: // show_statement
         value.move< std::shared_ptr<cmd::ShowStatement> > (that.value);
+        break;
+
+      case 25: // statement
+        value.move< std::shared_ptr<cmd::SqlStatement> > (that.value);
         break;
 
       case 35: // column_def
@@ -940,16 +940,16 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::InsertStatement> > (that.value);
         break;
 
-      case 25: // statement
-        value.copy< std::shared_ptr<cmd::SqlStatement> > (that.value);
-        break;
-
       case 28: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (that.value);
         break;
 
       case 27: // show_statement
         value.copy< std::shared_ptr<cmd::ShowStatement> > (that.value);
+        break;
+
+      case 25: // statement
+        value.copy< std::shared_ptr<cmd::SqlStatement> > (that.value);
         break;
 
       case 35: // column_def
@@ -1227,16 +1227,16 @@ namespace roflan_parser {
         yylhs.value.build< std::shared_ptr<cmd::InsertStatement> > ();
         break;
 
-      case 25: // statement
-        yylhs.value.build< std::shared_ptr<cmd::SqlStatement> > ();
-        break;
-
       case 28: // select_statement
         yylhs.value.build< std::shared_ptr<cmd::SelectStatement> > ();
         break;
 
       case 27: // show_statement
         yylhs.value.build< std::shared_ptr<cmd::ShowStatement> > ();
+        break;
+
+      case 25: // statement
+        yylhs.value.build< std::shared_ptr<cmd::SqlStatement> > ();
         break;
 
       case 35: // column_def
