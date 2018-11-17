@@ -14,7 +14,7 @@ namespace cmd {
     class DropStatement : public SqlStatement{
     public:
         DropStatement();
-
+        ~DropStatement() override = default;
         void execute(st_e::StorageEngine& storage_engine) override;
 
         explicit DropStatement(std::string table_name);
@@ -24,6 +24,8 @@ namespace cmd {
         std::string get_name() const;
 
     private:
+        bool is_valid(st_e::StorageEngine& engine_storage) override;
+
         DropType type_;
         std::string name_;
     };

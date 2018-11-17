@@ -16,7 +16,7 @@ namespace cmd {
     class SelectStatement : public SqlStatement {
     public:
         SelectStatement();
-
+        ~SelectStatement() override = default;
         void execute(st_e::StorageEngine& storage_engine) override;
 
         explicit SelectStatement(std::string table_name);
@@ -25,6 +25,8 @@ namespace cmd {
                 std::shared_ptr<std::vector<std::string>> cols_names,
                 SelectType type = ALL);
     private:
+        bool is_valid(st_e::StorageEngine& engine_storage) override;
+
         std::string table_name_;
         SelectType type_;
         std::vector<std::string> cols_names_;

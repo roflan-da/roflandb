@@ -1,4 +1,6 @@
 #include <utility>
+#include <show_statement.h>
+
 #include "show_statement.h"
 
 cmd::ShowStatement::ShowStatement() : SqlStatement(SHOW), type_(cmd::TABLE) {}
@@ -19,3 +21,7 @@ std::string cmd::ShowStatement::get_name() {
 }
 
 cmd::ShowStatement::ShowStatement(cmd::ShowType type, std::string name) : type_(type), name_(name){}
+
+bool cmd::ShowStatement::is_valid(st_e::StorageEngine &engine_storage) {
+    return false;
+}

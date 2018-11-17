@@ -1,4 +1,6 @@
 #include <utility>
+#include <create_statement.h>
+
 #include "create_statement.h"
 
 namespace cmd {
@@ -25,6 +27,10 @@ void CreateStatement::execute(st_e::StorageEngine& storage_engine) {
     }
     storage_engine.add_table(table_builder.build());
 }
+
+    bool CreateStatement::is_valid(st_e::StorageEngine &engine_storage) {
+        return false;
+    }
 
 
 } // namespace cmd
