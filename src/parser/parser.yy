@@ -79,7 +79,7 @@
 %type <std::shared_ptr<cmd::InsertStatement>>                               insert_statement
 %type <std::shared_ptr<cmd::DropStatement>>                                 drop_statement
 
-%type <st_e:Column::Type>                                                    column_type
+%type <st_e::Column::Type>                                                  column_type
 %type <std::shared_ptr<st_e::Column>>                                       column_def
 %type <std::string>                                                         col_value
 %type <std::string>                                                         string_val
