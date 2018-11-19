@@ -1,8 +1,6 @@
 #include <utility>
 #include <create_statement.h>
 
-#include "create_statement.h"
-
 namespace cmd {
 
     CreateStatement::CreateStatement() :

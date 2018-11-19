@@ -1,8 +1,6 @@
 #include <utility>
 #include <show_statement.h>
 
-#include "show_statement.h"
-
 cmd::ShowStatement::ShowStatement() : SqlStatement(SHOW), type_(cmd::TABLE) {}
 
 cmd::ShowStatement::ShowStatement(cmd::ShowType type) : SqlStatement(SHOW), type_(type) {}
