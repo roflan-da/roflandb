@@ -28,7 +28,7 @@ const Table& SharedTable::get_table(const std::string& name) {
 
 Table& SharedTable::load_table(const std::string& table_name) {
     auto invariant_table_name = boost::to_lower_copy(table_name);
-    auto meta_data_file_path = get_metadata_file_path(table_name);
+    auto meta_data_file_path = st_e::Table::get_metadata_file_path(table_name);
 
     if (!fs::exists(meta_data_file_path)) {
         // TODO: throw exception!
@@ -68,9 +68,9 @@ void SharedTable::save_table(const Table& table) {
 }
 
 void SharedTable::save_to_disk(const Table& table) const {
-    auto data_dir = get_metadata_file_path(table.get_name()).parent_path();
+    auto data_dir = st_e::Table::get_metadata_file_path(table.get_name()).parent_path();
     // create metadata file
-    auto metadata_file_path = get_metadata_file_path(table.get_name());
+    auto metadata_file_path = st_e::Table::get_metadata_file_path(table.get_name());
     // Todo: try-catch
     if (!fs::exists(data_dir)) {
         fs::create_directories(data_dir);
@@ -88,7 +88,7 @@ void SharedTable::save_to_disk(const Table& table) const {
     // create data file
     std::ofstream data_file;
     data_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-    data_file.open(get_data_file_path(table.get_name()).string(), std::ios::binary);
+    data_file.open(st_e::Table::get_data_file_path(table.get_name()).string(), std::ios::binary);
 
     // see data_block.h for details
     // set prev and next blocks to 0
@@ -97,26 +97,6 @@ void SharedTable::save_to_disk(const Table& table) const {
     data_file.write(reinterpret_cast<char*>(&no_block_pointer), sizeof(uint32_t));
 
     data_file.close();
-}
-
-fs::path SharedTable::get_metadata_file_path(const std::string& table_name) const {
-    auto invariant_table_name = boost::to_lower_copy(table_name);
-
-    // **/{data_dir_path}/{table_name}/{table_name.meta}
-    auto meta_data_file_path = fs::current_path() /= fs::path(DATA_DIR_PATH) /= fs::path(invariant_table_name)
-            /= fs::path(table_name + ".meta");
-
-    return meta_data_file_path.string();
-}
-
-boost::filesystem::path SharedTable::get_data_file_path(const std::string& table_name) const {
-    auto invariant_table_name = boost::to_lower_copy(table_name);
-
-    // **/{data_dir_path}/{table_name}/{table_name.data}
-    auto meta_data_file_path = fs::current_path() /= fs::path(DATA_DIR_PATH) /= fs::path(invariant_table_name)
-            /= fs::path(table_name + ".data");
-
-    return meta_data_file_path.string();
 }
 
 } // namespace st_e

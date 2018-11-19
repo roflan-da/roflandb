@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <boost/filesystem.hpp>
 
 namespace st_e {
 
@@ -27,6 +28,8 @@ public:
     std::string get_sql() const;
     std::string get_name() const { return name_; }
     const std::vector<Column>& get_columns() const { return columns_; }
+    static boost::filesystem::path get_metadata_file_path(const std::string& table_name);
+    static boost::filesystem::path get_data_file_path(const std::string& table_name);
 
 private:
     std::string name_;
