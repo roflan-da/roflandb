@@ -11,7 +11,7 @@ enum ShowType{
     TABLE
 };
 
-class ShowStatement : public SQLStatement{
+class ShowStatement : public SqlStatement{
 public:
     ShowStatement();
     ~ShowStatement() override = default;
@@ -19,13 +19,13 @@ public:
     explicit ShowStatement(ShowType type);
     explicit ShowStatement(ShowType type, std::string name);
 
-    void execute(st_e::IEngineStorage& storage_engine) override;
+    void execute(st_e::StorageEngine& storage_engine) override;
 
     ShowType get_type();
 
     std::string get_name();
 private:
-    bool is_valid(st_e::IEngineStorage &storage_engine) override;
+    bool is_valid(st_e::StorageEngine &storage_engine) override;
     ShowType type_;
     std::string name_;
 };

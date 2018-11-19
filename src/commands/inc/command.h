@@ -9,11 +9,11 @@ class Command {
 public:
     Command() = default;
 
-    explicit Command(std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> statements);
+    explicit Command(std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> statements);
 
-    void execute(st_e::IEngineStorage& storage_engine);
+    void execute(st_e::StorageEngine& storage_engine);
     std::string get_messages();
 private:
-    std::vector<std::shared_ptr<cmd::SQLStatement>> statements_;
+    std::vector<std::shared_ptr<cmd::SqlStatement>> statements_;
 };
 } //namespace cmd

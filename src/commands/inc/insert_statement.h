@@ -6,7 +6,7 @@
 #include <sql_statement.h>
 
 namespace cmd{
-class InsertStatement : public SQLStatement {
+class InsertStatement : public SqlStatement {
 public:
     InsertStatement();
     ~InsertStatement() override = default;
@@ -15,10 +15,10 @@ public:
                              std::shared_ptr<std::vector<std::string>> cols_names,
                              std::shared_ptr<std::vector<std::string>> cols_values);
 
-    void execute(st_e::IEngineStorage &storage_engine) override;
+    void execute(st_e::StorageEngine &storage_engine) override;
 private:
-    bool is_valid(st_e::IEngineStorage &storage_engine) override;
-    friend void SQLStatement::set_message(std::string message);
+    bool is_valid(st_e::StorageEngine &storage_engine) override;
+    friend void SqlStatement::set_message(std::string message);
 
 
     std::vector<std::pair<std::string, std::string>> get_name_val();

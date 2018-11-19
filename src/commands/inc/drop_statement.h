@@ -10,11 +10,11 @@ enum DropType{
     DROP_DATABASE
 };
 
-class DropStatement : public SQLStatement{
+class DropStatement : public SqlStatement{
 public:
     DropStatement();
     ~DropStatement() override = default;
-    void execute(st_e::IEngineStorage& storage_engine) override;
+    void execute(st_e::StorageEngine& storage_engine) override;
 
     explicit DropStatement(std::string table_name);
     explicit DropStatement(DropType type, std::string name);
@@ -23,7 +23,7 @@ public:
     std::string get_name() const;
 
 private:
-    bool is_valid(st_e::IEngineStorage &storage_engine) override;
+    bool is_valid(st_e::StorageEngine &storage_engine) override;
 
     DropType type_;
     std::string name_;
