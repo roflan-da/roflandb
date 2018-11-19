@@ -1,9 +1,8 @@
 #pragma once
 
 // weird interface include
-#include "../../storage_engine/inc/i_storage_engine.h"
 #include <vector>
-#include "SQL_Statement.h"
+#include "sql_statement.h"
 
 namespace cmd{
 class Command {

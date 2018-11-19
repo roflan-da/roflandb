@@ -7,7 +7,8 @@ SET(LIBS storage_engine commands parser)
 
 add_executable(roflandb ${SRC})
 target_include_directories(roflandb PUBLIC inc/)
-target_link_libraries(roflandb PUBLIC ${LIBS})
+#target_link_libraries(roflandb PUBLIC ${LIBS})
+target_link_libraries(roflandb PUBLIC storage_engine commands parser)
 
 add_library(roflandb_testlib SHARED ${SRC})
 target_include_directories(roflandb_testlib PUBLIC inc/)
@@ -15,7 +16,11 @@ target_link_libraries(roflandb_testlib PUBLIC ${LIBS})
 
 if (MINGW)
     get_filename_component( Mingw_Path ${CMAKE_CXX_COMPILER} PATH )
-    set(MINGW_RUNTIME_LIBS ${Mingw_Path}/libgcc_s_seh-1.dll ${Mingw_Path}/libstdc++-6.dll)
+    set(MINGW_RUNTIME_LIBS
+            ${Mingw_Path}/libgcc_s_seh-1.dll
+            ${Mingw_Path}/libstdc++-6.dll
+            ${Mingw_Path}/libwinpthread-1.dll)
+
 #    message(STATUS " - Coping system-libraries: MinGW DLLs.  ${Mingw_Path}")
 
     add_custom_target(copyDLL)

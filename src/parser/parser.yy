@@ -70,8 +70,8 @@
 %token VALUES
 %token INTO
 
-%type <std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>>>    statement_list
-%type <std::shared_ptr<cmd::SQLStatement>>                                  statement
+%type <std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>>    statement_list
+%type <std::shared_ptr<cmd::SqlStatement>>                                  statement
 
 %type <std::shared_ptr<cmd::CreateStatement>>                               create_statement
 %type <std::shared_ptr<cmd::ShowStatement>>                                 show_statement
@@ -79,7 +79,7 @@
 %type <std::shared_ptr<cmd::InsertStatement>>                               insert_statement
 %type <std::shared_ptr<cmd::DropStatement>>                                 drop_statement
 
-%type <st_e::ColumnType>                                                    column_type
+%type <st_e::Column::Type>                                                  column_type
 %type <std::shared_ptr<st_e::Column>>                                       column_def
 %type <std::string>                                                         col_value
 %type <std::string>                                                         string_val
@@ -111,7 +111,7 @@ start : statement_list {
     ;
 
 statement_list : statement {
-            $$ = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
+            $$ = std::make_shared<std::vector<std::shared_ptr<cmd::SqlStatement>>>();
             $$->emplace_back($1);
         }
     |   statement_list statement {
@@ -233,7 +233,7 @@ string_val :
         }
 
 column_type:
-        INT_TYPE { $$ = st_e::ColumnType::INT; }
+        INT_TYPE { $$ = st_e::Column::Type::INT; }
     ;
 
 %% /*** Additional Code ***/

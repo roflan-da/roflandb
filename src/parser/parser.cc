@@ -236,7 +236,7 @@ namespace roflan_parser {
         break;
 
       case 37: // column_type
-        value.copy< st_e::ColumnType > (other.value);
+        value.copy< st_e::Column::Type > (other.value);
         break;
 
       case 26: // create_statement
@@ -251,10 +251,6 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::InsertStatement> > (other.value);
         break;
 
-      case 25: // statement
-        value.copy< std::shared_ptr<cmd::SQLStatement> > (other.value);
-        break;
-
       case 28: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (other.value);
         break;
@@ -263,12 +259,16 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::ShowStatement> > (other.value);
         break;
 
+      case 25: // statement
+        value.copy< std::shared_ptr<cmd::SqlStatement> > (other.value);
+        break;
+
       case 35: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (other.value);
         break;
 
       case 24: // statement_list
-        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (other.value);
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (other.value);
         break;
 
       case 34: // column_def_list
@@ -306,7 +306,7 @@ namespace roflan_parser {
         break;
 
       case 37: // column_type
-        value.copy< st_e::ColumnType > (v);
+        value.copy< st_e::Column::Type > (v);
         break;
 
       case 26: // create_statement
@@ -321,10 +321,6 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::InsertStatement> > (v);
         break;
 
-      case 25: // statement
-        value.copy< std::shared_ptr<cmd::SQLStatement> > (v);
-        break;
-
       case 28: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (v);
         break;
@@ -333,12 +329,16 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::ShowStatement> > (v);
         break;
 
+      case 25: // statement
+        value.copy< std::shared_ptr<cmd::SqlStatement> > (v);
+        break;
+
       case 35: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (v);
         break;
 
       case 24: // statement_list
-        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (v);
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (v);
         break;
 
       case 34: // column_def_list
@@ -379,7 +379,7 @@ namespace roflan_parser {
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const st_e::ColumnType v, const location_type& l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const st_e::Column::Type v, const location_type& l)
     : Base (t)
     , value (v)
     , location (l)
@@ -407,13 +407,6 @@ namespace roflan_parser {
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SQLStatement> v, const location_type& l)
-    : Base (t)
-    , value (v)
-    , location (l)
-  {}
-
-  template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SelectStatement> v, const location_type& l)
     : Base (t)
     , value (v)
@@ -428,6 +421,13 @@ namespace roflan_parser {
   {}
 
   template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SqlStatement> v, const location_type& l)
+    : Base (t)
+    , value (v)
+    , location (l)
+  {}
+
+  template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<st_e::Column> v, const location_type& l)
     : Base (t)
     , value (v)
@@ -435,7 +435,7 @@ namespace roflan_parser {
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> v, const location_type& l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> v, const location_type& l)
     : Base (t)
     , value (v)
     , location (l)
@@ -491,7 +491,7 @@ namespace roflan_parser {
         break;
 
       case 37: // column_type
-        value.template destroy< st_e::ColumnType > ();
+        value.template destroy< st_e::Column::Type > ();
         break;
 
       case 26: // create_statement
@@ -506,10 +506,6 @@ namespace roflan_parser {
         value.template destroy< std::shared_ptr<cmd::InsertStatement> > ();
         break;
 
-      case 25: // statement
-        value.template destroy< std::shared_ptr<cmd::SQLStatement> > ();
-        break;
-
       case 28: // select_statement
         value.template destroy< std::shared_ptr<cmd::SelectStatement> > ();
         break;
@@ -518,12 +514,16 @@ namespace roflan_parser {
         value.template destroy< std::shared_ptr<cmd::ShowStatement> > ();
         break;
 
+      case 25: // statement
+        value.template destroy< std::shared_ptr<cmd::SqlStatement> > ();
+        break;
+
       case 35: // column_def
         value.template destroy< std::shared_ptr<st_e::Column> > ();
         break;
 
       case 24: // statement_list
-        value.template destroy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ();
+        value.template destroy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > ();
         break;
 
       case 34: // column_def_list
@@ -567,7 +567,7 @@ namespace roflan_parser {
         break;
 
       case 37: // column_type
-        value.move< st_e::ColumnType > (s.value);
+        value.move< st_e::Column::Type > (s.value);
         break;
 
       case 26: // create_statement
@@ -582,10 +582,6 @@ namespace roflan_parser {
         value.move< std::shared_ptr<cmd::InsertStatement> > (s.value);
         break;
 
-      case 25: // statement
-        value.move< std::shared_ptr<cmd::SQLStatement> > (s.value);
-        break;
-
       case 28: // select_statement
         value.move< std::shared_ptr<cmd::SelectStatement> > (s.value);
         break;
@@ -594,12 +590,16 @@ namespace roflan_parser {
         value.move< std::shared_ptr<cmd::ShowStatement> > (s.value);
         break;
 
+      case 25: // statement
+        value.move< std::shared_ptr<cmd::SqlStatement> > (s.value);
+        break;
+
       case 35: // column_def
         value.move< std::shared_ptr<st_e::Column> > (s.value);
         break;
 
       case 24: // statement_list
-        value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (s.value);
+        value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (s.value);
         break;
 
       case 34: // column_def_list
@@ -790,7 +790,7 @@ namespace roflan_parser {
         break;
 
       case 37: // column_type
-        value.copy< st_e::ColumnType > (that.value);
+        value.copy< st_e::Column::Type > (that.value);
         break;
 
       case 26: // create_statement
@@ -805,10 +805,6 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::InsertStatement> > (that.value);
         break;
 
-      case 25: // statement
-        value.copy< std::shared_ptr<cmd::SQLStatement> > (that.value);
-        break;
-
       case 28: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (that.value);
         break;
@@ -817,12 +813,16 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::ShowStatement> > (that.value);
         break;
 
+      case 25: // statement
+        value.copy< std::shared_ptr<cmd::SqlStatement> > (that.value);
+        break;
+
       case 35: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (that.value);
         break;
 
       case 24: // statement_list
-        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (that.value);
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (that.value);
         break;
 
       case 34: // column_def_list
@@ -856,7 +856,7 @@ namespace roflan_parser {
         break;
 
       case 37: // column_type
-        value.move< st_e::ColumnType > (that.value);
+        value.move< st_e::Column::Type > (that.value);
         break;
 
       case 26: // create_statement
@@ -871,10 +871,6 @@ namespace roflan_parser {
         value.move< std::shared_ptr<cmd::InsertStatement> > (that.value);
         break;
 
-      case 25: // statement
-        value.move< std::shared_ptr<cmd::SQLStatement> > (that.value);
-        break;
-
       case 28: // select_statement
         value.move< std::shared_ptr<cmd::SelectStatement> > (that.value);
         break;
@@ -883,12 +879,16 @@ namespace roflan_parser {
         value.move< std::shared_ptr<cmd::ShowStatement> > (that.value);
         break;
 
+      case 25: // statement
+        value.move< std::shared_ptr<cmd::SqlStatement> > (that.value);
+        break;
+
       case 35: // column_def
         value.move< std::shared_ptr<st_e::Column> > (that.value);
         break;
 
       case 24: // statement_list
-        value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (that.value);
+        value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (that.value);
         break;
 
       case 34: // column_def_list
@@ -925,7 +925,7 @@ namespace roflan_parser {
         break;
 
       case 37: // column_type
-        value.copy< st_e::ColumnType > (that.value);
+        value.copy< st_e::Column::Type > (that.value);
         break;
 
       case 26: // create_statement
@@ -940,10 +940,6 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::InsertStatement> > (that.value);
         break;
 
-      case 25: // statement
-        value.copy< std::shared_ptr<cmd::SQLStatement> > (that.value);
-        break;
-
       case 28: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (that.value);
         break;
@@ -952,12 +948,16 @@ namespace roflan_parser {
         value.copy< std::shared_ptr<cmd::ShowStatement> > (that.value);
         break;
 
+      case 25: // statement
+        value.copy< std::shared_ptr<cmd::SqlStatement> > (that.value);
+        break;
+
       case 35: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (that.value);
         break;
 
       case 24: // statement_list
-        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > (that.value);
+        value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (that.value);
         break;
 
       case 34: // column_def_list
@@ -1212,7 +1212,7 @@ namespace roflan_parser {
         break;
 
       case 37: // column_type
-        yylhs.value.build< st_e::ColumnType > ();
+        yylhs.value.build< st_e::Column::Type > ();
         break;
 
       case 26: // create_statement
@@ -1227,10 +1227,6 @@ namespace roflan_parser {
         yylhs.value.build< std::shared_ptr<cmd::InsertStatement> > ();
         break;
 
-      case 25: // statement
-        yylhs.value.build< std::shared_ptr<cmd::SQLStatement> > ();
-        break;
-
       case 28: // select_statement
         yylhs.value.build< std::shared_ptr<cmd::SelectStatement> > ();
         break;
@@ -1239,12 +1235,16 @@ namespace roflan_parser {
         yylhs.value.build< std::shared_ptr<cmd::ShowStatement> > ();
         break;
 
+      case 25: // statement
+        yylhs.value.build< std::shared_ptr<cmd::SqlStatement> > ();
+        break;
+
       case 35: // column_def
         yylhs.value.build< std::shared_ptr<st_e::Column> > ();
         break;
 
       case 24: // statement_list
-        yylhs.value.build< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ();
+        yylhs.value.build< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > ();
         break;
 
       case 34: // column_def_list
@@ -1283,7 +1283,7 @@ namespace roflan_parser {
   case 2:
 #line 107 "parser.yy" // lalr1.cc:856
     {
-            std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>(yystack_[0].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ());
+            std::shared_ptr<cmd::Command> result = std::make_shared<cmd::Command>(yystack_[0].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > ());
             driver.sql_parser_result = result;
         }
 #line 1290 "parser.cc" // lalr1.cc:856
@@ -1292,8 +1292,8 @@ namespace roflan_parser {
   case 3:
 #line 113 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > () = std::make_shared<std::vector<std::shared_ptr<cmd::SQLStatement>>>();
-            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SQLStatement> > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > () = std::make_shared<std::vector<std::shared_ptr<cmd::SqlStatement>>>();
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SqlStatement> > ());
         }
 #line 1299 "parser.cc" // lalr1.cc:856
     break;
@@ -1301,8 +1301,8 @@ namespace roflan_parser {
   case 4:
 #line 117 "parser.yy" // lalr1.cc:856
     {
-            yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SQLStatement> > ());
-            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > () = yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SQLStatement>>> > ();
+            yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > ()->emplace_back(yystack_[0].value.as< std::shared_ptr<cmd::SqlStatement> > ());
+            yylhs.value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > () = yystack_[1].value.as< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > ();
         }
 #line 1308 "parser.cc" // lalr1.cc:856
     break;
@@ -1310,7 +1310,7 @@ namespace roflan_parser {
   case 5:
 #line 123 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::CreateStatement> > ();
+            yylhs.value.as< std::shared_ptr<cmd::SqlStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::CreateStatement> > ();
         }
 #line 1316 "parser.cc" // lalr1.cc:856
     break;
@@ -1318,7 +1318,7 @@ namespace roflan_parser {
   case 6:
 #line 126 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::ShowStatement> > ();
+            yylhs.value.as< std::shared_ptr<cmd::SqlStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::ShowStatement> > ();
         }
 #line 1324 "parser.cc" // lalr1.cc:856
     break;
@@ -1326,7 +1326,7 @@ namespace roflan_parser {
   case 7:
 #line 129 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::SelectStatement> > ();
+            yylhs.value.as< std::shared_ptr<cmd::SqlStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::SelectStatement> > ();
         }
 #line 1332 "parser.cc" // lalr1.cc:856
     break;
@@ -1334,7 +1334,7 @@ namespace roflan_parser {
   case 8:
 #line 132 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::InsertStatement> > ();
+            yylhs.value.as< std::shared_ptr<cmd::SqlStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::InsertStatement> > ();
         }
 #line 1340 "parser.cc" // lalr1.cc:856
     break;
@@ -1342,7 +1342,7 @@ namespace roflan_parser {
   case 9:
 #line 135 "parser.yy" // lalr1.cc:856
     {
-            yylhs.value.as< std::shared_ptr<cmd::SQLStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::DropStatement> > ();
+            yylhs.value.as< std::shared_ptr<cmd::SqlStatement> > () = yystack_[1].value.as< std::shared_ptr<cmd::DropStatement> > ();
         }
 #line 1348 "parser.cc" // lalr1.cc:856
     break;
@@ -1484,7 +1484,7 @@ namespace roflan_parser {
   case 26:
 #line 222 "parser.yy" // lalr1.cc:856
     {
-		    yylhs.value.as< std::shared_ptr<st_e::Column> > () = std::make_shared<st_e::Column>(yystack_[0].value.as< st_e::ColumnType > (), yystack_[1].value.as< std::string > ().c_str());
+		    yylhs.value.as< std::shared_ptr<st_e::Column> > () = std::make_shared<st_e::Column>(yystack_[0].value.as< st_e::Column::Type > (), yystack_[1].value.as< std::string > ().c_str());
 		}
 #line 1490 "parser.cc" // lalr1.cc:856
     break;
@@ -1507,7 +1507,7 @@ namespace roflan_parser {
 
   case 29:
 #line 236 "parser.yy" // lalr1.cc:856
-    { yylhs.value.as< st_e::ColumnType > () = st_e::ColumnType::INT; }
+    { yylhs.value.as< st_e::Column::Type > () = st_e::Column::Type::INT; }
 #line 1512 "parser.cc" // lalr1.cc:856
     break;
 

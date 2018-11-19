@@ -6,12 +6,12 @@
 cmd::InsertStatement::InsertStatement(std::string table_name,
                                       std::shared_ptr<std::vector<std::string>> cols_names,
                                       std::shared_ptr<std::vector<std::string>> cols_values) :
-        SQLStatement(INSERT),
+        SqlStatement(INSERT),
         table_name_(std::move(table_name)),
         columns_names_(*cols_names.get()),
         columns_vals_(*cols_values.get()){}
 
-cmd::InsertStatement::InsertStatement() : SQLStatement(INSERT) {}
+cmd::InsertStatement::InsertStatement() : SqlStatement(INSERT) {}
 
 std::vector<std::pair<std::string, std::string>> cmd::InsertStatement::get_name_val() {
     std::vector<std::pair<std::string, std::string>> result;
@@ -24,12 +24,8 @@ std::vector<std::pair<std::string, std::string>> cmd::InsertStatement::get_name_
     return result;
 }
 
-void cmd::InsertStatement::execute(st_e::IEngineStorage& storage_engine) {
-    storage_engine.insert(table_name_, this->get_name_val());
-    set_message("INSERT INTO " + table_name_ + " SUCCESSFUL.");
-    //    storage_engine.save();
-}
-
-bool cmd::InsertStatement::is_valid(st_e::IEngineStorage &storage_engine) {
-    return false;
+void cmd::InsertStatement::execute(st_e::StorageEngine& engine_storage) {
+//    engine_storage.insert(table_name_, this->get_name_val());
+//    set_message("INSERT INTO " + table_name_ + " SUCCESSFUL.");
+    //    engine_storage.save();
 }

@@ -1,32 +1,36 @@
 #include <utility>
 #include <create_statement.h>
 
-cmd::CreateStatement::CreateStatement(std::string table_name, 
-                                      std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> n_columns) :
-    SQLStatement(CREATE_TABLE),
-    table_name_(std::move(table_name)),
-    columns_(*n_columns.get()) {}
+#include "create_statement.h"
 
-cmd::CreateStatement::CreateStatement() :
-        SQLStatement(CREATE_TABLE),
-        table_name_("") {}
+namespace cmd {
 
-void cmd::CreateStatement::add_column(std::shared_ptr<st_e::Column> column) {
-    columns_.emplace_back(column);
-}
+    CreateStatement::CreateStatement() :
+            SqlStatement(CREATE_TABLE),
+            table_name_("") {}
 
-void cmd::CreateStatement::execute(st_e::IEngineStorage& storage_engine) {
-    st_e::TableBuilder table_builder(table_name_);
-    table_builder.set_columns(columns_);
-    auto table = table_builder.build();
-    storage_engine.add_table(table);
-    storage_engine.save();
-}
+    CreateStatement::CreateStatement(std::string table_name,
+                                     std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> n_columns) :
+            SqlStatement(CREATE_TABLE),
+            table_name_(std::move(table_name)),
+            columns_(*n_columns.get()) {}
 
-cmd::CreateStatement::CreateStatement(std::string table_name) :
-    SQLStatement(CREATE_TABLE),
-    table_name_(std::move(table_name)) {}
+    void CreateStatement::add_column(std::shared_ptr<st_e::Column> column) {
+        columns_.emplace_back(column);
+    }
 
-bool cmd::CreateStatement::is_valid(st_e::IEngineStorage &storage_engine) {
-    return false;
-}
+    void CreateStatement::execute(st_e::StorageEngine& storage_engine) {
+        st_e::TableBuilder table_builder(table_name_);
+        for (const auto& column : columns_) {
+            // todo: consider remove shared_ptr
+            table_builder.add_column(*column);
+        }
+        storage_engine.add_table(table_builder.build());
+    }
+
+    bool CreateStatement::is_valid(st_e::StorageEngine &engine_storage) {
+        return false;
+    }
+
+
+} // namespace cmd
