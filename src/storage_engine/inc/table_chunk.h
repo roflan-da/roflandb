@@ -1,3 +1,5 @@
+#include <utility>
+
 #pragma once
 
 #include <string>
@@ -22,7 +24,7 @@ private:
 
 class TableRow {
 public:
-    explicit TableRow(const std::vector<TableCell>& cells) : cells_(cells) {}
+    explicit TableRow(std::vector<TableCell> cells) : cells_(std::move(cells)) {}
 
 //    std::string get_cell(size_t number){ return cells_[number].get_data(); }
 //    std::string to_string();
