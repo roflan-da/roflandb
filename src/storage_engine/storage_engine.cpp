@@ -28,8 +28,12 @@ StorageEngine &StorageEngine::get_instance() {
     return instance;
 }
 
-void StorageEngine::insert(const std::string& table_name, std::vector<std::pair<std::string, std::string>> row) {
-//    dsa
+void StorageEngine::insert(const std::string& table_name, const std::vector<std::pair<std::string, std::string>>& rows) {
+
+}
+
+void StorageEngine::load_first_block(const std::string& table_name) {
+//    tables_.get_table()
 }
 
 

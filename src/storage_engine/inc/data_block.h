@@ -27,6 +27,7 @@ public:
     DataBlock();
     uint32_t get_previous() const { return previous_; }
     uint32_t get_next() const { return next_; }
+
 private:
     uint32_t previous_ = 0;
     uint32_t next_ = 0;

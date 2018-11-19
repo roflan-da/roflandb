@@ -3,7 +3,6 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
-#include <shared_table.h>
 
 
 #include "shared_table.h"
