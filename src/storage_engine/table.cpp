@@ -1,6 +1,7 @@
 #include <exception>
-#include <table.h>
 #include <boost/algorithm/string.hpp>
+#include <table.h>
+
 
 #include "table.h"
 #include "storage_engine_exceptions.h"
@@ -68,24 +69,32 @@ TableBuilder& TableBuilder::add_column(Column& column) {
     return *this;
 }
 
-    fs::path Table::get_metadata_file_path(const std::string& table_name) {
-        auto invariant_table_name = boost::to_lower_copy(table_name);
+fs::path Table::get_metadata_file_path(const std::string& table_name) {
+    auto invariant_table_name = boost::to_lower_copy(table_name);
 
-        // **/{data_dir_path}/{table_name}/{table_name.meta}
-        auto meta_data_file_path = fs::current_path() /= fs::path(DATA_DIR_PATH) /= fs::path(invariant_table_name)
-                /= fs::path(table_name + ".meta");
+    // **/{data_dir_path}/{table_name}/{table_name.meta}
+    auto meta_data_file_path = fs::current_path() /= fs::path(DATA_DIR_PATH) /= fs::path(invariant_table_name)
+            /= fs::path(table_name + ".meta");
 
-        return meta_data_file_path.string();
-    }
+    return meta_data_file_path.string();
+}
 
-    boost::filesystem::path Table::get_data_file_path(const std::string& table_name) {
-        auto invariant_table_name = boost::to_lower_copy(table_name);
+boost::filesystem::path Table::get_data_file_path(const std::string& table_name) {
+    auto invariant_table_name = boost::to_lower_copy(table_name);
 
-        // **/{data_dir_path}/{table_name}/{table_name.data}
-        auto meta_data_file_path = fs::current_path() /= fs::path(DATA_DIR_PATH) /= fs::path(invariant_table_name)
-                /= fs::path(table_name + ".data");
+    // **/{data_dir_path}/{table_name}/{table_name.data}
+    auto meta_data_file_path = fs::current_path() /= fs::path(DATA_DIR_PATH) /= fs::path(invariant_table_name)
+            /= fs::path(table_name + ".data");
 
-        return meta_data_file_path.string();
-    }
+    return meta_data_file_path.string();
+}
+
+boost::filesystem::path Table::get_metadata_file_path() {
+    return get_metadata_file_path(name_);
+}
+
+boost::filesystem::path Table::get_data_file_path() {
+    return get_data_file_path(name_);
+}
 
 } // namespace st_e

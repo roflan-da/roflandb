@@ -32,6 +32,9 @@ public:
     static boost::filesystem::path get_metadata_file_path(const std::string& table_name);
     static boost::filesystem::path get_data_file_path(const std::string& table_name);
 
+    boost::filesystem::path get_metadata_file_path();
+    boost::filesystem::path get_data_file_path();
+
 private:
     std::string name_;
     std::map<std::string, Column> columns_;

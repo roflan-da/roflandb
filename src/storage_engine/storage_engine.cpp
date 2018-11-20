@@ -48,14 +48,24 @@ void StorageEngine::insert(const std::string& table_name, const std::vector<Tabl
         }
     }
 
-    std::string res(record_buffer.data());
-
-    int a = 2;
-
+//    std::string res(record_buffer.data());
+//
+//    int a = 2;
 }
 
-void StorageEngine::load_first_block(const std::string& table_name) {
-//    tables_.get_table()
+void StorageEngine::load_last_block(const std::string& table_name){
+    auto table = tables_.get_table(table_name);
+    auto data_file_path = table.get_data_file_path();
+
+    std::fstream data_file;
+    data_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+    data_file.open(table.get_data_file_path().string(), std::ios::binary);
+
+    uint32_t first_existing_block;
+    data_file.read(reinterpret_cast<char*>(&first_existing_block), sizeof(uint32_t));
+    if (first_existing_block == 0) {
+
+    }
 }
 
 
