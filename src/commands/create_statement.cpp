@@ -26,7 +26,7 @@ namespace cmd {
         storage_engine.add_table(table_builder.build());
     }
 
-    bool CreateStatement::is_valid(st_e::StorageEngine &engine_storage) {
+    bool CreateStatement::is_valid(st_e::StorageEngine &engine_storage) const {
         return false;
     }
 

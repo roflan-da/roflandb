@@ -17,11 +17,10 @@ public:
 
     void execute(st_e::StorageEngine &storage_engine) override;
 private:
-    bool is_valid(st_e::StorageEngine &storage_engine) override;
+    bool is_valid(st_e::StorageEngine &storage_engine) const override;
     friend void SqlStatement::set_message(std::string message);
+    st_e::TableRow get_row() const;
 
-
-    std::vector<std::pair<std::string, std::string>> get_name_val();
     std::string table_name_;
     std::vector<std::string> columns_names_;
     std::vector<std::string> columns_vals_;

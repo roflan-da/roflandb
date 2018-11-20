@@ -20,6 +20,6 @@ std::string cmd::ShowStatement::get_name() {
 
 cmd::ShowStatement::ShowStatement(cmd::ShowType type, std::string name) : type_(type), name_(name){}
 
-bool cmd::ShowStatement::is_valid(st_e::StorageEngine &engine_storage) {
+bool cmd::ShowStatement::is_valid(st_e::StorageEngine &engine_storage) const {
     return false;
 }

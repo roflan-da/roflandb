@@ -23,7 +23,7 @@ public:
     std::string get_name() const;
 
 private:
-    bool is_valid(st_e::StorageEngine &storage_engine) override;
+    bool is_valid(st_e::StorageEngine &storage_engine) const override;
 
     DropType type_;
     std::string name_;

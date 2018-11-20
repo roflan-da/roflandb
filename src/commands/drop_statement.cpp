@@ -27,6 +27,6 @@ std::string cmd::DropStatement::get_name() const {
     return name_;
 }
 
-bool cmd::DropStatement::is_valid(st_e::StorageEngine &engine_storage) {
+bool cmd::DropStatement::is_valid(st_e::StorageEngine &engine_storage) const {
     return false;
 }

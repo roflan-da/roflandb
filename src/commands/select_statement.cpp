@@ -51,6 +51,6 @@ void cmd::SelectStatement::execute(st_e::StorageEngine& storage_engine) {
 
 cmd::SelectStatement::SelectStatement(std::string table_name) : table_name_(table_name), type_(ALL){}
 
-bool cmd::SelectStatement::is_valid(st_e::StorageEngine &engine_storage) {
+bool cmd::SelectStatement::is_valid(st_e::StorageEngine &engine_storage) const {
     return false;
 }

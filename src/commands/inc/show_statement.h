@@ -25,7 +25,7 @@ public:
 
     std::string get_name();
 private:
-    bool is_valid(st_e::StorageEngine &storage_engine) override;
+    bool is_valid(st_e::StorageEngine &storage_engine) const override;
     ShowType type_;
     std::string name_;
 };

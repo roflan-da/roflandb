@@ -12,7 +12,7 @@ cmd::InsertStatement::InsertStatement(std::string table_name,
 
 cmd::InsertStatement::InsertStatement() : SqlStatement(INSERT) {}
 
-std::vector<std::pair<std::string, std::string>> cmd::InsertStatement::get_name_val() {
+st_e::TableRow cmd::InsertStatement::get_row() const {
     std::vector<std::pair<std::string, std::string>> result;
     if (columns_names_.size() != columns_vals_.size()){
         return result;
@@ -24,7 +24,11 @@ std::vector<std::pair<std::string, std::string>> cmd::InsertStatement::get_name_
 }
 
 void cmd::InsertStatement::execute(st_e::StorageEngine& engine_storage) {
-    engine_storage.insert(table_name_, this->get_name_val());
+    engine_storage.insert(table_name_, this->get_row());
 //    set_message("INSERT INTO " + table_name_ + " SUCCESSFUL.");
     //    engine_storage.save();
+}
+
+bool cmd::InsertStatement::is_valid(st_e::StorageEngine &storage_engine) const {
+    return false;
 }

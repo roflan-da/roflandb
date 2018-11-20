@@ -13,7 +13,3 @@ std::string cmd::SqlStatement::get_message() {
 void cmd::SqlStatement::set_message(std::string message) {
     message_ = message;
 }
-
-bool cmd::InsertStatement::is_valid(st_e::StorageEngine &engine_storage) {
-    return false;
-}
