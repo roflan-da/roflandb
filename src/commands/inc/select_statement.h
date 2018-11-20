@@ -18,7 +18,7 @@ public:
     SelectStatement();
     ~SelectStatement() override = default;
 
-    void execute(st_e::StorageEngine& storage_engine) override;
+    void execute() override;
 
     explicit SelectStatement(std::string table_name);
 
@@ -27,7 +27,7 @@ public:
             SelectType type = ALL);
 
 private:
-    bool is_valid(st_e::StorageEngine &storage_engine) const override;
+    bool is_valid() const override;
     std::string table_name_;
     SelectType type_;
     std::vector<std::string> cols_names_;

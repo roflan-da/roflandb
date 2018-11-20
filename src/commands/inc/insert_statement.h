@@ -1,9 +1,9 @@
 #pragma once
 
-#include "string"
+#include <string>
 #include <vector>
 #include <memory>
-#include <sql_statement.h>
+#include "sql_statement.h"
 
 namespace cmd{
 class InsertStatement : public SqlStatement {
@@ -15,11 +15,11 @@ public:
                              std::shared_ptr<std::vector<std::string>> cols_names,
                              std::shared_ptr<std::vector<std::string>> cols_values);
 
-    void execute(st_e::StorageEngine &storage_engine) override;
+    void execute() override;
 private:
-    bool is_valid(st_e::StorageEngine &storage_engine) const override;
+    bool is_valid() const override;
     friend void SqlStatement::set_message(std::string message);
-    st_e::TableRow get_row() const;
+    st_e::TableRow& get_row() const;
 
     std::string table_name_;
     std::vector<std::string> columns_names_;

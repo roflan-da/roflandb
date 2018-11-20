@@ -17,16 +17,16 @@ namespace cmd {
         columns_.emplace_back(column);
     }
 
-    void CreateStatement::execute(st_e::StorageEngine& storage_engine) {
+    void CreateStatement::execute() {
         st_e::TableBuilder table_builder(table_name_);
         for (const auto& column : columns_) {
             // todo: consider remove shared_ptr
             table_builder.add_column(*column);
         }
-        storage_engine.add_table(table_builder.build());
+        st_e::StorageEngine::get_instance().add_table(table_builder.build());
     }
 
-    bool CreateStatement::is_valid(st_e::StorageEngine &engine_storage) const {
+    bool CreateStatement::is_valid() const {
         return false;
     }
 

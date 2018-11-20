@@ -2,7 +2,7 @@
 
 cmd::DropStatement::DropStatement() : SqlStatement(DROP) {}
 
-void cmd::DropStatement::execute(st_e::StorageEngine& storage_engine) {
+void cmd::DropStatement::execute() {
 //    switch (type_){
 //        case DROP_TABLE :
 //            storage_engine.delete_table(name_);
@@ -27,6 +27,6 @@ std::string cmd::DropStatement::get_name() const {
     return name_;
 }
 
-bool cmd::DropStatement::is_valid(st_e::StorageEngine &engine_storage) const {
+bool cmd::DropStatement::is_valid() const {
     return false;
 }

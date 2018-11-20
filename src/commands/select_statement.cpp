@@ -13,7 +13,7 @@ cmd::SelectStatement::SelectStatement(std::string table_name,
         type_(type),
         cols_names_(*cols_names.get()) {}
 
-void cmd::SelectStatement::execute(st_e::StorageEngine& storage_engine) {
+void cmd::SelectStatement::execute() {
 //    st_e::SelectAnswer t = type_ == ALL ? storage_engine.select_all(table_name_) :
 //           storage_engine.select(table_name_,cols_names_);
 //    std::string message;
@@ -51,6 +51,6 @@ void cmd::SelectStatement::execute(st_e::StorageEngine& storage_engine) {
 
 cmd::SelectStatement::SelectStatement(std::string table_name) : table_name_(table_name), type_(ALL){}
 
-bool cmd::SelectStatement::is_valid(st_e::StorageEngine &engine_storage) const {
+bool cmd::SelectStatement::is_valid() const {
     return false;
 }

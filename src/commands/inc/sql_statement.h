@@ -23,10 +23,10 @@ public:
     std::string get_message();
     void set_message(std::string message);
 
-    virtual void execute(st_e::StorageEngine& engine_storage) = 0;
+    virtual void execute() = 0;
 
 private:
-    virtual bool is_valid(st_e::StorageEngine& engine_storage) const = 0;
+    virtual bool is_valid() const = 0;
     std::string message_;
     StatementType type_;
 };
