@@ -4,9 +4,9 @@
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 
-
 #include "shared_table.h"
 #include "configuration.h"
+#include "storage_engine_exceptions.h"
 
 namespace fs = boost::filesystem;
 
@@ -31,7 +31,7 @@ Table& SharedTable::load_table(const std::string& table_name) {
     auto meta_data_file_path = st_e::Table::get_metadata_file_path(table_name);
 
     if (!fs::exists(meta_data_file_path)) {
-        // TODO: throw exception!
+        throw TableNotExistException(table_name);
     }
 
     std::ifstream data_file;
@@ -51,8 +51,6 @@ Table& SharedTable::load_table(const std::string& table_name) {
         while(data_file.peek() == '\n' || data_file.peek() == '\r') {
             data_file.get();
         }
-
-
 
         tmp_col_type = Column::get_type_from_string(tmp_string_type);
         table_builder.add_column(tmp_col_type, tmp_col_name);
@@ -81,7 +79,7 @@ void SharedTable::save_to_disk(const Table& table) const {
     metada_data_file.open(metadata_file_path.string());
 
     for (const auto& column : table.get_columns()) {
-        metada_data_file << column.get_type_string() << " " << column.name << '\n';
+        metada_data_file << column.second.get_type_string() << " " << column.second.name << '\n';
     }
     metada_data_file.close();
 

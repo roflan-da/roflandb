@@ -43,23 +43,28 @@ Column::Type Column::get_type_from_string(std::string& type) {
 std::string Table::get_sql() const {
     std::string sql = "CREATE TABLE \'" + name_ + "\' (";
 
-    for (size_t i = 0; i < columns_.size(); i++){
+    size_t i = 0;
+    for (const auto& column : columns_) {
         if (0 < i && i < columns_.size() - 1) {
             sql += ", ";
         }
-        sql += "`" + columns_[i].name + "` " + columns_[i].get_type_string();
+
+        sql += "`" + column.second.name + "` " + column.second.get_type_string();
+        i++;
     }
+
     sql += ");";
     return sql;
 }
 
 TableBuilder& TableBuilder::add_column(Column::Type type, const std::string& name) {
-    columns_.emplace_back(type, name);
+    columns_.erase(name);
+    columns_.emplace(name, Column(type, name));
     return *this;
 }
 
 TableBuilder& TableBuilder::add_column(Column& column) {
-    columns_.emplace_back(column);
+    columns_.insert_or_assign(column.name, column);
     return *this;
 }
 

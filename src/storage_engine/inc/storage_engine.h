@@ -7,6 +7,7 @@
 #include <string>
 #include "shared_table.h"
 #include "data_block.h"
+#include "table_chunk.h"
 
 namespace st_e {
 
@@ -22,7 +23,7 @@ public:
 
     const Table& get_table_by_name(const std::string& table_name);
 
-    void insert(const std::string& table_name, const std::vector<std::pair<std::string, std::string>>& rows);
+    void insert(const std::string& table_name, const std::vector<TableRow>& rows);
 
 //    SelectAnswer select(std::string table_name, std::vector<std::string> columns_names) override;
 //    SelectAnswer select_all(std::string table_name) override;

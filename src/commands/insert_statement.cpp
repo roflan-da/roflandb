@@ -1,6 +1,5 @@
 #include <utility>
-
-#include <insert_statement.h>
+#include "insert_statement.h"
 
 
 cmd::InsertStatement::InsertStatement(std::string table_name,
@@ -25,7 +24,7 @@ std::vector<std::pair<std::string, std::string>> cmd::InsertStatement::get_name_
 }
 
 void cmd::InsertStatement::execute(st_e::StorageEngine& engine_storage) {
-//    engine_storage.insert(table_name_, this->get_name_val());
+    engine_storage.insert(table_name_, this->get_name_val());
 //    set_message("INSERT INTO " + table_name_ + " SUCCESSFUL.");
     //    engine_storage.save();
 }

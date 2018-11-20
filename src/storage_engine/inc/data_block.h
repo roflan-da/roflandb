@@ -8,7 +8,7 @@ namespace st_e {
 /*
  *
  * Data block structure:
- * Block numeration starts with 1. Block number 0 has specil meaning - absence of previous or next block.
+ * Block numeration starts with 1. Block number 0 has special meaning - absence of previous or next block.
  *
  * [uint32_t: previous block number]
  * [uint32_t: next block number]
@@ -31,7 +31,9 @@ public:
 private:
     uint32_t previous_ = 0;
     uint32_t next_ = 0;
+    // skip data from previos block
     uint32_t data_start_ = 8;
+    // offset to space without records. deleted or existing.
     uint32_t free_offset_ = 8;
     std::vector<char> data_;
 };
