@@ -48,7 +48,7 @@ int Cli::start() {
             error << error_message << std::endl;
             continue;
         }
-        parser_driver.sql_parser_result->execute(storage_engine);
+        parser_driver.sql_parser_result->execute();
         output << parser_driver.sql_parser_result->get_messages();
         output << parser_driver.result;
     }

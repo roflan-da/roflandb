@@ -28,29 +28,27 @@ StorageEngine &StorageEngine::get_instance() {
     return instance;
 }
 
-void StorageEngine::insert(const std::string& table_name, const std::vector<TableRow>& rows) {
+void StorageEngine::insert(const std::string& table_name, const TableRow& row) {
     auto columns = get_table_by_name(table_name).get_columns();
 
     std::vector<char> record_buffer;
-
     // first byte is internal value.
     record_buffer.resize(sizeof(uint32_t));
     uint32_t internal_flag = 0;
     std::memcpy(record_buffer.data(), &internal_flag, sizeof(uint32_t));
 
-    for (const auto& row : rows) {
+    for (const auto& cell : row.get_cells()) {
         //todo: add more types
-        for (const auto& cell : row.get_cells()) {
-            uint32_t value = dynamic_cast<const IntegerTableCell&>(cell).get_value();
-            auto first_unused_byte = record_buffer.size();
-            record_buffer.resize(record_buffer.size() + sizeof(uint32_t));
-            std::memcpy(record_buffer.data() + first_unused_byte, &value, sizeof(uint32_t));
-        }
+        uint32_t value = dynamic_cast<const IntegerTableCell&>(cell).get_value();
+
+        auto first_free_byte = record_buffer.size();
+        record_buffer.resize(record_buffer.size() + sizeof(uint32_t));
+        std::memcpy(record_buffer.data() + first_free_byte, &value, sizeof(uint32_t));
     }
 
-//    std::string res(record_buffer.data());
-//
-//    int a = 2;
+    std::string res(record_buffer.data());
+
+    int a = 2;
 }
 
 void StorageEngine::load_last_block(const std::string& table_name){
