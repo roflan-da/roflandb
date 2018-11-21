@@ -15,15 +15,15 @@ cmd::InsertStatement::InsertStatement(std::string table_name,
 
 cmd::InsertStatement::InsertStatement() : SqlStatement(INSERT) {}
 
-st_e::TableRow& cmd::InsertStatement::get_row() const {
+st_e::TableRow cmd::InsertStatement::get_row() const {
     auto table_cols = st_e::StorageEngine::get_instance().get_table_by_name(table_name_).get_columns();
-    std::vector<std::shared_ptr<st_e::TableCell>> row;
+    std::vector<std::shared_ptr<st_e::TableCell>> rows;
     for (int i = 0; i < columns_names_.size(); ++i) {
         auto found_col = table_cols.find(columns_names_[i])->second;
         switch (found_col.type)
         {
         case (st_e::Column::INT) : {
-            row.emplace_back(new st_e::IntegerTableCell(std::stoi(columns_vals_[i])));
+            rows.emplace_back(std::make_shared<st_e::IntegerTableCell>(std::stoi(columns_vals_[i])));
             break;
         }
         case (st_e::Column::STRING) : {
@@ -37,6 +37,7 @@ st_e::TableRow& cmd::InsertStatement::get_row() const {
         }
         }
     }
+    return st_e::TableRow(rows);
     /*std::vector<std::pair<std::string, std::string>> result;
     if (columns_names_.size() != columns_vals_.size()){
         return result;

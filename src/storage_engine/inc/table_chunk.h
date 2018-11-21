@@ -25,13 +25,13 @@ private:
 
 class TableRow {
 public:
-    explicit TableRow(std::vector<TableCell> cells) : cells_(std::move(cells)) {}
+    explicit TableRow(std::vector<std::shared_ptr<st_e::TableCell>> cells) : cells_(std::move(cells)) {}
 
 //    std::string get_cell(size_t number){ return cells_[number].get_data(); }
-    const std::vector<TableCell>& get_cells() const { return cells_; }
+    const std::vector<std::shared_ptr<st_e::TableCell>>& get_cells() const { return cells_; }
 
 private:
-    std::vector<TableCell> cells_;
+    std::vector<std::shared_ptr<st_e::TableCell>> cells_;
 };
 
 class TableChunk {
