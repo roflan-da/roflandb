@@ -3,6 +3,7 @@
 #include <utility>
 #include <string>
 #include "data_block.h"
+#include <memory>
 
 namespace st_e {
 
