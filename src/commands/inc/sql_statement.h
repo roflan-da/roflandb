@@ -11,7 +11,8 @@ enum StatementType{
     SHOW,
     DROP,
     SELECT,
-    INSERT
+    INSERT,
+    DELETE
 };
 
 class SqlStatement {

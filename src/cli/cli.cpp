@@ -21,7 +21,6 @@ int Cli::start() {
     CliTexts::print_startup_message(output);
 
     roflan_parser::Driver parser_driver;
-    auto& storage_engine = st_e::StorageEngine::get_instance();
     std::string query;
     std::string error_message;
 
