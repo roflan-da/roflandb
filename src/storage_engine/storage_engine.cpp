@@ -48,7 +48,7 @@ void StorageEngine::insert(const std::string& table_name, const TableRow& row) {
     auto last_block = get_last_block(table_name);
 
     if (last_block.get_free_space() < record_buffer.size()) {
-        // create new
+        //todo: create new
         return;
     }
 
