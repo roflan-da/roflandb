@@ -1,10 +1,23 @@
+
+#include <table_chunk.h>
+
 #include "table_chunk.h"
 
 namespace st_e {
 
-    void IntegerTableCell::push_into_buffer(std::vector<char> &buffer) const {
+    void IntegerTableCell::push_into_buffer(std::vector<char>& buffer) const {
         auto first_free_byte = buffer.size();
         buffer.resize(buffer.size() + sizeof(uint32_t));
         memcpy(buffer.data() + first_free_byte, &data_, sizeof(uint32_t));
+    }
+
+    std::string BoolTableCell::get_data() {
+        return (data_) ? "true" : "false";
+    }
+
+    void BoolTableCell::push_into_buffer(std::vector<char>& buffer) const {
+        auto first_free_byte = buffer.size();
+        buffer.resize(buffer.size() + sizeof(bool));
+        memcpy(buffer.data() + first_free_byte, &data_, sizeof(bool));
     }
 } // namespace st_e

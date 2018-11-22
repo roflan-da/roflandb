@@ -10,7 +10,7 @@ namespace st_e {
 
 class Column {
 public:
-    enum Type {INT, STRING, CHAR, TEXT};
+    enum Type {INT, STRING, CHAR, TEXT, BOOL};
 
     Column(Type type, const std::string& name) : type(type), name(name) {}
 

@@ -22,6 +22,8 @@ std::string Column::get_type_string() const {
             return "CHAR";
         case TEXT:
             return "TEXT";
+        case BOOL:
+            return "BOOL";
         default:
             throw std::range_error("Column type to string conversion doesn't exist");
     }
@@ -36,6 +38,8 @@ Column::Type Column::get_type_from_string(std::string& type) {
         return Type::CHAR;
     } else if (type == "TEXT") {
         return Type::TEXT;
+    } else if (type == "BOOL") {
+        return Type::BOOL;
     }
 
     throw std::range_error("Column string to type conversion doesn't exist");
