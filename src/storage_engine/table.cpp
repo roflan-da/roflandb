@@ -89,11 +89,11 @@ boost::filesystem::path Table::get_data_file_path(const std::string& table_name)
     return meta_data_file_path.string();
 }
 
-boost::filesystem::path Table::get_metadata_file_path() {
+boost::filesystem::path Table::get_metadata_file_path() const {
     return get_metadata_file_path(name_);
 }
 
-boost::filesystem::path Table::get_data_file_path() {
+boost::filesystem::path Table::get_data_file_path() const {
     return get_data_file_path(name_);
 }
 

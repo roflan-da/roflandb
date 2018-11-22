@@ -1,7 +1,8 @@
 #include <string>
-
-#include "storage_engine.h"
-#include "table_chunk.h"
+#include <storage_engine.h>
+#include <table_chunk.h>
+#include <configuration.h>
+#include <storage_engine_exceptions.h>
 
 namespace st_e {
 
@@ -29,7 +30,9 @@ StorageEngine &StorageEngine::get_instance() {
 }
 
 void StorageEngine::insert(const std::string& table_name, const TableRow& row) {
-    auto columns = get_table_by_name(table_name).get_columns();
+    const auto& table = get_table_by_name(table_name);
+    const auto& columns = table.get_columns();
+
     std::vector<char> record_buffer;
 
     record_buffer.resize(sizeof(char));
@@ -42,30 +45,73 @@ void StorageEngine::insert(const std::string& table_name, const TableRow& row) {
         cell->push_into_buffer(record_buffer);
     }
 
-    std::string res(record_buffer.data());
+    auto last_block = get_last_block(table_name);
 
-    int a = 2;
+    if (last_block.get_free_space() < record_buffer.size()) {
+        // create new
+        return;
+    }
+
+    append_record_to_block(record_buffer, last_block, table);
 }
 
-DataBlock StorageEngine::get_last_block(const std::string& table_name){
+DataBlock StorageEngine::get_last_block(const std::string& table_name) {
     auto table = tables_.get_table(table_name);
     auto data_file_path = table.get_data_file_path();
 
     std::fstream data_file;
-    data_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-    data_file.open(table.get_data_file_path().string(), std::ios::binary);
 
-    uint32_t existing_block_ptr;
-    data_file.read(reinterpret_cast<char*>(&existing_block_ptr), sizeof(uint32_t));
+    auto  t = table.get_data_file_path().string();
+    data_file.open(table.get_data_file_path().string(), std::fstream::binary | std::fstream::in | std::fstream::out | std::fstream::app);
+
+    if (!data_file.is_open()) {
+        throw TableNotExistException(table.get_name());
+    }
+
+    uint32_t first_block_ptr;
+    data_file.read(reinterpret_cast<char*>(&first_block_ptr), sizeof(uint32_t));
+
     // if it is first insert and we have no block created.
-    if (existing_block_ptr == 0) {
-        DataBlock new_data_block(0, 0);
+    if (first_block_ptr == 0) {
+        DataBlock new_data_block(0, 0, DATA_FILE_HEADER_SIZE);
         data_file.seekp(std::ios_base::end);
         auto block_binary = new_data_block.get_binary_representation();
         data_file.write(block_binary.data(), block_binary.size());
 
         return new_data_block;
     }
+
+    uint32_t prev_block_ptr = 0;
+    auto next_block_ptr = first_block_ptr;
+    long long current_file_offset = 0;
+
+    do {
+        current_file_offset = DATA_FILE_HEADER_SIZE + next_block_ptr;
+        data_file.seekg(current_file_offset);
+        data_file.read(reinterpret_cast<char*>(&prev_block_ptr), sizeof(uint32_t));
+        data_file.read(reinterpret_cast<char*>(&next_block_ptr), sizeof(uint32_t));
+
+    } while (next_block_ptr);
+
+    return DataBlock(prev_block_ptr, next_block_ptr, current_file_offset);
+}
+
+void StorageEngine::append_record_to_block(const std::vector<char>& buffer, const DataBlock& block, const Table& table) {
+    std::fstream data_file(table.get_data_file_path().string(), std::fstream::binary | std::fstream::in | std::fstream::out);
+    data_file.seekp(0, std::ios::end);
+
+    if (!data_file.is_open()) {
+        throw  TableNotExistException(table.get_name());
+    }
+
+    long long free_offset_value_offset = block.get_file_offset() + 12; // 12 because free_offset is 4th uint32_t
+    data_file.seekg(block.get_file_offset() + block.get_free_offset());
+    data_file.write(buffer.data(), buffer.size());
+
+    data_file.seekp(free_offset_value_offset);
+    auto new_free_offset_value = static_cast<uint32_t>(block.get_free_offset() + buffer.size());
+    data_file.write(reinterpret_cast<const char*>(&new_free_offset_value), sizeof(uint32_t));
+    data_file.close();
 }
 
 

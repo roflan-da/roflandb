@@ -5,9 +5,9 @@
 #include <memory>
 #include <map>
 #include <string>
-#include "shared_table.h"
-#include "data_block.h"
-#include "table_chunk.h"
+#include <shared_table.h>
+#include <data_block.h>
+#include <table_chunk.h>
 
 namespace st_e {
 
@@ -33,10 +33,8 @@ private:
     StorageEngine() = default;
 
     SharedTable& tables_ = SharedTable::get_instance();
-
     DataBlock get_last_block(const std::string& table_name);
-//    void create_block
-
+    void append_record_to_block(const std::vector<char>& buffer, const DataBlock& block, const Table& table);
 };
 
 }//namespace st_e

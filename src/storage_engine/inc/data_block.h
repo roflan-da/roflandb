@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <vector>
+#include <configuration.h>
 
 namespace st_e {
 
@@ -13,9 +14,9 @@ namespace st_e {
  *
  * [uint32_t: previous block number]
  * [uint32_t: next block number]
- * [uint32_t<=BLOCK_SIZE data start - skip data from previous block]
+ * [uint32_t<=DATA_BLOCK_SIZE data start - skip data from previous block]
  * [unit32_t free space offset]
- * [BLOCK_SIZE-HEADER_LENGTH bytes of data]
+ * [DATA_BLOCK_SIZE-HEADER_LENGTH bytes of data]
  *
  * Data File structure:
  * [uint32_t first existing block]
@@ -25,12 +26,17 @@ namespace st_e {
 
 class DataBlock {
 public:
-    static const uint32_t HEADER_LENGTH = 8;
+    static const uint32_t HEADER_LENGTH = 16;
 
-    DataBlock(uint32_t previous_ptr, uint32_t next_ptr);
+    DataBlock(uint32_t previous_ptr, uint32_t next_ptr, long long file_offset);
     uint32_t get_previous_ptr() const { return previous_; }
     uint32_t get_next_ptr() const { return next_; }
     std::vector<char> get_binary_representation() const;
+
+    uint32_t get_free_space() const { return DATA_BLOCK_SIZE - free_offset_; }
+    long long get_file_offset() const { return file_offset_; }
+    uint32_t get_free_offset() const { return free_offset_; }
+
 private:
     uint32_t previous_ = 0;
     uint32_t next_ = 0;
@@ -38,7 +44,7 @@ private:
     uint32_t data_start_ = HEADER_LENGTH;
     // offset to space without records. deleted or existing.
     uint32_t free_offset_ = HEADER_LENGTH;
-//    std::vector<char> data_;
+    long long file_offset_;
 };
 
 } // namespace st_e

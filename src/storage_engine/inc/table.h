@@ -32,8 +32,8 @@ public:
     static boost::filesystem::path get_metadata_file_path(const std::string& table_name);
     static boost::filesystem::path get_data_file_path(const std::string& table_name);
 
-    boost::filesystem::path get_metadata_file_path();
-    boost::filesystem::path get_data_file_path();
+    boost::filesystem::path get_metadata_file_path() const;
+    boost::filesystem::path get_data_file_path() const;
 
 private:
     std::string name_;
