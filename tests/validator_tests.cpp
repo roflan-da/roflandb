@@ -6,7 +6,7 @@
 
 bool validate_query(const std::string &query) {
     roflan_parser::Driver parser_driver;
-    std::__cxx11::string error_message;
+    std::string error_message;
     REQUIRE(parser_driver.parse_string(query, error_message));
     bool res = true;
     for (const auto& statement: parser_driver.sql_parser_result->statements_){
@@ -45,6 +45,7 @@ TEST_CASE("Insert Statement Validation"){
     SECTION("correct inserts"){
         std::vector<std::string> queries {"CREATE TABLE a (c1 INT, c2 INT);",
                                           "INSERT a(c1) VALUES(1);",
+                                          "INSERT a(c2) VALUES(1);",
                                           "INSERT a(c1,c2) VALUES(1488,228);",
                                           "INSERT a(c2, c1) VALUES(1,1);",
                                           "INSERT a VALUES(1,1);",};
