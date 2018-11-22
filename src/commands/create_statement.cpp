@@ -27,7 +27,7 @@ namespace cmd {
     }
 
     bool CreateStatement::is_valid() const {
-        return false;
+        return true;
     }
 
 
