@@ -29,8 +29,20 @@ namespace cmd {
     }
 
     bool CreateStatement::is_valid() const {
-
-        return true;
+        for (int i = 0; i < columns_.size(); ++i) {
+            for (int j = i + 1; j < columns_.size(); ++j) {
+                if (columns_[i]->name == columns_[j]->name) {
+                    return false;
+                }
+            }
+        }
+        try {
+            auto table = st_e::StorageEngine::get_instance().get_table_by_name(table_name_);
+        }
+        catch (st_e::TableNotExistException& e){
+            return true;
+        }
+        return false;
     }
 
 

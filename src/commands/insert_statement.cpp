@@ -63,6 +63,13 @@ bool cmd::InsertStatement::is_valid() const {
     if (columns_names_.size() != columns_vals_.size()){
         return false;
     }
+    for (int i = 0; i < columns_names_.size(); ++i) {
+        for (int j = i + 1; j < columns_names_.size(); ++j) {
+            if (columns_names_[i] == columns_names_[j]) {
+                return false;
+            }
+        }
+    }
     try {
         auto table = st_e::StorageEngine::get_instance().get_table_by_name(table_name_);
         auto table_cols = table.get_columns();
