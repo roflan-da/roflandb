@@ -23,7 +23,7 @@ st_e::TableRow cmd::InsertStatement::get_row() const {
         switch (found_col.type)
         {
         case (st_e::Column::INT) : {
-            rows.emplace_back(new st_e::IntegerTableCell(std::stoi(col_name)));
+            rows.emplace_back(new st_e::IntegerTableCell(std::stoi(col_value)));
             break;
         }
         case (st_e::Column::STRING) : {

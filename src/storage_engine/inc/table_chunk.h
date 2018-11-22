@@ -30,9 +30,10 @@ public:
 
 //    std::string get_cell(size_t number){ return cells_[number].get_data(); }
     const std::vector<std::shared_ptr<st_e::TableCell>>& get_cells() const { return cells_; }
-
+    bool is_deleted() const { return is_deleted_; }
 private:
     std::vector<std::shared_ptr<st_e::TableCell>> cells_;
+    bool is_deleted_ = false;
 };
 
 class TableChunk {

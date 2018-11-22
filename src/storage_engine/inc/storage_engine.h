@@ -33,9 +33,8 @@ private:
     StorageEngine() = default;
 
     SharedTable& tables_ = SharedTable::get_instance();
-    DataBlock last_data_block;
 
-    void load_last_block(const std::string& table_name);
+    DataBlock get_last_block(const std::string& table_name);
 //    void create_block
 
 };
