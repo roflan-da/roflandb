@@ -34,6 +34,7 @@ private:
 
     SharedTable& tables_ = SharedTable::get_instance();
     DataBlock get_last_block(const std::string& table_name);
+    DataBlock append_new_block(const std::string& table_name, const DataBlock& block);
     void append_record_to_block(const std::vector<char>& buffer, const DataBlock& block, const Table& table);
 };
 

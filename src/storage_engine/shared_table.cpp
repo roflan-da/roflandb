@@ -91,8 +91,10 @@ void SharedTable::save_to_disk(const Table& table) const {
     // see data_block.h for details
     // set prev and next blocks to 0
     uint32_t no_block_pointer = 0;
+    uint32_t block_counter = 1;
     data_file.write(reinterpret_cast<char*>(&no_block_pointer), sizeof(uint32_t));
     data_file.write(reinterpret_cast<char*>(&no_block_pointer), sizeof(uint32_t));
+    data_file.write(reinterpret_cast<char*>(&block_counter), sizeof(uint32_t));
 
     data_file.close();
 }
