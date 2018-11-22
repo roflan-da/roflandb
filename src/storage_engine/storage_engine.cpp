@@ -31,7 +31,6 @@ StorageEngine &StorageEngine::get_instance() {
 
 void StorageEngine::insert(const std::string& table_name, const TableRow& row) {
     const auto& table = get_table_by_name(table_name);
-    const auto& columns = table.get_columns();
 
     std::vector<char> record_buffer;
 

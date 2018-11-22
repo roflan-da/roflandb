@@ -29,8 +29,8 @@ namespace cmd {
     }
 
     bool CreateStatement::is_valid() const {
-        for (int i = 0; i < columns_.size(); ++i) {
-            for (int j = i + 1; j < columns_.size(); ++j) {
+        for (size_t i = 0; i < columns_.size(); ++i) {
+            for (size_t j = i + 1; j < columns_.size(); ++j) {
                 if (columns_[i]->name == columns_[j]->name) {
                     return false;
                 }
