@@ -29,4 +29,28 @@ TEST_CASE("Insert Statement Validation"){
             REQUIRE(validate_query(queries[i]) == validator_answers[i]);
         }
     }
+
+    SECTION("incorrect inserts"){
+        std::vector<std::string> queries {"CREATE TABLE a (c1 INT, c2 INT);",
+                                          "INSERT a(c1) VALUES(\'abc\');",
+                                          "INSERT a(c3) VALUES(2);",
+                                          "INSERT a(c1, c2) VALUES(\'abc\',1);",
+                                          "INSERT a(c1, c2) VALUES(1,\'abc\');",};
+        std::vector <int> validator_answers(queries.size(),0);
+        for (const auto &querie : queries) {
+            REQUIRE_FALSE(validate_query(querie));
+        }
+    }
+
+    SECTION("correct inserts"){
+        std::vector<std::string> queries {"CREATE TABLE a (c1 INT, c2 INT);",
+                                          "INSERT a(c1) VALUES(1);",
+                                          "INSERT a(c1,c2) VALUES(1488,228);",
+                                          "INSERT a(c2, c1) VALUES(1,1);",
+                                          "INSERT a VALUES(1,1);",};
+        std::vector <int> validator_answers(queries.size(),1);
+        for (const auto &querie : queries) {
+            REQUIRE(validate_query(querie));
+        }
+    }
 }
