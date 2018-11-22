@@ -39,11 +39,7 @@ void StorageEngine::insert(const std::string& table_name, const TableRow& row) {
 
     for (const auto& cell : row.get_cells()) {
         //todo: add more types
-        uint32_t cell_value = dynamic_cast<const IntegerTableCell&>(*cell).get_value();
-
-        auto first_free_byte = record_buffer.size();
-        record_buffer.resize(record_buffer.size() + sizeof(uint32_t));
-        std::memcpy(record_buffer.data() + first_free_byte, &cell_value, sizeof(uint32_t));
+        cell->push_into_buffer(record_buffer);
     }
 
     std::string res(record_buffer.data());

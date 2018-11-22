@@ -11,6 +11,7 @@ class TableCell {
 public:
     virtual ~TableCell() = default;
     virtual std::string get_data() = 0;
+    virtual void push_into_buffer(std::vector<char>& buffer) const = 0;
 };
 
 class IntegerTableCell : public TableCell {
@@ -18,7 +19,7 @@ public:
     explicit IntegerTableCell(int data) : data_(data) {}
     std::string get_data() override { return std::to_string(data_); }
     // todo: maybe do like this?
-    uint32_t get_value() const { return data_; }
+    void push_into_buffer(std::vector<char>& buffer) const;
 
 private:
     uint32_t data_;
