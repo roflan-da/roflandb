@@ -7,9 +7,9 @@
 TEST_CASE("structColumn") {
 
     SECTION("trivial") {
-        auto col = st_e::Column(st_e::STRING, "test");
+        auto col = st_e::Column(st_e::Column::STRING, "test");
         REQUIRE(col.name == "test");
-        REQUIRE(col.type == st_e::STRING);
+        REQUIRE(col.type == st_e::Column::STRING);
 
     }
 
@@ -35,9 +35,11 @@ TEST_CASE("TableBuilder") {
     SECTION("trivial") {
         st_e::TableBuilder tb("ababaca");
         std::vector<std::shared_ptr<st_e::Column>> cols;
-        cols.emplace_back(std::make_shared<st_e::Column>(st_e::INT, "intcol"));
-        cols.emplace_back(std::make_shared<st_e::Column>(st_e::STRING, "strcol"));
-        tb.set_columns(cols);
+        cols.emplace_back(std::make_shared<st_e::Column>(st_e::Column::INT, "intcol"));
+        cols.emplace_back(std::make_shared<st_e::Column>(st_e::Column::STRING, "strcol"));
+        for (auto i: cols){
+            tb.add_column(*i.get());
+        }
         auto table = tb.build();
 
     }
@@ -48,24 +50,26 @@ TEST_CASE("Table") {
 
     st_e::TableBuilder tb("ababaca");
     std::vector<std::shared_ptr<st_e::Column>> cols;
-    cols.emplace_back(std::make_shared<st_e::Column>(st_e::INT, "intcol"));
-    cols.emplace_back(std::make_shared<st_e::Column>(st_e::STRING, "strcol"));
-    tb.set_columns(cols);
+    cols.emplace_back(std::make_shared<st_e::Column>(st_e::Column::INT, "intcol"));
+    cols.emplace_back(std::make_shared<st_e::Column>(st_e::Column::STRING, "strcol"));
+    for (auto i: cols){
+        tb.add_column(*i.get());
+    }
     auto table = tb.build();
 
     SECTION("get_sql") {
-        REQUIRE(table->get_sql() == "CREATE TABLE \'ababaca\' (\'intcol\' INT, \'strcol\' STRING);");
+        REQUIRE(table.get_sql() == "CREATE TABLE \'ababaca\' (\'intcol\' INT, \'strcol\' STRING);");
     }
 
     SECTION("get_name") {
-        REQUIRE(table->get_name() == "ababaca");
+        REQUIRE(table.get_name() == "ababaca");
     }
 
     SECTION("EnumToString") {
-        REQUIRE(table->type_to_string(st_e::INT) == "INT");
-        REQUIRE(table->type_to_string(st_e::STRING) == "STRING");
-        REQUIRE(table->type_to_string(st_e::CHAR) == "CHAR");
-        REQUIRE(table->type_to_string(st_e::TEXT) == "TEXT");
+//        REQUIRE(table->type_to_string(st_e::INT) == "INT");
+//        REQUIRE(table->type_to_string(st_e::STRING) == "STRING");
+//        REQUIRE(table->type_to_string(st_e::CHAR) == "CHAR");
+//        REQUIRE(table->type_to_string(st_e::TEXT) == "TEXT");
     }
 
     SECTION("create_cell") {
@@ -87,14 +91,11 @@ TEST_CASE("Table") {
 
 TEST_CASE("Parser"){
     roflan_parser::Driver parser_driver;
-    st_e::StorageEngine storage_engine;
     std::string query = "CREATE TABLE a(col1 INT);"
                         "INSERT INTO a VALUES(1488);"
                         "INSERT INTO a VALUES(1337);"
                         "SELECT * FROM a;";
     std::string error_message;
     REQUIRE(parser_driver.parse_string(query, error_message));
-    parser_driver.sql_parser_result->execute(storage_engine);
-
-
+    parser_driver.sql_parser_result->execute();
 }
