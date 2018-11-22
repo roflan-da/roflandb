@@ -70,6 +70,20 @@ INTO    { return token::INTO; }
 
 INT     { return token::INT_TYPE; }
 
+WHERE   { return token::INT_TYPE; }
+AND     { return token::AND; }
+OR      { return token::OR; }
+
+"=="    { return token::EQUALS; }
+"!=" 	{ return token::NOT_EQUALS; }
+"<>" 	{ return token::NOT_EQUALS; }
+"<="	{ return token::LESS_EQUALS; }
+"<"	    { return token::LESS; }
+">="	{ return token::GREATER_EQUALS; }
+">"	    { return token::GREATER; }
+
+
+
 
 [0-9]+ {
     yylval->build(atoi(yytext));

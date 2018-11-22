@@ -69,6 +69,15 @@
 %token INSERT
 %token VALUES
 %token INTO
+%token AND
+%token OR
+
+%token EQUALS
+%token NOT_EQUALS
+%token LESS_EQUALS
+%token GREATER_EQUALS
+%token GREATER
+%token LESS
 
 %type <std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>>    statement_list
 %type <std::shared_ptr<cmd::SqlStatement>>                                  statement
@@ -83,6 +92,10 @@
 %type <std::shared_ptr<st_e::Column>>                                       column_def
 %type <std::string>                                                         col_value
 %type <std::string>                                                         string_val
+
+%type <std::shared_ptr<cmd::Condition>>                                     atomic_condition
+%type <std::shared_ptr<cmd::QueryConditions>>                               condition_list
+%type <std::shared_ptr<cmd::QueryConditions>>                               opt_where
 
 %type <std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>>         column_def_list
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_names_list
@@ -150,10 +163,10 @@ show_statement :
     ;
 
 select_statement :
-        SELECT '*' FROM string_val {
+        SELECT '*' FROM string_val opt_where{
             $$ = std::make_shared<cmd::SelectStatement>($4.c_str());
         }
-    |   SELECT cols_names_list FROM string_val {
+    |   SELECT cols_names_list FROM string_val opt_where{
             $$ = std::make_shared<cmd::SelectStatement>($4.c_str(), $2, cmd::VARIABLE);
         }
     ;
@@ -172,6 +185,51 @@ drop_statement :
             $$ = std::make_shared<cmd::DropStatement>($3.c_str());
         }
     ;
+
+opt_where :
+        WHERE expr {
+            $$ = $2
+        }
+    |   { $$ = nullptr; }
+    ;
+
+expr:
+		operand
+	|	logic_expr
+	;
+
+operand :
+		'(' expr ')' { $$ = $2; }
+	|	scalar_expr
+	|	binary_expr
+	|	unary_expr
+	;
+
+binary_expr :
+		comp_expr
+	;
+
+unary_expr:
+		NOT operand { $$ =  }
+	;
+
+scalar_expr:
+		col_value
+	;
+
+comp_expr:
+	|	operand EQUALS operand		    { $$ =  }
+	|	operand NOT_EQUALS operand	    { $$ =  }
+	|	operand LESS_EQUALS operand	    { $$ =  }
+	|	operand GREATER_EQUALS operand	{ $$ =  }
+	|	operand GREATER operand		    { $$ =  }
+	|	operand LESS operand	        { $$ =  }
+	;
+
+logic_expr:
+		expr AND expr	{ $$ = }
+	|	expr OR expr	{ $$ = }
+	;
 
 cols_values_list :
         col_value {
