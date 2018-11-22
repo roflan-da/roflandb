@@ -163,8 +163,15 @@ DataBlock StorageEngine::append_new_block(const std::string& table_name, const D
 //    return tables_.find(table_name)->second->select(columns_names);  //добавить проверку на существование
 //}
 //
+// TODO: continue
 //SelectAnswer StorageEngine::select_all(std::string table_name) {
-//    return tables_.find(table_name)->second->select_all();  //добавить проверку на существование
+//    auto table = tables_.get_table(table_name);
+//    auto data_file_path = table.get_data_file_path();
+//
+//    std::ifstream data_file;
+//    data_file.open(table.get_data_file_path().string(), std::fstream::binary | std::fstream::in);
+//
+//    return tables_.find(table_name)->second->select_all();
 //}
 
-}//namespace st_e
+} // namespace st_e
