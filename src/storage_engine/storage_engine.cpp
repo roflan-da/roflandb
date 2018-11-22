@@ -62,7 +62,7 @@ DataBlock StorageEngine::get_last_block(const std::string& table_name) {
     std::fstream data_file;
 
     auto  t = table.get_data_file_path().string();
-    data_file.open(table.get_data_file_path().string(), std::fstream::binary | std::fstream::in | std::fstream::out | std::fstream::app);
+    data_file.open(table.get_data_file_path().string(), std::fstream::binary | std::fstream::in | std::fstream::out);
 
     if (!data_file.is_open()) {
         throw TableNotExistException(table.get_name());
@@ -74,26 +74,33 @@ DataBlock StorageEngine::get_last_block(const std::string& table_name) {
     // if it is first insert and we have no block created.
     if (first_block_ptr == 0) {
         DataBlock new_data_block(0, 0, DATA_FILE_HEADER_SIZE);
-        data_file.seekp(std::ios_base::end);
+        data_file.seekp(0, std::ios::end);
         auto block_binary = new_data_block.get_binary_representation();
         data_file.write(block_binary.data(), block_binary.size());
 
+        data_file.seekp(0);
+        uint32_t new_first_block_pointer = 1;
+        data_file.write(reinterpret_cast<const char*>(&new_first_block_pointer), sizeof(uint32_t));
         return new_data_block;
     }
 
+    // if at leas one block exists
     uint32_t prev_block_ptr = 0;
     auto next_block_ptr = first_block_ptr;
     long long current_file_offset = 0;
+    uint32_t data_start, free_offset;
 
     do {
-        current_file_offset = DATA_FILE_HEADER_SIZE + next_block_ptr;
+        current_file_offset = DATA_FILE_HEADER_SIZE + (next_block_ptr - 1) * DATA_BLOCK_SIZE;
         data_file.seekg(current_file_offset);
         data_file.read(reinterpret_cast<char*>(&prev_block_ptr), sizeof(uint32_t));
         data_file.read(reinterpret_cast<char*>(&next_block_ptr), sizeof(uint32_t));
+        data_file.read(reinterpret_cast<char*>(&data_start), sizeof(uint32_t));
+        data_file.read(reinterpret_cast<char*>(&free_offset), sizeof(uint32_t));
 
     } while (next_block_ptr);
 
-    return DataBlock(prev_block_ptr, next_block_ptr, current_file_offset);
+    return DataBlock(prev_block_ptr, next_block_ptr, data_start, free_offset, current_file_offset);
 }
 
 void StorageEngine::append_record_to_block(const std::vector<char>& buffer, const DataBlock& block, const Table& table) {
@@ -105,7 +112,8 @@ void StorageEngine::append_record_to_block(const std::vector<char>& buffer, cons
     }
 
     long long free_offset_value_offset = block.get_file_offset() + 12; // 12 because free_offset is 4th uint32_t
-    data_file.seekg(block.get_file_offset() + block.get_free_offset());
+    auto mem = block.get_file_offset() + block.get_free_offset();
+    data_file.seekp(block.get_file_offset() + block.get_free_offset());
     data_file.write(buffer.data(), buffer.size());
 
     data_file.seekp(free_offset_value_offset);

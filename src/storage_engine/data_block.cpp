@@ -4,7 +4,10 @@
 
 namespace st_e {
 
-st_e::DataBlock::DataBlock(uint32_t previous_ptr, uint32_t next_ptr, long long file_offset)
+st_e::DataBlock::DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint32_t data_start, uint32_t free_offset, long long file_offset)
+    : previous_(previous_ptr), next_(next_ptr), data_start_(data_start), free_offset_(free_offset), file_offset_(file_offset) {}
+
+DataBlock::DataBlock(uint32_t previous_ptr, uint32_t next_ptr, long long file_offset)
     : previous_(previous_ptr), next_(next_ptr), file_offset_(file_offset) {}
 
 std::vector<char> DataBlock::get_binary_representation() const {

@@ -28,6 +28,7 @@ class DataBlock {
 public:
     static const uint32_t HEADER_LENGTH = 16;
 
+    DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint32_t data_start, uint32_t free_offset, long long file_offset);
     DataBlock(uint32_t previous_ptr, uint32_t next_ptr, long long file_offset);
     uint32_t get_previous_ptr() const { return previous_; }
     uint32_t get_next_ptr() const { return next_; }
