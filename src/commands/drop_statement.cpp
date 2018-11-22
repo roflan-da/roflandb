@@ -1,4 +1,5 @@
-#include <drop_statement.h>
+#include "drop_statement.h"
+#include "storage_engine_exceptions.h"
 
 cmd::DropStatement::DropStatement() : SqlStatement(DROP) {}
 
