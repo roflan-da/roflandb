@@ -26,7 +26,7 @@ st_e::TableRow cmd::InsertStatement::get_row() const {
             rows.emplace_back(new st_e::IntegerTableCell(std::stoi(columns_vals_[i])));
             break;
         }
-        case (st_e::Column::STRING) : {
+        case (st_e::Column::VARCHAR) : {
             break;
         }
         case (st_e::Column::TEXT) : {
@@ -98,7 +98,7 @@ bool cmd::InsertStatement::is_valid() const {
                 }
                 break;
             }
-            case (st_e::Column::STRING) : {
+            case (st_e::Column::VARCHAR) : {
                 //TODO: ограничение по длине строки
                 break;
             }

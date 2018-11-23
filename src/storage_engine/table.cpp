@@ -16,8 +16,8 @@ std::string Column::get_type_string() const {
     switch (type){
         case INT:
             return "INT";
-        case STRING:
-            return "STRING";
+        case VARCHAR:
+            return "VARCHAR";
         case CHAR:
             return "CHAR";
         case TEXT:
@@ -32,8 +32,8 @@ std::string Column::get_type_string() const {
 Column::Type Column::get_type_from_string(std::string& type) {
     if (type == "INT") {
         return Type::INT;
-    } else if (type == "STRING") {
-        return Type::STRING;
+    } else if (type == "VARCHAR") {
+        return Type::VARCHAR;
     } else if (type == "CHAR") {
         return Type::CHAR;
     } else if (type == "TEXT") {

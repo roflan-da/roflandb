@@ -1,3 +1,5 @@
+#include <utility>
+
 #pragma once
 
 #include <utility>
@@ -34,6 +36,17 @@ public:
 
 private:
     bool data_;
+};
+
+class VarCharTableCell : public TableCell {
+public:
+    explicit VarCharTableCell(std::string data) : data_(std::move(data)) {}
+    std::string get_data() override { return data_; }
+    // todo: maybe do like this?
+    void push_into_buffer(std::vector<char>& buffer) const override;
+
+private:
+    std::string data_;
 };
 
 class TableRow {

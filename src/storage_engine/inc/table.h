@@ -10,7 +10,7 @@ namespace st_e {
 
 class Column {
 public:
-    enum Type {INT, STRING, CHAR, TEXT, BOOL};
+    enum Type {INT, CHAR, VARCHAR, TEXT, BOOL};
 
     Column(Type type, const std::string& name) : type(type), name(name) {}
 
@@ -19,6 +19,12 @@ public:
     std::string get_type_string() const;
     // Todo: remove copypaste
     static Type get_type_from_string(std::string& type);
+};
+
+class VarcharColumn : public Column {
+public:
+    VarcharColumn(Type type, const std::string& name, int length) : Column(type, name), length(length) {}
+    int length;
 };
 
 class Table {
