@@ -93,9 +93,10 @@
 %type <std::string>                                                         col_value
 %type <std::string>                                                         string_val
 
-%type <std::shared_ptr<cmd::Condition>>                                     atomic_condition
+%type <std::shared_ptr<cmd::Condition>>                                     atm_cond operand binary_expr scalar_expr
+%type <std::shared_ptr<cmd::Condition>>                                     comp_expr
 %type <std::shared_ptr<cmd::QueryConditions>>                               condition_list
-%type <std::shared_ptr<cmd::QueryConditions>>                               opt_where
+%type <std::shared_ptr<cmd::QueryConditions>>                               opt_where logic_expr
 
 %type <std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>>         column_def_list
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_names_list
@@ -107,6 +108,7 @@
 
 #include "driver.h"
 #include "scanner.h"
+#import "../query_conditions/inc/query_conditions.h"
 
 /* this "connects" the bison parser in the driver to the flex scanner class
  * object. it defines the yylex() function call to pull the next token from the
@@ -199,37 +201,40 @@ expr:
 	;
 
 operand :
-		'(' expr ')' { $$ = $2; }
-	|	scalar_expr
+		scalar_expr
 	|	binary_expr
-	|	unary_expr
+	/*|	unary_expr*/
 	;
 
 binary_expr :
 		comp_expr
 	;
 
-unary_expr:
+comp_expr:
+        atm_cond EQUALS atm_cond            { $$ =  std::make_shared<cond::Condition>(cond::EQUAl, atm_cond, atm_cond); }
+    |	atm_cond NOT_EQUALS atm_cond	    { $$ =  std::make_shared<cond::Condition>(cond::NOT_EQUAl, atm_cond, atm_cond); }
+    |	atm_cond LESS_EQUALS atm_cond	    { $$ =  std::make_shared<cond::Condition>(cond::LESS_EQUAL, atm_cond, atm_cond); }
+    |	atm_cond GREATER_EQUALS atm_cond	{ $$ =  std::make_shared<cond::Condition>(cond::GREATER_EQUALS, atm_cond, atm_cond); }
+    |	atm_cond GREATER atm_cond		    { $$ =  std::make_shared<cond::Condition>(cond::GREATER, atm_cond, atm_cond); }
+    |	atm_cond LESS atm_cond	            { $$ =  std::make_shared<cond::Condition>(cond::LESS, atm_cond, atm_cond); }
+    ;
+
+atm_cond
+
+logic_expr:
+        expr AND expr	{ $$ = }
+    |	expr OR expr	{ $$ = }
+    ;
+
+
+        /*unary_expr:
 		NOT operand { $$ =  }
 	;
 
 scalar_expr:
 		col_value
-	;
+	;*/
 
-comp_expr:
-	|	operand EQUALS operand		    { $$ =  }
-	|	operand NOT_EQUALS operand	    { $$ =  }
-	|	operand LESS_EQUALS operand	    { $$ =  }
-	|	operand GREATER_EQUALS operand	{ $$ =  }
-	|	operand GREATER operand		    { $$ =  }
-	|	operand LESS operand	        { $$ =  }
-	;
-
-logic_expr:
-		expr AND expr	{ $$ = }
-	|	expr OR expr	{ $$ = }
-	;
 
 cols_values_list :
         col_value {

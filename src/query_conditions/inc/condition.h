@@ -9,9 +9,9 @@ namespace cond{
 enum SimpleConditionType{
     EQUAl,
     NOT_EQUAL,
-    MORE,
+    GREATER,
     LESS,
-    MORE_EQUAL,
+    GREATER_EQUALS,
     LESS_EQUAL
 };
 //HOW TO USE DIS SHIT
