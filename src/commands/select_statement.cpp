@@ -54,3 +54,7 @@ cmd::SelectStatement::SelectStatement(std::string table_name) : table_name_(tabl
 bool cmd::SelectStatement::is_valid() const {
     return false;
 }
+
+void cmd::SelectStatement::add_conditions(std::shared_ptr<cond::QueryConditions> conditions) {
+    conditions_ = *conditions.get();
+}

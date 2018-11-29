@@ -70,7 +70,7 @@ INTO    { return token::INTO; }
 
 INT     { return token::INT_TYPE; }
 
-WHERE   { return token::INT_TYPE; }
+WHERE   { return token::WHERE; }
 AND     { return token::AND; }
 OR      { return token::OR; }
 

@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <sql_statement.h>
+#include <query_conditions.h>
 #include "condition.h"
 
 namespace cmd {
@@ -26,11 +27,14 @@ public:
             std::shared_ptr<std::vector<std::string>> cols_names,
             SelectType type = ALL);
 
+    void add_conditions(std::shared_ptr<cond::QueryConditions> conditions);
+
 private:
     bool is_valid() const override;
     std::string table_name_;
     SelectType type_;
     std::vector<std::string> cols_names_;
+    cond::QueryConditions conditions_;
 };
 
 } //namespace cmd
