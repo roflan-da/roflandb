@@ -75,14 +75,14 @@ void SharedTable::save_to_disk(const Table& table) const {
         fs::create_directories(data_dir);
     }
 
-    std::ofstream metada_data_file;
-    metada_data_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-    metada_data_file.open(metadata_file_path.string());
+    std::ofstream metadata_file;
+    metadata_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+    metadata_file.open(metadata_file_path.string());
 
-    for (const auto& column : table.get_columns()) {
-        metada_data_file << column.second.get_type_string() << " " << column.second.name << '\n';
+    for (const auto& column : table.get_ordered_columns()) {
+        metadata_file << column.get_type_string() << " " << column.name << '\n';
     }
-    metada_data_file.close();
+    metadata_file.close();
 
     // create data file
     std::ofstream data_file;

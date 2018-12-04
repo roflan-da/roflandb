@@ -20,7 +20,7 @@ public:
 
     void execute() override;
 
-    explicit SelectStatement(std::string table_name);
+    explicit SelectStatement(const std::string& table_name);
 
     explicit SelectStatement(std::string table_name,
             std::shared_ptr<std::vector<std::string>> cols_names,

@@ -36,10 +36,12 @@ public:
     uint32_t get_next_ptr() const { return next_; }
     std::vector<char> get_binary_representation() const;
 
-    uint32_t get_free_space() const { return DATA_BLOCK_SIZE - free_offset_; }
+    uint32_t  get_free_space()  const { return DATA_BLOCK_SIZE - free_offset_; }
     long long get_file_offset() const { return file_offset_; }
-    uint32_t get_free_offset() const { return free_offset_; }
-    uint32_t get_ptr() const { return curr_block_ptr_; }
+    uint32_t  get_free_offset() const { return free_offset_; }
+    uint32_t  get_data_start()  const { return data_start_; }
+    uint32_t  get_ptr() const { return curr_block_ptr_; }
+
 private:
     uint32_t previous_ = 0;
     uint32_t next_ = 0;

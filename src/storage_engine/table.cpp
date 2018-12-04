@@ -45,16 +45,28 @@ Column::Type Column::get_type_from_string(std::string& type) {
     throw std::range_error("Column string to type conversion doesn't exist");
 }
 
+uint32_t Column::deserialize(std::ifstream& input, TableRow::ArrayOfCells& cells) const {
+    switch(type) {
+        case INT:
+            uint32_t val;
+            input.readsome(reinterpret_cast<char*>(&val), sizeof(uint32_t));
+            cells.emplace_back(new IntegerTableCell(val));
+            return sizeof(uint32_t);
+        default:
+            throw CrutchException();
+    }
+}
+
 std::string Table::get_sql() const {
     std::string sql = "CREATE TABLE \'" + name_ + "\' (";
 
     size_t i = 0;
-    for (const auto& column : columns_) {
-        if (0 < i && i < columns_.size() - 1) {
+    for (const auto& column : ordered_columns_) {
+        if (0 < i && i < columns_orders_.size() - 1) {
             sql += ", ";
         }
 
-        sql += "`" + column.second.name + "` " + column.second.get_type_string();
+        sql += "`" + column.name + "` " + column.get_type_string();
         i++;
     }
 
@@ -63,13 +75,15 @@ std::string Table::get_sql() const {
 }
 
 TableBuilder& TableBuilder::add_column(Column::Type type, const std::string& name) {
-    columns_.emplace(name, Column(type, name));
+    auto order = (unsigned int)ordered_columns_.size();
+    columns_orders_.emplace(name, order);
     ordered_columns_.emplace_back(Column(type, name));
     return *this;
 }
 
 TableBuilder& TableBuilder::add_column(Column& column) {
-    columns_.emplace(column.name, column);
+    auto order = (unsigned int)ordered_columns_.size();
+    columns_orders_.emplace(column.name, order);
     ordered_columns_.emplace_back(column);
     return *this;
 }

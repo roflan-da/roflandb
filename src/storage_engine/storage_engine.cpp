@@ -152,19 +152,36 @@ DataBlock StorageEngine::append_new_block(const std::string& table_name, const D
     return new_data_block;
 }
 
-//SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names) {
-//    return tables_.find(table_name)->second->select(columns_names);  //добавить проверку на существование
-//}
-//
-//SelectAnswer StorageEngine::select_all(std::string table_name) {
-//    auto table = tables_.get_table(table_name);
-//    std::vector<std::string> all_columns;
-//    all_columns.reserve(table.get_columns().size());
-//
-//    for (const auto& it : table.get_ordered_columns()) {
-//        all_columns.push_back(it.name);
-//    }
-//    return select(table_name, all_columns);
-//}
+SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names) {
+    auto curr_data_block = get_first_block(table_name);
+
+    SelectAnswer answer;
+    answer.columns_names = columns_names;
+
+    do {
+        TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
+        for(const auto& row : curr_table_chunk.get_rows()) {
+            std::vector<std::string> data;
+            for (const auto& cell : row.get_cells()) {
+                data.emplace_back(cell->get_data());
+            }
+            answer.rows.emplace_back(data);
+        }
+        curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
+    } while(curr_data_block.get_next_ptr());
+
+    return answer;
+}
+
+SelectAnswer StorageEngine::select_all(std::string table_name) {
+    auto table = tables_.get_table(table_name);
+    std::vector<std::string> all_columns;
+    all_columns.reserve(table.get_columns_orders().size());
+
+    for (const auto& it : table.get_ordered_columns()) {
+        all_columns.push_back(it.name);
+    }
+    return select(table_name, all_columns);
+}
 
 } // namespace st_e
