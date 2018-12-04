@@ -13,6 +13,7 @@ class TableCell {
 public:
     virtual ~TableCell() = default;
     virtual std::string get_data() = 0;
+    // resizes vector and ads binary representation to it
     virtual void push_into_buffer(std::vector<char>& buffer) const = 0;
 };
 
