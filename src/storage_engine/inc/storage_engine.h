@@ -16,7 +16,6 @@ struct SelectAnswer {
     std::vector<std::vector<std::string>> rows;
 };
 
-
 class StorageEngine {
 public:
     StorageEngine( const StorageEngine&) = delete;
@@ -29,14 +28,18 @@ public:
 
     const Table& get_table_by_name(const std::string& table_name);
     void insert(const std::string& table_name, const TableRow& row);
-//    SelectAnswer select(std::string table_name, std::vector<std::string> columns_names) override;
-    SelectAnswer select_all(std::string table_name);
+//    SelectAnswer select(std::string table_name, std::vector<std::string> columns_names);
+//    SelectAnswer select_all(std::string table_name);
 
 private:
     StorageEngine() = default;
 
     SharedTable& tables_ = SharedTable::get_instance();
+
+    DataBlock get_block(const std::string& table_name, uint32_t number);
+    DataBlock get_first_block(const std::string& table_name);
     DataBlock get_last_block(const std::string& table_name);
+
     DataBlock append_new_block(const std::string& table_name, const DataBlock& block);
     void append_record_to_block(const std::vector<char>& buffer, const DataBlock& block, const Table& table);
 };

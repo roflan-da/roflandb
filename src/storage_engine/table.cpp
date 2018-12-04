@@ -63,13 +63,14 @@ std::string Table::get_sql() const {
 }
 
 TableBuilder& TableBuilder::add_column(Column::Type type, const std::string& name) {
-    columns_.erase(name);
     columns_.emplace(name, Column(type, name));
+    ordered_columns_.emplace_back(Column(type, name));
     return *this;
 }
 
 TableBuilder& TableBuilder::add_column(Column& column) {
-    columns_.insert_or_assign(column.name, column);
+    columns_.emplace(column.name, column);
+    ordered_columns_.emplace_back(column);
     return *this;
 }
 
