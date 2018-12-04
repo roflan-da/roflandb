@@ -41,10 +41,10 @@ public:
 
     std::string get_sql() const;
     std::string get_name() const { return name_; }
-    const MapOfColumns& get_columns_orders() const { return columns_orders_; }
+    MapOfColumns& get_columns_orders() { return columns_orders_; }
     const ArrayOfColumns& get_ordered_columns() const { return ordered_columns_; }
 
-    const Column& get_column(std::string name) { return ordered_columns_[columns_orders_[name]]; }
+    const Column& get_column(const std::string& name) { return ordered_columns_[columns_orders_[name]]; }
 
     static boost::filesystem::path get_metadata_file_path(const std::string& table_name);
     static boost::filesystem::path get_data_file_path(const std::string& table_name);

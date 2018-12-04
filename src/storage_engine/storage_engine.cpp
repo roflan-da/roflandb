@@ -154,6 +154,7 @@ DataBlock StorageEngine::append_new_block(const std::string& table_name, const D
 
 SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names) {
     auto curr_data_block = get_first_block(table_name);
+    auto table = tables_.get_table(table_name);
 
     SelectAnswer answer;
     answer.columns_names = columns_names;
@@ -161,11 +162,20 @@ SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::stri
     do {
         TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
         for(const auto& row : curr_table_chunk.get_rows()) {
-            std::vector<std::string> data;
+            std::vector<std::string> raw_data;
+
             for (const auto& cell : row.get_cells()) {
-                data.emplace_back(cell->get_data());
+                raw_data.emplace_back(cell->get_data());
             }
-            answer.rows.emplace_back(data);
+
+            std::vector<std::string> formatted_data;
+            formatted_data.reserve(raw_data.size());
+
+            for (auto const& col: columns_names) {
+                formatted_data.emplace_back(raw_data[table.get_columns_orders()[col]]);
+            }
+
+            answer.rows.emplace_back(formatted_data);
         }
         curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
     } while(curr_data_block.get_next_ptr());

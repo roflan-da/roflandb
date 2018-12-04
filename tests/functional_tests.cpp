@@ -46,7 +46,7 @@ TEST_CASE("insert pages") {
     std::string error_message;
 
     parser_driver.parse_string("create table test(id int);", error_message);
-    for (int i = 0; i < 20000; ++i) {
+    for (int i = 0; i < 100; ++i) {
         parser_driver.parse_string("insert into test(id) values (16777215);", error_message);
         parser_driver.sql_parser_result->execute();
     }
