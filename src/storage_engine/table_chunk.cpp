@@ -11,22 +11,21 @@ TableChunk::TableChunk(const Table& table, const DataBlock& data_block) {
         throw TableNotExistException(table.get_name());
     }
 
-
-    auto current_block_offset = data_block.get_file_offset() + data_block.get_data_start();
+    auto current_file_offset = data_block.get_file_offset() + data_block.get_data_start();
     auto data_end_offset = data_block.get_file_offset() + data_block.get_free_offset();
 
-    data_file.seekg(current_block_offset);
+    data_file.seekg(current_file_offset);
 
-    while (current_block_offset != data_end_offset) {
+    while (current_file_offset != data_end_offset) {
         TableRow::ArrayOfCells cells;
 
         char internal_flags;
         data_file.read(&internal_flags, sizeof(char));
-        current_block_offset += sizeof(char);
+        current_file_offset += sizeof(char);
 
         for (const auto& col : table.get_ordered_columns()) {
             auto read_bytes = col.deserialize(data_file, cells);
-            current_block_offset += read_bytes;
+            current_file_offset += read_bytes;
         }
 
         rows_.emplace_back(cells, false);

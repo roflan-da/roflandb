@@ -158,8 +158,15 @@ SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::stri
 
     SelectAnswer answer;
     answer.columns_names = columns_names;
+    bool first = true;
 
     do {
+        if (!first) {
+            curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
+        }
+
+        first = false;
+
         TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
         for(const auto& row : curr_table_chunk.get_rows()) {
             std::vector<std::string> raw_data;
@@ -177,7 +184,8 @@ SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::stri
 
             answer.rows.emplace_back(formatted_data);
         }
-        curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
+
+
     } while(curr_data_block.get_next_ptr());
 
     return answer;

@@ -45,9 +45,11 @@ TEST_CASE("insert pages") {
     roflan_parser::Driver parser_driver;
     std::string error_message;
 
-    parser_driver.parse_string("create table test(id int);", error_message);
-    for (int i = 0; i < 100; ++i) {
-        parser_driver.parse_string("insert into test(id) values (16777215);", error_message);
+    parser_driver.parse_string("create table test(id int, phone int);", error_message);
+    parser_driver.sql_parser_result->execute();
+    for (int i = 1; i < 20000; ++i) {
+        auto k = i-1;
+        parser_driver.parse_string("insert into test(id, phone) values (" + std::to_string(i) + ", " + std::to_string(k) + ");", error_message);
         parser_driver.sql_parser_result->execute();
     }
 }

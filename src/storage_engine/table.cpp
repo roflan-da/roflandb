@@ -49,7 +49,7 @@ uint32_t Column::deserialize(std::ifstream& input, TableRow::ArrayOfCells& cells
     switch(type) {
         case INT:
             uint32_t val;
-            input.readsome(reinterpret_cast<char*>(&val), sizeof(uint32_t));
+            input.read(reinterpret_cast<char*>(&val), sizeof(uint32_t));
             cells.emplace_back(new IntegerTableCell(val));
             return sizeof(uint32_t);
         default:
