@@ -46,15 +46,21 @@ Column::Type Column::get_type_from_string(std::string& type) {
 }
 
 uint32_t Column::deserialize(std::ifstream& input, TableRow::ArrayOfCells& cells) const {
-    switch(type) {
-        case INT:
-            uint32_t val;
-            input.read(reinterpret_cast<char*>(&val), sizeof(uint32_t));
-            cells.emplace_back(new IntegerTableCell(val));
-            return sizeof(uint32_t);
-        default:
-            throw CrutchException();
+    if (type == INT) {
+        uint32_t val = 0;
+        input.read(reinterpret_cast<char*>(&val), sizeof(uint32_t));
+        cells.emplace_back(new IntegerTableCell(val));
+        return sizeof(uint32_t);
     }
+
+    if (type == BOOL) {
+        bool val = false;
+        input.read(reinterpret_cast<char*>(&val), sizeof(bool));
+        cells.emplace_back(new BoolTableCell(val));
+        return sizeof(bool);
+    }
+
+    throw CrutchException();
 }
 
 std::string Table::get_sql() const {

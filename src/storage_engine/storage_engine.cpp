@@ -184,8 +184,6 @@ SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::stri
 
             answer.rows.emplace_back(formatted_data);
         }
-
-
     } while(curr_data_block.get_next_ptr());
 
     return answer;
