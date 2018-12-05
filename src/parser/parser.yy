@@ -204,14 +204,11 @@ expr:
 	;
 
 operand :
-        /*"(" expr ")" { $$ = $2; };
-	|	scalar_expr
-	|	*/binary_expr
-	/*|	unary_expr*/
-	;
+        binary_expr { $$ = $1; }
+    ;
 
 binary_expr :
-		comp_expr
+		comp_expr { $$ = $1; }
 	;
 
 comp_expr :
@@ -231,16 +228,6 @@ logic_expr :
         expr AND expr	{ $$ = std::make_shared<cond::QueryConditions>(cond::AND, $1, $3); }
     |	expr OR expr	{ $$ = std::make_shared<cond::QueryConditions>(cond::OR, $1, $3); }
     ;
-
-
-        /*unary_expr:
-		NOT operand { $$ =  }
-	;
-
-scalar_expr:
-		col_value
-	;*/
-
 
 cols_values_list :
         col_value {
