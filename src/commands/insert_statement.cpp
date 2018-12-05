@@ -18,12 +18,17 @@ cmd::InsertStatement::InsertStatement() : SqlStatement(INSERT) {}
 st_e::TableRow cmd::InsertStatement::get_row() const {
     auto table = st_e::StorageEngine::get_instance().get_table_by_name(table_name_);
     std::vector<std::shared_ptr<st_e::TableCell>> cells;
+    // todo: add better check
+    cells.resize(table.get_ordered_columns().size());
+
     for (size_t i = 0; i < columns_names_.size(); ++i) {
+        auto found_col_index = table.get_columns_orders()[columns_names_[i]];
         auto found_col = table.get_column(columns_names_[i]);
+
         switch (found_col.type)
         {
         case (st_e::Column::INT) : {
-            cells.emplace_back(new st_e::IntegerTableCell(std::stoi(columns_vals_[i])));
+            cells[found_col_index] = std::make_shared<st_e::IntegerTableCell>(std::stoi(columns_vals_[i]));
             break;
         }
         case (st_e::Column::VARCHAR) : {
