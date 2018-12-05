@@ -71,16 +71,7 @@
 %token INSERT
 %token VALUES
 %token INTO
-%token AND
-%token OR
 %token WHERE
-
-%token EQUALS
-%token NOT_EQUALS
-%token LESS_EQUALS
-%token GREATER_EQUALS
-%token GREATER
-%token LESS
 
 %type <std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>>    statement_list
 %type <std::shared_ptr<cmd::SqlStatement>>                                  statement
@@ -104,6 +95,12 @@
 %type <std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>>         column_def_list
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_names_list
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_values_list
+
+
+%left  OR
+%left  AND
+
+%nonassoc EQUALS NOT_EQUALS LESS GREATER LESS_EQUALS GREATER_EQUALS
 
  /*** END TOKENS ***/
 

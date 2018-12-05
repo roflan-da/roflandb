@@ -367,15 +367,15 @@ namespace roflan_parser {
         INSERT = 268,
         VALUES = 269,
         INTO = 270,
-        AND = 271,
+        WHERE = 271,
         OR = 272,
-        WHERE = 273,
+        AND = 273,
         EQUALS = 274,
         NOT_EQUALS = 275,
-        LESS_EQUALS = 276,
-        GREATER_EQUALS = 277,
-        GREATER = 278,
-        LESS = 279
+        LESS = 276,
+        GREATER = 277,
+        LESS_EQUALS = 278,
+        GREATER_EQUALS = 279
       };
     };
 
@@ -568,7 +568,7 @@ namespace roflan_parser {
 
     static inline
     symbol_type
-    make_AND (const location_type& l);
+    make_WHERE (const location_type& l);
 
     static inline
     symbol_type
@@ -576,7 +576,7 @@ namespace roflan_parser {
 
     static inline
     symbol_type
-    make_WHERE (const location_type& l);
+    make_AND (const location_type& l);
 
     static inline
     symbol_type
@@ -588,11 +588,7 @@ namespace roflan_parser {
 
     static inline
     symbol_type
-    make_LESS_EQUALS (const location_type& l);
-
-    static inline
-    symbol_type
-    make_GREATER_EQUALS (const location_type& l);
+    make_LESS (const location_type& l);
 
     static inline
     symbol_type
@@ -600,7 +596,11 @@ namespace roflan_parser {
 
     static inline
     symbol_type
-    make_LESS (const location_type& l);
+    make_LESS_EQUALS (const location_type& l);
+
+    static inline
+    symbol_type
+    make_GREATER_EQUALS (const location_type& l);
 
 
     /// Build a parser object.
@@ -809,7 +809,7 @@ namespace roflan_parser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 96,     ///< Last index in yytable_.
+      yylast_ = 99,     ///< Last index in yytable_.
       yynnts_ = 23,  ///< Number of nonterminal symbols.
       yyfinal_ = 24, ///< Termination state number.
       yyterror_ = 1,
