@@ -45,17 +45,19 @@ Column::Type Column::get_type_from_string(std::string& type) {
     throw std::range_error("Column string to type conversion doesn't exist");
 }
 
-uint32_t Column::deserialize(std::ifstream& input, TableRow::ArrayOfCells& cells) const {
+uint32_t Column::deserialize(const std::vector<char>& input, TableRow::ArrayOfCells& cells, size_t offset) const {
+    auto start_ptr = input.data() + offset;
+
     if (type == INT) {
         uint32_t val = 0;
-        input.read(reinterpret_cast<char*>(&val), sizeof(uint32_t));
+        std::memcpy(&val, start_ptr, sizeof(uint32_t));
         cells.emplace_back(new IntegerTableCell(val));
         return sizeof(uint32_t);
     }
 
     if (type == BOOL) {
         bool val = false;
-        input.read(reinterpret_cast<char*>(&val), sizeof(bool));
+        std::memcpy(&val, start_ptr, sizeof(bool));
         cells.emplace_back(new BoolTableCell(val));
         return sizeof(bool);
     }

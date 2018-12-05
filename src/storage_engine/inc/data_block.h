@@ -37,7 +37,7 @@ public:
     std::vector<char> get_binary_representation() const;
 
     uint32_t  get_free_space()  const { return DATA_BLOCK_SIZE - free_offset_; }
-    long long get_file_offset() const { return file_offset_; }
+    size_t get_file_offset() const { return file_offset_; }
     uint32_t  get_free_offset() const { return free_offset_; }
     uint32_t  get_data_start()  const { return data_start_; }
     uint32_t  get_ptr() const { return curr_block_ptr_; }
@@ -50,7 +50,7 @@ private:
     // offset to space without records. deleted or existing.
     uint32_t free_offset_ = HEADER_LENGTH;
     uint32_t curr_block_ptr_;
-    long long file_offset_ = DATA_FILE_HEADER_SIZE + (curr_block_ptr_ - 1) * DATA_BLOCK_SIZE;
+    size_t file_offset_ = DATA_FILE_HEADER_SIZE + (curr_block_ptr_ - 1) * DATA_BLOCK_SIZE;
 };
 
 } // namespace st_e
