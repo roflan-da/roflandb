@@ -109,6 +109,7 @@ void SharedTable::save_to_disk(const Table& table) const {
 void SharedTable::delete_table(const std::string& table_name) {
     auto data_dir = st_e::Table::get_metadata_file_path(table_name).parent_path();
     boost::filesystem::remove_all(data_dir);
+    cached_tables_.erase(table_name);
 }
 
 } // namespace st_e
