@@ -10,14 +10,9 @@ void StorageEngine::add_table(const Table& table) {
     tables_.save_table(table);
 }
 
-//bool StorageEngine::delete_table(std::string table_name) {
-//    auto it = tables_.find(table_name);
-//    if (it != tables_.end()) {
-//        tables_.erase(it);
-//        return true;
-//    }
-//    return false;
-//}
+void StorageEngine::delete_table(const std::string& table_name) {
+    tables_.delete_table(table_name);
+}
 
 
 const st_e::Table& StorageEngine::get_table_by_name(const std::string& table_name) {

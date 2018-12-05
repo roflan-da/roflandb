@@ -24,7 +24,7 @@ public:
     static StorageEngine& get_instance();
 
     void add_table(const Table& table);
-//    bool delete_table(std::string table_name);
+    void delete_table(const std::string& table_name);
 
     const Table& get_table_by_name(const std::string& table_name);
     void insert(const std::string& table_name, const TableRow& row);

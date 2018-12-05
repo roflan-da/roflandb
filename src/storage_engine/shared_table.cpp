@@ -4,6 +4,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 #include <data_block.h>
+#include <shared_table.h>
+
 
 #include "shared_table.h"
 #include "configuration.h"
@@ -102,6 +104,11 @@ void SharedTable::save_to_disk(const Table& table) const {
     data_file.write(block_binary.data(), block_binary.size());
 
     data_file.close();
+}
+
+void SharedTable::delete_table(const std::string& table_name) {
+    auto data_dir = st_e::Table::get_metadata_file_path(table_name).parent_path();
+    boost::filesystem::remove_all(data_dir);
 }
 
 } // namespace st_e

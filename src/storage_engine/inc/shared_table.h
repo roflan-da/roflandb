@@ -15,6 +15,7 @@ public:
     const Table& get_table(const std::string& name);
     // rewrites existing table metadata
     void save_table(const Table& table);
+    void delete_table(const std::string& table_name);
 
 private:
     SharedTable() = default;

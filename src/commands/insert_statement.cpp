@@ -3,8 +3,6 @@
 #include "insert_statement.h"
 #include "storage_engine_exceptions.h"
 
-
-
 cmd::InsertStatement::InsertStatement(std::string table_name,
                                       std::shared_ptr<std::vector<std::string>> cols_names,
                                       std::shared_ptr<std::vector<std::string>> cols_values) :
