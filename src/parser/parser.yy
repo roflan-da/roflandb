@@ -165,6 +165,12 @@ insert_statement :
     |   INSERT INTO string_val '(' cols_names_list ')' VALUES '(' cols_values_list ')' {
             $$ = std::make_shared<cmd::InsertStatement>($3.c_str(), $5, $9);
         }
+    |   INSERT INTO string_val VALUES '(' cols_values_list ')' {
+                $$ = std::make_shared<cmd::InsertStatement>($3.c_str(), $6);
+        }
+    |   INSERT string_val VALUES '(' cols_values_list ')' {
+                $$ = std::make_shared<cmd::InsertStatement>($2.c_str(), $5);
+        }
     ;
 
 drop_statement :
