@@ -371,14 +371,12 @@ namespace roflan_parser {
         WHERE = 271,
         OR = 272,
         AND = 273,
-        LBRACKET = 274,
-        RBRACKET = 275,
-        EQUALS = 276,
-        NOT_EQUALS = 277,
-        LESS = 278,
-        GREATER = 279,
-        LESS_EQUALS = 280,
-        GREATER_EQUALS = 281
+        EQUALS = 274,
+        NOT_EQUALS = 275,
+        LESS = 276,
+        GREATER = 277,
+        LESS_EQUALS = 278,
+        GREATER_EQUALS = 279
       };
     };
 
@@ -582,14 +580,6 @@ namespace roflan_parser {
     static inline
     symbol_type
     make_AND (const location_type& l);
-
-    static inline
-    symbol_type
-    make_LBRACKET (const location_type& l);
-
-    static inline
-    symbol_type
-    make_RBRACKET (const location_type& l);
 
     static inline
     symbol_type
@@ -827,7 +817,7 @@ namespace roflan_parser {
       yyfinal_ = 24, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 33  ///< Number of tokens.
+      yyntokens_ = 31  ///< Number of tokens.
     };
 
 
@@ -838,7 +828,7 @@ namespace roflan_parser {
 
 
 } // roflan_parser
-#line 842 "parser.h" // lalr1.cc:379
+#line 832 "parser.h" // lalr1.cc:379
 
 
 

@@ -99,7 +99,7 @@
 
 %left  OR
 %left  AND
-%left  LBRACKET RBRACKET
+%left  '(' ')'
 
 %nonassoc EQUALS NOT_EQUALS LESS GREATER LESS_EQUALS GREATER_EQUALS
 
@@ -203,7 +203,7 @@ opt_where :
     ;
 
 expr:
-        LBRACKET expr RBRACKET { $$ = $2; }
+        '(' expr ')' { $$ = $2; }
     |   logic_expr { $$ = std::shared_ptr<cond::Condition>(new cond::ComplexCondition($1->type(),
                                                                                       $1->left(),
                                                                                       $1->right()));
