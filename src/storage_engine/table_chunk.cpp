@@ -29,9 +29,10 @@ TableChunk::TableChunk(const Table& table, const DataBlock& data_block) {
         char internal_flags = data[curr_data_block_offset];
         curr_data_block_offset += sizeof(char);
 
+        bool is_removed = false;
         // check deletion
         if (internal_flags & 1) {
-            continue;
+            is_removed = true;
         }
 
         for (const auto& col : table.get_ordered_columns()) {
@@ -39,7 +40,7 @@ TableChunk::TableChunk(const Table& table, const DataBlock& data_block) {
             curr_data_block_offset += read_bytes;
         }
 
-        rows_.emplace_back(cells, false);
+        rows_.emplace_back(cells, is_removed);
     }
 }
 

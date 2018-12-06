@@ -28,6 +28,7 @@ public:
 
     const Table& get_table_by_name(const std::string& table_name);
     void insert(const std::string& table_name, const TableRow& row);
+    void remove(const std::string& table_name);
     SelectAnswer select(std::string table_name, std::vector<std::string> columns_names);
     SelectAnswer select_all(std::string table_name);
 
@@ -42,6 +43,7 @@ private:
 
     DataBlock append_new_block(const std::string& table_name, const DataBlock& block);
     void append_record_to_block(const std::vector<char>& buffer, const DataBlock& block, const Table& table);
+    void rewrite_record(const DataBlock& block, TableChunk& table_chunk, const Table& table);
 };
 
 }//namespace st_e

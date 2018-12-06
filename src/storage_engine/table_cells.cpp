@@ -29,7 +29,7 @@ void TableRow::push_binary(std::vector<char>& input) const {
     // first byte is internal value. Value of 0 means that record is not deleted
     input.resize(sizeof(char));
     char internal_flag = 0;
-    internal_flag = internal_flag & is_deleted_;
+    internal_flag = internal_flag | is_removed_;
     std::memcpy(input.data(), &internal_flag, sizeof(char));
 
     for (const auto& cell : cells_) {

@@ -151,11 +151,12 @@ SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::stri
         if (!first) {
             curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
         }
-
         first = false;
-
         TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
         for(const auto& row : curr_table_chunk.get_rows()) {
+            if (row.is_removed())
+                continue;
+
             std::vector<std::string> raw_data;
 
             for (const auto& cell : row.get_cells()) {
@@ -185,6 +186,40 @@ SelectAnswer StorageEngine::select_all(std::string table_name) {
         all_columns.push_back(it.name);
     }
     return select(table_name, all_columns);
+}
+
+void StorageEngine::remove(const std::string& table_name) {
+    auto curr_data_block = get_first_block(table_name);
+    auto table = tables_.get_table(table_name);
+
+    bool first = true;
+    do {
+        if (!first) {
+            curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
+        }
+
+        first = false;
+        TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
+
+        for(auto& row : curr_table_chunk.get_rows()) {
+            row.remove();
+        }
+
+        rewrite_record(curr_data_block, curr_table_chunk, table);
+    } while(curr_data_block.get_next_ptr());
+}
+
+void StorageEngine::rewrite_record(const DataBlock& block, TableChunk& table_chunk, const Table& table) {
+    std::ofstream data_file;
+    // Low level section ahead. Please fasten your seatbelts and don't touch anything.
+    data_file.open(table.get_data_file_path().string(), std::ofstream::binary | std::ofstream::out | std::ofstream::in);
+    data_file.seekp(block.get_file_offset() + block.get_data_start());
+
+    std::vector<char> out;
+    for (auto& row : table_chunk.get_rows()) {
+        row.push_binary(out);
+    }
+    data_file.write(out.data(), out.size());
 }
 
 } // namespace st_e

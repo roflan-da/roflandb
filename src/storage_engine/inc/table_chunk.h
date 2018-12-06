@@ -15,7 +15,7 @@ public:
     using ArrayOfRows = std::vector<TableRow>;
 
     TableChunk(const Table& table, const DataBlock& data_block);
-    const ArrayOfRows& get_rows() const { return rows_; }
+    ArrayOfRows& get_rows() { return rows_; }
 
 private:
     ArrayOfRows rows_;
