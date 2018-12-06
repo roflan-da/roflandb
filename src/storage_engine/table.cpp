@@ -49,8 +49,8 @@ uint32_t Column::deserialize(const std::vector<char>& input, TableRow::ArrayOfCe
     auto start_ptr = input.data() + offset;
 
     if (type == INT) {
-        uint32_t val = 0;
-        std::memcpy(&val, start_ptr, sizeof(uint32_t));
+        int32_t val = 0;
+        std::memcpy(&val, start_ptr, sizeof(int32_t));
         cells.emplace_back(new IntegerTableCell(val));
         return sizeof(uint32_t);
     }

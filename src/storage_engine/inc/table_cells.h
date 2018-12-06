@@ -16,13 +16,13 @@ public:
 
 class IntegerTableCell : public TableCell {
 public:
-    explicit IntegerTableCell(uint32_t data) : data_(data) {}
+    explicit IntegerTableCell(int32_t data) : data_(data) {}
     std::string get_data() override { return std::to_string(data_); }
     // todo: maybe do like this?
     void push_into_buffer(std::vector<char>& buffer) const override;
 
 private:
-    uint32_t data_;
+    int32_t data_;
 };
 
 class BoolTableCell : public TableCell {
