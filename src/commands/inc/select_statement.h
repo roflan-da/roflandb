@@ -4,7 +4,6 @@
 #include <vector>
 #include <memory>
 #include <sql_statement.h>
-#include "condition.h"
 
 namespace cmd {
 
