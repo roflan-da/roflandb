@@ -85,7 +85,7 @@ OR      { return token::OR; }
 
 
 
-[0-9]+ {
+-?[0-9]+ {
     yylval->build(atoi(yytext));
     return token::INTEGER;
 }

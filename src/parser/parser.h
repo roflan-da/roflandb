@@ -45,7 +45,6 @@
     #include "command.h"
     #include "statements.h"
     #include "../query_conditions/inc/query_conditions.h"
-    #include "../query_conditions/inc/condition.h"
 
 #line 51 "parser.h" // lalr1.cc:379
 
@@ -809,7 +808,7 @@ namespace roflan_parser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 99,     ///< Last index in yytable_.
+      yylast_ = 110,     ///< Last index in yytable_.
       yynnts_ = 23,  ///< Number of nonterminal symbols.
       yyfinal_ = 24, ///< Termination state number.
       yyterror_ = 1,
