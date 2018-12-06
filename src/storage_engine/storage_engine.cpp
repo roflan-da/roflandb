@@ -1,7 +1,8 @@
 #include <string>
-
-#include "storage_engine.h"
-#include "table_chunk.h"
+#include <storage_engine.h>
+#include <table_chunk.h>
+#include <configuration.h>
+#include <storage_engine_exceptions.h>
 
 namespace st_e {
 
@@ -9,14 +10,9 @@ void StorageEngine::add_table(const Table& table) {
     tables_.save_table(table);
 }
 
-//bool StorageEngine::delete_table(std::string table_name) {
-//    auto it = tables_.find(table_name);
-//    if (it != tables_.end()) {
-//        tables_.erase(it);
-//        return true;
-//    }
-//    return false;
-//}
+void StorageEngine::delete_table(const std::string& table_name) {
+    tables_.delete_table(table_name);
+}
 
 
 const st_e::Table& StorageEngine::get_table_by_name(const std::string& table_name) {
@@ -29,50 +25,174 @@ StorageEngine &StorageEngine::get_instance() {
 }
 
 void StorageEngine::insert(const std::string& table_name, const TableRow& row) {
-    auto columns = get_table_by_name(table_name).get_columns();
+    const auto& table = get_table_by_name(table_name);
 
     std::vector<char> record_buffer;
-    // first byte is internal value.
-    record_buffer.resize(sizeof(uint32_t));
-    uint32_t internal_flag = 0;
-    std::memcpy(record_buffer.data(), &internal_flag, sizeof(uint32_t));
+
+    record_buffer.resize(sizeof(char));
+    // first byte is internal value. Value of 0 means that record is not deleted
+    char internal_flag = 0;
+    std::memcpy(record_buffer.data(), &internal_flag, sizeof(char));
 
     for (const auto& cell : row.get_cells()) {
-        //todo: add more types
-        uint32_t value = dynamic_cast<const IntegerTableCell&>(*cell).get_value();
-
-        auto first_free_byte = record_buffer.size();
-        record_buffer.resize(record_buffer.size() + sizeof(uint32_t));
-        std::memcpy(record_buffer.data() + first_free_byte, &value, sizeof(uint32_t));
+        cell->push_into_buffer(record_buffer);
     }
 
-    std::string res(record_buffer.data());
+    auto last_block = get_last_block(table_name);
 
-    int a = 2;
+    if (last_block.get_free_space() < record_buffer.size()) {
+        last_block = append_new_block(table_name, last_block);
+    }
+
+    append_record_to_block(record_buffer, last_block, table);
 }
 
-void StorageEngine::load_last_block(const std::string& table_name){
+DataBlock StorageEngine::get_block(const std::string& table_name, uint32_t block_number) {
+    auto table = tables_.get_table(table_name);
+    std::fstream data_file;
+    data_file.open(table.get_data_file_path().string(), std::fstream::binary | std::fstream::in | std::fstream::out);
+
+    if (!data_file.is_open()) {
+        throw TableNotExistException(table.get_name());
+    }
+
+    uint32_t next_block_ptr;
+    uint32_t prev_block_ptr;
+    uint32_t cur_block_ptr;
+    uint32_t free_offset;
+    uint32_t data_start;
+
+    // Low level section ahead. Please fasten your seatbelts and don't touch anything.
+    long long current_file_offset = DATA_FILE_HEADER_SIZE + (block_number - 1) * DATA_BLOCK_SIZE;
+    data_file.seekg(current_file_offset);
+    data_file.read(reinterpret_cast<char*>(&prev_block_ptr), sizeof(uint32_t));
+    data_file.read(reinterpret_cast<char*>(&next_block_ptr), sizeof(uint32_t));
+    data_file.read(reinterpret_cast<char*>(&data_start),     sizeof(uint32_t));
+    data_file.read(reinterpret_cast<char*>(&free_offset),    sizeof(uint32_t));
+    data_file.read(reinterpret_cast<char*>(&cur_block_ptr),  sizeof(uint32_t));
+
+    return DataBlock(prev_block_ptr, next_block_ptr, data_start, free_offset, cur_block_ptr);
+}
+
+DataBlock StorageEngine::get_first_block(const std::string& table_name) {
+    return get_block(table_name, 1);
+}
+
+DataBlock StorageEngine::get_last_block(const std::string& table_name) {
+    auto table = tables_.get_table(table_name);
+    auto data_file_path = table.get_data_file_path();
+
+    auto curr_data_block = get_first_block(table_name);
+
+    while (curr_data_block.get_next_ptr()) {
+        curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
+    }
+
+    return curr_data_block;
+}
+
+void StorageEngine::append_record_to_block(const std::vector<char>& buffer, const DataBlock& block, const Table& table) {
+    std::fstream data_file(table.get_data_file_path().string(), std::fstream::binary | std::fstream::in | std::fstream::out);
+
+    if (!data_file.is_open()) {
+        throw  TableNotExistException(table.get_name());
+    }
+    // Low level section ahead. Please fasten your seatbelts and don't touch anything.
+    long long free_offset_value_offset = block.get_file_offset() + 12; // 12 because free_offset is 4th uint32_t
+    data_file.seekp(block.get_file_offset() + block.get_free_offset());
+    data_file.write(buffer.data(), buffer.size());
+
+    data_file.seekp(free_offset_value_offset);
+    auto new_free_offset_value = static_cast<uint32_t>(block.get_free_offset() + buffer.size());
+    data_file.write(reinterpret_cast<const char*>(&new_free_offset_value), sizeof(uint32_t));
+    data_file.close();
+}
+
+DataBlock StorageEngine::append_new_block(const std::string& table_name, const DataBlock& last_block) {
     auto table = tables_.get_table(table_name);
     auto data_file_path = table.get_data_file_path();
 
     std::fstream data_file;
-    data_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-    data_file.open(table.get_data_file_path().string(), std::ios::binary);
+    // Low level section ahead. Please fasten your seatbelts and don't touch anything.
+    data_file.open(table.get_data_file_path().string(), std::fstream::binary | std::fstream::in | std::fstream::out);
 
-    uint32_t first_existing_block;
-    data_file.read(reinterpret_cast<char*>(&first_existing_block), sizeof(uint32_t));
-    if (first_existing_block == 0) {
-
+    if (!data_file.is_open()) {
+        throw TableNotExistException(table.get_name());
     }
+
+    // FILL PREV BLOCK WITH ZEROES TO KEEP RIGHT ALIGN
+    data_file.seekp(last_block.get_file_offset() + last_block.get_free_offset());
+    char zero = 0;
+    for (auto i = last_block.get_free_space(); i > 0; i--) {
+        data_file.write(reinterpret_cast<const char*>(&zero), sizeof(char));
+    }
+
+    uint32_t block_number;
+    data_file.seekg(8);
+    data_file.read(reinterpret_cast<char*>(&block_number), sizeof(uint32_t));
+    block_number += 1;
+    data_file.seekp(8);
+    data_file.write(reinterpret_cast<char*>(&block_number), sizeof(uint32_t));
+
+    DataBlock new_data_block(last_block.get_ptr(), 0, block_number);
+    data_file.seekp(0, std::ios::end);
+    auto block_binary = new_data_block.get_binary_representation();
+    data_file.write(block_binary.data(), block_binary.size());
+
+    //change last, block's next_ptr
+    data_file.seekp(last_block.get_file_offset() + 4);
+    uint32_t curr_block_offset = new_data_block.get_ptr();
+    data_file.write(reinterpret_cast<const char*>(&curr_block_offset), sizeof(uint32_t));
+
+    return new_data_block;
 }
 
+SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names) {
+    auto curr_data_block = get_first_block(table_name);
+    auto table = tables_.get_table(table_name);
 
-//SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names) {
-//    return tables_.find(table_name)->second->select(columns_names);  //добавить проверку на существование
-//}
-//
-//SelectAnswer StorageEngine::select_all(std::string table_name) {
-//    return tables_.find(table_name)->second->select_all();  //добавить проверку на существование
-//}
+    SelectAnswer answer;
+    answer.columns_names = columns_names;
+    bool first = true;
 
-}//namespace st_e
+    do {
+        if (!first) {
+            curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
+        }
+
+        first = false;
+
+        TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
+        for(const auto& row : curr_table_chunk.get_rows()) {
+            std::vector<std::string> raw_data;
+
+            for (const auto& cell : row.get_cells()) {
+                raw_data.emplace_back(cell->get_data());
+            }
+
+            std::vector<std::string> formatted_data;
+            formatted_data.reserve(raw_data.size());
+
+            for (auto const& col: columns_names) {
+                formatted_data.emplace_back(raw_data[table.get_columns_orders()[col]]);
+            }
+
+            answer.rows.emplace_back(formatted_data);
+        }
+    } while(curr_data_block.get_next_ptr());
+
+    return answer;
+}
+
+SelectAnswer StorageEngine::select_all(std::string table_name) {
+    auto table = tables_.get_table(table_name);
+    std::vector<std::string> all_columns;
+    all_columns.reserve(table.get_columns_orders().size());
+
+    for (const auto& it : table.get_ordered_columns()) {
+        all_columns.push_back(it.name);
+    }
+    return select(table_name, all_columns);
+}
+
+} // namespace st_e

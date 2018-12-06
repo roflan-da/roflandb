@@ -3,8 +3,6 @@
 #include "insert_statement.h"
 #include "storage_engine_exceptions.h"
 
-
-
 cmd::InsertStatement::InsertStatement(std::string table_name,
                                       std::shared_ptr<std::vector<std::string>> cols_names,
                                       std::shared_ptr<std::vector<std::string>> cols_values) :
@@ -16,17 +14,22 @@ cmd::InsertStatement::InsertStatement(std::string table_name,
 cmd::InsertStatement::InsertStatement() : SqlStatement(INSERT) {}
 
 st_e::TableRow cmd::InsertStatement::get_row() const {
-    auto table_cols = st_e::StorageEngine::get_instance().get_table_by_name(table_name_).get_columns();
-    std::vector<std::shared_ptr<st_e::TableCell>> rows;
-    for (auto col_name : columns_names_) {
-        auto found_col = table_cols.find(col_name)->second;
+    auto table = st_e::StorageEngine::get_instance().get_table_by_name(table_name_);
+    std::vector<std::shared_ptr<st_e::TableCell>> cells;
+    // todo: add better check
+    cells.resize(table.get_ordered_columns().size());
+
+    for (size_t i = 0; i < columns_names_.size(); ++i) {
+        auto found_col_index = table.get_columns_orders()[columns_names_[i]];
+        auto found_col = table.get_column(columns_names_[i]);
+
         switch (found_col.type)
         {
         case (st_e::Column::INT) : {
-            rows.emplace_back(new st_e::IntegerTableCell(std::stoi(col_name)));
+            cells[found_col_index] = std::make_shared<st_e::IntegerTableCell>(std::stoi(columns_vals_[i]));
             break;
         }
-        case (st_e::Column::STRING) : {
+        case (st_e::Column::VARCHAR) : {
             break;
         }
         case (st_e::Column::TEXT) : {
@@ -37,7 +40,7 @@ st_e::TableRow cmd::InsertStatement::get_row() const {
         }
         }
     }
-    return st_e::TableRow(rows);
+    return st_e::TableRow(cells, false);
     /*std::vector<std::pair<std::string, std::string>> result;
     if (columns_names_.size() != columns_vals_.size()){
         return result;
@@ -63,9 +66,16 @@ bool cmd::InsertStatement::is_valid() const {
     if (columns_names_.size() != columns_vals_.size()){
         return false;
     }
+    for (size_t i = 0; i < columns_names_.size(); ++i) {
+        for (size_t j = i + 1; j < columns_names_.size(); ++j) {
+            if (columns_names_[i] == columns_names_[j]) {
+                return false;
+            }
+        }
+    }
     try {
         auto table = st_e::StorageEngine::get_instance().get_table_by_name(table_name_);
-        auto table_cols = table.get_columns();
+        auto table_cols = table.get_columns_orders();
         for (const auto &col_name : columns_names_) {
             auto found = table_cols.find(col_name);
             if (found == table_cols.end()) {
@@ -73,7 +83,7 @@ bool cmd::InsertStatement::is_valid() const {
             }
         }
         for (size_t i = 0; i < columns_names_.size(); ++i) {
-            auto found_col = table_cols.find(columns_names_[i])->second;
+            auto found_col = table.get_column(columns_names_[i]);
             switch (found_col.type)
             {
             case (st_e::Column::INT) : {
@@ -91,7 +101,7 @@ bool cmd::InsertStatement::is_valid() const {
                 }
                 break;
             }
-            case (st_e::Column::STRING) : {
+            case (st_e::Column::VARCHAR) : {
                 //TODO: ограничение по длине строки
                 break;
             }

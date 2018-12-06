@@ -3,6 +3,12 @@
 #include <string>
 #include "storage_engine.h"
 
+#ifdef SET_PRIVATE_AS_PUBLIC
+#define PRIVATE public
+#else
+#define PRIVATE private
+#endif
+
 namespace cmd {
 
 enum StatementType{
@@ -26,7 +32,7 @@ public:
 
     virtual void execute() = 0;
 
-private:
+PRIVATE:
     virtual bool is_valid() const = 0;
     std::string message_;
     StatementType type_;

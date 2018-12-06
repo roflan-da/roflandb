@@ -4,6 +4,12 @@
 #include <vector>
 #include "sql_statement.h"
 
+#ifdef SET_PRIVATE_AS_PUBLIC
+#define PRIVATE public
+#else
+#define PRIVATE private
+#endif
+
 namespace cmd{
 class Command {
 public:
@@ -13,7 +19,7 @@ public:
 
     void execute();
     std::string get_messages();
-private:
+PRIVATE:
     std::vector<std::shared_ptr<cmd::SqlStatement>> statements_;
 };
 } //namespace cmd

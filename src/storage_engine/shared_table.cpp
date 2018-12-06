@@ -3,6 +3,9 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
+#include <data_block.h>
+#include <shared_table.h>
+
 
 #include "shared_table.h"
 #include "configuration.h"
@@ -74,27 +77,39 @@ void SharedTable::save_to_disk(const Table& table) const {
         fs::create_directories(data_dir);
     }
 
-    std::ofstream metada_data_file;
-    metada_data_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-    metada_data_file.open(metadata_file_path.string());
+    std::ofstream metadata_file;
+    metadata_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+    metadata_file.open(metadata_file_path.string());
 
-    for (const auto& column : table.get_columns()) {
-        metada_data_file << column.second.get_type_string() << " " << column.second.name << '\n';
+    for (const auto& column : table.get_ordered_columns()) {
+        metadata_file << column.get_type_string() << " " << column.name << '\n';
     }
-    metada_data_file.close();
+    metadata_file.close();
 
     // create data file
     std::ofstream data_file;
     data_file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
     data_file.open(st_e::Table::get_data_file_path(table.get_name()).string(), std::ios::binary);
 
-    // see data_block.h for details
+    // see <data_block.h> for details
     // set prev and next blocks to 0
     uint32_t no_block_pointer = 0;
+    uint32_t block_counter = 1;
+    data_file.write(reinterpret_cast<char*>(&block_counter), sizeof(uint32_t));
     data_file.write(reinterpret_cast<char*>(&no_block_pointer), sizeof(uint32_t));
-    data_file.write(reinterpret_cast<char*>(&no_block_pointer), sizeof(uint32_t));
+    data_file.write(reinterpret_cast<char*>(&block_counter), sizeof(uint32_t));
+
+    DataBlock new_data_block(0, 0, 1);
+    auto block_binary = new_data_block.get_binary_representation();
+    data_file.write(block_binary.data(), block_binary.size());
 
     data_file.close();
+}
+
+void SharedTable::delete_table(const std::string& table_name) {
+    auto data_dir = st_e::Table::get_metadata_file_path(table_name).parent_path();
+    boost::filesystem::remove_all(data_dir);
+    cached_tables_.erase(table_name);
 }
 
 } // namespace st_e

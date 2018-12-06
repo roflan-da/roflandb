@@ -29,4 +29,10 @@ public:
         : StorageEngineException("Table " + name + " doesn't exist") {}
 };
 
+// just because
+class CrutchException : public StorageEngineException {
+public:
+    explicit CrutchException() : StorageEngineException("You are doing something wrong.") {}
+};
+
 } // namespace st_e

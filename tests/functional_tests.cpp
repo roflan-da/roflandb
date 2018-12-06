@@ -15,10 +15,9 @@ int test_statement(const std::string& query, const std::string& output){
     cleanquery.erase(remove_if(cleanquery.begin(), cleanquery.end(), isspace), cleanquery.end());
     cleanoutput.erase(remove_if(cleanoutput.begin(), cleanoutput.end(), isspace), cleanoutput.end());
     roflan_parser::Driver parser_driver;
-    st_e::StorageEngine storage_engine = st_e::StorageEngine();
     std::string error_message;
     parser_driver.parse_string(query, error_message);
-    parser_driver.sql_parser_result->execute(storage_engine);
+    parser_driver.sql_parser_result->execute();
 //    std::cout << "MESSAGES " << parser_driver.sql_parser_result->get_messages() << std::endl;
 //    std::cout << "RESULT " << parser_driver.result << std::endl;
     REQUIRE(compare(cleanoutput,parser_driver.sql_parser_result->get_messages()));
@@ -40,4 +39,17 @@ TEST_CASE("create insert select") {
                    "|c1|c2|c3\n"
                    "|12|  14|177"
                    "| 1|1746|   ");
+}
+
+TEST_CASE("insert pages") {
+    roflan_parser::Driver parser_driver;
+    std::string error_message;
+
+    parser_driver.parse_string("create table test(id int, phone int);", error_message);
+    parser_driver.sql_parser_result->execute();
+    for (int i = 1; i < 20000; ++i) {
+        auto k = i-1;
+        parser_driver.parse_string("insert into test(id, phone) values (" + std::to_string(i) + ", " + std::to_string(k) + ");", error_message);
+        parser_driver.sql_parser_result->execute();
+    }
 }
