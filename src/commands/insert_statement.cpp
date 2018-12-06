@@ -70,24 +70,46 @@ void cmd::InsertStatement::execute() {
     //    engine_storage.save();
 }
 
-bool cmd::InsertStatement::is_valid() const {
-    if (columns_names_.size() != columns_vals_.size()){
-        return false;
-    }
-    for (size_t i = 0; i < columns_names_.size(); ++i) {
-        for (size_t j = i + 1; j < columns_names_.size(); ++j) {
-            if (columns_names_[i] == columns_names_[j]) {
-                return false;
-            }
-        }
-    }
+bool cmd::InsertStatement::is_valid() {
     try {
         auto table = st_e::StorageEngine::get_instance().get_table_by_name(table_name_);
         auto table_cols = table.get_columns_orders();
-        for (const auto &col_name : columns_names_) {
-            auto found = table_cols.find(col_name);
-            if (found == table_cols.end()) {
+        if(list_type_ == ALL){
+            for(const auto &item : table_cols) {
+                columns_names_.push_back(item.first);
+            }
+        }
+        else {
+            if (columns_names_.size() != columns_vals_.size()) {
                 return false;
+            }
+            for (size_t i = 0; i < columns_names_.size(); ++i) {
+                for (size_t j = i + 1; j < columns_names_.size(); ++j) {
+                    if (columns_names_[i] == columns_names_[j]) {
+                        return false;
+                    }
+                }
+            }
+            bool sort_needed = false;
+            for (int i = 0; i < columns_names_.size(); ++i) {
+                auto found = table_cols.find(columns_names_[i]);
+                if (found == table_cols.end()) {
+                    return false;
+                }
+                else if (i != found->second){
+                    sort_needed = true;
+                }
+            }
+            if (sort_needed){
+                std::vector<std::string> new_columns_names(columns_names_.size());
+                std::vector<std::string> new_columns_values(columns_vals_.size());
+                for (int i = 0; i < columns_names_.size(); ++i) {
+                    auto found = table_cols.find(columns_names_[i]);
+                    new_columns_names[found->second] = columns_names_[i];
+                    new_columns_values[found->second] = columns_vals_[i];
+                }
+                columns_names_ = new_columns_names;
+                columns_vals_ = new_columns_values;
             }
         }
         for (size_t i = 0; i < columns_names_.size(); ++i) {

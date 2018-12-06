@@ -53,6 +53,6 @@ void cmd::SelectStatement::execute() {
 
 cmd::SelectStatement::SelectStatement(const std::string& table_name) : table_name_(table_name), type_(ALL){}
 
-bool cmd::SelectStatement::is_valid() const {
+bool cmd::SelectStatement::is_valid() {
     return false;
 }

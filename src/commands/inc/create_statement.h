@@ -22,7 +22,7 @@ public:
     void execute() override;
     void add_column(std::shared_ptr<st_e::Column> column);
 private:
-    bool is_valid() const override;
+    bool is_valid() override;
 
     std::string table_name_;
     std::vector<std::shared_ptr<st_e::Column>> columns_;

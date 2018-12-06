@@ -18,7 +18,7 @@ public:
 
     void execute() override;
 private:
-    bool is_valid() const override;
+    bool is_valid() override;
 
     std::string table_name_;
     cond::Condition condition_;

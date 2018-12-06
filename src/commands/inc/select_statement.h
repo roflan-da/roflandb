@@ -21,7 +21,7 @@ public:
             std::shared_ptr<std::vector<std::string>> cols_names, ListType type = ALL);
 
 private:
-    bool is_valid() const override;
+    bool is_valid() override;
     std::string table_name_;
     ListType type_;
     std::vector<std::string> cols_names_;

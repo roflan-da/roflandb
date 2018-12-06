@@ -20,7 +20,7 @@ public:
 
     void execute() override;
 private:
-    bool is_valid() const override;
+    bool is_valid() override;
     friend void SqlStatement::set_message(std::string message);
     st_e::TableRow get_row() const;
     ListType list_type_;

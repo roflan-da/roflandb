@@ -28,6 +28,6 @@ std::string cmd::DropStatement::get_name() const {
     return name_;
 }
 
-bool cmd::DropStatement::is_valid() const {
+bool cmd::DropStatement::is_valid() {
     return false;
 }

@@ -28,7 +28,7 @@ namespace cmd {
         st_e::StorageEngine::get_instance().add_table(table_builder.build());
     }
 
-    bool CreateStatement::is_valid() const {
+    bool CreateStatement::is_valid() {
         for (size_t i = 0; i < columns_.size(); ++i) {
             for (size_t j = i + 1; j < columns_.size(); ++j) {
                 if (columns_[i]->name == columns_[j]->name) {
