@@ -71,7 +71,7 @@ INTO    { return token::INTO; }
 INT     { return token::INT_TYPE; }
 
 
-[0-9]+ {
+-?[0-9]+ {
     yylval->build(atoi(yytext));
     return token::INTEGER;
 }
