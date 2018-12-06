@@ -10,7 +10,6 @@
     #include "command.h"
     #include "statements.h"
     #include "../query_conditions/inc/query_conditions.h"
-    #include "../query_conditions/inc/condition.h"
 }
 
 /*** yacc/bison Declarations ***/
@@ -87,9 +86,10 @@
 %type <std::string>                                                         col_value
 %type <std::string>                                                         string_val
 
-%type <std::shared_ptr<cond::Condition>>                                     operand binary_expr /*scalar_expr*/
-%type <std::shared_ptr<cond::Condition>>                                     comp_expr
-%type <std::shared_ptr<cond::QueryConditions>>                               opt_where logic_expr expr
+%type <std::shared_ptr<cond::SimpleCondition>>                              operand binary_expr
+%type <std::shared_ptr<cond::SimpleCondition>>                              comp_expr
+%type <std::shared_ptr<cond::Condition>>                                    opt_where expr
+%type <std::shared_ptr<cond::ComplexCondition>>                             logic_expr
 %type <std::string>                                                         atm_operand
 
 %type <std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>>         column_def_list
@@ -202,8 +202,14 @@ opt_where :
     ;
 
 expr:
-		operand { $$ = std::make_shared<cond::QueryConditions>(cond::SINGLE, $1, $1); };
-	|	logic_expr { $$ = $1; }
+        logic_expr { $$ = std::shared_ptr<cond::Condition>(new cond::ComplexCondition($1->type(),
+                                                                                      $1->left(),
+                                                                                      $1->right()));
+        }
+    |   operand { $$ = std::shared_ptr<cond::Condition>(new cond::SimpleCondition($1->type(),
+                                                                                  $1->column_name(),
+                                                                                  $1->value()));
+        }
 	;
 
 operand :
@@ -215,12 +221,12 @@ binary_expr :
 	;
 
 comp_expr :
-        atm_operand EQUALS atm_operand          { $$ =  std::make_shared<cond::Condition>(cond::EQUAl, $1, $3); }
-    |	atm_operand NOT_EQUALS atm_operand	    { $$ =  std::make_shared<cond::Condition>(cond::NOT_EQUAL, $1, $3); }
-    |	atm_operand LESS_EQUALS atm_operand	    { $$ =  std::make_shared<cond::Condition>(cond::LESS_EQUAL, $1, $3); }
-    |	atm_operand GREATER_EQUALS atm_operand	{ $$ =  std::make_shared<cond::Condition>(cond::GREATER_EQUALS, $1, $3); }
-    |	atm_operand GREATER atm_operand		    { $$ =  std::make_shared<cond::Condition>(cond::GREATER, $1, $3); }
-    |	atm_operand LESS atm_operand	        { $$ =  std::make_shared<cond::Condition>(cond::LESS, $1, $3); }
+        atm_operand EQUALS atm_operand          { $$ =  std::make_shared<cond::SimpleCondition>(cond::EQUAl, $1, $3); }
+    |	atm_operand NOT_EQUALS atm_operand	    { $$ =  std::make_shared<cond::SimpleCondition>(cond::NOT_EQUAL, $1, $3); }
+    |	atm_operand LESS_EQUALS atm_operand	    { $$ =  std::make_shared<cond::SimpleCondition>(cond::LESS_EQUAL, $1, $3); }
+    |	atm_operand GREATER_EQUALS atm_operand	{ $$ =  std::make_shared<cond::SimpleCondition>(cond::GREATER_EQUALS, $1, $3); }
+    |	atm_operand GREATER atm_operand		    { $$ =  std::make_shared<cond::SimpleCondition>(cond::GREATER, $1, $3); }
+    |	atm_operand LESS atm_operand	        { $$ =  std::make_shared<cond::SimpleCondition>(cond::LESS, $1, $3); }
     ;
 
 atm_operand :
@@ -228,8 +234,8 @@ atm_operand :
     ;
 
 logic_expr :
-        expr AND expr	{ $$ = std::make_shared<cond::QueryConditions>(cond::AND, $1, $3); }
-    |	expr OR expr	{ $$ = std::make_shared<cond::QueryConditions>(cond::OR, $1, $3); }
+        expr AND expr	{ $$ = std::make_shared<cond::ComplexCondition>(cond::AND, $1, $3); }
+    |	expr OR expr 	{ $$ = std::make_shared<cond::ComplexCondition>(cond::OR, $1, $3); }
     ;
 
 cols_values_list :

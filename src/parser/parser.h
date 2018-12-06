@@ -46,7 +46,7 @@
     #include "statements.h"
     #include "../query_conditions/inc/query_conditions.h"
 
-#line 51 "parser.h" // lalr1.cc:379
+#line 50 "parser.h" // lalr1.cc:379
 
 
 # include <cstdlib> // std::abort
@@ -131,7 +131,7 @@
 
 
 namespace roflan_parser {
-#line 136 "parser.h" // lalr1.cc:379
+#line 135 "parser.h" // lalr1.cc:379
 
 
 
@@ -302,34 +302,36 @@ namespace roflan_parser {
       // statement
       char dummy8[sizeof(std::shared_ptr<cmd::SqlStatement>)];
 
-      // operand
-      // binary_expr
-      // comp_expr
-      char dummy9[sizeof(std::shared_ptr<cond::Condition>)];
+      // logic_expr
+      char dummy9[sizeof(std::shared_ptr<cond::ComplexCondition>)];
 
       // opt_where
       // expr
-      // logic_expr
-      char dummy10[sizeof(std::shared_ptr<cond::QueryConditions>)];
+      char dummy10[sizeof(std::shared_ptr<cond::Condition>)];
+
+      // operand
+      // binary_expr
+      // comp_expr
+      char dummy11[sizeof(std::shared_ptr<cond::SimpleCondition>)];
 
       // column_def
-      char dummy11[sizeof(std::shared_ptr<st_e::Column>)];
+      char dummy12[sizeof(std::shared_ptr<st_e::Column>)];
 
       // statement_list
-      char dummy12[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>)];
+      char dummy13[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>)];
 
       // column_def_list
-      char dummy13[sizeof(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>)];
+      char dummy14[sizeof(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>)];
 
       // cols_values_list
       // cols_names_list
-      char dummy14[sizeof(std::shared_ptr<std::vector<std::string>>)];
+      char dummy15[sizeof(std::shared_ptr<std::vector<std::string>>)];
 
       // "string"
       // atm_operand
       // col_value
       // string_val
-      char dummy15[sizeof(std::string)];
+      char dummy16[sizeof(std::string)];
 };
 
     /// Symbol semantic values.
@@ -428,9 +430,11 @@ namespace roflan_parser {
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SqlStatement> v, const location_type& l);
 
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cond::ComplexCondition> v, const location_type& l);
+
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cond::Condition> v, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cond::QueryConditions> v, const location_type& l);
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cond::SimpleCondition> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<st_e::Column> v, const location_type& l);
 
@@ -824,7 +828,7 @@ namespace roflan_parser {
 
 
 } // roflan_parser
-#line 829 "parser.h" // lalr1.cc:379
+#line 832 "parser.h" // lalr1.cc:379
 
 
 

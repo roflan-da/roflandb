@@ -1,3 +1,5 @@
+#include <utility>
+
 #pragma once
 
 #include <string>
@@ -13,9 +15,9 @@ enum ConditionType{
     NOT,
     EQUAl,
     NOT_EQUAL,
-    MORE,
+    GREATER,
     LESS,
-    MORE_EQUAL,
+    GREATER_EQUALS,
     LESS_EQUAL
 };
 
@@ -28,9 +30,10 @@ enum ConditionType{
 class Condition {
 public:
     Condition() = default;
-    Condition(ConditionType type) : type_(type) {}
-    virtual ~Condition() = default;
 
+    explicit Condition(ConditionType type) : type_(type) {}
+    virtual ~Condition() = default;
+    virtual std::string get_value(){};
     void type(ConditionType type) { type_ = type; }
     ConditionType type() const { return type_; }
 
@@ -42,27 +45,29 @@ private:
 
 
 //between column and value
-class SimpleCondition : Condition {
+class SimpleCondition : public Condition {
 public:
     SimpleCondition() = default;
     ~SimpleCondition() override = default ;
-    SimpleCondition(ConditionType type, std::string col_name, std::variant<int, std::string> value) :
+    SimpleCondition(ConditionType type, std::string col_name, std::string value) :
             Condition(type), column_name_(std::move(col_name)), value_(std::move(value)) {}
 
-    void column_name(std::string name) { column_name_ = name; }
+    void column_name(std::string name) { column_name_ = std::move(name); }
     std::string column_name() const { return column_name_; }
 
-    void value(std::variant<int, std::string> value) { value_ = value; }
-    std::variant<int, std::string> value() const { return value_; }
+    void value(std::string value) { value_ = std::move(value); }
+    std::string value() const { return value_; }
+
+    std::string get_value() override { return value_; };
 
 
 private:
     std::string column_name_;
-    std::variant<int, std::string> value_;
+    std::string value_;
 
 };
 
-class ComplexCondition : Condition {
+class ComplexCondition : public Condition {
 public:
     ComplexCondition() = default;
     ~ComplexCondition() override = default;
@@ -74,7 +79,7 @@ public:
 
     void right(std::shared_ptr<Condition> right) { right_ = right; }
     std::shared_ptr<Condition> right() { return right_; }
-
+    std::string get_value() override { return left_->get_value(); };
 private:
     std::shared_ptr<Condition> left_;
     std::shared_ptr<Condition> right_;

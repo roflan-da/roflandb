@@ -14,13 +14,13 @@ public:
     ~DeleteStatement() override = default;
 
     explicit DeleteStatement(std::string table_name,
-                             std::shared_ptr<cond::QueryConditions> conditions_);
+                             std::shared_ptr<cond::Condition> conditions_);
 
     void execute() override;
 private:
     bool is_valid() const override;
 
     std::string table_name_;
-    cond::QueryConditions conditions_;
+    cond::Condition conditions_;
 };
 } //namespace cmd

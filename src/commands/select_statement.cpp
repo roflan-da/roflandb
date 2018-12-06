@@ -1,3 +1,5 @@
+#include <utility>
+
 #include <iostream>
 #include <sstream>
 #include "select_statement.h"
@@ -57,6 +59,6 @@ bool cmd::SelectStatement::is_valid() const {
     return false;
 }
 
-void cmd::SelectStatement::add_conditions(std::shared_ptr<cond::QueryConditions> conditions) {
-    conditions_ = *conditions.get();
+void cmd::SelectStatement::add_conditions(std::shared_ptr<cond::Condition> conditions) {
+    conditions_ = std::move(conditions);
 }
