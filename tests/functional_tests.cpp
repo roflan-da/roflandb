@@ -134,6 +134,14 @@ TEST_CASE("create insert select") {
                        "|c1|c2|c3|\n"+repeat(1000,single_select_output));
     }
 
+    SECTION("insert > 64k"){
+        std::string single_insert = "INSERT a(c1,c2,c3) VALUES (1,2,3);";
+        std::string single_select_output = "| 1| 2| 3|\n";
+        test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);" +
+                       repeat(100000,single_insert) + "SELECT * FROM a;",
+                       "|c1|c2|c3|\n"+repeat(100000,single_select_output));
+    }
+
     SECTION("negative ints"){
         test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT INTO a(c2,c1) VALUES (-12,14);"
