@@ -73,6 +73,18 @@ TEST_CASE("create insert select") {
                        "| 1|1746|   |");
     }
 
+    SECTION("select not all columns"){
+        test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
+                       "INSERT a(c1,c2) VALUES (12,14);"
+                       "INSERT a(c1,c2,c3) VALUES (1,1746,177);"
+                       "SELECT c1,c3 FROM a;",
+                       "INSERT INTO a SUCCESSFUL.\n"
+                       "INSERT INTO a SUCCESSFUL.\n"
+                       "|c1| c3|\n"
+                       "|12|177|\n"
+                       "| 1|   |");
+    }
+
     SECTION("insert into"){
         test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT INTO a(c2,c1) VALUES (12,14);"
@@ -94,12 +106,11 @@ TEST_CASE("create insert select") {
     }
 
     SECTION("erase table before creation"){
-        //REPLACE MESSAGE WITH REAL
-        test_statement("CREATE TABLE a(c1 INT, c2 INT, column3 INT);"
+        REQUIRE_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT, column3 INT);"
                        "INSERT a(c1,c2,column3) VALUES (12,14,0);"
                        "INSERT a(c1,c2,column3) VALUES (1,1746,177);"
                        "SELECT c1,c2,c3 FROM a;",//c3 has to be undefined??
-                       "SOME ERROR MESSAGE");
+                       "SOME ERROR MESSAGE"));
     }
 
     SECTION("big insert"){
@@ -121,6 +132,15 @@ TEST_CASE("create insert select") {
         test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);" +
                        repeat(1000,single_insert) + "SELECT * FROM a;",
                        "|c1|c2|c3|\n"+repeat(1000,single_select_output));
+    }
+
+    SECTION("negative ints"){
+        test_statement("CREATE TABLE a(c1 INT, c2 INT);"
+                       "INSERT INTO a(c2,c1) VALUES (-12,14);"
+                       "SELECT c1,c2 FROM a;",
+                       "INSERT INTO a SUCCESSFUL.\n"
+                       "| c1|c2|\n"
+                       "|-12|14|");
     }
 
 }
