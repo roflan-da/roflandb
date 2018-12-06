@@ -80,7 +80,7 @@ bool cmd::InsertStatement::is_valid() {
             }
         }
         else {
-            if (columns_names_.size() != columns_vals_.size()) {
+            if ((columns_names_.size() != table_cols.size()) || (columns_vals_.size() != table_cols.size())) {
                 return false;
             }
             for (size_t i = 0; i < columns_names_.size(); ++i) {
