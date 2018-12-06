@@ -21,6 +21,11 @@ enum StatementType{
     DELETE
 };
 
+enum ListType{
+    VARIABLE,
+    ALL
+};
+
 class SqlStatement {
 public:
     SqlStatement();

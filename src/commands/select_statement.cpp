@@ -7,7 +7,7 @@ cmd::SelectStatement::SelectStatement() : SqlStatement(SELECT) {}
 
 cmd::SelectStatement::SelectStatement(std::string table_name,
                                       std::shared_ptr<std::vector<std::string>> cols_names,
-                                      SelectType type) :
+                                      ListType type) :
         SqlStatement(SELECT),
         table_name_(std::move(table_name)),
         type_(type),
