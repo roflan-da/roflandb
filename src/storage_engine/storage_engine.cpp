@@ -167,7 +167,7 @@ SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::stri
             formatted_data.reserve(raw_data.size());
 
             for (auto const& col: columns_names) {
-                formatted_data.emplace_back(raw_data[table.get_columns_orders()[col]]);
+                formatted_data.emplace_back(raw_data[table.get_columns_orders().at(col)]);
             }
 
             answer.rows.emplace_back(formatted_data);
