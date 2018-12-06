@@ -21,6 +21,6 @@ private:
     bool is_valid() override;
 
     std::string table_name_;
-    cond::Condition condition_;
+    cond::Condition conditions_;
 };
 } //namespace cmd

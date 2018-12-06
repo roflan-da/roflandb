@@ -44,8 +44,9 @@
 
     #include "command.h"
     #include "statements.h"
+    #include "../query_conditions/inc/query_conditions.h"
 
-#line 49 "parser.h" // lalr1.cc:379
+#line 50 "parser.h" // lalr1.cc:379
 
 
 # include <cstdlib> // std::abort
@@ -130,7 +131,7 @@
 
 
 namespace roflan_parser {
-#line 134 "parser.h" // lalr1.cc:379
+#line 135 "parser.h" // lalr1.cc:379
 
 
 
@@ -301,23 +302,36 @@ namespace roflan_parser {
       // statement
       char dummy8[sizeof(std::shared_ptr<cmd::SqlStatement>)];
 
+      // logic_expr
+      char dummy9[sizeof(std::shared_ptr<cond::ComplexCondition>)];
+
+      // opt_where
+      // expr
+      char dummy10[sizeof(std::shared_ptr<cond::Condition>)];
+
+      // operand
+      // binary_expr
+      // comp_expr
+      char dummy11[sizeof(std::shared_ptr<cond::SimpleCondition>)];
+
       // column_def
-      char dummy9[sizeof(std::shared_ptr<st_e::Column>)];
+      char dummy12[sizeof(std::shared_ptr<st_e::Column>)];
 
       // statement_list
-      char dummy10[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>)];
+      char dummy13[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>)];
 
       // column_def_list
-      char dummy11[sizeof(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>)];
+      char dummy14[sizeof(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>)];
 
       // cols_values_list
       // cols_names_list
-      char dummy12[sizeof(std::shared_ptr<std::vector<std::string>>)];
+      char dummy15[sizeof(std::shared_ptr<std::vector<std::string>>)];
 
       // "string"
+      // atm_operand
       // col_value
       // string_val
-      char dummy13[sizeof(std::string)];
+      char dummy16[sizeof(std::string)];
 };
 
     /// Symbol semantic values.
@@ -353,7 +367,16 @@ namespace roflan_parser {
         INT_TYPE = 267,
         INSERT = 268,
         VALUES = 269,
-        INTO = 270
+        INTO = 270,
+        WHERE = 271,
+        OR = 272,
+        AND = 273,
+        EQUALS = 274,
+        NOT_EQUALS = 275,
+        LESS = 276,
+        GREATER = 277,
+        LESS_EQUALS = 278,
+        GREATER_EQUALS = 279
       };
     };
 
@@ -406,6 +429,12 @@ namespace roflan_parser {
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::ShowStatement> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SqlStatement> v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cond::ComplexCondition> v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cond::Condition> v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cond::SimpleCondition> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<st_e::Column> v, const location_type& l);
 
@@ -540,6 +569,42 @@ namespace roflan_parser {
     symbol_type
     make_INTO (const location_type& l);
 
+    static inline
+    symbol_type
+    make_WHERE (const location_type& l);
+
+    static inline
+    symbol_type
+    make_OR (const location_type& l);
+
+    static inline
+    symbol_type
+    make_AND (const location_type& l);
+
+    static inline
+    symbol_type
+    make_EQUALS (const location_type& l);
+
+    static inline
+    symbol_type
+    make_NOT_EQUALS (const location_type& l);
+
+    static inline
+    symbol_type
+    make_LESS (const location_type& l);
+
+    static inline
+    symbol_type
+    make_GREATER (const location_type& l);
+
+    static inline
+    symbol_type
+    make_LESS_EQUALS (const location_type& l);
+
+    static inline
+    symbol_type
+    make_GREATER_EQUALS (const location_type& l);
+
 
     /// Build a parser object.
     Parser (class Driver& driver_yyarg);
@@ -646,7 +711,7 @@ namespace roflan_parser {
     static const char* const yytname_[];
 #if ROFLAN_PARSERDEBUG
   // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-  static const unsigned char yyrline_[];
+  static const unsigned short int yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
     virtual void yy_reduce_print_ (int r);
     /// Print the state stack on the debug stream.
@@ -747,12 +812,12 @@ namespace roflan_parser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 81,     ///< Last index in yytable_.
-      yynnts_ = 16,  ///< Number of nonterminal symbols.
+      yylast_ = 110,     ///< Last index in yytable_.
+      yynnts_ = 23,  ///< Number of nonterminal symbols.
       yyfinal_ = 24, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 22  ///< Number of tokens.
+      yyntokens_ = 31  ///< Number of tokens.
     };
 
 
@@ -763,7 +828,7 @@ namespace roflan_parser {
 
 
 } // roflan_parser
-#line 767 "parser.h" // lalr1.cc:379
+#line 832 "parser.h" // lalr1.cc:379
 
 
 

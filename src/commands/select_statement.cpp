@@ -1,3 +1,5 @@
+#include <utility>
+
 #include <iostream>
 #include <sstream>
 #include "select_statement.h"
@@ -55,4 +57,8 @@ cmd::SelectStatement::SelectStatement(const std::string& table_name) : table_nam
 
 bool cmd::SelectStatement::is_valid() {
     return false;
+}
+
+void cmd::SelectStatement::add_conditions(std::shared_ptr<cond::Condition> conditions) {
+    conditions_ = std::move(conditions);
 }
