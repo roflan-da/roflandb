@@ -40,4 +40,5 @@ bool cmd::DropStatement::is_valid() {
     else{
         return false;
     }
+    return true;
 }

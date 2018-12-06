@@ -29,4 +29,5 @@ bool cmd::ShowStatement::is_valid() {
     catch (st_e::TableNotExistException &e) {
         return false;
     }
+    return true;
 }
