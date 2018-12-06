@@ -14,7 +14,6 @@ void StorageEngine::delete_table(const std::string& table_name) {
     tables_.delete_table(table_name);
 }
 
-
 const st_e::Table& StorageEngine::get_table_by_name(const std::string& table_name) {
     return tables_.get_table(table_name);
 }
@@ -29,14 +28,7 @@ void StorageEngine::insert(const std::string& table_name, const TableRow& row) {
 
     std::vector<char> record_buffer;
 
-    record_buffer.resize(sizeof(char));
-    // first byte is internal value. Value of 0 means that record is not deleted
-    char internal_flag = 0;
-    std::memcpy(record_buffer.data(), &internal_flag, sizeof(char));
-
-    for (const auto& cell : row.get_cells()) {
-        cell->push_into_buffer(record_buffer);
-    }
+    row.push_binary(record_buffer);
 
     auto last_block = get_last_block(table_name);
 
@@ -123,7 +115,7 @@ DataBlock StorageEngine::append_new_block(const std::string& table_name, const D
     // FILL PREV BLOCK WITH ZEROES TO KEEP RIGHT ALIGN
     data_file.seekp(last_block.get_file_offset() + last_block.get_free_offset());
     char zero = 0;
-    for (auto i = last_block.get_free_space(); i > 0; i--) {
+    for (auto i = last_block.get_free_space(); i > 0; --i) {
         data_file.write(reinterpret_cast<const char*>(&zero), sizeof(char));
     }
 

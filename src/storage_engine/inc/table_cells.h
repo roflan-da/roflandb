@@ -57,6 +57,8 @@ public:
     const ArrayOfCells& get_cells() const { return cells_; }
     bool is_deleted() const { return is_deleted_; }
 
+    void push_binary(std::vector<char>& input) const;
+
 private:
     ArrayOfCells cells_;
     bool is_deleted_ = false;
