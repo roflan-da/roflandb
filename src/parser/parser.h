@@ -371,12 +371,14 @@ namespace roflan_parser {
         WHERE = 271,
         OR = 272,
         AND = 273,
-        EQUALS = 274,
-        NOT_EQUALS = 275,
-        LESS = 276,
-        GREATER = 277,
-        LESS_EQUALS = 278,
-        GREATER_EQUALS = 279
+        LBRACKET = 274,
+        RBRACKET = 275,
+        EQUALS = 276,
+        NOT_EQUALS = 277,
+        LESS = 278,
+        GREATER = 279,
+        LESS_EQUALS = 280,
+        GREATER_EQUALS = 281
       };
     };
 
@@ -583,6 +585,14 @@ namespace roflan_parser {
 
     static inline
     symbol_type
+    make_LBRACKET (const location_type& l);
+
+    static inline
+    symbol_type
+    make_RBRACKET (const location_type& l);
+
+    static inline
+    symbol_type
     make_EQUALS (const location_type& l);
 
     static inline
@@ -690,7 +700,7 @@ namespace roflan_parser {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const signed char yycheck_[];
+  static const unsigned char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -812,12 +822,12 @@ namespace roflan_parser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 110,     ///< Last index in yytable_.
+      yylast_ = 111,     ///< Last index in yytable_.
       yynnts_ = 23,  ///< Number of nonterminal symbols.
       yyfinal_ = 24, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 31  ///< Number of tokens.
+      yyntokens_ = 33  ///< Number of tokens.
     };
 
 
@@ -828,7 +838,7 @@ namespace roflan_parser {
 
 
 } // roflan_parser
-#line 832 "parser.h" // lalr1.cc:379
+#line 842 "parser.h" // lalr1.cc:379
 
 
 

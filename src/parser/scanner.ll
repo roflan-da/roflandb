@@ -81,6 +81,8 @@ OR      { return token::OR; }
 "<"	    { return token::LESS; }
 ">="	{ return token::GREATER_EQUALS; }
 ">"	    { return token::GREATER; }
+"("     { return token::LBRACKET; }
+ ")"    { return token::RBRACKET; }
 
 
 
