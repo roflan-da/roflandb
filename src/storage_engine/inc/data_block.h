@@ -21,6 +21,7 @@ namespace st_e {
  *
  * Data File structure:
  * [uint32_t first existing block]
+ * [uint32_t last existing block]
  * [uint32_t first deleted block]
  * [uint32_t block counter]
  * [N blocks of data blocks]

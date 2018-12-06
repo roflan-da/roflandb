@@ -72,15 +72,18 @@ DataBlock StorageEngine::get_first_block(const std::string& table_name) {
 
 DataBlock StorageEngine::get_last_block(const std::string& table_name) {
     auto table = tables_.get_table(table_name);
-    auto data_file_path = table.get_data_file_path();
 
-    auto curr_data_block = get_first_block(table_name);
+    std::fstream data_file;
+    data_file.open(table.get_data_file_path().string(), std::fstream::binary | std::fstream::in | std::fstream::out);
 
-    while (curr_data_block.get_next_ptr()) {
-        curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
+    if (!data_file.is_open()) {
+        throw TableNotExistException(table.get_name());
     }
 
-    return curr_data_block;
+    uint32_t last_block;
+    data_file.seekg(4);
+    data_file.read(reinterpret_cast<char*>(&last_block), sizeof(uint32_t));
+    return get_block(table_name, last_block);
 }
 
 void StorageEngine::append_record_to_block(const std::vector<char>& buffer, const DataBlock& block, const Table& table) {
@@ -120,10 +123,13 @@ DataBlock StorageEngine::append_new_block(const std::string& table_name, const D
     }
 
     uint32_t block_number;
-    data_file.seekg(8);
+    data_file.seekg(12);
     data_file.read(reinterpret_cast<char*>(&block_number), sizeof(uint32_t));
     block_number += 1;
-    data_file.seekp(8);
+    data_file.seekp(4);
+    data_file.write(reinterpret_cast<char*>(&block_number), sizeof(uint32_t));
+
+    data_file.seekp(12);
     data_file.write(reinterpret_cast<char*>(&block_number), sizeof(uint32_t));
 
     DataBlock new_data_block(last_block.get_ptr(), 0, block_number);
