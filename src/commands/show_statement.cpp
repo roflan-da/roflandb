@@ -23,5 +23,10 @@ std::string cmd::ShowStatement::get_name() {
 cmd::ShowStatement::ShowStatement(cmd::ShowType type, std::string name) : type_(type), name_(name){}
 
 bool cmd::ShowStatement::is_valid() {
-    return false;
+    try {
+        auto table = st_e::StorageEngine::get_instance().get_table_by_name(name_);
+    }
+    catch (st_e::TableNotExistException &e) {
+        return false;
+    }
 }

@@ -29,5 +29,15 @@ std::string cmd::DropStatement::get_name() const {
 }
 
 bool cmd::DropStatement::is_valid() {
-    return false;
+    if (type_ == DROP_TABLE) {
+        try {
+            auto table = st_e::StorageEngine::get_instance().get_table_by_name(name_);
+        }
+        catch (st_e::TableNotExistException &e) {
+            return false;
+        }
+    }
+    else{
+        return false;
+    }
 }
