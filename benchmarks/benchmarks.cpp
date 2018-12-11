@@ -1,7 +1,5 @@
 #include <iostream>
-//#include "driver.h"
-//#include "/src/parser/driver.h"
-
+#include "driver.h"
 
 int main(){
     std::cout <<"benchmarks";
