@@ -33,6 +33,7 @@ public:
     void type(ConditionType type) { type_ = type; }
     ConditionType type() const { return type_; }
 
+
 private:
     ConditionType type_;
 };
