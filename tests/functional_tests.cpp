@@ -168,6 +168,6 @@ TEST_CASE("create table after drop"){
                        "CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT INTO a(c2,c1) VALUES (12,14);"
                        "SELECT c1,c2 FROM a;",
-                       "|c1| c2|\n"
-                       "|14|-12|"));
+                       "|c1|c2|\n"
+                       "|14|12|"));
 }
