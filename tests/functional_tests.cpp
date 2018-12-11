@@ -109,9 +109,7 @@ TEST_CASE("big insert"){
     std::string error_message;
 
     parser_driver.parse_string("create table test(id int, phone int);", error_message);
-    parser_driver.sql_parser_result->
-
-    execute();
+    parser_driver.sql_parser_result->execute();
 
     for (int i = 1; i < 20000; ++i) {
         auto k = i - 1;
