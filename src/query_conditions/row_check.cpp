@@ -1,11 +1,9 @@
-#pragma once
+#include "row_check.h"
 
-#include <memory>
-#include "query_conditions.h"
-#include "table_cells.h"
 #include "storage_engine.h"
+#include <memory>
 
-namespace cond {
+
 
     //ONLY FOR INT cols
     //ya ne dodumalsya kak normalno vipilit' copypaste
@@ -110,4 +108,3 @@ bool row_check(const std::string &table_name, const st_e::TableRow &row, std::sh
     }
 }
 
-} //namespace cond
