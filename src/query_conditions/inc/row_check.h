@@ -5,6 +5,6 @@
 
 namespace cond {
 
-bool row_check(const std::string &table_name, const st_e::TableRow &row, std::shared_ptr<cond::Condition> condition)
+bool row_check(const std::string &table_name, const st_e::TableRow &row, std::shared_ptr<cond::Condition> condition);
 
 } //namespace cond

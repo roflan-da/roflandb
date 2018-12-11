@@ -3,11 +3,11 @@
 #include "storage_engine.h"
 #include <memory>
 
-
+namespace cond {
 
     //ONLY FOR INT cols
     //ya ne dodumalsya kak normalno vipilit' copypaste
-bool cond::row_check(const std::string &table_name, const st_e::TableRow &row, std::shared_ptr<cond::Condition> condition) {
+bool row_check(const std::string &table_name, const st_e::TableRow &row, std::shared_ptr<cond::Condition> condition) {
     switch (condition->type()) {
     case(cond::EQUAl) : {
         auto cells = row.get_cells();
@@ -107,4 +107,4 @@ bool cond::row_check(const std::string &table_name, const st_e::TableRow &row, s
     }
     }
 }
-
+} //namespace cond
