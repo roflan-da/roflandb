@@ -150,3 +150,24 @@ TEST_CASE("drop table"){
                                   "SOME ERROR MESSAGE"));
 }
     
+TEST_CASE("drop table does not drop all tables"){
+    REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
+                           "INSERT INTO a(c2,c1) VALUES (-12,14);"
+                           "CREATE TABLE b(c1 INT, c2 INT);"
+                           "INSERT INTO b(c2,c1) VALUES (-12,14);"
+                           "DROP TABLE a;"
+                           "SELECT * FROM b;",
+                           "|c1| c2|\n"
+                           "|14|-12|"));
+}
+
+TEST_CASE("create table after drop"){
+    REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
+                       "INSERT INTO a(c2,c1) VALUES (12,14);"
+                       "DROP table a;"
+                       "CREATE TABLE a(c1 INT, c2 INT);"
+                       "INSERT INTO a(c2,c1) VALUES (12,14);"
+                       "SELECT c1,c2 FROM a;",
+                       "|c1| c2|\n"
+                       "|14|-12|"));
+}
