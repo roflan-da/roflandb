@@ -3,13 +3,13 @@
 #include "storage_engine.h"
 #include "inc/dtl/dtl.hpp"
 
-long long int compare(const std::string& s1, const std::string& s2){
+bool compare(const std::string& s1, const std::string& s2){
     dtl::Diff<char, std::string> d(s1, s2);
     d.compose();
-    return  !d.getEditDistance();
+    return  bool(!d.getEditDistance());
 }
 
-int test_statement(const std::string& query, const std::string& output){
+bool test_statement(const std::string& query, const std::string& output){
     std::string cleanoutput = output;
     cleanoutput.erase(remove_if(cleanoutput.begin(), cleanoutput.end(), isspace), cleanoutput.end());
     roflan_parser::Driver parser_driver;
@@ -21,7 +21,7 @@ int test_statement(const std::string& query, const std::string& output){
     //std::cout << "TEST OUTPUT " << output << std::endl;
     //std::cout << "REAL OUTPUT " << parser_driver.sql_parser_result->get_messages() << std::endl;
     //std::cout << "RESULT " << parser_driver.result << std::endl;
-    REQUIRE(compare(cleanoutput,realoutput));
+    return (compare(cleanoutput,realoutput));
 }
 
 std::string repeat(int n, std::string s) {
@@ -34,68 +34,68 @@ std::string repeat(int n, std::string s) {
 TEST_CASE("create insert select") {
 
     SECTION("create, insert, select *"){
-        test_statement("CREATE TABLE a(c1 INT, c2 INT);"
+        REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT a(c1,c2) VALUES (12,14);"
                        "SELECT * FROM a;",
                        "|c1|c2|\n"
-                       "|12|14|");
+                       "|12|14|"));
     }
 
 
     SECTION("create, insert, select column_names") {
-        test_statement("CREATE TABLE a(c1 INT, c2 INT);"
+        REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT a(c1,c2) VALUES (12,14);"
                        "SELECT c1,c2 FROM a;",
                        "|c1|c2|\n"
-                       "|12|14|");
+                       "|12|14|"));
     }
 
     SECTION("select formatting"){
-        test_statement("CREATE TABLE a(c1 INT, c2 INT, column3 INT);"
+        REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT, column3 INT);"
                        "INSERT a(c1,c2,column3) VALUES (12,14,0);"
                        "INSERT a(c1,c2,column3) VALUES (1,1746,177);"
                        "SELECT c1,c2,column3 FROM a;",
                        "|c1|  c2|column3|\n"
                        "|12|  14|      0|\n"
-                       "| 1|1746|    177|");
+                       "| 1|1746|    177|"));
     }
 
     SECTION("insert not all columns"){
-        test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
+        REQUIRE_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
                        "INSERT a(c1,c2) VALUES (12,14);"
                        "INSERT a(c1,c2,c3) VALUES (1,1746,177);"
                        "SELECT c1,c2,c3 FROM a;",
                        "|c1|  c2| c3|\n"
                        "|12|  14|177|\n"
-                       "| 1|1746|   |");
+                       "| 1|1746|   |"));
     }
 
     SECTION("select not all columns"){
-        test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
+        REQUIRE_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
                        "INSERT a(c1,c2) VALUES (12,14);"
                        "INSERT a(c1,c2,c3) VALUES (1,1746,177);"
                        "SELECT c1,c3 FROM a;",
                        "|c1| c3|\n"
                        "|12|177|\n"
-                       "| 1|   |");
+                       "| 1|   |"));
     }
 
     SECTION("insert into"){
-        test_statement("CREATE TABLE a(c1 INT, c2 INT);"
+        REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT INTO a(c2,c1) VALUES (12,14);"
                        "SELECT c1,c2 FROM a;",
                        "|c1|c2|\n"
-                       "|14|12|");
+                       "|14|12|"));
     }
 
     SECTION("insert with columns inversion"){
-        test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
+        REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
                        "INSERT a(c2,c1) VALUES (12,14);"
                        "INSERT a(c3,c1,c2) VALUES (12,14,13);"
                        "SELECT * FROM a;",
                        "|c1|c2|c3|\n"
                        "|12|14|12|\n"
-                       "|14|13|  |");
+                       "|14|13|  |"));
     }
 
     SECTION("erase table before creation"){
@@ -122,25 +122,25 @@ TEST_CASE("create insert select") {
     SECTION("big insert"){
         std::string single_insert = "INSERT a(c1,c2,c3) VALUES (1,2,3);";
         std::string single_select_output = "| 1| 2| 3|\n";
-        test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);" +
+        REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);" +
                        repeat(1000,single_insert) + "SELECT * FROM a;",
-                       "|c1|c2|c3|\n"+repeat(1000,single_select_output));
+                       "|c1|c2|c3|\n"+repeat(1000,single_select_output)));
     }
 
     SECTION("insert > 64k"){
         std::string single_insert = "INSERT a(c1,c2,c3) VALUES (1,2,3);";
         std::string single_select_output = "| 1| 2| 3|\n";
-        test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);" +
+        REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);" +
                        repeat(50000,single_insert) + "SELECT * FROM a;",
-                       "|c1|c2|c3|\n"+repeat(50000,single_select_output));
+                       "|c1|c2|c3|\n"+repeat(50000,single_select_output)));
     }
 
     SECTION("negative ints"){
-        test_statement("CREATE TABLE a(c1 INT, c2 INT);"
+        REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT INTO a(c2,c1) VALUES (-12,14);"
                        "SELECT c1,c2 FROM a;",
                        "|c1| c2|\n"
-                       "|14|-12|");
+                       "|14|-12|"));
     }
 
     SECTION("drop table"){
