@@ -8,12 +8,13 @@
 
 namespace cmd {
 
-class DeleteStatement : public SqlStatement {
+class UpdateStatement : public SqlStatement {
 public:
-    DeleteStatement();
-    ~DeleteStatement() override = default;
+    UpdateStatement();
+    ~UpdateStatement() override = default;
 
-    explicit DeleteStatement(std::string table_name,
+    explicit UpdateStatement(std::string table_name,
+                             std::shared_ptr<std::vector<std::pair<std::string, std::string>>> updated_vals,
                              std::shared_ptr<cond::Condition> conditions);
 
     void execute() override;
@@ -21,6 +22,7 @@ private:
     bool is_valid() override;
 
     std::string table_name_;
+    std::shared_ptr<std::vector<std::pair<std::string, std::string>>> updated_vals_;
     std::shared_ptr<cond::Condition> conditions_;
 };
 } //namespace cmd

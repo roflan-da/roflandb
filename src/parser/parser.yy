@@ -71,6 +71,9 @@
 %token VALUES
 %token INTO
 %token WHERE
+%token DELETE
+%token UPDATE
+%token SET
 
 %type <std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>>    statement_list
 %type <std::shared_ptr<cmd::SqlStatement>>                                  statement
@@ -80,6 +83,8 @@
 %type <std::shared_ptr<cmd::SelectStatement>>                               select_statement
 %type <std::shared_ptr<cmd::InsertStatement>>                               insert_statement
 %type <std::shared_ptr<cmd::DropStatement>>                                 drop_statement
+%type <std::shared_ptr<cmd::DeleteStatement>>                               delete_statement
+%type <std::shared_ptr<cmd::UpdateStatement>>                               update_statement
 
 %type <st_e::Column::Type>                                                  column_type
 %type <std::shared_ptr<st_e::Column>>                                       column_def
@@ -96,6 +101,8 @@
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_names_list
 %type <std::shared_ptr<std::vector<std::string>>>                           cols_values_list
 
+%type <std::shared_ptr<std::vector<std::pair<std::string, std::string>>>>   updated_cols_list
+%type <std::pair<std::string, std::string>>                                 updated_col_def
 
 %left  OR
 %left  AND
@@ -135,21 +142,14 @@ statement_list : statement {
         }
     ;
 
-statement : create_statement ';' {
-            $$ = $1;
-        }
-    |   show_statement ';' {
-            $$ = $1;
-        }
-    |   select_statement ';' {
-            $$ = $1;
-        }
-    |   insert_statement ';' {
-            $$ = $1;
-        }
-    |   drop_statement ';' {
-            $$ = $1;
-        }
+statement :
+        create_statement ';' { $$ = $1; }
+    |   show_statement ';' { $$ = $1; }
+    |   select_statement ';' { $$ = $1; }
+    |   insert_statement ';' { $$ = $1; }
+    |   drop_statement ';' { $$ = $1; }
+    |   delete_statement ';' { $$ = $1; }
+    |   update_statement ';' { $$ = $1; }
     ;
 
 create_statement :
@@ -195,6 +195,30 @@ drop_statement :
         DROP TABLE string_val {
             $$ = std::make_shared<cmd::DropStatement>($3.c_str());
         }
+    ;
+
+delete_statement :
+        DELETE FROM string_val opt_where { $$ = std::make_shared<cmd::DeleteStatement>($3.c_str(), $4); }
+    ;
+
+update_statement :
+        UPDATE string_val SET updated_cols_list opt_where {
+            $$ = std::make_shared<cmd::UpdateStatement>($2.c_str(), $4, $5); }
+    ;
+
+updated_cols_list :
+        updated_col_def {
+            $$ = std::make_shared<std::vector<std::pair<std::string, std::string>>>();
+            $$->emplace_back($1);
+        }
+    |   updated_cols_list ',' updated_col_def {
+            $1->emplace_back($3);
+            $$ = $1;
+        }
+    ;
+
+updated_col_def :
+        string_val '=' col_value { $$ = std::pair<std::string, std::string>($1, $3); }
     ;
 
 opt_where :

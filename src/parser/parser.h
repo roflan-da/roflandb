@@ -284,54 +284,66 @@ namespace roflan_parser {
       // column_type
       char dummy2[sizeof(st_e::Column::Type)];
 
+      // updated_col_def
+      char dummy3[sizeof(std::pair<std::string, std::string>)];
+
       // create_statement
-      char dummy3[sizeof(std::shared_ptr<cmd::CreateStatement>)];
+      char dummy4[sizeof(std::shared_ptr<cmd::CreateStatement>)];
+
+      // delete_statement
+      char dummy5[sizeof(std::shared_ptr<cmd::DeleteStatement>)];
 
       // drop_statement
-      char dummy4[sizeof(std::shared_ptr<cmd::DropStatement>)];
+      char dummy6[sizeof(std::shared_ptr<cmd::DropStatement>)];
 
       // insert_statement
-      char dummy5[sizeof(std::shared_ptr<cmd::InsertStatement>)];
+      char dummy7[sizeof(std::shared_ptr<cmd::InsertStatement>)];
 
       // select_statement
-      char dummy6[sizeof(std::shared_ptr<cmd::SelectStatement>)];
+      char dummy8[sizeof(std::shared_ptr<cmd::SelectStatement>)];
 
       // show_statement
-      char dummy7[sizeof(std::shared_ptr<cmd::ShowStatement>)];
+      char dummy9[sizeof(std::shared_ptr<cmd::ShowStatement>)];
 
       // statement
-      char dummy8[sizeof(std::shared_ptr<cmd::SqlStatement>)];
+      char dummy10[sizeof(std::shared_ptr<cmd::SqlStatement>)];
+
+      // update_statement
+      char dummy11[sizeof(std::shared_ptr<cmd::UpdateStatement>)];
 
       // logic_expr
-      char dummy9[sizeof(std::shared_ptr<cond::ComplexCondition>)];
+      char dummy12[sizeof(std::shared_ptr<cond::ComplexCondition>)];
 
       // opt_where
       // expr
-      char dummy10[sizeof(std::shared_ptr<cond::Condition>)];
+      char dummy13[sizeof(std::shared_ptr<cond::Condition>)];
 
       // operand
       // binary_expr
       // comp_expr
-      char dummy11[sizeof(std::shared_ptr<cond::SimpleCondition>)];
+      char dummy14[sizeof(std::shared_ptr<cond::SimpleCondition>)];
 
       // column_def
-      char dummy12[sizeof(std::shared_ptr<st_e::Column>)];
+      char dummy15[sizeof(std::shared_ptr<st_e::Column>)];
+
+      // updated_cols_list
+      char dummy16[sizeof(std::shared_ptr<std::vector<std::pair<std::string, std::string>>>)];
 
       // statement_list
-      char dummy13[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>)];
+      char dummy17[sizeof(std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>)];
 
       // column_def_list
-      char dummy14[sizeof(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>)];
+      char dummy18[sizeof(std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>>)];
 
       // cols_values_list
       // cols_names_list
-      char dummy15[sizeof(std::shared_ptr<std::vector<std::string>>)];
+      char dummy19[sizeof(std::shared_ptr<std::vector<std::string>>)];
 
       // "string"
       // atm_operand
       // col_value
       // string_val
-      char dummy16[sizeof(std::string)];
+      char dummy20[sizeof(std::string)];
 };
 
     /// Symbol semantic values.
@@ -369,14 +381,17 @@ namespace roflan_parser {
         VALUES = 269,
         INTO = 270,
         WHERE = 271,
-        OR = 272,
-        AND = 273,
-        EQUALS = 274,
-        NOT_EQUALS = 275,
-        LESS = 276,
-        GREATER = 277,
-        LESS_EQUALS = 278,
-        GREATER_EQUALS = 279
+        DELETE = 272,
+        UPDATE = 273,
+        SET = 274,
+        OR = 275,
+        AND = 276,
+        EQUALS = 277,
+        NOT_EQUALS = 278,
+        LESS = 279,
+        GREATER = 280,
+        LESS_EQUALS = 281,
+        GREATER_EQUALS = 282
       };
     };
 
@@ -418,7 +433,11 @@ namespace roflan_parser {
 
   basic_symbol (typename Base::kind_type t, const st_e::Column::Type v, const location_type& l);
 
+  basic_symbol (typename Base::kind_type t, const std::pair<std::string, std::string> v, const location_type& l);
+
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::CreateStatement> v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::DeleteStatement> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::DropStatement> v, const location_type& l);
 
@@ -430,6 +449,8 @@ namespace roflan_parser {
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::SqlStatement> v, const location_type& l);
 
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<cmd::UpdateStatement> v, const location_type& l);
+
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cond::ComplexCondition> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cond::Condition> v, const location_type& l);
@@ -437,6 +458,8 @@ namespace roflan_parser {
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<cond::SimpleCondition> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<st_e::Column> v, const location_type& l);
+
+  basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::pair<std::string, std::string>>> v, const location_type& l);
 
   basic_symbol (typename Base::kind_type t, const std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> v, const location_type& l);
 
@@ -572,6 +595,18 @@ namespace roflan_parser {
     static inline
     symbol_type
     make_WHERE (const location_type& l);
+
+    static inline
+    symbol_type
+    make_DELETE (const location_type& l);
+
+    static inline
+    symbol_type
+    make_UPDATE (const location_type& l);
+
+    static inline
+    symbol_type
+    make_SET (const location_type& l);
 
     static inline
     symbol_type
@@ -812,12 +847,12 @@ namespace roflan_parser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 111,     ///< Last index in yytable_.
-      yynnts_ = 23,  ///< Number of nonterminal symbols.
-      yyfinal_ = 24, ///< Termination state number.
+      yylast_ = 128,     ///< Last index in yytable_.
+      yynnts_ = 27,  ///< Number of nonterminal symbols.
+      yyfinal_ = 30, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 31  ///< Number of tokens.
+      yyntokens_ = 35  ///< Number of tokens.
     };
 
 
@@ -828,7 +863,7 @@ namespace roflan_parser {
 
 
 } // roflan_parser
-#line 832 "parser.h" // lalr1.cc:379
+#line 867 "parser.h" // lalr1.cc:379
 
 
 

@@ -7,3 +7,4 @@
 #include <insert_statement.h>
 #include <drop_statement.h>
 #include <delete_statement.h>
+#include <update_statement.h>

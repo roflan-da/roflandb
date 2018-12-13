@@ -74,6 +74,10 @@ WHERE   { return token::WHERE; }
 AND     { return token::AND; }
 OR      { return token::OR; }
 
+DELETE  { return token::DELETE; }
+UPDATE  { return token::UPDATE; }
+SET     { return token::SET; }
+
 "=="    { return token::EQUALS; }
 "!=" 	{ return token::NOT_EQUALS; }
 "<>" 	{ return token::NOT_EQUALS; }
