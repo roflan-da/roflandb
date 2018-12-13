@@ -232,4 +232,29 @@ void StorageEngine::rewrite_record(const DataBlock& block, TableChunk& table_chu
     data_file.write(out.data(), out.size());
 }
 
+void StorageEngine::update(const std::string& table_name, UpdateValues update_values, StorageEngine::ConditionPtr condition) {
+    auto curr_data_block = get_first_block(table_name);
+    auto table = tables_.get_table(table_name);
+
+    bool first = true;
+    do {
+        if (!first) {
+            curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
+        }
+
+        first = false;
+        TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
+
+        for(auto& row : curr_table_chunk.get_rows()) {
+            if (!row.is_removed() && cond::row_check(table, row, condition)) {
+                for (const auto& pair : *update_values) {
+                    row.get_cells()[table.get_columns_orders().at(pair.first)]->set_value(pair.second);
+                }
+            }
+        }
+
+        rewrite_record(curr_data_block, curr_table_chunk, table);
+    } while(curr_data_block.get_next_ptr());
+}
+
 } // namespace st_e
