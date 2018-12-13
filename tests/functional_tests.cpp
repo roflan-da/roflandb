@@ -2,6 +2,7 @@
 #include "driver.h"
 #include "storage_engine.h"
 #include "inc/dtl/dtl.hpp"
+#include "row_check.h"
 
 bool compare(const std::string &s1, const std::string &s2) {
     dtl::Diff<char, std::string> d(s1, s2);
@@ -178,4 +179,82 @@ TEST_CASE("create table after drop","[implemented]"){
                        "SELECT c1,c2 FROM a;",
                        "|c1|c2|\n"
                        "|14|12|"));
+}
+
+std::string execute_query(const std::string &query) {
+    std::string error_message;
+    roflan_parser::Driver parser_driver;
+    parser_driver.parse_string(query, error_message);
+    parser_driver.sql_parser_result->execute();
+    return error_message;
+}
+
+TEST_CASE("Trivial testing of row_check"){
+    execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2);");
+    std::vector<std::shared_ptr<st_e::TableCell>> cells;
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(2)));
+    st_e::TableRow row(cells, false);
+    auto cond = std::make_shared<cond::SimpleCondition>(cond::EQUAl,"c1","1");
+    REQUIRE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
+}
+
+TEST_CASE("Trivial testing of row_check where condition is not true"){
+    execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2);");
+    std::vector<std::shared_ptr<st_e::TableCell>> cells;
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(2)));
+    st_e::TableRow row(cells, false);
+    auto cond = std::make_shared<cond::SimpleCondition>(cond::EQUAl,"c1","123");
+    REQUIRE_FALSE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
+}
+
+TEST_CASE("LESS condition"){
+    execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2,3);");
+    std::vector<std::shared_ptr<st_e::TableCell>> cells;
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(2)));
+    st_e::TableRow row(cells, false);
+    auto cond = std::make_shared<cond::SimpleCondition>(cond::LESS,"c2","123");
+    REQUIRE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
+}
+
+TEST_CASE("LESS_EQUAL condition"){
+    execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2,3);");
+    std::vector<std::shared_ptr<st_e::TableCell>> cells;
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(2)));
+    st_e::TableRow row(cells, false);
+    auto cond = std::make_shared<cond::SimpleCondition>(cond::LESS_EQUAL,"c2","2");
+    REQUIRE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
+}
+
+TEST_CASE("GREATER condition"){
+    execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2,3);");
+    std::vector<std::shared_ptr<st_e::TableCell>> cells;
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(2)));
+    st_e::TableRow row(cells, false);
+    auto cond = std::make_shared<cond::SimpleCondition>(cond::GREATER,"c2","0");
+    REQUIRE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
+}
+
+TEST_CASE("GREATER_OR_EQUAL condition"){
+    execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2,3);");
+    std::vector<std::shared_ptr<st_e::TableCell>> cells;
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(2)));
+    st_e::TableRow row(cells, false);
+    auto cond = std::make_shared<cond::SimpleCondition>(cond::GREATER_EQUALS,"c2","2");
+    REQUIRE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
+}
+
+TEST_CASE("Integers less than 0"){
+    execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(-1,-2,-3);");
+    std::vector<std::shared_ptr<st_e::TableCell>> cells;
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
+    cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(2)));
+    st_e::TableRow row(cells, false);
+    auto cond = std::make_shared<cond::SimpleCondition>(cond::LESS,"c2","123");
+    REQUIRE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
 }
