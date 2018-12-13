@@ -32,21 +32,24 @@ st_e::TableRow cmd::InsertStatement::get_row() const {
         auto found_col = table.get_column(columns_names_[i]);
 
         switch (found_col.type)
-        {
-        case (st_e::Column::INT) : {
-            cells[found_col_index] = std::make_shared<st_e::IntegerTableCell>(std::stoi(columns_vals_[i]));
-            break;
-        }
-        case (st_e::Column::VARCHAR) : {
-            break;
-        }
-        case (st_e::Column::TEXT) : {
-            break;
-        }
-        case (st_e::Column::CHAR) : {
-            break;
-        }
-        }
+            {
+            case (st_e::Column::INT) : {
+                cells[found_col_index] = std::make_shared<st_e::IntegerTableCell>(std::stoi(columns_vals_[i]));
+                break;
+            }
+            case (st_e::Column::VARCHAR) : {
+                break;
+            }
+            case (st_e::Column::TEXT) : {
+                break;
+            }
+            case (st_e::Column::CHAR) : {
+                break;
+            }
+            case st_e::Column::BOOL:{
+                break;
+            }
+            }
     }
     return st_e::TableRow(cells, false);
     /*std::vector<std::pair<std::string, std::string>> result;
@@ -91,7 +94,7 @@ bool cmd::InsertStatement::is_valid() {
                 }
             }
             bool sort_needed = false;
-            for (int i = 0; i < columns_names_.size(); ++i) {
+            for (size_t i = 0; i < columns_names_.size(); ++i) {
                 auto found = table_cols.find(columns_names_[i]);
                 if (found == table_cols.end()) {
                     return false;
@@ -103,7 +106,7 @@ bool cmd::InsertStatement::is_valid() {
             if (sort_needed){
                 std::vector<std::string> new_columns_names(columns_names_.size());
                 std::vector<std::string> new_columns_values(columns_vals_.size());
-                for (int i = 0; i < columns_names_.size(); ++i) {
+                for (size_t i = 0; i < columns_names_.size(); ++i) {
                     auto found = table_cols.find(columns_names_[i]);
                     new_columns_names[found->second] = columns_names_[i];
                     new_columns_values[found->second] = columns_vals_[i];

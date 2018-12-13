@@ -23,27 +23,27 @@ void cmd::SelectStatement::execute() {
     std::stringstream message_stream;
 
     //todo: fix sigsegv error
-    std::vector<long long int> maxwidth(t.columns_names.size(), 0);
-    for (auto column = 0; column < t.columns_names.size(); ++column){
+    std::vector<long long unsigned int> maxwidth(t.columns_names.size(), 0);
+    for (size_t column = 0; column < t.columns_names.size(); ++column){
         if (t.columns_names[column].size() >= maxwidth[column]){
             maxwidth[column] = t.columns_names[column].size() + 1;//1 for spacing
         }
     }
     for (auto& row : t.rows) {
-        for (auto column = 0; column < row.size(); ++column) {
+        for (size_t column = 0; column < row.size(); ++column) {
             if (row[column].size() >= maxwidth[column]) {
                 maxwidth[column] = row[column].size() + 1; //1 for spacing
             }
         }
     }
     message_stream << "|";
-    for (int i = 0; i < t.columns_names.size(); ++i) {
+    for (size_t  i = 0; i < t.columns_names.size(); ++i) {
         message_stream << std::setw(maxwidth[i]) << t.columns_names[i] + "|";
     }
     message_stream << std::endl;
     for (auto& row : t.rows) {
         message_stream << "|";
-        for (auto cell = 0; cell < row.size(); ++cell) {
+        for (size_t  cell = 0; cell < row.size(); ++cell) {
             message_stream << std::setw(maxwidth[cell]) << row[cell] + "|";
         }
         message_stream << std::endl;
