@@ -6,11 +6,11 @@ namespace cond {
 
     //ONLY FOR INT cols
     //ya ne dodumalsya kak normalno vipilit' copypaste
-bool row_check(const std::string &table_name, const st_e::TableRow &row, std::shared_ptr<cond::Condition> condition) {
+bool row_check(const st_e::Table &table, const st_e::TableRow &row, std::shared_ptr<cond::Condition> condition) {
     switch (condition->type()) {
         case(cond::EQUAl) : {
             auto cells = row.get_cells();
-            auto cols = st_e::StorageEngine::get_instance().get_table_by_name(table_name).get_ordered_columns();
+            auto cols = table.get_ordered_columns();
             size_t index = 0;
             for (size_t i = 0; i < cells.size(); ++i) {
                 if (cols[i].name == dynamic_cast<cond::SimpleCondition*>(condition.get())->column_name()) {
@@ -24,7 +24,7 @@ bool row_check(const std::string &table_name, const st_e::TableRow &row, std::sh
         }
         case(cond::NOT_EQUAL) : {
             auto cells = row.get_cells();
-            auto cols = st_e::StorageEngine::get_instance().get_table_by_name(table_name).get_ordered_columns();
+            auto cols = table.get_ordered_columns();
             size_t index = 0;
             for (size_t i = 0; i < cells.size(); ++i) {
                 if (cols[i].name == dynamic_cast<cond::SimpleCondition*>(condition.get())->column_name()) {
@@ -38,7 +38,7 @@ bool row_check(const std::string &table_name, const st_e::TableRow &row, std::sh
         }
         case(cond::GREATER) : {
             auto cells = row.get_cells();
-            auto cols = st_e::StorageEngine::get_instance().get_table_by_name(table_name).get_ordered_columns();
+            auto cols = table.get_ordered_columns();
             size_t index = 0;
             for (size_t i = 0; i < cells.size(); ++i) {
                 if (cols[i].name == dynamic_cast<cond::SimpleCondition*>(condition.get())->column_name()) {
@@ -52,7 +52,7 @@ bool row_check(const std::string &table_name, const st_e::TableRow &row, std::sh
         }
         case(cond::GREATER_EQUALS) : {
             auto cells = row.get_cells();
-            auto cols = st_e::StorageEngine::get_instance().get_table_by_name(table_name).get_ordered_columns();
+            auto cols = table.get_ordered_columns();
             size_t index = 0;
             for (size_t i = 0; i < cells.size(); ++i) {
                 if (cols[i].name == dynamic_cast<cond::SimpleCondition*>(condition.get())->column_name()) {
@@ -66,7 +66,7 @@ bool row_check(const std::string &table_name, const st_e::TableRow &row, std::sh
         }
         case(cond::LESS) : {
             auto cells = row.get_cells();
-            auto cols = st_e::StorageEngine::get_instance().get_table_by_name(table_name).get_ordered_columns();
+            auto cols = table.get_ordered_columns();
             size_t index = 0;
             for (size_t i = 0; i < cells.size(); ++i) {
                 if (cols[i].name == dynamic_cast<cond::SimpleCondition*>(condition.get())->column_name()) {
@@ -80,7 +80,7 @@ bool row_check(const std::string &table_name, const st_e::TableRow &row, std::sh
         }
         case(cond::LESS_EQUAL) : {
             auto cells = row.get_cells();
-            auto cols = st_e::StorageEngine::get_instance().get_table_by_name(table_name).get_ordered_columns();
+            auto cols = table.get_ordered_columns();
             size_t index = 0;
             for (size_t i = 0; i < cells.size(); ++i) {
                 if (cols[i].name == dynamic_cast<cond::SimpleCondition*>(condition.get())->column_name()) {
@@ -93,16 +93,16 @@ bool row_check(const std::string &table_name, const st_e::TableRow &row, std::sh
             return (cell_value <= cond_value);
         }
         case(cond::AND) : {
-            return (row_check(table_name, row, dynamic_cast<cond::ComplexCondition*>(condition.get())->left()) &&
-                    row_check(table_name, row, dynamic_cast<cond::ComplexCondition*>(condition.get())->right()));
+            return (row_check(table, row, dynamic_cast<cond::ComplexCondition*>(condition.get())->left()) &&
+                    row_check(table, row, dynamic_cast<cond::ComplexCondition*>(condition.get())->right()));
         }
         case(cond::OR) : {
-            return (row_check(table_name, row, dynamic_cast<cond::ComplexCondition*>(condition.get())->left()) ||
-                    row_check(table_name, row, dynamic_cast<cond::ComplexCondition*>(condition.get())->right()));
+            return (row_check(table, row, dynamic_cast<cond::ComplexCondition*>(condition.get())->left()) ||
+                    row_check(table, row, dynamic_cast<cond::ComplexCondition*>(condition.get())->right()));
         }
         case(cond::NOT) : {
         //WTF NOT AVAILABLE IN BETA
-            return (!row_check(table_name, row, dynamic_cast<cond::ComplexCondition*>(condition.get())->left()));
+            return (!row_check(table, row, dynamic_cast<cond::ComplexCondition*>(condition.get())->left()));
         }
         default:
             return false;
