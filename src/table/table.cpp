@@ -1,11 +1,7 @@
 #include <exception>
 #include <boost/algorithm/string.hpp>
 #include <table.h>
-
-
-#include "table.h"
-#include "storage_engine_exceptions.h"
-#include "configuration.h"
+#include <configuration.h>
 
 
 namespace fs = boost::filesystem;
@@ -61,8 +57,6 @@ uint32_t Column::deserialize(const std::vector<char>& input, TableRow::ArrayOfCe
         cells.emplace_back(new BoolTableCell(val));
         return sizeof(bool);
     }
-
-    throw CrutchException();
 }
 
 std::string Table::get_sql() const {

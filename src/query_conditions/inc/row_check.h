@@ -1,7 +1,7 @@
 #pragma once
 
 #include "query_conditions.h"
-#include "table_cells.h"
+#include <table_cells.h>
 
 namespace cond {
 

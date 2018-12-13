@@ -194,7 +194,7 @@ SelectAnswer StorageEngine::select_all(std::string table_name) {
     return select(table_name, all_columns);
 }
 
-void StorageEngine::remove(const std::string& table_name) {
+void StorageEngine::remove(const std::string& table_name, ConditionPtr condition) {
     auto curr_data_block = get_first_block(table_name);
     auto table = tables_.get_table(table_name);
 
@@ -208,6 +208,7 @@ void StorageEngine::remove(const std::string& table_name) {
         TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
 
         for(auto& row : curr_table_chunk.get_rows()) {
+            
             row.remove();
         }
 

@@ -65,4 +65,4 @@ private:
 };
 
 
-} // namespce st_e
+} // namespace st_e
