@@ -24,6 +24,9 @@ public:
     void add_conditions(std::shared_ptr<cond::Condition> conditions);
 
 private:
+    bool is_condition_valid(const std::shared_ptr<cond::Condition>& condition,
+                            st_e::Table::MapOfColumns& columns_names, const st_e::Table::ArrayOfColumns& columns_types);
+
     bool is_valid() override;
     std::string table_name_;
     ListType type_;
