@@ -12,6 +12,7 @@ public:
     virtual std::string get_data() = 0;
     // resizes vector and ads binary representation to it
     virtual void push_into_buffer(std::vector<char>& buffer) const = 0;
+    virtual void set_value(std::string) = 0;
 };
 
 class IntegerTableCell : public TableCell {
@@ -20,6 +21,7 @@ public:
     std::string get_data() override { return std::to_string(data_); }
     // todo: maybe do like this?
     void push_into_buffer(std::vector<char>& buffer) const override;
+    void set_value(std::string value) override;
 
 private:
     int32_t data_;
@@ -31,6 +33,7 @@ public:
     std::string get_data() override;
     // todo: maybe do like this?
     void push_into_buffer(std::vector<char>& buffer) const override;
+    void set_value(std::string value) override;
 
 private:
     bool data_;
@@ -42,6 +45,7 @@ public:
     std::string get_data() override { return data_; }
     // todo: maybe do like this?
     void push_into_buffer(std::vector<char>& buffer) const override;
+    void set_value(std::string value) override;
 
 private:
     std::string data_;
