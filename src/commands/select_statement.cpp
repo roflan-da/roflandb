@@ -17,8 +17,8 @@ cmd::SelectStatement::SelectStatement(std::string table_name,
         cols_names_(*cols_names.get()) {}
 
 void cmd::SelectStatement::execute() {
-    st_e::SelectAnswer t = type_ == ALL ? st_e::StorageEngine::get_instance().select_all(table_name_) :
-                           st_e::StorageEngine::get_instance().select(table_name_, cols_names_);
+    st_e::SelectAnswer t = type_ == ALL ? st_e::StorageEngine::get_instance().select_all(table_name_, conditions_) :
+                           st_e::StorageEngine::get_instance().select(table_name_, cols_names_, conditions_);
     std::string message;
     std::stringstream message_stream;
 

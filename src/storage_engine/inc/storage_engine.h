@@ -31,8 +31,8 @@ public:
     const Table& get_table_by_name(const std::string& table_name);
     void insert(const std::string& table_name, const TableRow& row);
     void remove(const std::string& table_name, ConditionPtr condition);
-    SelectAnswer select(std::string table_name, std::vector<std::string> columns_names);
-    SelectAnswer select_all(std::string table_name);
+    SelectAnswer select(std::string table_name, std::vector<std::string> columns_names, ConditionPtr condition);
+    SelectAnswer select_all(std::string table_name, ConditionPtr condition);
 
 private:
     StorageEngine() = default;
