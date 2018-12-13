@@ -78,6 +78,8 @@ DELETE  { return token::DELETE; }
 UPDATE  { return token::UPDATE; }
 SET     { return token::SET; }
 
+BOOL    { return token::BOOL; }
+
 "=="    { return token::EQUALS; }
 "="    { return token::EQUALS; }
 "!=" 	{ return token::NOT_EQUALS; }

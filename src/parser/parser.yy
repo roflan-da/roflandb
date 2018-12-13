@@ -74,6 +74,7 @@
 %token DELETE
 %token UPDATE
 %token SET
+%token BOOL
 
 %type <std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>>>    statement_list
 %type <std::shared_ptr<cmd::SqlStatement>>                                  statement
@@ -325,6 +326,7 @@ string_val :
 
 column_type:
         INT_TYPE { $$ = st_e::Column::Type::INT; }
+    |   BOOL { $$ = st_e::Column::Type::BOOL; }
     ;
 
 %% /*** Additional Code ***/

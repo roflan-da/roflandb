@@ -384,14 +384,15 @@ namespace roflan_parser {
         DELETE = 272,
         UPDATE = 273,
         SET = 274,
-        OR = 275,
-        AND = 276,
-        EQUALS = 277,
-        NOT_EQUALS = 278,
-        LESS = 279,
-        GREATER = 280,
-        LESS_EQUALS = 281,
-        GREATER_EQUALS = 282
+        BOOL = 275,
+        OR = 276,
+        AND = 277,
+        EQUALS = 278,
+        NOT_EQUALS = 279,
+        LESS = 280,
+        GREATER = 281,
+        LESS_EQUALS = 282,
+        GREATER_EQUALS = 283
       };
     };
 
@@ -607,6 +608,10 @@ namespace roflan_parser {
     static inline
     symbol_type
     make_SET (const location_type& l);
+
+    static inline
+    symbol_type
+    make_BOOL (const location_type& l);
 
     static inline
     symbol_type
@@ -847,12 +852,12 @@ namespace roflan_parser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 128,     ///< Last index in yytable_.
+      yylast_ = 129,     ///< Last index in yytable_.
       yynnts_ = 27,  ///< Number of nonterminal symbols.
       yyfinal_ = 30, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 35  ///< Number of tokens.
+      yyntokens_ = 36  ///< Number of tokens.
     };
 
 
@@ -863,7 +868,7 @@ namespace roflan_parser {
 
 
 } // roflan_parser
-#line 867 "parser.h" // lalr1.cc:379
+#line 872 "parser.h" // lalr1.cc:379
 
 
 
