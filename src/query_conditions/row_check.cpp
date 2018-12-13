@@ -104,6 +104,8 @@ bool row_check(const st_e::Table &table, const st_e::TableRow &row, std::shared_
         //WTF NOT AVAILABLE IN BETA
             return (!row_check(table, row, dynamic_cast<cond::ComplexCondition*>(condition.get())->left()));
         }
+        case(cond::ALWAYS_TRUE) :
+            return true;
         default:
             return false;
     }

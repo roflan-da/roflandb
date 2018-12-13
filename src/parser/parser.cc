@@ -1852,7 +1852,7 @@ namespace roflan_parser {
 
   case 27:
 #line 227 "parser.yy" // lalr1.cc:856
-    { yylhs.value.as< std::shared_ptr<cond::Condition> > () = nullptr; }
+    { yylhs.value.as< std::shared_ptr<cond::Condition> > () = std::shared_ptr<cond::Condition>(new cond::AlwaysTrueCondition()); }
 #line 1857 "parser.cc" // lalr1.cc:856
     break;
 

@@ -16,7 +16,8 @@ enum ConditionType{
     GREATER,
     LESS,
     GREATER_EQUALS,
-    LESS_EQUAL
+    LESS_EQUAL,
+    ALWAYS_TRUE
 };
 
 //HOW TO USE DIS SHIT
@@ -75,4 +76,9 @@ private:
     std::shared_ptr<Condition> right_;
 };
 
+class AlwaysTrueCondition : public Condition{
+public:
+    AlwaysTrueCondition();
+    ~AlwaysTrueCondition() override = default;
+};
 }//namespace cond

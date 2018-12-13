@@ -224,7 +224,7 @@ updated_col_def :
 
 opt_where :
         WHERE expr { $$ = $2; }
-    |   { $$ = nullptr; }
+    |   { $$ = std::shared_ptr<cond::Condition>(new cond::AlwaysTrueCondition()); };
     ;
 
 expr:

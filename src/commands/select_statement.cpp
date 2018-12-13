@@ -100,6 +100,8 @@ bool cmd::SelectStatement::is_valid() {
 
 bool cmd::SelectStatement::is_condition_valid(const std::shared_ptr<cond::Condition>& condition,
                         st_e::Table::MapOfColumns& columns_names, const st_e::Table::ArrayOfColumns& columns_types) {
+    if (condition->type() == cond::ALWAYS_TRUE)
+        return true;
     if ((condition->type() == cond::OR) || ((condition->type() == cond::AND))){
         bool a = is_condition_valid(dynamic_cast<cond::ComplexCondition*>(condition.get())->left(), columns_names, columns_types);
         bool b = is_condition_valid(dynamic_cast<cond::ComplexCondition*>(condition.get())->right(), columns_names, columns_types);
