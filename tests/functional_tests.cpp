@@ -31,7 +31,7 @@ std::string repeat(int n, std::string s) {
     return os.str();
 }
 
-TEST_CASE("create, insert, select *"){
+TEST_CASE("create, insert, select *","[implemented]"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT a(c1,c2) VALUES (12,14);"
                        "SELECT * FROM a;"
@@ -41,7 +41,7 @@ TEST_CASE("create, insert, select *"){
 }
 
 
-TEST_CASE("create, insert, select column_names") {
+TEST_CASE("create, insert, select column_names","[implemented]") {
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT a(c1,c2) VALUES (12,14);"
                        "SELECT c1,c2 FROM a;"
@@ -50,7 +50,7 @@ TEST_CASE("create, insert, select column_names") {
                        "|12|14|"));
 }
 
-TEST_CASE("select formatting"){
+TEST_CASE("select formatting","[implemented]"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT, column3 INT);"
                        "INSERT a(c1,c2,column3) VALUES (12,14,0);"
                        "INSERT a(c1,c2,column3) VALUES (1,1746,177);"
@@ -83,7 +83,7 @@ TEST_CASE("select not all columns"){
                               "| 1|   |"));
 }
 
-TEST_CASE("insert into"){
+TEST_CASE("insert into","[implemented]"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT INTO a(c2,c1) VALUES (12,14);"
                        "SELECT c1,c2 FROM a;"
@@ -103,7 +103,7 @@ TEST_CASE("insert with columns inversion"){
                        "|14|13|  |"));
 }
 
-TEST_CASE("erase table before creation"){
+TEST_CASE("erase table before creation","[implemented]"){
     REQUIRE_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT, column3 INT);"
                               "INSERT a(c1,c2,column3) VALUES (12,14,0);"
                               "INSERT a(c1,c2,column3) VALUES (1,1746,177);"
@@ -126,21 +126,21 @@ TEST_CASE("erase table before creation"){
 //    }
 //}
 
-TEST_CASE("huge insert"){
+TEST_CASE("huge insert","[implemented]"){
     std::string single_insert = "INSERT a(c1,c2,c3) VALUES (1,2,3);";
     std::string single_select_output = "| 1| 2| 3|\n";
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);" + repeat(1000, single_insert) + "SELECT * FROM a;DROP TABLE a;",
                             "|c1|c2|c3|\n" + repeat(1000, single_select_output)));
 }
 
-TEST_CASE("insert > 64k"){
+TEST_CASE("insert > 64k","[implemented]"){
     std::string single_insert = "INSERT a(c1,c2,c3) VALUES (1,2,3);";
     std::string single_select_output = "| 1| 2| 3|\n";
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);" + repeat(50000, single_insert) + "SELECT * FROM a;DROP TABLE a;",
                            "|c1|c2|c3|\n" + repeat(50000, single_select_output)));
 }
 
-TEST_CASE("negative ints"){
+TEST_CASE("negative ints","[implemented]"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                            "INSERT INTO a(c2,c1) VALUES (-12,14);"
                            "SELECT c1,c2 FROM a;"
@@ -149,7 +149,7 @@ TEST_CASE("negative ints"){
                            "|14|-12|"));
 }
 
-TEST_CASE("drop table"){
+TEST_CASE("drop table","[implemented]"){
     REQUIRE_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                                   "INSERT INTO a(c2,c1) VALUES (12,14);"
                                   "DROP table a;"
@@ -157,7 +157,7 @@ TEST_CASE("drop table"){
                                   "SOME ERROR MESSAGE"));
 }
     
-TEST_CASE("drop table does not drop all tables"){
+TEST_CASE("drop table does not drop all tables","[implemented]"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                            "INSERT INTO a(c2,c1) VALUES (-12,14);"
                            "CREATE TABLE b(c1 INT, c2 INT);"
@@ -169,7 +169,7 @@ TEST_CASE("drop table does not drop all tables"){
                            "|14|-12|"));
 }
 
-TEST_CASE("create table after drop"){
+TEST_CASE("create table after drop","[implemented]"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT INTO a(c2,c1) VALUES (12,14);"
                        "DROP table a;"
