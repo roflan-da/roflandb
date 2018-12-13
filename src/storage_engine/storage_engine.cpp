@@ -3,6 +3,7 @@
 #include <table_chunk.h>
 #include <configuration.h>
 #include <storage_engine_exceptions.h>
+#include <row_check.h>
 
 namespace st_e {
 
@@ -160,8 +161,9 @@ SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::stri
         first = false;
         TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
         for(const auto& row : curr_table_chunk.get_rows()) {
-            if (row.is_removed())
+            if (row.is_removed()) {
                 continue;
+            }
 
             std::vector<std::string> raw_data;
 
@@ -208,8 +210,9 @@ void StorageEngine::remove(const std::string& table_name, ConditionPtr condition
         TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
 
         for(auto& row : curr_table_chunk.get_rows()) {
-            
-            row.remove();
+            if (cond::row_check(table, row, condition)) {
+                row.remove();
+            }
         }
 
         rewrite_record(curr_data_block, curr_table_chunk, table);

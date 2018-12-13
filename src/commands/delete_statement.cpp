@@ -9,5 +9,5 @@ bool cmd::DeleteStatement::is_valid() {
 }
 
 void cmd::DeleteStatement::execute() {
-    st_e::StorageEngine::get_instance();
+    st_e::StorageEngine::get_instance().remove(table_name_, conditions_);
 }
