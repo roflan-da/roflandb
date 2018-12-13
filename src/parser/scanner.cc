@@ -401,8 +401,8 @@ typedef flex_uint8_t YY_CHAR;
 /* %% [3.0] code to copy yytext_ptr to yytext[] goes here, if %array \ */\
 	(yy_c_buf_p) = yy_cp;
 /* %% [4.0] data tables for the DFA and the user's section 1 definitions go here */
-#define YY_NUM_RULES 29
-#define YY_END_OF_BUFFER 30
+#define YY_NUM_RULES 30
+#define YY_END_OF_BUFFER 31
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -412,14 +412,14 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[87] =
     {   0,
-        0,    0,   30,   28,   26,   27,   28,   28,   24,   21,
-       28,   23,   25,   25,   25,   25,   25,   25,   25,   25,
-       25,   25,   25,   25,   26,   18,   24,   20,   19,   17,
-       22,   25,   25,   25,   25,   25,   25,   25,   13,   25,
-       25,   25,   25,   25,   25,   12,   25,   25,   25,   25,
-       25,   10,   25,   16,   25,   25,   25,   25,   25,   25,
-       25,    4,    6,   25,    9,   25,    3,   25,   25,   25,
-       25,   25,   25,   25,   25,    2,   25,   25,   11,    1,
+        0,    0,   31,   29,   27,   28,   29,   29,   25,   22,
+       18,   24,   26,   26,   26,   26,   26,   26,   26,   26,
+       26,   26,   26,   26,   27,   19,   25,   21,   20,   17,
+       23,   26,   26,   26,   26,   26,   26,   26,   13,   26,
+       26,   26,   26,   26,   26,   12,   26,   26,   26,   26,
+       26,   10,   26,   16,   26,   26,   26,   26,   26,   26,
+       26,    4,    6,   26,    9,   26,    3,   26,   26,   26,
+       26,   26,   26,   26,   26,    2,   26,   26,   11,    1,
        14,    7,    5,   15,    8,    0
     } ;
 
@@ -546,11 +546,11 @@ static const flex_int16_t yy_chk[219] =
        86,   86,   86,   86,   86,   86,   86,   86
     } ;
 
-static const flex_int16_t yy_rule_linenum[29] =
+static const flex_int16_t yy_rule_linenum[30] =
     {   0,
        59,   60,   62,   63,   65,   66,   68,   69,   70,   72,
        74,   75,   76,   78,   79,   80,   82,   83,   84,   85,
-       86,   87,   88,   92,   98,  104,  109,  115
+       86,   87,   88,   89,   93,   99,  105,  110,  116
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -848,12 +848,12 @@ do_action:	/* This label is used only to access EOF actions. */
 			{
 			if ( yy_act == 0 )
 				std::cerr << "--scanner backing up\n";
-			else if ( yy_act < 29 )
+			else if ( yy_act < 30 )
 				std::cerr << "--accepting rule at line " << yy_rule_linenum[yy_act] <<
 				         "(\"" << yytext << "\")\n";
-			else if ( yy_act == 29 )
-				std::cerr << "--accepting default rule (\"" << yytext << "\")\n";
 			else if ( yy_act == 30 )
+				std::cerr << "--accepting default rule (\"" << yytext << "\")\n";
+			else if ( yy_act == 31 )
 				std::cerr << "--(end of buffer or a NUL)\n";
 			else
 				std::cerr << "--EOF (start condition " << YY_START << ")\n";
@@ -957,7 +957,7 @@ YY_RULE_SETUP
 case 18:
 YY_RULE_SETUP
 #line 83 "scanner.ll"
-{ return token::NOT_EQUALS; }
+{ return token::EQUALS; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
@@ -967,72 +967,77 @@ YY_RULE_SETUP
 case 20:
 YY_RULE_SETUP
 #line 85 "scanner.ll"
-{ return token::LESS_EQUALS; }
+{ return token::NOT_EQUALS; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 86 "scanner.ll"
-{ return token::LESS; }
+{ return token::LESS_EQUALS; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 87 "scanner.ll"
-{ return token::GREATER_EQUALS; }
+{ return token::LESS; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 88 "scanner.ll"
-{ return token::GREATER; }
+{ return token::GREATER_EQUALS; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 92 "scanner.ll"
+#line 89 "scanner.ll"
+{ return token::GREATER; }
+	YY_BREAK
+case 25:
+YY_RULE_SETUP
+#line 93 "scanner.ll"
 {
     yylval->build(atoi(yytext));
     return token::INTEGER;
 }
 	YY_BREAK
-case 25:
+case 26:
 YY_RULE_SETUP
-#line 98 "scanner.ll"
+#line 99 "scanner.ll"
 {
     yylval->build(std::string(yytext));
     return token::STRING;
 }
 	YY_BREAK
 /* gobble up white-spaces */
-case 26:
+case 27:
 YY_RULE_SETUP
-#line 104 "scanner.ll"
+#line 105 "scanner.ll"
 {
     yylloc->step();
 }
 	YY_BREAK
 /* gobble up end-of-lines */
-case 27:
-/* rule 27 can match eol */
+case 28:
+/* rule 28 can match eol */
 YY_RULE_SETUP
-#line 109 "scanner.ll"
+#line 110 "scanner.ll"
 {
     yylloc->lines(yyleng); yylloc->step();
     return token::EOL;
 }
 	YY_BREAK
 /* pass all other characters up to bison */
-case 28:
+case 29:
 YY_RULE_SETUP
-#line 115 "scanner.ll"
+#line 116 "scanner.ll"
 {
     return static_cast<token_type>(*yytext);
 }
 	YY_BREAK
 /*** END RULES ***/
-case 29:
+case 30:
 YY_RULE_SETUP
-#line 121 "scanner.ll"
+#line 122 "scanner.ll"
 ECHO;
 	YY_BREAK
-#line 1035 "scanner.cc"
+#line 1040 "scanner.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2151,7 +2156,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 121 "scanner.ll"
+#line 122 "scanner.ll"
 
 
 namespace roflan_parser {

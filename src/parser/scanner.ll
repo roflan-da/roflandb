@@ -79,6 +79,7 @@ UPDATE  { return token::UPDATE; }
 SET     { return token::SET; }
 
 "=="    { return token::EQUALS; }
+"="    { return token::EQUALS; }
 "!=" 	{ return token::NOT_EQUALS; }
 "<>" 	{ return token::NOT_EQUALS; }
 "<="	{ return token::LESS_EQUALS; }
