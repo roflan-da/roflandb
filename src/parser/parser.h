@@ -857,7 +857,7 @@ namespace roflan_parser {
       yyfinal_ = 30, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 36  ///< Number of tokens.
+      yyntokens_ = 35  ///< Number of tokens.
     };
 
 

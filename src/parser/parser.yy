@@ -219,7 +219,7 @@ updated_cols_list :
     ;
 
 updated_col_def :
-        string_val '=' col_value { $$ = std::pair<std::string, std::string>($1, $3); }
+        string_val EQUALS col_value { $$ = std::pair<std::string, std::string>($1, $3); }
     ;
 
 opt_where :

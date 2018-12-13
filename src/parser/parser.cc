@@ -235,86 +235,86 @@ namespace roflan_parser {
         value.copy< int > (other.value);
         break;
 
-      case 62: // column_type
+      case 61: // column_type
         value.copy< st_e::Column::Type > (other.value);
         break;
 
-      case 48: // updated_col_def
+      case 47: // updated_col_def
         value.copy< std::pair<std::string, std::string> > (other.value);
         break;
 
-      case 40: // create_statement
+      case 39: // create_statement
         value.copy< std::shared_ptr<cmd::CreateStatement> > (other.value);
         break;
 
-      case 45: // delete_statement
+      case 44: // delete_statement
         value.copy< std::shared_ptr<cmd::DeleteStatement> > (other.value);
         break;
 
-      case 44: // drop_statement
+      case 43: // drop_statement
         value.copy< std::shared_ptr<cmd::DropStatement> > (other.value);
         break;
 
-      case 43: // insert_statement
+      case 42: // insert_statement
         value.copy< std::shared_ptr<cmd::InsertStatement> > (other.value);
         break;
 
-      case 42: // select_statement
+      case 41: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (other.value);
         break;
 
-      case 41: // show_statement
+      case 40: // show_statement
         value.copy< std::shared_ptr<cmd::ShowStatement> > (other.value);
         break;
 
-      case 39: // statement
+      case 38: // statement
         value.copy< std::shared_ptr<cmd::SqlStatement> > (other.value);
         break;
 
-      case 46: // update_statement
+      case 45: // update_statement
         value.copy< std::shared_ptr<cmd::UpdateStatement> > (other.value);
         break;
 
-      case 55: // logic_expr
+      case 54: // logic_expr
         value.copy< std::shared_ptr<cond::ComplexCondition> > (other.value);
         break;
 
-      case 49: // opt_where
-      case 50: // expr
+      case 48: // opt_where
+      case 49: // expr
         value.copy< std::shared_ptr<cond::Condition> > (other.value);
         break;
 
-      case 51: // operand
-      case 52: // binary_expr
-      case 53: // comp_expr
+      case 50: // operand
+      case 51: // binary_expr
+      case 52: // comp_expr
         value.copy< std::shared_ptr<cond::SimpleCondition> > (other.value);
         break;
 
-      case 60: // column_def
+      case 59: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (other.value);
         break;
 
-      case 47: // updated_cols_list
+      case 46: // updated_cols_list
         value.copy< std::shared_ptr<std::vector<std::pair<std::string, std::string>>> > (other.value);
         break;
 
-      case 38: // statement_list
+      case 37: // statement_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (other.value);
         break;
 
-      case 59: // column_def_list
+      case 58: // column_def_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (other.value);
         break;
 
-      case 56: // cols_values_list
-      case 58: // cols_names_list
+      case 55: // cols_values_list
+      case 57: // cols_names_list
         value.copy< std::shared_ptr<std::vector<std::string>> > (other.value);
         break;
 
       case 5: // "string"
-      case 54: // atm_operand
-      case 57: // col_value
-      case 61: // string_val
+      case 53: // atm_operand
+      case 56: // col_value
+      case 60: // string_val
         value.copy< std::string > (other.value);
         break;
 
@@ -337,86 +337,86 @@ namespace roflan_parser {
         value.copy< int > (v);
         break;
 
-      case 62: // column_type
+      case 61: // column_type
         value.copy< st_e::Column::Type > (v);
         break;
 
-      case 48: // updated_col_def
+      case 47: // updated_col_def
         value.copy< std::pair<std::string, std::string> > (v);
         break;
 
-      case 40: // create_statement
+      case 39: // create_statement
         value.copy< std::shared_ptr<cmd::CreateStatement> > (v);
         break;
 
-      case 45: // delete_statement
+      case 44: // delete_statement
         value.copy< std::shared_ptr<cmd::DeleteStatement> > (v);
         break;
 
-      case 44: // drop_statement
+      case 43: // drop_statement
         value.copy< std::shared_ptr<cmd::DropStatement> > (v);
         break;
 
-      case 43: // insert_statement
+      case 42: // insert_statement
         value.copy< std::shared_ptr<cmd::InsertStatement> > (v);
         break;
 
-      case 42: // select_statement
+      case 41: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (v);
         break;
 
-      case 41: // show_statement
+      case 40: // show_statement
         value.copy< std::shared_ptr<cmd::ShowStatement> > (v);
         break;
 
-      case 39: // statement
+      case 38: // statement
         value.copy< std::shared_ptr<cmd::SqlStatement> > (v);
         break;
 
-      case 46: // update_statement
+      case 45: // update_statement
         value.copy< std::shared_ptr<cmd::UpdateStatement> > (v);
         break;
 
-      case 55: // logic_expr
+      case 54: // logic_expr
         value.copy< std::shared_ptr<cond::ComplexCondition> > (v);
         break;
 
-      case 49: // opt_where
-      case 50: // expr
+      case 48: // opt_where
+      case 49: // expr
         value.copy< std::shared_ptr<cond::Condition> > (v);
         break;
 
-      case 51: // operand
-      case 52: // binary_expr
-      case 53: // comp_expr
+      case 50: // operand
+      case 51: // binary_expr
+      case 52: // comp_expr
         value.copy< std::shared_ptr<cond::SimpleCondition> > (v);
         break;
 
-      case 60: // column_def
+      case 59: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (v);
         break;
 
-      case 47: // updated_cols_list
+      case 46: // updated_cols_list
         value.copy< std::shared_ptr<std::vector<std::pair<std::string, std::string>>> > (v);
         break;
 
-      case 38: // statement_list
+      case 37: // statement_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (v);
         break;
 
-      case 59: // column_def_list
+      case 58: // column_def_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (v);
         break;
 
-      case 56: // cols_values_list
-      case 58: // cols_names_list
+      case 55: // cols_values_list
+      case 57: // cols_names_list
         value.copy< std::shared_ptr<std::vector<std::string>> > (v);
         break;
 
       case 5: // "string"
-      case 54: // atm_operand
-      case 57: // col_value
-      case 61: // string_val
+      case 53: // atm_operand
+      case 56: // col_value
+      case 60: // string_val
         value.copy< std::string > (v);
         break;
 
@@ -603,86 +603,86 @@ namespace roflan_parser {
         value.template destroy< int > ();
         break;
 
-      case 62: // column_type
+      case 61: // column_type
         value.template destroy< st_e::Column::Type > ();
         break;
 
-      case 48: // updated_col_def
+      case 47: // updated_col_def
         value.template destroy< std::pair<std::string, std::string> > ();
         break;
 
-      case 40: // create_statement
+      case 39: // create_statement
         value.template destroy< std::shared_ptr<cmd::CreateStatement> > ();
         break;
 
-      case 45: // delete_statement
+      case 44: // delete_statement
         value.template destroy< std::shared_ptr<cmd::DeleteStatement> > ();
         break;
 
-      case 44: // drop_statement
+      case 43: // drop_statement
         value.template destroy< std::shared_ptr<cmd::DropStatement> > ();
         break;
 
-      case 43: // insert_statement
+      case 42: // insert_statement
         value.template destroy< std::shared_ptr<cmd::InsertStatement> > ();
         break;
 
-      case 42: // select_statement
+      case 41: // select_statement
         value.template destroy< std::shared_ptr<cmd::SelectStatement> > ();
         break;
 
-      case 41: // show_statement
+      case 40: // show_statement
         value.template destroy< std::shared_ptr<cmd::ShowStatement> > ();
         break;
 
-      case 39: // statement
+      case 38: // statement
         value.template destroy< std::shared_ptr<cmd::SqlStatement> > ();
         break;
 
-      case 46: // update_statement
+      case 45: // update_statement
         value.template destroy< std::shared_ptr<cmd::UpdateStatement> > ();
         break;
 
-      case 55: // logic_expr
+      case 54: // logic_expr
         value.template destroy< std::shared_ptr<cond::ComplexCondition> > ();
         break;
 
-      case 49: // opt_where
-      case 50: // expr
+      case 48: // opt_where
+      case 49: // expr
         value.template destroy< std::shared_ptr<cond::Condition> > ();
         break;
 
-      case 51: // operand
-      case 52: // binary_expr
-      case 53: // comp_expr
+      case 50: // operand
+      case 51: // binary_expr
+      case 52: // comp_expr
         value.template destroy< std::shared_ptr<cond::SimpleCondition> > ();
         break;
 
-      case 60: // column_def
+      case 59: // column_def
         value.template destroy< std::shared_ptr<st_e::Column> > ();
         break;
 
-      case 47: // updated_cols_list
+      case 46: // updated_cols_list
         value.template destroy< std::shared_ptr<std::vector<std::pair<std::string, std::string>>> > ();
         break;
 
-      case 38: // statement_list
+      case 37: // statement_list
         value.template destroy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > ();
         break;
 
-      case 59: // column_def_list
+      case 58: // column_def_list
         value.template destroy< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ();
         break;
 
-      case 56: // cols_values_list
-      case 58: // cols_names_list
+      case 55: // cols_values_list
+      case 57: // cols_names_list
         value.template destroy< std::shared_ptr<std::vector<std::string>> > ();
         break;
 
       case 5: // "string"
-      case 54: // atm_operand
-      case 57: // col_value
-      case 61: // string_val
+      case 53: // atm_operand
+      case 56: // col_value
+      case 60: // string_val
         value.template destroy< std::string > ();
         break;
 
@@ -711,86 +711,86 @@ namespace roflan_parser {
         value.move< int > (s.value);
         break;
 
-      case 62: // column_type
+      case 61: // column_type
         value.move< st_e::Column::Type > (s.value);
         break;
 
-      case 48: // updated_col_def
+      case 47: // updated_col_def
         value.move< std::pair<std::string, std::string> > (s.value);
         break;
 
-      case 40: // create_statement
+      case 39: // create_statement
         value.move< std::shared_ptr<cmd::CreateStatement> > (s.value);
         break;
 
-      case 45: // delete_statement
+      case 44: // delete_statement
         value.move< std::shared_ptr<cmd::DeleteStatement> > (s.value);
         break;
 
-      case 44: // drop_statement
+      case 43: // drop_statement
         value.move< std::shared_ptr<cmd::DropStatement> > (s.value);
         break;
 
-      case 43: // insert_statement
+      case 42: // insert_statement
         value.move< std::shared_ptr<cmd::InsertStatement> > (s.value);
         break;
 
-      case 42: // select_statement
+      case 41: // select_statement
         value.move< std::shared_ptr<cmd::SelectStatement> > (s.value);
         break;
 
-      case 41: // show_statement
+      case 40: // show_statement
         value.move< std::shared_ptr<cmd::ShowStatement> > (s.value);
         break;
 
-      case 39: // statement
+      case 38: // statement
         value.move< std::shared_ptr<cmd::SqlStatement> > (s.value);
         break;
 
-      case 46: // update_statement
+      case 45: // update_statement
         value.move< std::shared_ptr<cmd::UpdateStatement> > (s.value);
         break;
 
-      case 55: // logic_expr
+      case 54: // logic_expr
         value.move< std::shared_ptr<cond::ComplexCondition> > (s.value);
         break;
 
-      case 49: // opt_where
-      case 50: // expr
+      case 48: // opt_where
+      case 49: // expr
         value.move< std::shared_ptr<cond::Condition> > (s.value);
         break;
 
-      case 51: // operand
-      case 52: // binary_expr
-      case 53: // comp_expr
+      case 50: // operand
+      case 51: // binary_expr
+      case 52: // comp_expr
         value.move< std::shared_ptr<cond::SimpleCondition> > (s.value);
         break;
 
-      case 60: // column_def
+      case 59: // column_def
         value.move< std::shared_ptr<st_e::Column> > (s.value);
         break;
 
-      case 47: // updated_cols_list
+      case 46: // updated_cols_list
         value.move< std::shared_ptr<std::vector<std::pair<std::string, std::string>>> > (s.value);
         break;
 
-      case 38: // statement_list
+      case 37: // statement_list
         value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (s.value);
         break;
 
-      case 59: // column_def_list
+      case 58: // column_def_list
         value.move< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (s.value);
         break;
 
-      case 56: // cols_values_list
-      case 58: // cols_names_list
+      case 55: // cols_values_list
+      case 57: // cols_names_list
         value.move< std::shared_ptr<std::vector<std::string>> > (s.value);
         break;
 
       case 5: // "string"
-      case 54: // atm_operand
-      case 57: // col_value
-      case 61: // string_val
+      case 53: // atm_operand
+      case 56: // col_value
+      case 60: // string_val
         value.move< std::string > (s.value);
         break;
 
@@ -1044,86 +1044,86 @@ namespace roflan_parser {
         value.copy< int > (that.value);
         break;
 
-      case 62: // column_type
+      case 61: // column_type
         value.copy< st_e::Column::Type > (that.value);
         break;
 
-      case 48: // updated_col_def
+      case 47: // updated_col_def
         value.copy< std::pair<std::string, std::string> > (that.value);
         break;
 
-      case 40: // create_statement
+      case 39: // create_statement
         value.copy< std::shared_ptr<cmd::CreateStatement> > (that.value);
         break;
 
-      case 45: // delete_statement
+      case 44: // delete_statement
         value.copy< std::shared_ptr<cmd::DeleteStatement> > (that.value);
         break;
 
-      case 44: // drop_statement
+      case 43: // drop_statement
         value.copy< std::shared_ptr<cmd::DropStatement> > (that.value);
         break;
 
-      case 43: // insert_statement
+      case 42: // insert_statement
         value.copy< std::shared_ptr<cmd::InsertStatement> > (that.value);
         break;
 
-      case 42: // select_statement
+      case 41: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (that.value);
         break;
 
-      case 41: // show_statement
+      case 40: // show_statement
         value.copy< std::shared_ptr<cmd::ShowStatement> > (that.value);
         break;
 
-      case 39: // statement
+      case 38: // statement
         value.copy< std::shared_ptr<cmd::SqlStatement> > (that.value);
         break;
 
-      case 46: // update_statement
+      case 45: // update_statement
         value.copy< std::shared_ptr<cmd::UpdateStatement> > (that.value);
         break;
 
-      case 55: // logic_expr
+      case 54: // logic_expr
         value.copy< std::shared_ptr<cond::ComplexCondition> > (that.value);
         break;
 
-      case 49: // opt_where
-      case 50: // expr
+      case 48: // opt_where
+      case 49: // expr
         value.copy< std::shared_ptr<cond::Condition> > (that.value);
         break;
 
-      case 51: // operand
-      case 52: // binary_expr
-      case 53: // comp_expr
+      case 50: // operand
+      case 51: // binary_expr
+      case 52: // comp_expr
         value.copy< std::shared_ptr<cond::SimpleCondition> > (that.value);
         break;
 
-      case 60: // column_def
+      case 59: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (that.value);
         break;
 
-      case 47: // updated_cols_list
+      case 46: // updated_cols_list
         value.copy< std::shared_ptr<std::vector<std::pair<std::string, std::string>>> > (that.value);
         break;
 
-      case 38: // statement_list
+      case 37: // statement_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (that.value);
         break;
 
-      case 59: // column_def_list
+      case 58: // column_def_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (that.value);
         break;
 
-      case 56: // cols_values_list
-      case 58: // cols_names_list
+      case 55: // cols_values_list
+      case 57: // cols_names_list
         value.copy< std::shared_ptr<std::vector<std::string>> > (that.value);
         break;
 
       case 5: // "string"
-      case 54: // atm_operand
-      case 57: // col_value
-      case 61: // string_val
+      case 53: // atm_operand
+      case 56: // col_value
+      case 60: // string_val
         value.copy< std::string > (that.value);
         break;
 
@@ -1142,86 +1142,86 @@ namespace roflan_parser {
         value.move< int > (that.value);
         break;
 
-      case 62: // column_type
+      case 61: // column_type
         value.move< st_e::Column::Type > (that.value);
         break;
 
-      case 48: // updated_col_def
+      case 47: // updated_col_def
         value.move< std::pair<std::string, std::string> > (that.value);
         break;
 
-      case 40: // create_statement
+      case 39: // create_statement
         value.move< std::shared_ptr<cmd::CreateStatement> > (that.value);
         break;
 
-      case 45: // delete_statement
+      case 44: // delete_statement
         value.move< std::shared_ptr<cmd::DeleteStatement> > (that.value);
         break;
 
-      case 44: // drop_statement
+      case 43: // drop_statement
         value.move< std::shared_ptr<cmd::DropStatement> > (that.value);
         break;
 
-      case 43: // insert_statement
+      case 42: // insert_statement
         value.move< std::shared_ptr<cmd::InsertStatement> > (that.value);
         break;
 
-      case 42: // select_statement
+      case 41: // select_statement
         value.move< std::shared_ptr<cmd::SelectStatement> > (that.value);
         break;
 
-      case 41: // show_statement
+      case 40: // show_statement
         value.move< std::shared_ptr<cmd::ShowStatement> > (that.value);
         break;
 
-      case 39: // statement
+      case 38: // statement
         value.move< std::shared_ptr<cmd::SqlStatement> > (that.value);
         break;
 
-      case 46: // update_statement
+      case 45: // update_statement
         value.move< std::shared_ptr<cmd::UpdateStatement> > (that.value);
         break;
 
-      case 55: // logic_expr
+      case 54: // logic_expr
         value.move< std::shared_ptr<cond::ComplexCondition> > (that.value);
         break;
 
-      case 49: // opt_where
-      case 50: // expr
+      case 48: // opt_where
+      case 49: // expr
         value.move< std::shared_ptr<cond::Condition> > (that.value);
         break;
 
-      case 51: // operand
-      case 52: // binary_expr
-      case 53: // comp_expr
+      case 50: // operand
+      case 51: // binary_expr
+      case 52: // comp_expr
         value.move< std::shared_ptr<cond::SimpleCondition> > (that.value);
         break;
 
-      case 60: // column_def
+      case 59: // column_def
         value.move< std::shared_ptr<st_e::Column> > (that.value);
         break;
 
-      case 47: // updated_cols_list
+      case 46: // updated_cols_list
         value.move< std::shared_ptr<std::vector<std::pair<std::string, std::string>>> > (that.value);
         break;
 
-      case 38: // statement_list
+      case 37: // statement_list
         value.move< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (that.value);
         break;
 
-      case 59: // column_def_list
+      case 58: // column_def_list
         value.move< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (that.value);
         break;
 
-      case 56: // cols_values_list
-      case 58: // cols_names_list
+      case 55: // cols_values_list
+      case 57: // cols_names_list
         value.move< std::shared_ptr<std::vector<std::string>> > (that.value);
         break;
 
       case 5: // "string"
-      case 54: // atm_operand
-      case 57: // col_value
-      case 61: // string_val
+      case 53: // atm_operand
+      case 56: // col_value
+      case 60: // string_val
         value.move< std::string > (that.value);
         break;
 
@@ -1243,86 +1243,86 @@ namespace roflan_parser {
         value.copy< int > (that.value);
         break;
 
-      case 62: // column_type
+      case 61: // column_type
         value.copy< st_e::Column::Type > (that.value);
         break;
 
-      case 48: // updated_col_def
+      case 47: // updated_col_def
         value.copy< std::pair<std::string, std::string> > (that.value);
         break;
 
-      case 40: // create_statement
+      case 39: // create_statement
         value.copy< std::shared_ptr<cmd::CreateStatement> > (that.value);
         break;
 
-      case 45: // delete_statement
+      case 44: // delete_statement
         value.copy< std::shared_ptr<cmd::DeleteStatement> > (that.value);
         break;
 
-      case 44: // drop_statement
+      case 43: // drop_statement
         value.copy< std::shared_ptr<cmd::DropStatement> > (that.value);
         break;
 
-      case 43: // insert_statement
+      case 42: // insert_statement
         value.copy< std::shared_ptr<cmd::InsertStatement> > (that.value);
         break;
 
-      case 42: // select_statement
+      case 41: // select_statement
         value.copy< std::shared_ptr<cmd::SelectStatement> > (that.value);
         break;
 
-      case 41: // show_statement
+      case 40: // show_statement
         value.copy< std::shared_ptr<cmd::ShowStatement> > (that.value);
         break;
 
-      case 39: // statement
+      case 38: // statement
         value.copy< std::shared_ptr<cmd::SqlStatement> > (that.value);
         break;
 
-      case 46: // update_statement
+      case 45: // update_statement
         value.copy< std::shared_ptr<cmd::UpdateStatement> > (that.value);
         break;
 
-      case 55: // logic_expr
+      case 54: // logic_expr
         value.copy< std::shared_ptr<cond::ComplexCondition> > (that.value);
         break;
 
-      case 49: // opt_where
-      case 50: // expr
+      case 48: // opt_where
+      case 49: // expr
         value.copy< std::shared_ptr<cond::Condition> > (that.value);
         break;
 
-      case 51: // operand
-      case 52: // binary_expr
-      case 53: // comp_expr
+      case 50: // operand
+      case 51: // binary_expr
+      case 52: // comp_expr
         value.copy< std::shared_ptr<cond::SimpleCondition> > (that.value);
         break;
 
-      case 60: // column_def
+      case 59: // column_def
         value.copy< std::shared_ptr<st_e::Column> > (that.value);
         break;
 
-      case 47: // updated_cols_list
+      case 46: // updated_cols_list
         value.copy< std::shared_ptr<std::vector<std::pair<std::string, std::string>>> > (that.value);
         break;
 
-      case 38: // statement_list
+      case 37: // statement_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > (that.value);
         break;
 
-      case 59: // column_def_list
+      case 58: // column_def_list
         value.copy< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > (that.value);
         break;
 
-      case 56: // cols_values_list
-      case 58: // cols_names_list
+      case 55: // cols_values_list
+      case 57: // cols_names_list
         value.copy< std::shared_ptr<std::vector<std::string>> > (that.value);
         break;
 
       case 5: // "string"
-      case 54: // atm_operand
-      case 57: // col_value
-      case 61: // string_val
+      case 53: // atm_operand
+      case 56: // col_value
+      case 60: // string_val
         value.copy< std::string > (that.value);
         break;
 
@@ -1562,86 +1562,86 @@ namespace roflan_parser {
         yylhs.value.build< int > ();
         break;
 
-      case 62: // column_type
+      case 61: // column_type
         yylhs.value.build< st_e::Column::Type > ();
         break;
 
-      case 48: // updated_col_def
+      case 47: // updated_col_def
         yylhs.value.build< std::pair<std::string, std::string> > ();
         break;
 
-      case 40: // create_statement
+      case 39: // create_statement
         yylhs.value.build< std::shared_ptr<cmd::CreateStatement> > ();
         break;
 
-      case 45: // delete_statement
+      case 44: // delete_statement
         yylhs.value.build< std::shared_ptr<cmd::DeleteStatement> > ();
         break;
 
-      case 44: // drop_statement
+      case 43: // drop_statement
         yylhs.value.build< std::shared_ptr<cmd::DropStatement> > ();
         break;
 
-      case 43: // insert_statement
+      case 42: // insert_statement
         yylhs.value.build< std::shared_ptr<cmd::InsertStatement> > ();
         break;
 
-      case 42: // select_statement
+      case 41: // select_statement
         yylhs.value.build< std::shared_ptr<cmd::SelectStatement> > ();
         break;
 
-      case 41: // show_statement
+      case 40: // show_statement
         yylhs.value.build< std::shared_ptr<cmd::ShowStatement> > ();
         break;
 
-      case 39: // statement
+      case 38: // statement
         yylhs.value.build< std::shared_ptr<cmd::SqlStatement> > ();
         break;
 
-      case 46: // update_statement
+      case 45: // update_statement
         yylhs.value.build< std::shared_ptr<cmd::UpdateStatement> > ();
         break;
 
-      case 55: // logic_expr
+      case 54: // logic_expr
         yylhs.value.build< std::shared_ptr<cond::ComplexCondition> > ();
         break;
 
-      case 49: // opt_where
-      case 50: // expr
+      case 48: // opt_where
+      case 49: // expr
         yylhs.value.build< std::shared_ptr<cond::Condition> > ();
         break;
 
-      case 51: // operand
-      case 52: // binary_expr
-      case 53: // comp_expr
+      case 50: // operand
+      case 51: // binary_expr
+      case 52: // comp_expr
         yylhs.value.build< std::shared_ptr<cond::SimpleCondition> > ();
         break;
 
-      case 60: // column_def
+      case 59: // column_def
         yylhs.value.build< std::shared_ptr<st_e::Column> > ();
         break;
 
-      case 47: // updated_cols_list
+      case 46: // updated_cols_list
         yylhs.value.build< std::shared_ptr<std::vector<std::pair<std::string, std::string>>> > ();
         break;
 
-      case 38: // statement_list
+      case 37: // statement_list
         yylhs.value.build< std::shared_ptr<std::vector<std::shared_ptr<cmd::SqlStatement>>> > ();
         break;
 
-      case 59: // column_def_list
+      case 58: // column_def_list
         yylhs.value.build< std::shared_ptr<std::vector<std::shared_ptr<st_e::Column>>> > ();
         break;
 
-      case 56: // cols_values_list
-      case 58: // cols_names_list
+      case 55: // cols_values_list
+      case 57: // cols_names_list
         yylhs.value.build< std::shared_ptr<std::vector<std::string>> > ();
         break;
 
       case 5: // "string"
-      case 54: // atm_operand
-      case 57: // col_value
-      case 61: // string_val
+      case 53: // atm_operand
+      case 56: // col_value
+      case 60: // string_val
         yylhs.value.build< std::string > ();
         break;
 
@@ -2316,27 +2316,27 @@ namespace roflan_parser {
   }
 
 
-  const signed char Parser::yypact_ninf_ = -70;
+  const signed char Parser::yypact_ninf_ = -69;
 
   const signed char Parser::yytable_ninf_ = -1;
 
   const signed char
   Parser::yypact_[] =
   {
-      45,     6,    20,    -4,    23,     9,    22,     0,    16,    45,
-     -70,    72,    76,    77,    78,    79,    81,    83,     0,    58,
-     -70,    68,   106,    10,   -70,     0,     0,    38,     0,    94,
-     -70,   -70,   -70,   -70,   -70,   -70,   -70,   -70,   -70,    92,
-       0,     0,    85,     0,     0,   -70,    43,    93,     0,   101,
-       0,     0,   -70,   101,   -70,   101,   -70,    95,     0,     7,
-      36,     4,   -70,    34,   -70,    87,    44,   -70,    63,   -70,
-     -70,     7,    46,   -70,    82,    47,   -70,   -70,   105,     4,
-      84,   -70,   -70,   -70,    64,   -70,   -70,     0,   -70,     7,
-     -70,     0,   -70,   -70,   -70,    48,   108,    88,   -70,     7,
-     102,    80,     4,     4,     7,     7,     7,     7,     7,     7,
-     -70,   -70,   -70,   -70,   103,   -70,   -70,     7,   -70,   107,
-     -70,   -70,   -70,   -70,   -70,   -70,   -70,     7,    49,    52,
-     -70,   -70
+      52,    10,    14,     0,    26,    -4,    42,     9,    56,    52,
+     -69,    23,    55,    73,    79,    80,    82,    83,     9,    72,
+     -69,    75,    90,    -2,   -69,     9,     9,    21,     9,    93,
+     -69,   -69,   -69,   -69,   -69,   -69,   -69,   -69,   -69,    92,
+       9,     9,    84,     9,     9,   -69,    39,    94,     9,   100,
+       9,     9,   -69,   100,   -69,   100,   -69,    96,     9,     8,
+      33,     5,   -69,    -9,   -69,    95,    43,   -69,    63,   -69,
+     -69,     8,    44,   -69,   102,    47,   -69,   -69,   107,     5,
+      87,   -69,   -69,   -69,    64,   -69,   -69,     9,   -69,     8,
+     -69,     9,   -69,   -69,   -69,    48,   108,    89,   -69,     8,
+     101,    81,     5,     5,     8,     8,     8,     8,     8,     8,
+     -69,   -69,   -69,   -69,   103,   -69,   -69,     8,   -69,   105,
+     -69,   -69,   -69,   -69,   -69,   -69,   -69,     8,    49,    54,
+     -69,   -69
   };
 
   const unsigned char
@@ -2361,9 +2361,9 @@ namespace roflan_parser {
   const signed char
   Parser::yypgoto_[] =
   {
-     -70,   -70,   -70,   115,   -70,   -70,   -70,   -70,   -70,   -70,
-     -70,   -70,    40,   -34,   -69,   -70,   -70,   -70,    -9,   -70,
-     -68,   -53,   -41,   -70,    37,    -3,   -70
+     -69,   -69,   -69,   116,   -69,   -69,   -69,   -69,   -69,   -69,
+     -69,   -69,    41,   -34,   -52,   -69,   -69,   -69,    -8,   -69,
+     -68,   -53,   -32,   -69,    38,    -3,   -69
   };
 
   const signed char
@@ -2377,67 +2377,67 @@ namespace roflan_parser {
   const unsigned char
   Parser::yytable_[] =
   {
-      24,    20,    27,    95,    29,    20,    76,    60,    73,    20,
-     101,    73,    20,    18,    20,    39,    30,    72,    76,    69,
-      43,    70,    45,    46,    26,    49,    19,    79,    21,    88,
-      25,    22,    28,   119,   120,    22,   111,    52,    53,    74,
-      55,    56,    74,    44,    22,    24,   116,    65,    68,   128,
-      61,     1,    47,     2,     3,    24,     4,    57,     5,   129,
-      78,    48,     6,     7,    76,    40,    58,    87,    90,    44,
-      96,    98,   113,   130,    76,    92,   131,    91,    41,    44,
-      99,    99,    99,    93,    65,    99,    97,    42,    68,   104,
-     105,   106,   107,   108,   109,   121,   122,   123,   124,   125,
-     126,   102,   103,    32,   118,   102,   103,    33,    34,    35,
-      36,    42,    37,    50,    38,    51,    59,    61,    71,   100,
-      54,    89,   114,   115,    31,   117,   127,   110,   112,   103
+      24,    20,    27,    95,    29,    20,    76,    61,    43,    73,
+      20,    26,    73,    20,    20,    39,    60,    18,    76,    69,
+      19,    70,    45,    46,    87,    49,    72,   101,    79,    88,
+      22,    44,    21,    25,    22,    47,   111,    52,    53,    74,
+      55,    56,    74,    22,    48,    24,   116,    65,    68,   128,
+     119,   120,    28,    57,    32,    24,    30,    78,     1,   129,
+       2,     3,    58,     4,    76,     5,    44,    90,    96,     6,
+       7,    98,   113,   130,    76,    92,    91,    44,   131,    40,
+      99,    99,    99,    93,    65,    41,    33,    99,    68,   104,
+     105,   106,   107,   108,   109,    42,   121,   122,   123,   124,
+     125,   126,   102,   103,    34,   118,    97,    42,   102,   103,
+      35,    36,    50,    37,    38,    51,    61,    59,    54,    71,
+      89,   100,   114,   115,   117,    31,   127,   103,   110,   112
   };
 
   const unsigned char
   Parser::yycheck_[] =
   {
-       3,     5,     5,    71,     7,     5,    59,    48,     4,     5,
-      79,     4,     5,     7,     5,    18,     0,    58,    71,    53,
-      10,    55,    25,    26,    15,    28,     6,    23,    32,    63,
-       7,    35,    10,   102,   103,    35,    89,    40,    41,    35,
-      43,    44,    35,    33,    35,    48,    99,    50,    51,   117,
-      16,     6,    14,     8,     9,    58,    11,    14,    13,   127,
-      24,    23,    17,    18,   117,     7,    23,    33,    24,    33,
-      24,    24,    24,    24,   127,    12,    24,    33,    10,    33,
-      33,    33,    33,    20,    87,    33,     4,     5,    91,    25,
-      26,    27,    28,    29,    30,   104,   105,   106,   107,   108,
-     109,    21,    22,    31,    24,    21,    22,    31,    31,    31,
-      31,     5,    31,    19,    31,    23,    23,    16,    23,    14,
-      35,    34,    14,    35,     9,    23,    23,    87,    91,    22
+       3,     5,     5,    71,     7,     5,    59,    16,    10,     4,
+       5,    15,     4,     5,     5,    18,    48,     7,    71,    53,
+       6,    55,    25,    26,    33,    28,    58,    79,    23,    63,
+      34,    33,    32,     7,    34,    14,    89,    40,    41,    34,
+      43,    44,    34,    34,    23,    48,    99,    50,    51,   117,
+     102,   103,    10,    14,    31,    58,     0,    24,     6,   127,
+       8,     9,    23,    11,   117,    13,    33,    24,    24,    17,
+      18,    24,    24,    24,   127,    12,    33,    33,    24,     7,
+      33,    33,    33,    20,    87,    10,    31,    33,    91,    25,
+      26,    27,    28,    29,    30,     5,   104,   105,   106,   107,
+     108,   109,    21,    22,    31,    24,     4,     5,    21,    22,
+      31,    31,    19,    31,    31,    23,    16,    23,    34,    23,
+      25,    14,    14,    34,    23,     9,    23,    22,    87,    91
   };
 
   const unsigned char
   Parser::yystos_[] =
   {
-       0,     6,     8,     9,    11,    13,    17,    18,    37,    38,
-      39,    40,    41,    42,    43,    44,    45,    46,     7,     6,
-       5,    32,    35,    58,    61,     7,    15,    61,    10,    61,
-       0,    39,    31,    31,    31,    31,    31,    31,    31,    61,
-       7,    10,     5,    10,    33,    61,    61,    14,    23,    61,
-      19,    23,    61,    61,    35,    61,    61,    14,    23,    23,
-      58,    16,    49,    47,    48,    61,    59,    60,    61,    49,
-      49,    23,    58,     4,    35,    56,    57,    61,    24,    23,
-      50,    51,    52,    53,    54,    55,    57,    33,    49,    34,
-      24,    33,    12,    20,    62,    56,    24,     4,    24,    33,
-      14,    50,    21,    22,    25,    26,    27,    28,    29,    30,
-      48,    57,    60,    24,    14,    35,    57,    23,    24,    50,
-      50,    54,    54,    54,    54,    54,    54,    23,    56,    56,
+       0,     6,     8,     9,    11,    13,    17,    18,    36,    37,
+      38,    39,    40,    41,    42,    43,    44,    45,     7,     6,
+       5,    32,    34,    57,    60,     7,    15,    60,    10,    60,
+       0,    38,    31,    31,    31,    31,    31,    31,    31,    60,
+       7,    10,     5,    10,    33,    60,    60,    14,    23,    60,
+      19,    23,    60,    60,    34,    60,    60,    14,    23,    23,
+      57,    16,    48,    46,    47,    60,    58,    59,    60,    48,
+      48,    23,    57,     4,    34,    55,    56,    60,    24,    23,
+      49,    50,    51,    52,    53,    54,    56,    33,    48,    25,
+      24,    33,    12,    20,    61,    55,    24,     4,    24,    33,
+      14,    49,    21,    22,    25,    26,    27,    28,    29,    30,
+      47,    56,    59,    24,    14,    34,    56,    23,    24,    49,
+      49,    53,    53,    53,    53,    53,    53,    23,    55,    55,
       24,    24
   };
 
   const unsigned char
   Parser::yyr1_[] =
   {
-       0,    36,    37,    38,    38,    39,    39,    39,    39,    39,
-      39,    39,    40,    41,    42,    42,    43,    43,    43,    43,
-      44,    45,    46,    47,    47,    48,    49,    49,    50,    50,
-      50,    51,    52,    53,    53,    53,    53,    53,    53,    54,
-      55,    55,    56,    56,    57,    57,    57,    58,    58,    59,
-      59,    60,    61,    61,    62,    62
+       0,    35,    36,    37,    37,    38,    38,    38,    38,    38,
+      38,    38,    39,    40,    41,    41,    42,    42,    42,    42,
+      43,    44,    45,    46,    46,    47,    48,    48,    49,    49,
+      49,    50,    51,    52,    52,    52,    52,    52,    52,    53,
+      54,    54,    55,    55,    56,    56,    56,    57,    57,    58,
+      58,    59,    60,    60,    61,    61
   };
 
   const unsigned char
@@ -2463,8 +2463,8 @@ namespace roflan_parser {
   "DROP", "INT_TYPE", "INSERT", "VALUES", "INTO", "WHERE", "DELETE",
   "UPDATE", "SET", "BOOL", "OR", "AND", "'('", "')'", "EQUALS",
   "NOT_EQUALS", "LESS", "GREATER", "LESS_EQUALS", "GREATER_EQUALS", "';'",
-  "'*'", "','", "'='", "'`'", "$accept", "start", "statement_list",
-  "statement", "create_statement", "show_statement", "select_statement",
+  "'*'", "','", "'`'", "$accept", "start", "statement_list", "statement",
+  "create_statement", "show_statement", "select_statement",
   "insert_statement", "drop_statement", "delete_statement",
   "update_statement", "updated_cols_list", "updated_col_def", "opt_where",
   "expr", "operand", "binary_expr", "comp_expr", "atm_operand",
@@ -2527,10 +2527,10 @@ namespace roflan_parser {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
       23,    24,    32,     2,    33,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,    31,
-       2,    34,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,    35,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,    34,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,

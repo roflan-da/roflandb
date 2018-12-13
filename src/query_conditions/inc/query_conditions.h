@@ -74,4 +74,8 @@ private:
     std::shared_ptr<Condition> left_;
     std::shared_ptr<Condition> right_;
 };
+
+class ComplexCondition : public Condition{
+
+};
 }//namespace cond
