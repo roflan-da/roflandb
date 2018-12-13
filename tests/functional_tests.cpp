@@ -62,7 +62,7 @@ TEST_CASE("select formatting"){
 }
 
 TEST_CASE("insert not all columns"){
-    REQUIRE_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
+    CHECK_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
                               "INSERT a(c1,c2) VALUES (12,14);"
                               "INSERT a(c1,c2,c3) VALUES (1,1746,177);"
                               "SELECT c1,c2,c3 FROM a;"
@@ -73,7 +73,7 @@ TEST_CASE("insert not all columns"){
 }
 
 TEST_CASE("select not all columns"){
-    REQUIRE_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
+    CHECK_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
                               "INSERT a(c1,c2) VALUES (12,14);"
                               "INSERT a(c1,c2,c3) VALUES (1,1746,177);"
                               "SELECT c1,c3 FROM a;"
@@ -93,7 +93,7 @@ TEST_CASE("insert into"){
 }
 
 TEST_CASE("insert with columns inversion"){
-    REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
+    CHECK(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
                        "INSERT a(c2,c1) VALUES (12,14);"
                        "INSERT a(c3,c1,c2) VALUES (12,14,13);"
                        "SELECT * FROM a;"
