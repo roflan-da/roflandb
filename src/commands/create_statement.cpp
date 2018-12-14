@@ -20,6 +20,10 @@ namespace cmd {
     }
 
     void CreateStatement::execute() {
+        if (!is_valid()){
+            //TODO: Exception or message
+            return;
+        }
         st_e::TableBuilder table_builder(table_name_);
         for (const auto& column : columns_) {
             // todo: consider remove shared_ptr

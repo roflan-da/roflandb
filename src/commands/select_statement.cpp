@@ -126,7 +126,6 @@ bool cmd::SelectStatement::is_condition_valid(const std::shared_ptr<cond::Condit
 
                     break;
                 case st_e::Column::BOOL:
-
                     break;
             }
         }

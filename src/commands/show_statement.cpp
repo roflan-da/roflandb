@@ -8,6 +8,10 @@ cmd::ShowStatement::ShowStatement() : SqlStatement(SHOW), type_(cmd::TABLE) {}
 cmd::ShowStatement::ShowStatement(cmd::ShowType type) : SqlStatement(SHOW), type_(type) {}
 
 void cmd::ShowStatement::execute() {
+    if (!is_valid()){
+        //TODO: Exception or message
+        return;
+    }
     auto table = st_e::StorageEngine::get_instance().get_table_by_name(name_);
     std::cout << table.get_sql() << std::endl;
 }

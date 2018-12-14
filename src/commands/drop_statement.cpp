@@ -4,6 +4,10 @@
 cmd::DropStatement::DropStatement() : SqlStatement(DROP) {}
 
 void cmd::DropStatement::execute() {
+    if (!is_valid()){
+        //TODO: Exception or message
+        return;
+    }
     switch (type_){
         case DROP_TABLE :
             st_e::StorageEngine::get_instance().delete_table(name_);
