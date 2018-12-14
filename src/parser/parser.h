@@ -342,6 +342,7 @@ namespace roflan_parser {
       // "string"
       // atm_operand
       // col_value
+      // col_name
       // string_val
       char dummy20[sizeof(std::string)];
 };
@@ -852,12 +853,12 @@ namespace roflan_parser {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 129,     ///< Last index in yytable_.
-      yynnts_ = 27,  ///< Number of nonterminal symbols.
+      yylast_ = 133,     ///< Last index in yytable_.
+      yynnts_ = 28,  ///< Number of nonterminal symbols.
       yyfinal_ = 30, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 35  ///< Number of tokens.
+      yyntokens_ = 36  ///< Number of tokens.
     };
 
 
@@ -868,7 +869,7 @@ namespace roflan_parser {
 
 
 } // roflan_parser
-#line 872 "parser.h" // lalr1.cc:379
+#line 873 "parser.h" // lalr1.cc:379
 
 
 

@@ -91,6 +91,7 @@
 %type <std::shared_ptr<st_e::Column>>                                       column_def
 %type <std::string>                                                         col_value
 %type <std::string>                                                         string_val
+%type <std::string>                                                         col_name
 
 %type <std::shared_ptr<cond::SimpleCondition>>                              operand binary_expr
 %type <std::shared_ptr<cond::SimpleCondition>>                              comp_expr
@@ -174,6 +175,9 @@ select_statement :
         }
     |   SELECT cols_names_list FROM string_val opt_where{
             $$ = std::make_shared<cmd::SelectStatement>($4.c_str(), $2, cmd::VARIABLE);
+            if ($5 != nullptr){
+                $$->add_conditions($5);
+            }
         }
     ;
 
@@ -258,6 +262,7 @@ comp_expr :
 
 atm_operand :
         col_value { $$ = $1; }
+    |   col_name  { $$ = $1; }
     ;
 
 logic_expr :
@@ -277,15 +282,13 @@ cols_values_list :
     ;
 
 col_value :
-        INTEGER {
-            $$ = std::to_string($1);
-        }
-    |   string_val {
-            $$ = $1;
-        }
-    |   '`' INTEGER '`' {
-            $$ = std::to_string($2);
-        }
+        INTEGER { $$ = std::to_string($1); }
+    |   STRING { $$ = $1; }
+    |   '"' STRING '"' { $$ = $2; }
+    ;
+
+col_name :
+        string_val { $$ = $1; }
     ;
 
 cols_names_list :
