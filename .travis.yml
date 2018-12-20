@@ -3,7 +3,6 @@ language: cpp
 compiler:
   - gcc
 dist: xenial
-env: COMPILER=g++-7
 addons:
   apt:
     sources:
@@ -30,8 +29,8 @@ install:
   - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
   # don't forget to switch back to the main build directory once you are done
   - cd ${TRAVIS_BUILD_DIR}
-
-before_script:
+ 
+script:
   # Export CC and CXX to tell cmake which compiler to use
   - export CC=gcc-7
   - export CXX=g++-7
@@ -43,8 +42,6 @@ before_script:
   # run cmake; here we assume that the project's
   # top-level CMakeLists.txt is located at '..'
   - cmake ..
-
-script:
   # Link gcc-7 and g++-7 to their standard commands
   #- sudo ln -s /usr/bin/g++-7 /usr/local/bin/g++
   # once CMake has done its job we just build using make as usual
