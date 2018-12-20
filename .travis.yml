@@ -9,6 +9,8 @@ addons:
     - ubuntu-toolchain-r-test
     - llvm-toolchain-precise-3.8
     packages:
+    - cmake-data
+    - cmake
     - g++-6
     - clang-3.8
     - libboost-all-dev
