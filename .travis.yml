@@ -2,25 +2,50 @@ sudo: true
 language: cpp
 compiler:
   - gcc
-  - clang
+dist: xenial
 addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
     - llvm-toolchain-precise-3.8
     packages:
-    - cmake-data
-    - cmake
-    - g++-6
-    - clang-3.8
+    - g++-7
     - libboost-all-dev
-install:
-- "[ $CXX = g++ ] && export CXX=g++-6 || true"
-- "[ $CXX = clang++ ] && export CXX=clang++-3.8 || true"
+# the install step will take care of deploying a newer cmake version
+install:    
+  # first we create a directory for the CMake binaries
+  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+  # we use wget to fetch the cmake binaries
+  - travis_retry wget --no-check-certificate https://cmake.org/files/v3.13/cmake-3.13.2-Linux-x86_64.tar.gz
+  # extract the binaries; the output here is quite lengthy,
+  # so we swallow it to not clutter up the travis console
+  - tar -xvf cmake-3.13.2-Linux-x86_64.tar.gz
+  - mv cmake-3.13.2-Linux-x86_64 cmake-install
+  # add both the top-level directory and the bin directory from the archive
+  # to the system PATH. By adding it to the front of the path we hide the
+  # preinstalled CMake with our own.
+  - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+  # don't forget to switch back to the main build directory once you are done
+  - cd ${TRAVIS_BUILD_DIR}
+
+before_script:
+  # create a build folder for the out-of-source build
+  - mkdir build
+  # switch to build directory
+  - cd build
+  # run cmake; here we assume that the project's
+  # top-level CMakeLists.txt is located at '..'
+  - cmake ..
+
 script:
-  - apt remove --purge --auto-remove cmake
-  - apt-get install cmake
-  - cmake -G "Unix Makefiles"
+  # Link gcc-7 and g++-7 to their standard commands
+  #- sudo ln -s /usr/bin/g++-7 /usr/local/bin/g++
+  # Export CC and CXX to tell cmake which compiler to use
+  - export CXX=g++-7
+  - g++ -v && cmake --version
+  # once CMake has done its job we just build using make as usual
   - make roflandb
   - make tests
+  #execute tests
   - ./tests
