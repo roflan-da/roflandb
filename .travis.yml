@@ -10,7 +10,7 @@ addons:
     - ubuntu-toolchain-r-test
     - llvm-toolchain-precise-3.8
     packages:
-	- gcc-7
+    - gcc-7
     - g++-7
     - libboost-all-dev
 # the install step will take care of deploying a newer cmake version
