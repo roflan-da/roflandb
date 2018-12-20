@@ -3,12 +3,14 @@ language: cpp
 compiler:
   - gcc
 dist: xenial
+env: COMPILER=g++-7
 addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
     - llvm-toolchain-precise-3.8
     packages:
+	- gcc-7
     - g++-7
     - libboost-all-dev
 # the install step will take care of deploying a newer cmake version
@@ -30,6 +32,10 @@ install:
   - cd ${TRAVIS_BUILD_DIR}
 
 before_script:
+  # Export CC and CXX to tell cmake which compiler to use
+  - export CC=gcc-7
+  - export CXX=g++-7
+  - g++ -v && cmake --version
   # create a build folder for the out-of-source build
   - mkdir build
   # switch to build directory
@@ -41,10 +47,6 @@ before_script:
 script:
   # Link gcc-7 and g++-7 to their standard commands
   #- sudo ln -s /usr/bin/g++-7 /usr/local/bin/g++
-  # Export CC and CXX to tell cmake which compiler to use
-  - export CC=gcc-7
-  - export CXX=g++-7
-  - g++ -v && cmake --version
   # once CMake has done its job we just build using make as usual
   - make roflandb
   - make tests
