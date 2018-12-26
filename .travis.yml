@@ -46,4 +46,4 @@ script:
   - make roflandb
   - make tests
   #execute tests
-  - ./bin/tests
+  - ./bin/tests [implemented]
