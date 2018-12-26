@@ -6,6 +6,7 @@
 #include <memory>
 #include <table.h>
 #include <table_cells.h>
+#include <fstream>
 
 namespace st_e {
 
