@@ -168,12 +168,11 @@ show_statement :
 select_statement :
         SELECT '*' FROM string_val opt_where{
             $$ = std::make_shared<cmd::SelectStatement>($4.c_str());
-            if ($5 != nullptr){
-                $$->add_conditions($5);
-            }
+            $$->add_conditions($5);
         }
     |   SELECT cols_names_list FROM string_val opt_where{
             $$ = std::make_shared<cmd::SelectStatement>($4.c_str(), $2, cmd::VARIABLE);
+            $$->add_conditions($5);
         }
     ;
 
