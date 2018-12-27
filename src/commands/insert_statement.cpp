@@ -68,6 +68,7 @@ void cmd::InsertStatement::execute() {
 
     } else {
         //TODO: Exception or message
+        throw st_e::StorageEngineException("ERROR");
     }
 //    set_message("INSERT INTO " + table_name_ + " SUCCESSFUL.");
     //    engine_storage.save();

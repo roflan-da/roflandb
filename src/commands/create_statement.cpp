@@ -22,6 +22,7 @@ namespace cmd {
     void CreateStatement::execute() {
         if (!is_valid()){
             //TODO: Exception or message
+            throw st_e::StorageEngineException("ERROR");
             return;
         }
         st_e::TableBuilder table_builder(table_name_);

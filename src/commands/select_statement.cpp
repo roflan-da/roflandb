@@ -21,6 +21,7 @@ cmd::SelectStatement::SelectStatement(std::string table_name,
 void cmd::SelectStatement::execute() {
     if (!is_valid()){
         //TODO: Exception or message
+        throw st_e::StorageEngineException("ERROR");
         return;
     }
     st_e::SelectAnswer t = type_ == ALL ? st_e::StorageEngine::get_instance().select_all(table_name_, conditions_) :

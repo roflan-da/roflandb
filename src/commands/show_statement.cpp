@@ -10,6 +10,7 @@ cmd::ShowStatement::ShowStatement(cmd::ShowType type) : SqlStatement(SHOW), type
 void cmd::ShowStatement::execute() {
     if (!is_valid()){
         //TODO: Exception or message
+        throw st_e::StorageEngineException("ERROR");
         return;
     }
     auto table = st_e::StorageEngine::get_instance().get_table_by_name(name_);

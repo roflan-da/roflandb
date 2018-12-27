@@ -6,6 +6,7 @@ cmd::DropStatement::DropStatement() : SqlStatement(DROP) {}
 void cmd::DropStatement::execute() {
     if (!is_valid()){
         //TODO: Exception or message
+        throw st_e::StorageEngineException("ERROR");
         return;
     }
     switch (type_){

@@ -1,3 +1,4 @@
+#include <storage_engine_exceptions.h>
 #include "catch.hpp"
 #include "driver.h"
 #include "storage_engine.h"
@@ -15,6 +16,10 @@ bool test_statement(const std::string &query, const std::string &output) {
     cleanoutput.erase(remove_if(cleanoutput.begin(), cleanoutput.end(), isspace), cleanoutput.end());
     roflan_parser::Driver parser_driver;
     std::string error_message;
+    try{
+        parser_driver.parse_string("DROP TABLE a;");
+        parser_driver.sql_parser_result->execute();
+    } catch(...){}
     parser_driver.parse_string(query, error_message);
     parser_driver.sql_parser_result->execute();
     std::string realoutput(parser_driver.sql_parser_result->get_messages());
