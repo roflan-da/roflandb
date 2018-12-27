@@ -51,6 +51,6 @@ script:
   - ./bin/tests [implemented]
   
 after_success:
-  - "curl -o /tmp/travis-automerge https://raw.githubusercontent.com/cdown/travis-automerge/master/travis-automerge"
+  - "curl -o /tmp/travis-automerge https://raw.githubusercontent.com/boriswinner/travis-automerge/master/travis-automerge"
   - "chmod a+x /tmp/travis-automerge"
   - "BRANCHES_TO_MERGE_REGEX='staging' BRANCH_TO_MERGE_INTO=dev GITHUB_REPO=roflan-da/roflandb /tmp/travis-automerge"
