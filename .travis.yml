@@ -3,6 +3,8 @@ language: cpp
 compiler:
   - gcc
 dist: xenial
+env:
+  - secure: "AktDPa0LZiWXdej9CWFtvGm/2iSlgHd/f+LGuhPUTeRojEMNODE1KBsTdniqj2Wdnxw8431gl8YTz9b7+5vjGF/6kfzBP2C19eHKnIk7AUkSpbhYmJ4QrzrCkhHT5KXJYmM6yb39wbtSY9gYoPrTCSd6qolMyhAdAV2e93JhBcD4x2FV4lTMLFEKZRrcMt8YrQksa0vetxyRb/YHd2jAvRByEklFLlNes1kj8WX1wAQVoEl6HtwbP1IwtuYyfIJeNp8wN0Kln/4/I4T7WJZv4g8DA4suGTueNbpCbcrdkclMNTFesvwdfv9rgVNSj0gRBDvNrIvNCP317Se2QnT7Rq83SVuE4asPUiGlRQXI2jU9FfPCmcWYjP4dUn/XIyFvwPkgb5ss2yQDKkkK/32I6en/k7C7SxRNVSSpQ1qVfeLuLY1TDRjArVAOsvnYVfr8wLTJSJ1OXIbB1Yj0ZZRwTyLI3d9ULcvoSrOGdw4XedSSRQyz8DRd3jpLJ9zvzPO5WEVn8R8vnDjCGomjP1/OZlNuDf5XA6IKSeTkwFe3QwUv9leJuZANGnPszDs3et6D+Djy28gO/RJnWP75T3dMcI3kTGi6v08ejQpciIFC9bVXv8Ok2BBMnreDJ6WUKxAqSAfPjKTxEIz9gbMkyUq7pQowTSXMj+D11Y7U0iI6hqU="
 addons:
   apt:
     sources:
@@ -47,3 +49,8 @@ script:
   - make tests
   #execute tests
   - ./bin/tests [implemented]
+  
+after_success:
+  - "curl -o /tmp/travis-automerge https://raw.githubusercontent.com/cdown/travis-automerge/master/travis-automerge"
+  - "chmod a+x /tmp/travis-automerge"
+  - "BRANCHES_TO_MERGE_REGEX='staging' BRANCH_TO_MERGE_INTO=dev GITHUB_REPO=roflan-da/roflandb /tmp/travis-automerge"
