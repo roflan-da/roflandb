@@ -1,0 +1,8 @@
+REQUIRE
+CREATE TABLE a(c1 INT, c2 INT);
+INSERT a(c1,c2) VALUES (12,14);
+SELECT * FROM a;
+DROP TABLE a;
+---
+|c1|c2|
+|12|14|
