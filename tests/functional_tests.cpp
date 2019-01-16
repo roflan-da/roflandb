@@ -37,7 +37,7 @@ std::string repeat(int n, std::string s) {
     return os.str();
 }
 
-TEST_CASE("create, insert, select *","[implemented]"){
+TEST_CASE("create, insert, select *"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT a(c1,c2) VALUES (12,14);"
                        "SELECT * FROM a;"
@@ -47,7 +47,7 @@ TEST_CASE("create, insert, select *","[implemented]"){
 }
 
 
-TEST_CASE("create, insert, select column_names","[implemented]") {
+TEST_CASE("create, insert, select column_names") {
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT a(c1,c2) VALUES (12,14);"
                        "SELECT c1,c2 FROM a;"
@@ -56,7 +56,7 @@ TEST_CASE("create, insert, select column_names","[implemented]") {
                        "|12|14|"));
 }
 
-TEST_CASE("select formatting","[implemented]"){
+TEST_CASE("select formatting"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT, column3 INT);"
                        "INSERT a(c1,c2,column3) VALUES (12,14,0);"
                        "INSERT a(c1,c2,column3) VALUES (1,1746,177);"
@@ -67,7 +67,7 @@ TEST_CASE("select formatting","[implemented]"){
                        "| 1|1746|    177|"));
 }
 
-TEST_CASE("insert not all columns"){
+TEST_CASE("insert not all columns","[.]"){
     CHECK_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
                               "INSERT a(c1,c2) VALUES (12,14);"
                               "INSERT a(c1,c2,c3) VALUES (1,1746,177);"
@@ -78,7 +78,7 @@ TEST_CASE("insert not all columns"){
                               "| 1|1746|   |"));
 }
 
-TEST_CASE("select not all columns"){
+TEST_CASE("select not all columns","[.]"){
     CHECK_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
                               "INSERT a(c1,c2) VALUES (12,14);"
                               "INSERT a(c1,c2,c3) VALUES (1,1746,177);"
@@ -89,7 +89,7 @@ TEST_CASE("select not all columns"){
                               "| 1|   |"));
 }
 
-TEST_CASE("insert into","[implemented]"){
+TEST_CASE("insert into"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT INTO a(c2,c1) VALUES (12,14);"
                        "SELECT c1,c2 FROM a;"
@@ -98,7 +98,7 @@ TEST_CASE("insert into","[implemented]"){
                        "|14|12|"));
 }
 
-TEST_CASE("insert with columns inversion"){
+TEST_CASE("insert with columns inversion","[.]"){
     CHECK(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);"
                        "INSERT a(c2,c1) VALUES (12,14);"
                        "INSERT a(c3,c1,c2) VALUES (12,14,13);"
@@ -109,7 +109,7 @@ TEST_CASE("insert with columns inversion"){
                        "|14|13|  |"));
 }
 
-TEST_CASE("erase table before creation","[implemented]"){
+TEST_CASE("erase table before creation"){
     REQUIRE_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT, column3 INT);"
                               "INSERT a(c1,c2,column3) VALUES (12,14,0);"
                               "INSERT a(c1,c2,column3) VALUES (1,1746,177);"
@@ -132,21 +132,21 @@ TEST_CASE("erase table before creation","[implemented]"){
 //    }
 //}
 
-TEST_CASE("huge insert","[implemented]"){
+TEST_CASE("huge insert"){
     std::string single_insert = "INSERT a(c1,c2,c3) VALUES (1,2,3);";
     std::string single_select_output = "| 1| 2| 3|\n";
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);" + repeat(1000, single_insert) + "SELECT * FROM a;DROP TABLE a;",
                             "|c1|c2|c3|\n" + repeat(1000, single_select_output)));
 }
 
-TEST_CASE("insert > 64k","[implemented]"){
+TEST_CASE("insert > 64k"){
     std::string single_insert = "INSERT a(c1,c2,c3) VALUES (1,2,3);";
     std::string single_select_output = "| 1| 2| 3|\n";
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT, c3 INT);" + repeat(50000, single_insert) + "SELECT * FROM a;DROP TABLE a;",
                            "|c1|c2|c3|\n" + repeat(50000, single_select_output)));
 }
 
-TEST_CASE("negative ints","[implemented]"){
+TEST_CASE("negative ints"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                            "INSERT INTO a(c2,c1) VALUES (-12,14);"
                            "SELECT c1,c2 FROM a;"
@@ -155,15 +155,15 @@ TEST_CASE("negative ints","[implemented]"){
                            "|14|-12|"));
 }
 
-TEST_CASE("drop table","[implemented]"){
+TEST_CASE("drop table"){
     REQUIRE_THROWS(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                                   "INSERT INTO a(c2,c1) VALUES (12,14);"
                                   "DROP table a;"
                                   "SELECT c1,c2 FROM a;",
                                   "SOME ERROR MESSAGE"));
 }
-    
-TEST_CASE("drop table does not drop all tables","[implemented]"){
+
+TEST_CASE("drop table does not drop all tables"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                            "INSERT INTO a(c2,c1) VALUES (-12,14);"
                            "CREATE TABLE b(c1 INT, c2 INT);"
@@ -175,7 +175,7 @@ TEST_CASE("drop table does not drop all tables","[implemented]"){
                            "|14|-12|"));
 }
 
-TEST_CASE("create table after drop","[implemented]"){
+TEST_CASE("create table after drop"){
     REQUIRE(test_statement("CREATE TABLE a(c1 INT, c2 INT);"
                        "INSERT INTO a(c2,c1) VALUES (12,14);"
                        "DROP table a;"
@@ -194,7 +194,7 @@ std::string execute_query(const std::string &query) {
     return error_message;
 }
 
-TEST_CASE("Trivial testing of row_check"){
+TEST_CASE("Trivial testing of row_check","[.]"){
     execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2);");
     std::vector<std::shared_ptr<st_e::TableCell>> cells;
     cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
@@ -204,7 +204,7 @@ TEST_CASE("Trivial testing of row_check"){
     REQUIRE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
 }
 
-TEST_CASE("Trivial testing of row_check where condition is not true"){
+TEST_CASE("Trivial testing of row_check where condition is not true","[.]"){
     execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2);");
     std::vector<std::shared_ptr<st_e::TableCell>> cells;
     cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
@@ -214,7 +214,7 @@ TEST_CASE("Trivial testing of row_check where condition is not true"){
     REQUIRE_FALSE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
 }
 
-TEST_CASE("LESS condition"){
+TEST_CASE("LESS condition","[.]"){
     execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2,3);");
     std::vector<std::shared_ptr<st_e::TableCell>> cells;
     cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
@@ -224,7 +224,7 @@ TEST_CASE("LESS condition"){
     REQUIRE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
 }
 
-TEST_CASE("LESS_EQUAL condition"){
+TEST_CASE("LESS_EQUAL condition","[.]"){
     execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2,3);");
     std::vector<std::shared_ptr<st_e::TableCell>> cells;
     cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
@@ -234,7 +234,7 @@ TEST_CASE("LESS_EQUAL condition"){
     REQUIRE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
 }
 
-TEST_CASE("GREATER condition"){
+TEST_CASE("GREATER condition","[.]"){
     execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2,3);");
     std::vector<std::shared_ptr<st_e::TableCell>> cells;
     cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
@@ -244,7 +244,7 @@ TEST_CASE("GREATER condition"){
     REQUIRE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
 }
 
-TEST_CASE("GREATER_OR_EQUAL condition"){
+TEST_CASE("GREATER_OR_EQUAL condition","[.]"){
     execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(1,2,3);");
     std::vector<std::shared_ptr<st_e::TableCell>> cells;
     cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));
@@ -254,7 +254,7 @@ TEST_CASE("GREATER_OR_EQUAL condition"){
     REQUIRE(cond::row_check(st_e::StorageEngine::get_instance().get_table_by_name("a"), row, cond));
 }
 
-TEST_CASE("Integers less than 0"){
+TEST_CASE("Integers less than 0","[.]"){
     execute_query("CREATE TABLE a(c1 INT, c2 INT); INSERT INTO a(c1,c2) VALUES(-1,-2,-3);");
     std::vector<std::shared_ptr<st_e::TableCell>> cells;
     cells.push_back(std::make_shared<st_e::IntegerTableCell>(st_e::IntegerTableCell(1)));

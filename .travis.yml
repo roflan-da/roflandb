@@ -48,7 +48,7 @@ script:
   - make roflandb
   - make tests
   #execute tests
-  - ./bin/tests [implemented]
+  - ./bin/tests
   
 after_success:
   - "curl -o /tmp/travis-automerge https://raw.githubusercontent.com/boriswinner/travis-automerge/master/travis-automerge"
