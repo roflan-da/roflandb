@@ -10,6 +10,7 @@
 static std::string TEST_DELIMETER = "---";
 static std::string TESTS_DIRECTORY = "tests";
 static std::string TESTS_SUBDIRECTORY = "functional_tests";
+static std::string PROJECT_DIRECTORY_NAME = "roflandb";
 
 bool compare(const std::string &s1, const std::string &s2) {
     dtl::Diff<char, std::string> d(s1, s2);
@@ -48,7 +49,11 @@ std::string repeat(int n, std::string s) {
 }
 
 TEST_CASE("All tests"){
-    auto tests_path = boost::filesystem::current_path().parent_path().parent_path().append(TESTS_DIRECTORY).append(TESTS_SUBDIRECTORY);
+    auto tests_path = boost::filesystem::current_path();
+    while(tests_path.filename() != PROJECT_DIRECTORY_NAME){
+        tests_path = tests_path.parent_path();
+    }
+    tests_path.append(TESTS_DIRECTORY).append(TESTS_SUBDIRECTORY);
     for(auto& test_file: boost::filesystem::directory_iterator(tests_path)){
         std::cout << "RUNNING TEST " << test_file.path() << '\n';
         std::ifstream test(test_file.path().string());
