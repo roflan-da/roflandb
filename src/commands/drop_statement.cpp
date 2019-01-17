@@ -4,11 +4,7 @@
 cmd::DropStatement::DropStatement() : SqlStatement(DROP) {}
 
 void cmd::DropStatement::execute() {
-    if (!is_valid()){
-        //TODO: Exception or message
-        throw st_e::StorageEngineException("ERROR");
-        return;
-    }
+    check_valid();
     switch (type_){
         case DROP_TABLE :
             st_e::StorageEngine::get_instance().delete_table(name_);
@@ -33,17 +29,16 @@ std::string cmd::DropStatement::get_name() const {
     return name_;
 }
 
-bool cmd::DropStatement::is_valid() {
+void cmd::DropStatement::check_valid() {
     if (type_ == DROP_TABLE) {
         try {
             auto table = st_e::StorageEngine::get_instance().get_table_by_name(name_);
         }
         catch (st_e::TableNotExistException &e) {
-            return false;
+            throw st_e::DropTableNotExistException(name_);
         }
     }
     else{
-        return false;
+        throw st_e::DropValidException();
     }
-    return true;
 }

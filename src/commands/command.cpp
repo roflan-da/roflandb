@@ -1,11 +1,16 @@
 #include <utility>
 
 #include <command.h>
+#include <storage_engine_exceptions.h>
 #include "iostream"
 
 void cmd::Command::execute() {
     for (const auto& statement : statements_){
-        statement->execute();
+        try{
+            statement->execute();
+        } catch(st_e::RoflanException& exc){
+            statement->set_message(exc.get_message());
+        }
     }
 }
 

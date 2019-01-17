@@ -19,11 +19,7 @@ cmd::SelectStatement::SelectStatement(std::string table_name,
         cols_names_(*cols_names.get()) {}
 
 void cmd::SelectStatement::execute() {
-    if (!is_valid()){
-        //TODO: Exception or message
-        throw st_e::StorageEngineException("ERROR");
-        return;
-    }
+    check_valid();
     st_e::SelectAnswer t = type_ == ALL ? st_e::StorageEngine::get_instance().select_all(table_name_, conditions_) :
                            st_e::StorageEngine::get_instance().select(table_name_, cols_names_, conditions_);
     std::string message;
@@ -61,7 +57,7 @@ void cmd::SelectStatement::execute() {
 
 cmd::SelectStatement::SelectStatement(const std::string& table_name) : table_name_(table_name), type_(ALL){}
 
-bool cmd::SelectStatement::is_valid() {
+void cmd::SelectStatement::check_valid() {
     try {
         auto table = st_e::StorageEngine::get_instance().get_table_by_name(table_name_);
         auto table_cols = table.get_columns_orders();
@@ -73,30 +69,29 @@ bool cmd::SelectStatement::is_valid() {
         }
         else {
             if (cols_names_.size() != table_cols.size()) {
-                return false;
+                throw st_e::SelectIncorrectNumberOfColumnsException(table_cols.size());
             }
             for (size_t i = 0; i < cols_names_.size(); ++i) {
                 for (size_t j = i + 1; j < cols_names_.size(); ++j) {
                     if (cols_names_[i] == cols_names_[j]) {
-                        return false;
+                        throw st_e::SelectDuplicateColumnsException(cols_names_[i]);
                     }
                 }
             }
             for (const auto &cols_name : cols_names_) {
                 auto found = table_cols.find(cols_name);
                 if (found == table_cols.end()) {
-                    return false;
+                    throw st_e::SelectIncorrectColumnNameException(cols_name);
                 }
             }
         }
     if (!is_condition_valid(conditions_, table_cols, table.get_ordered_columns())){
-        return false;
+        throw st_e::SelectConditionsNotValidException();
     }
     }
     catch (st_e::TableNotExistException &e) {
-        return false;
+        throw st_e::SelectTableNotExistException(table_name_);
     }
-    return true;
 }
 
 bool cmd::SelectStatement::is_condition_valid(const std::shared_ptr<cond::Condition>& condition,

@@ -12,6 +12,6 @@ void cmd::UpdateStatement::execute() {
     st_e::StorageEngine::get_instance().update(table_name_, updated_vals_, conditions_);
 }
 
-bool cmd::UpdateStatement::is_valid() {
-    return true;
+void cmd::UpdateStatement::check_valid() {
+    //return true;
 }

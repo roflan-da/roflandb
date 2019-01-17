@@ -10,7 +10,7 @@
 //    REQUIRE(parser_driver.parse_string(query, error_message));
 //    bool res = true;
 //    for (const auto& statement: parser_driver.sql_parser_result->statements_){
-//        if (!statement->is_valid()){
+//        if (!statement->check_valid()){
 //            res = false;
 //            break;
 //        };

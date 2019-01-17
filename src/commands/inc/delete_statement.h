@@ -18,7 +18,7 @@ public:
 
     void execute() override;
 private:
-    bool is_valid() override;
+    void check_valid() override;
 
     std::string table_name_;
     std::shared_ptr<cond::Condition> conditions_;

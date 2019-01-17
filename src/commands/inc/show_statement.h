@@ -25,7 +25,7 @@ public:
 
     std::string get_name();
 private:
-    bool is_valid() override;
+    void check_valid() override;
     ShowType type_;
     std::string name_;
 };

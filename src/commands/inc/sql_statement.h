@@ -38,7 +38,7 @@ public:
     virtual void execute() = 0;
 
 private:
-    virtual bool is_valid() = 0;
+    virtual void check_valid() = 0;
     std::string message_;
     StatementType type_;
 };

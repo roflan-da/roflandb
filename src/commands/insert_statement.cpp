@@ -63,18 +63,13 @@ st_e::TableRow cmd::InsertStatement::get_row() const {
 }
 
 void cmd::InsertStatement::execute() {
-    if (is_valid()){
-        st_e::StorageEngine::get_instance().insert(table_name_, get_row());
-
-    } else {
-        //TODO: Exception or message
-        throw st_e::StorageEngineException("ERROR");
-    }
+    check_valid();
+    st_e::StorageEngine::get_instance().insert(table_name_, get_row());
 //    set_message("INSERT INTO " + table_name_ + " SUCCESSFUL.");
     //    engine_storage.save();
 }
 
-bool cmd::InsertStatement::is_valid() {
+void cmd::InsertStatement::check_valid() {
     try {
         auto table = st_e::StorageEngine::get_instance().get_table_by_name(table_name_);
         auto table_cols = table.get_columns_orders();
@@ -85,12 +80,12 @@ bool cmd::InsertStatement::is_valid() {
         }
         else {
             if ((columns_names_.size() != table_cols.size()) || (columns_vals_.size() != table_cols.size())) {
-                return false;
+                throw st_e::InsertIncorrectNumberOfParametersException(table_cols.size());
             }
             for (size_t i = 0; i < columns_names_.size(); ++i) {
                 for (size_t j = i + 1; j < columns_names_.size(); ++j) {
                     if (columns_names_[i] == columns_names_[j]) {
-                        return false;
+                        throw st_e::InsertDuplicateColumnsException(columns_names_[i]);
                     }
                 }
             }
@@ -98,7 +93,7 @@ bool cmd::InsertStatement::is_valid() {
             for (size_t i = 0; i < columns_names_.size(); ++i) {
                 auto found = table_cols.find(columns_names_[i]);
                 if (found == table_cols.end()) {
-                    return false;
+                    throw st_e::InsertIncorrectColumnNameException(columns_names_[i]);
                 }
                 else if (i != found->second){
                     sort_needed = true;
@@ -122,7 +117,7 @@ bool cmd::InsertStatement::is_valid() {
             {
             case (st_e::Column::INT) : {
                 if (columns_vals_[i].empty()) {
-                    return false;
+                    throw st_e::InsertValidException();
                 }
                 std::stringstream ss;
                 ss << columns_vals_[i];
@@ -131,7 +126,7 @@ bool cmd::InsertStatement::is_valid() {
                 ss >> integer;
                 ss >> string;
                 if (!string.empty() || (integer == 0 && columns_vals_[i] != "0")) { //HOLY SHIT (still better than static_cast)
-                    return false; //TEST!!!
+                    throw st_e::InsertValidException(); //TEST!!!
                 }
                 break;
             }
@@ -145,18 +140,17 @@ bool cmd::InsertStatement::is_valid() {
             case (st_e::Column::CHAR) : {
                 //is it correct?
                 if (columns_vals_[i].size() > 1) {
-                    return false;
+                    throw st_e::InsertValidException();
                 }
                 break;
             }
             default: {
-                return false;
+                throw st_e::InsertValidException();
             }
             }
         }
     }
     catch (st_e::TableNotExistException& e){
-        return false;
+        throw st_e::InsertValidException();
     }
-    return true;
 }

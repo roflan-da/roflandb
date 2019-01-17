@@ -23,7 +23,7 @@ public:
     std::string get_name() const;
 
 private:
-    bool is_valid() override;
+    void check_valid() override;
 
     DropType type_;
     std::string name_;
