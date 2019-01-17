@@ -1,0 +1,6 @@
+REQUIRE
+CREATE TABLE a(c1 INT, c2 INT);
+INSERT INTO a(c1, c2, c3) VALUES (1,2,3);
+DROP TABLE a;
+---
+ERROR inserting into table: expected 2 parameters

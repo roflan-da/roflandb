@@ -1,0 +1,6 @@
+REQUIRE
+CREATE TABLE a(c1 INT, c2 INT);
+INSERT INTO a(c1, c1) VALUES (1,2);
+DROP TABLE a;
+---
+ERROR inserting into table: duplicate column c1

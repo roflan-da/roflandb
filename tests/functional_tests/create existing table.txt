@@ -1,0 +1,6 @@
+REQUIRE
+CREATE TABLE a(c1 INT, c2 INT);
+CREATE TABLE a(c1 INT, c2 INT);
+DROP TABLE a;
+---
+ERROR creating table: table a alerady exists

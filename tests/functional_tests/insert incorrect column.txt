@@ -1,0 +1,6 @@
+REQUIRE
+CREATE TABLE a(c1 INT, c2 INT);
+INSERT INTO a(c3, c1) VALUES (1,2);
+DROP TABLE a;
+---
+ERROR inserting into table: incorrect column c3

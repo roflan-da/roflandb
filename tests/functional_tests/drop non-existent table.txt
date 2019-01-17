@@ -1,0 +1,7 @@
+REQUIRE
+CREATE TABLE a(c1 INT, c2 INT);
+INSERT INTO a(c1, c2) VALUES (1,2);
+DROP TABLE a;
+DROP TABLE a;
+---
+ERROR dropping table: table a doesn't exist

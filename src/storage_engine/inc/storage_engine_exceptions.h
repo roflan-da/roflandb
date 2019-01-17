@@ -63,7 +63,7 @@ public:
 class CreateTableAlreadyExistsException : public CreateValidException {
 public:
     explicit CreateTableAlreadyExistsException(const std::string& table_name) :
-    CreateValidException("ERROR creating table: table alerady exists "+table_name) {}
+    CreateValidException("ERROR creating table: table "+ table_name + " alerady exists") {}
 };
 
 

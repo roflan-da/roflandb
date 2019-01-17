@@ -1,0 +1,4 @@
+REQUIRE
+CREATE TABLE a(c1 INT, c1 INT);
+---
+ERROR creating table: duplicate column c1
