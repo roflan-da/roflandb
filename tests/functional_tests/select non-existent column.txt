@@ -1,8 +1,8 @@
-REQUIRE_THROWS
+REQUIRE
 CREATE TABLE a(c1 INT, c2 INT, column3 INT);
 INSERT a(c1,c2,column3) VALUES (12,14,0);
 INSERT a(c1,c2,column3) VALUES (1,1746,177);
 SELECT c1,c2,c3 FROM a;
 DROP TABLE a;
 ---
-SOME ERROR MESSAGE
+ERROR selecting from table: incorrect column c3

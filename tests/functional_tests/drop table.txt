@@ -1,7 +1,7 @@
-REQUIRE_THROWS
+REQUIRE
 CREATE TABLE a(c1 INT, c2 INT);
 INSERT INTO a(c2,c1) VALUES (12,14);
 DROP table a;
 SELECT c1,c2 FROM a;
 ---
-SOME ERROR MESSAGE
+ERROR selecting from table: table a doesn't exist
