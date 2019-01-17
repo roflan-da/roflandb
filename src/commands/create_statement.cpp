@@ -46,9 +46,10 @@ namespace cmd {
             auto table = st_e::StorageEngine::get_instance().get_table_by_name(table_name_);
         }
         catch (st_e::TableNotExistException& e){
+            return;
             //everything is good
         }
-        throw st_e::CreateDuplicateColumnsException(table_name_);
+        throw st_e::CreateTableAlreadyExistsException(table_name_);
     }
 
 
