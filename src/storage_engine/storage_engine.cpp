@@ -151,7 +151,8 @@ DataBlock StorageEngine::append_new_block(const std::string& table_name, const D
     return new_data_block;
 }
 
-SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names, ConditionPtr condition) {
+SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names, ConditionPtr condition,
+                                   uint64_t transaction_number) {
     auto curr_data_block = get_first_block(table_name);
     auto table = tables_.get_table(table_name);
 
@@ -164,6 +165,9 @@ SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::stri
             curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
         }
         first = false;
+        if (curr_data_block.get_expire_transaction_number() < transaction_number) {
+            continue;
+        }
         TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
         for(const auto& row : curr_table_chunk.get_rows()) {
             if (row.is_removed() || !cond::row_check(table, row, condition)) {
@@ -198,7 +202,7 @@ SelectAnswer StorageEngine::select_all(std::string table_name, ConditionPtr cond
     for (const auto& it : table.get_ordered_columns()) {
         all_columns.push_back(it.name);
     }
-    return select(table_name, all_columns, condition);
+    return select(table_name, all_columns, condition, 0);
 }
 
 void StorageEngine::remove(const std::string& table_name, ConditionPtr condition) {

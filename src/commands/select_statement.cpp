@@ -21,7 +21,7 @@ cmd::SelectStatement::SelectStatement(std::string table_name,
 void cmd::SelectStatement::execute() {
     check_valid();
     st_e::SelectAnswer t = type_ == ALL ? st_e::StorageEngine::get_instance().select_all(table_name_, conditions_) :
-                           st_e::StorageEngine::get_instance().select(table_name_, cols_names_, conditions_);
+                           st_e::StorageEngine::get_instance().select(table_name_, cols_names_, conditions_, 0);
     std::string message;
     std::stringstream message_stream;
 
