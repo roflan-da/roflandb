@@ -13,6 +13,11 @@ if(WIN32)
     target_link_libraries(roflanclient PUBLIC wsock32 ws2_32)
 endif()
 
+if (UNIX)
+    find_package(Threads)
+    target_link_libraries(roflanclient PUBLIC ${CMAKE_THREAD_LIBS_INIT} )
+endif(UNIX)
+
 if(CMAKE_BUILD_TYPE STREQUAL "Debug" AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
     target_compile_options(query_conditions PUBLIC -g3 -O0 -coverage)
     set_target_properties(query_conditions PROPERTIES LINK_FLAGS "${LINK_FLAGS} -coverage")

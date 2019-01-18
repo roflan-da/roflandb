@@ -36,9 +36,13 @@ if (MINGW)
                 copy ${dll} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
     endforeach()
 
-    add_dependencies(roflandb copyDLL)
 endif (MINGW)
 
+if (UNIX)
+    find_package(Threads)
+    target_link_libraries(roflandb_testlib PUBLIC ${CMAKE_THREAD_LIBS_INIT} )
+    target_link_libraries(roflandb PUBLIC ${CMAKE_THREAD_LIBS_INIT} )
+endif(UNIX)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug" AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
     target_compile_options(roflandb PUBLIC -g3 -O0 -coverage)

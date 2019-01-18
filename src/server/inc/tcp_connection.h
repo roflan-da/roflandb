@@ -19,11 +19,11 @@ public:
 
     void start();
     void handle_write(const boost::system::error_code& , size_t /*bytes_transferred*/);
-    void handle_write();
+    void handle_read(const boost::system::error_code& , size_t /*bytes_transferred*/);
 
 private:
     boost::asio::ip::tcp::socket socket_;
-    std::string message_;
+    boost::asio::streambuf query_;
 };
 
 }

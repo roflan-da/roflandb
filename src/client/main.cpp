@@ -19,7 +19,6 @@ int main(int argc, char *argv[]) {
     io_service io_service;
     ip::tcp::endpoint ep(ip::address_v4::loopback(), 1337);
 
-
     std::string answer;
 
     Texts::print_startup_message(output);
@@ -47,10 +46,11 @@ int main(int argc, char *argv[]) {
         //todo: send request
         sock.connect(ep);
         try {
+            write(sock, buffer(query + '\0'));
             read_until(sock, b, '\0');
         }
         catch (boost::system::system_error &e) {
-
+            std::cerr << e.what();
         }
 
         std::istream is(&b);
