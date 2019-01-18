@@ -1,32 +1,30 @@
 #include <iostream>
-#include "server.h"
-#include "driver.h"
-#include "storage_engine.h"
-#include "server.h"
-#include "texts.h"
+#include <texts.h>
 
 #include <boost/asio.hpp>
+#include <boost/asio/read_until.hpp>
 
-namespace roflan_cli {
+using namespace roflan_cli;
+using namespace boost::asio;
 
-Server& Server::get_instance() {
-    static Server instance;
-    return instance;
+bool is_starts_with(const std::string& hay, const std::string& needle)  {
+    return hay.compare(0, needle.length(), needle) == 0;
 }
 
-int Server::start() {
-    // init section
+int main(int argc, char *argv[]) {
     std::istream& input = std::cin;
     std::ostream& output = std::cout;
     std::ostream& error = std::cerr;
 
+    io_service io_service;
+    ip::tcp::endpoint ep(ip::address_v4::loopback(), 1337);
+
+
+    std::string answer;
+
     Texts::print_startup_message(output);
-
-    roflan_parser::Driver parser_driver;
     std::string query;
-    std::string error_message;
 
-    // main loop
     while (true) {
         // print prompt
         output << "rdb> ";
@@ -34,8 +32,7 @@ int Server::start() {
         std::getline(input, query);
         // Handle not sql commands
         if (is_starts_with(query, "\\q")) {
-            // Todo: implement
-            // storage_engine.on_shutdown()
+            Texts::print_goodbye_message(output);
             return EXIT_SUCCESS;
         } else if (is_starts_with(query, "\\a")) {
             Texts::print_authors(output);
@@ -45,19 +42,21 @@ int Server::start() {
             continue;
         }
 
-        if (!parser_driver.parse_string(query, error_message)) {
-            error << error_message << std::endl;
-            continue;
+        ip::tcp::socket sock(io_service);
+        streambuf b;
+        //todo: send request
+        sock.connect(ep);
+        try {
+            read_until(sock, b, '\0');
         }
-        parser_driver.sql_parser_result->execute();
-        output << parser_driver.sql_parser_result->get_messages();
-        output << parser_driver.result;
+        catch (boost::system::system_error &e) {
+
+        }
+
+        std::istream is(&b);
+        std::getline(is, answer);
+        std::cout << answer << std::endl;
+
     }
-    return EXIT_SUCCESS;
 }
 
-bool Server::is_starts_with(const std::string& hay, const std::string& needle) const {
-    return hay.compare(0, needle.length(), needle) == 0;
-}
-
-} // namespace roflan_cli

@@ -20,8 +20,7 @@ void roflan_srv::TcpServer::start_accept() {
 }
 
 void TcpServer::handle_accept(TcpConnection::pointer new_connection, const boost::system::error_code& error) {
-    if (!error)
-    {
+    if (!error) {
         new_connection->start();
     }
 

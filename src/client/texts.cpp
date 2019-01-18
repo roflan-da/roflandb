@@ -1,8 +1,8 @@
 #include "texts.h"
 
-namespace roflan_srv {
+namespace roflan_cli {
 
-void roflan_srv::Texts::print_help(std::ostream& output_steam) {
+void Texts::print_help(std::ostream& output_steam) {
     output_steam << "RoflanDB: a database better then mariadb" << std::endl;
     output_steam << "(C) 2018 by Roflan Digital Agency"        << std::endl;
     output_steam                                               << std::endl;
@@ -13,7 +13,7 @@ void roflan_srv::Texts::print_help(std::ostream& output_steam) {
     output_steam << "\\a authors"                              << std::endl;
 }
 
-void roflan_srv::Texts::print_authors(std::ostream& output_steam) {
+void Texts::print_authors(std::ostream& output_steam) {
     output_steam << "RoflanDB is proudly brought to you by:" << std::endl;
     output_steam << "- Alexey Mogilyovkin"                   << std::endl;
     output_steam << "- Artem Sityaev"                        << std::endl;
@@ -22,13 +22,17 @@ void roflan_srv::Texts::print_authors(std::ostream& output_steam) {
     output_steam << "- Miroslav Koberskiy"                   << std::endl;
 }
 
-void roflan_srv::Texts::print_startup_message(std::ostream& output_stream) {
-    std::cout <<  " ____  _____  ____  __      __    _  _  ____   ____"    << std::endl;
-    std::cout << R"((  _ \(  _  )( ___)(  )    /__\  ( \( )(  _ \ (  _ \)" << std::endl;
-    std::cout << R"( )   / )(_)(  )__)  )(__  /(__)\  )  (  )(_) ) ) _ <)" << std::endl;
-    std::cout << R"((_)\_)(_____)(__)  (____)(__)(__)(_)\_)(____/ (____/)" << std::endl;
-    std::cout << "RoflanDB command line"                                   << std::endl;
-    std::cout << "Enter \\h for help"                                      << std::endl;
+void Texts::print_startup_message(std::ostream& output_stream) {
+    output_stream <<  " ____  _____  ____  __      __    _  _  ____   ____"    << std::endl;
+    output_stream << R"((  _ \(  _  )( ___)(  )    /__\  ( \( )(  _ \ (  _ \)" << std::endl;
+    output_stream << R"( )   / )(_)(  )__)  )(__  /(__)\  )  (  )(_) ) ) _ <)" << std::endl;
+    output_stream << R"((_)\_)(_____)(__)  (____)(__)(__)(_)\_)(____/ (____/)" << std::endl;
+    output_stream << "RoflanDB command line"                                   << std::endl;
+    output_stream << "Enter \\h for help"                                      << std::endl;
+}
+
+void Texts::print_goodbye_message(std::ostream& output_stream) {
+    output_stream << "Bye, bye...";
 }
 
 } // roflan_srv

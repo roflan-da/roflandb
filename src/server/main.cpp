@@ -2,6 +2,6 @@
 #include "shared_table.h"
 
 int main(int argc, char *argv[]) {
-    auto& cli = roflan_srv::Server::get_instance();
-    return cli.start();
+    auto& srv = roflan_srv::Server::get_instance();
+    return srv.start();
 }

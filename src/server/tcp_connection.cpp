@@ -10,7 +10,7 @@ boost::asio::ip::tcp::socket& TcpConnection::socket() {
 }
 
 void TcpConnection::start() {
-    message_ = "sdadsdaasdssheh";
+    message_ = "sdadsdaasdssheh\0";
     boost::asio::async_write(socket_, boost::asio::buffer(message_),
                              boost::bind(&TcpConnection::handle_write, shared_from_this(),
                                          boost::asio::placeholders::error,

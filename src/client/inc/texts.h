@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 
-namespace roflan_srv {
+namespace roflan_cli {
 
 class Texts {
 public:
@@ -14,6 +14,8 @@ public:
     static void print_help(std::ostream& output_steam);
     static void print_authors(std::ostream& output_steam);
     static void print_startup_message(std::ostream& output_stream);
+    static void print_goodbye_message(std::ostream& output_stream);
+
 };
 
 } // namespace roflan_srv
