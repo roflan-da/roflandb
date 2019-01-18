@@ -6,14 +6,10 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COMPILE_FLAGS}")
 SET(LIBS storage_engine commands parser)
 
 add_executable(roflandb ${SRC})
-target_include_directories(roflandb PUBLIC inc/)
 #target_link_libraries(roflandb PUBLIC ${LIBS})
 
-target_link_libraries(roflandb PUBLIC storage_engine commands parser ${Boost_LIBRARIES})
 
 add_library(roflandb_testlib SHARED ${SRC})
-target_include_directories(roflandb_testlib PUBLIC inc/)
-target_link_libraries(roflandb_testlib PUBLIC ${LIBS})
 
 if(WIN32)
     target_link_libraries(roflandb PUBLIC wsock32 ws2_32)
@@ -43,6 +39,13 @@ if (UNIX)
     target_link_libraries(roflandb_testlib PUBLIC ${CMAKE_THREAD_LIBS_INIT} )
     target_link_libraries(roflandb PUBLIC ${CMAKE_THREAD_LIBS_INIT} )
 endif(UNIX)
+
+target_include_directories(roflandb PUBLIC inc/)
+target_link_libraries(roflandb PUBLIC storage_engine commands parser ${Boost_LIBRARIES})
+
+target_include_directories(roflandb_testlib PUBLIC inc/)
+target_link_libraries(roflandb_testlib PUBLIC ${LIBS} ${Boost_LIBRARIES})
+
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug" AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
     target_compile_options(roflandb PUBLIC -g3 -O0 -coverage)
