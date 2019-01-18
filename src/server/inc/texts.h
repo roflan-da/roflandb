@@ -3,17 +3,17 @@
 #include <string>
 #include <iostream>
 
-namespace roflan_cli {
+namespace roflan_srv {
 
-class CliTexts {
+class Texts {
 public:
-    CliTexts() = delete;
-    CliTexts(CliTexts const&) = delete;
-    CliTexts& operator=(CliTexts const&) = delete;
+    Texts() = delete;
+    Texts(Texts const&) = delete;
+    Texts& operator=(Texts const&) = delete;
 
     static void print_help(std::ostream& output_steam);
     static void print_authors(std::ostream& output_steam);
     static void print_startup_message(std::ostream& output_stream);
 };
 
-} // namespace roflan_cli
+} // namespace roflan_srv

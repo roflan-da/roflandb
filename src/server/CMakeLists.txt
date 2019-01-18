@@ -9,15 +9,16 @@ add_executable(roflandb ${SRC})
 target_include_directories(roflandb PUBLIC inc/)
 #target_link_libraries(roflandb PUBLIC ${LIBS})
 
-if(WIN32)
-    target_link_libraries(roflandb PUBLIC wsock32 ws2_32)
-endif()
-
 target_link_libraries(roflandb PUBLIC storage_engine commands parser ${Boost_LIBRARIES})
 
 add_library(roflandb_testlib SHARED ${SRC})
 target_include_directories(roflandb_testlib PUBLIC inc/)
 target_link_libraries(roflandb_testlib PUBLIC ${LIBS})
+
+if(WIN32)
+    target_link_libraries(roflandb PUBLIC wsock32 ws2_32)
+    target_link_libraries(roflandb_testlib PUBLIC wsock32 ws2_32)
+endif()
 
 if (MINGW)
     get_filename_component( Mingw_Path ${CMAKE_CXX_COMPILER} PATH )

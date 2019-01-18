@@ -1,26 +1,26 @@
 #include <iostream>
-#include "cli.h"
+#include "server.h"
 #include "driver.h"
 #include "storage_engine.h"
-#include "cli.h"
-#include "cli_texts.h"
+#include "server.h"
+#include "texts.h"
 
 #include <boost/asio.hpp>
 
-namespace roflan_cli {
+namespace roflan_srv {
 
-Cli& Cli::get_instance() {
-    static Cli instance;
+Server& Server::get_instance() {
+    static Server instance;
     return instance;
 }
 
-int Cli::start() {
+int Server::start() {
     // init section
     std::istream& input = std::cin;
     std::ostream& output = std::cout;
     std::ostream& error = std::cerr;
 
-    CliTexts::print_startup_message(output);
+    Texts::print_startup_message(output);
 
     roflan_parser::Driver parser_driver;
     std::string query;
@@ -38,10 +38,10 @@ int Cli::start() {
             // storage_engine.on_shutdown()
             return EXIT_SUCCESS;
         } else if (is_starts_with(query, "\\a")) {
-            CliTexts::print_authors(output);
+            Texts::print_authors(output);
             continue;
         } else if (is_starts_with(query, "\\?") || is_starts_with(query, "\\h")) {
-            CliTexts::print_help(output);
+            Texts::print_help(output);
             continue;
         }
 
@@ -56,8 +56,8 @@ int Cli::start() {
     return EXIT_SUCCESS;
 }
 
-bool Cli::is_starts_with(const std::string& hay, const std::string& needle) const {
+bool Server::is_starts_with(const std::string& hay, const std::string& needle) const {
     return hay.compare(0, needle.length(), needle) == 0;
 }
 
-} // namespace roflan_cli
+} // namespace roflan_srv
