@@ -8,15 +8,21 @@ env:
 addons:
   apt:
     sources:
-    - ubuntu-toolchain-r-test
-    - llvm-toolchain-precise-3.8
-    - llvm-toolchain-trusty-6.0
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-precise-3.8
+      - llvm-toolchain-trusty-6.0
     packages:
-    - gcc-8
-    - g++-8
-    - libboost-all-dev
+      - gcc-8
+      - g++-8
 # the install step will take care of deploying a newer cmake version
-install:    
+install:
+  - wget -O boost_1_69_0.tar.gz https://sourceforge.net/projects/boost/files/boost/1.69.0/boost_1_69_0.tar.gz/download > /dev/null 2>&1
+  - tar xzvf boost_1_69_0.tar.gz > /dev/null 2>&1
+  - cd boost_1_69_0/
+  - sudo apt-get install build-essential g++ python-dev autotools-dev libicu-dev build-essential libbz2-dev libboost-all-dev > /dev/null 2>&1
+  - ./bootstrap.sh --prefix=/usr/
+  - ./b2 --with-filesystem --with-system --with-thread -j2 > /dev/null 2>&1
+  - sudo ./b2 install --with-filesystem --with-system --with-thread
   # first we create a directory for the CMake binaries
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
@@ -32,7 +38,7 @@ install:
   - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
   # don't forget to switch back to the main build directory once you are done
   - cd ${TRAVIS_BUILD_DIR}
- 
+
 script:
   # Export CC and CXX to tell cmake which compiler to use
   - export CC=gcc-8
@@ -49,7 +55,7 @@ script:
   - make tests
   #execute tests
   - ./bin/tests
-  
+
 after_success:
   - "curl -o /tmp/travis-automerge https://raw.githubusercontent.com/boriswinner/travis-automerge/master/travis-automerge"
   - "chmod a+x /tmp/travis-automerge"
