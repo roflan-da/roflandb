@@ -59,6 +59,7 @@ Table& SharedTable::load_table(const std::string& table_name) {
         table_builder.add_column(tmp_col_type, tmp_col_name);
     }
     data_file.close();
+    table_locks.insert_or_assign(invariant_table_name, false);
     return cached_tables_.insert_or_assign(invariant_table_name, table_builder.build()).first->second;
 }
 
@@ -100,7 +101,7 @@ void SharedTable::save_to_disk(const Table& table) const {
     data_file.write(reinterpret_cast<char*>(&no_block_pointer), sizeof(uint32_t));
     data_file.write(reinterpret_cast<char*>(&block_counter), sizeof(uint32_t));
 
-    DataBlock new_data_block(0, 0, 1);
+    DataBlock new_data_block(0, 0, 0, 1);// TODO::Вставить нормальную генерацию номеров(тут это мб и не обязательно)
     auto block_binary = new_data_block.get_binary_representation();
     data_file.write(block_binary.data(), block_binary.size());
 

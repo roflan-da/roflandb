@@ -9,7 +9,7 @@ namespace st_e {
 /*
  *
  * Data block structure:
- * Data block is contains only metadata
+ * Data block contains only metadata
  * Block numeration starts with 1. Block number 0 has special meaning - absence of previous or next block.
  *
  * [uint32_t: previous block number]
@@ -18,6 +18,8 @@ namespace st_e {
  * [unit32_t free space offset]
  * [uint32_t current_block_ptr]
  * [DATA_BLOCK_SIZE-HEADER_LENGTH bytes of data]
+ * [uint32_t: Creating transaction number]
+ * [uint32_t: Expire transaction number] if 0, it is valid
  *
  * Data File structure:
  * [uint32_t first existing block]
@@ -29,10 +31,10 @@ namespace st_e {
 
 class DataBlock {
 public:
-    static const uint32_t HEADER_LENGTH = 20;
+    static const uint32_t HEADER_LENGTH = 28;
 
-    DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint32_t data_start, uint32_t free_offset, uint32_t curr_block_ptr);
-    DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint32_t curr_block_ptr);
+    DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint32_t creating_transaction_number, uint32_t data_start, uint32_t free_offset, uint32_t curr_block_ptr);
+    DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint32_t creating_transaction_number, uint32_t curr_block_ptr);
     uint32_t get_previous_ptr() const { return previous_; }
     uint32_t get_next_ptr() const { return next_; }
     std::vector<char> get_binary_representation() const;
@@ -52,6 +54,8 @@ private:
     uint32_t free_offset_ = HEADER_LENGTH;
     uint32_t curr_block_ptr_;
     size_t file_offset_ = DATA_FILE_HEADER_SIZE + (curr_block_ptr_ - 1) * DATA_BLOCK_SIZE;
+    uint32_t creating_transaction_number_;
+    uint32_t expire_transaction_number_ = 0;
 };
 
 } // namespace st_e

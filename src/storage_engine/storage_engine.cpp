@@ -54,6 +54,8 @@ DataBlock StorageEngine::get_block(const std::string& table_name, uint32_t block
     uint32_t cur_block_ptr;
     uint32_t free_offset;
     uint32_t data_start;
+    uint32_t creating_transaction_number;
+    uint32_t expire_transaction_number;
 
     // setvbuf
     // Low level section ahead. Please fasten your seatbelts and don't touch anything.
@@ -64,8 +66,10 @@ DataBlock StorageEngine::get_block(const std::string& table_name, uint32_t block
     data_file.read(reinterpret_cast<char*>(&data_start),     sizeof(uint32_t));
     data_file.read(reinterpret_cast<char*>(&free_offset),    sizeof(uint32_t));
     data_file.read(reinterpret_cast<char*>(&cur_block_ptr),  sizeof(uint32_t));
+    data_file.read(reinterpret_cast<char*>(&creating_transaction_number), sizeof(uint32_t));
+    data_file.read(reinterpret_cast<char*>(&expire_transaction_number), sizeof(uint32_t));
 
-    return DataBlock(prev_block_ptr, next_block_ptr, data_start, free_offset, cur_block_ptr);
+    return DataBlock(prev_block_ptr, next_block_ptr, creating_transaction_number, data_start, free_offset, cur_block_ptr);  // TODO::Вставить нормальную генерацию номеров
 }
 
 DataBlock StorageEngine::get_first_block(const std::string& table_name) {
@@ -134,7 +138,7 @@ DataBlock StorageEngine::append_new_block(const std::string& table_name, const D
     data_file.seekp(12);
     data_file.write(reinterpret_cast<char*>(&block_number), sizeof(uint32_t));
 
-    DataBlock new_data_block(last_block.get_ptr(), 0, block_number);
+    DataBlock new_data_block(last_block.get_ptr(), 0, 0, block_number); // TODO::Вставить нормальную генерацию номеров
     data_file.seekp(0, std::ios::end);
     auto block_binary = new_data_block.get_binary_representation();
     data_file.write(block_binary.data(), block_binary.size());
