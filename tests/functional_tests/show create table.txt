@@ -1,0 +1,5 @@
+REQUIRE
+CREATE TABLE a(c1 INT, c2 INT, column3 INT);
+SHOW CREATE TABLE a;
+---
+CREATE TABLE 'a' (`c1` INT, `c2` INT`column3` INT);

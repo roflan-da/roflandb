@@ -10,7 +10,7 @@ cmd::ShowStatement::ShowStatement(cmd::ShowType type) : SqlStatement(SHOW), type
 void cmd::ShowStatement::execute() {
     check_valid();
     auto table = st_e::StorageEngine::get_instance().get_table_by_name(name_);
-    std::cout << table.get_sql() << std::endl;
+    set_message(table.get_sql());
 }
 
 cmd::ShowType cmd::ShowStatement::get_type() {
