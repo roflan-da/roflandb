@@ -7,6 +7,8 @@
 #include "boost/filesystem.hpp"
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
+#include "boost/bind.hpp"
+#include "boost/thread/thread.hpp"
 #include "iostream"
 
 static std::string TEST_DELIMETER = "---";
@@ -94,7 +96,7 @@ size_t read_complete(char * buf, const boost::system::error_code & err, size_t b
     // we read one-by-one until we get to enter, no buffering
     return found ? 0 : 1;
 }
-void parallel_test_statement(const std::string &query, const std::string &output){
+void parallel_test_statement(std::string query){
     using namespace boost::asio;
     std::string tquery = query+"\n";
     ip::tcp::socket sock(service);
@@ -110,9 +112,9 @@ void parallel_test_statement(const std::string &query, const std::string &output
 
 void test_parallel(){
     using namespace boost::asio;
-    char* messages[] = { "CREATE TABLE a(c1 INT)", "CREATE TABLE b(c1 INT)", 0 };
+    char* messages[] = {const_cast<char *>("CREATE TABLE a(c1 INT)"), const_cast<char *>("CREATE TABLE b(c1 INT)")};
     boost::thread_group threads;
-    for ( char ** message = messages; *message; ++message) {
+    for (char ** message = messages; *message; ++message) {
         threads.create_thread( boost::bind(parallel_test_statement, *message));
         boost::this_thread::sleep( boost::posix_time::millisec(100));
     }
