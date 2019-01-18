@@ -33,8 +33,7 @@ public:
     void insert(const std::string& table_name, const TableRow& row);
     void update(const std::string& table_name, UpdateValues update_values, ConditionPtr condition);
     void remove(const std::string& table_name, ConditionPtr condition);
-    SelectAnswer select(std::string table_name, std::vector<std::string> columns_names, ConditionPtr condition,
-                            uint64_t transaction_number);
+    SelectAnswer select(std::string table_name, std::vector<std::string> columns_names, ConditionPtr condition);
     SelectAnswer select_all(std::string table_name, ConditionPtr condition);
 
 private:

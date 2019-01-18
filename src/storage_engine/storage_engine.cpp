@@ -151,10 +151,11 @@ DataBlock StorageEngine::append_new_block(const std::string& table_name, const D
     return new_data_block;
 }
 
-SelectAnswer StorageEngine::select(std::string table_name, std::vector<std::string> columns_names, ConditionPtr condition,
-                                   uint64_t transaction_number) {
+SelectAnswer
+StorageEngine::select(std::string table_name, std::vector<std::string> columns_names, ConditionPtr condition) {
     auto curr_data_block = get_first_block(table_name);
     auto table = tables_.get_table(table_name);
+    uint64_t transaction_number = 0;
 
     SelectAnswer answer;
     answer.columns_names = columns_names;
@@ -202,7 +203,7 @@ SelectAnswer StorageEngine::select_all(std::string table_name, ConditionPtr cond
     for (const auto& it : table.get_ordered_columns()) {
         all_columns.push_back(it.name);
     }
-    return select(table_name, all_columns, condition, 0);
+    return select(table_name, all_columns, condition);
 }
 
 void StorageEngine::remove(const std::string& table_name, ConditionPtr condition) {
