@@ -74,7 +74,7 @@ WHERE   { return token::WHERE; }
 AND     { return token::AND; }
 OR      { return token::OR; }
 
-DELETE  { return token::DELETE; }
+DELETE  { return token::DLT; }
 UPDATE  { return token::UPDATE; }
 SET     { return token::SET; }
 

@@ -924,9 +924,9 @@ namespace roflan_parser {
   }
 
   Parser::symbol_type
-  Parser::make_DELETE (const location_type& l)
+  Parser::make_DLT (const location_type& l)
   {
-    return symbol_type (token::DELETE, l);
+    return symbol_type (token::DLT, l);
   }
 
   Parser::symbol_type
@@ -2459,16 +2459,16 @@ namespace roflan_parser {
   {
   "\"end of file\"", "error", "$undefined", "\"end of line\"",
   "\"integer\"", "\"string\"", "CREATE", "TABLE", "SHOW", "SELECT", "FROM",
-  "DROP", "INT_TYPE", "INSERT", "VALUES", "INTO", "WHERE", "DELETE",
-  "UPDATE", "SET", "BOOL", "OR", "AND", "'('", "')'", "EQUALS",
-  "NOT_EQUALS", "LESS", "GREATER", "LESS_EQUALS", "GREATER_EQUALS", "';'",
-  "'*'", "','", "'`'", "$accept", "start", "statement_list", "statement",
-  "create_statement", "show_statement", "select_statement",
-  "insert_statement", "drop_statement", "delete_statement",
-  "update_statement", "updated_cols_list", "updated_col_def", "opt_where",
-  "expr", "operand", "binary_expr", "comp_expr", "atm_operand",
-  "logic_expr", "cols_values_list", "col_value", "cols_names_list",
-  "column_def_list", "column_def", "string_val", "column_type", YY_NULLPTR
+  "DROP", "INT_TYPE", "INSERT", "VALUES", "INTO", "WHERE", "DLT", "UPDATE",
+  "SET", "BOOL", "OR", "AND", "'('", "')'", "EQUALS", "NOT_EQUALS", "LESS",
+  "GREATER", "LESS_EQUALS", "GREATER_EQUALS", "';'", "'*'", "','", "'`'",
+  "$accept", "start", "statement_list", "statement", "create_statement",
+  "show_statement", "select_statement", "insert_statement",
+  "drop_statement", "delete_statement", "update_statement",
+  "updated_cols_list", "updated_col_def", "opt_where", "expr", "operand",
+  "binary_expr", "comp_expr", "atm_operand", "logic_expr",
+  "cols_values_list", "col_value", "cols_names_list", "column_def_list",
+  "column_def", "string_val", "column_type", YY_NULLPTR
   };
 
 #if ROFLAN_PARSERDEBUG

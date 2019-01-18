@@ -381,7 +381,7 @@ namespace roflan_parser {
         VALUES = 269,
         INTO = 270,
         WHERE = 271,
-        DELETE = 272,
+        DLT = 272,
         UPDATE = 273,
         SET = 274,
         BOOL = 275,
@@ -599,7 +599,7 @@ namespace roflan_parser {
 
     static inline
     symbol_type
-    make_DELETE (const location_type& l);
+    make_DLT (const location_type& l);
 
     static inline
     symbol_type

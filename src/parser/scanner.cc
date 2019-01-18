@@ -939,7 +939,7 @@ YY_RULE_SETUP
 case 14:
 YY_RULE_SETUP
 #line 78 "scanner.ll"
-{ return token::DELETE; }
+{ return token::DLT; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP

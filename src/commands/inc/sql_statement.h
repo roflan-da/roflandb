@@ -18,7 +18,7 @@ enum StatementType {
     DROP,
     SELECT,
     INSERT,
-    DELETE
+    DLR
 };
 
 enum ListType{

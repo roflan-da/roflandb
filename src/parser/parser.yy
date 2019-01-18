@@ -71,7 +71,7 @@
 %token VALUES
 %token INTO
 %token WHERE
-%token DELETE
+%token DLT
 %token UPDATE
 %token SET
 %token BOOL
@@ -198,7 +198,7 @@ drop_statement :
     ;
 
 delete_statement :
-        DELETE FROM string_val opt_where { $$ = std::make_shared<cmd::DeleteStatement>($3.c_str(), $4); }
+        DLT FROM string_val opt_where { $$ = std::make_shared<cmd::DeleteStatement>($3.c_str(), $4); }
     ;
 
 update_statement :
