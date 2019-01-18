@@ -1,0 +1,9 @@
+REQUIRE
+CREATE TABLE a(c1 INT, c2 INT);
+INSERT a(c1,c2) VALUES (12,14);
+UPDATE a SET c1 = 99, c2 = 38
+SELECT c1,c2 FROM a;
+DROP TABLE a;
+---
+|c1|c2|
+|99|38|
