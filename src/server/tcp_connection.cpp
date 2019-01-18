@@ -40,7 +40,7 @@ void TcpConnection::handle_read(const boost::system::error_code&, size_t) {
     parser_driver_.parse_string(query, error_message);
 
     if (!parser_driver_.parse_string(query, error_message)) {
-        async_write(socket_, buffer(error_message),
+        async_write(socket_, buffer(error_message + '\0'),
                     boost::bind(&TcpConnection::handle_write, shared_from_this(), boost::asio::placeholders::error,
                                 boost::asio::placeholders::bytes_transferred));
         return;
@@ -49,7 +49,7 @@ void TcpConnection::handle_read(const boost::system::error_code&, size_t) {
 //        output << parser_driver_.sql_parser_result->get_messages();
 //        output << parser_driver_.result;
 
-    async_write(socket_, buffer(parser_driver_.result),
+    async_write(socket_, buffer(parser_driver_.result + '\0'),
                 boost::bind(&TcpConnection::handle_write, shared_from_this(), boost::asio::placeholders::error,
                             boost::asio::placeholders::bytes_transferred));
 
