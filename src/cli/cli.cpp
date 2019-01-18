@@ -5,6 +5,8 @@
 #include "cli.h"
 #include "cli_texts.h"
 
+#include <boost/asio.hpp>
+
 namespace roflan_cli {
 
 Cli& Cli::get_instance() {
