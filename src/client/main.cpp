@@ -19,8 +19,6 @@ int main(int argc, char *argv[]) {
     io_service io_service;
     ip::tcp::endpoint ep(ip::address_v4::loopback(), 1337);
 
-    std::string answer;
-
     Texts::print_startup_message(output);
     std::string query;
 
@@ -53,9 +51,11 @@ int main(int argc, char *argv[]) {
             std::cerr << e.what();
         }
 
-        std::istream is(&b);
-        std::getline(is, answer);
-        std::cout << answer << std::endl;
+
+        streambuf::const_buffers_type bufs = b.data();
+        std::string answer(boost::asio::buffers_begin(bufs),
+                          boost::asio::buffers_begin(bufs) + bufs.size());
+        std::cout << answer;
 
     }
 }

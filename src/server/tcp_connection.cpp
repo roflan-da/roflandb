@@ -49,7 +49,9 @@ void TcpConnection::handle_read(const boost::system::error_code&, size_t) {
 //        output << parser_driver_.sql_parser_result->get_messages();
 //        output << parser_driver_.result;
 
-    async_write(socket_, buffer(parser_driver_.result + '\0'),
+    auto kek = parser_driver_.sql_parser_result->get_messages();
+
+    async_write(socket_, buffer(parser_driver_.sql_parser_result->get_messages() + '\0'),
                 boost::bind(&TcpConnection::handle_write, shared_from_this(), boost::asio::placeholders::error,
                             boost::asio::placeholders::bytes_transferred));
 
