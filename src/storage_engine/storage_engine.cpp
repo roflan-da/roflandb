@@ -263,7 +263,32 @@ void StorageEngine::update(const std::string& table_name, UpdateValues update_va
             }
         }
 
-        rewrite_record(curr_data_block, curr_table_chunk, table);
+        //создаем новый блок и закидываем данные
+        std::vector<char> out;
+        for (auto& row : curr_table_chunk.get_rows()) {
+            row.push_binary(out);
+        }
+        auto last_block = get_last_block(table_name);
+        append_new_block(table_name, last_block);
+
+        const auto& table = get_table_by_name(table_name);
+
+        last_block = get_last_block(table_name);
+        append_record_to_block(out, last_block, table);
+
+        //устанавливаем expire_transaction
+
+        std::fstream data_file;
+        data_file.open(table.get_data_file_path().string(), std::ofstream::binary | std::ofstream::out | std::ofstream::in);
+        data_file.seekg(16); // смещение на current_transaction
+        uint64_t current_transaction;
+        data_file.read(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
+        data_file.seekp(curr_data_block.get_ptr() + 28); // смещение для expire_transaction изменяемого блока
+        data_file.write(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
+
+
+        //rewrite_record(curr_data_block, curr_table_chunk, table);
+
     } while(curr_data_block.get_next_ptr());
 }
 

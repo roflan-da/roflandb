@@ -17,9 +17,9 @@ namespace st_e {
  * [uint32_t<=DATA_BLOCK_SIZE data start - skip data from previous block]
  * [unit32_t free space offset]
  * [uint32_t current_block_ptr]
- * [DATA_BLOCK_SIZE-HEADER_LENGTH bytes of data]
  * [uint64_t: Creating transaction number]
  * [uint64_t: Expire transaction number] if 0, it is valid
+ * [DATA_BLOCK_SIZE-HEADER_LENGTH bytes of data]
  *
  * Data File structure:
  * [uint32_t first existing block]
