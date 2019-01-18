@@ -283,7 +283,7 @@ void StorageEngine::update(const std::string& table_name, UpdateValues update_va
         data_file.seekg(16); // смещение на current_transaction
         uint64_t current_transaction;
         data_file.read(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
-        data_file.seekp(curr_data_block.get_ptr() + 28); // смещение для expire_transaction изменяемого блока
+        data_file.seekp(curr_data_block.get_file_offset() + 28); // смещение для expire_transaction изменяемого блока
         data_file.write(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
 
 

@@ -16,7 +16,7 @@ namespace st_e {
  * [uint32_t: next block number]
  * [uint32_t<=DATA_BLOCK_SIZE data start - skip data from previous block]
  * [unit32_t free space offset]
- * [uint32_t current_block_ptr]
+ * [uint32_t current_block_ptr - order number]
  * [uint64_t: Creating transaction number]
  * [uint64_t: Expire transaction number] if 0, it is valid
  * [DATA_BLOCK_SIZE-HEADER_LENGTH bytes of data]
@@ -32,10 +32,10 @@ namespace st_e {
 
 class DataBlock {
 public:
-    static const uint32_t HEADER_LENGTH = 28;
+    static const uint32_t HEADER_LENGTH = 36;
 
-    DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint32_t creating_transaction_number, uint32_t data_start, uint32_t free_offset, uint32_t curr_block_ptr);
-    DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint32_t creating_transaction_number, uint32_t curr_block_ptr);
+    DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint64_t creating_transaction_number, uint32_t data_start, uint32_t free_offset, uint32_t curr_block_ptr);
+    DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint64_t creating_transaction_number, uint32_t curr_block_ptr);
     uint32_t get_previous_ptr() const { return previous_; }
     uint32_t get_next_ptr() const { return next_; }
     std::vector<char> get_binary_representation() const;
