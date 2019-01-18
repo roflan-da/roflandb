@@ -15,6 +15,6 @@ endif()
 
 if (UNIX)
     find_package(Threads)
-    target_link_libraries(test PUBLIC ${CMAKE_THREAD_LIBS_INIT} )
+    target_link_libraries(tests PUBLIC ${CMAKE_THREAD_LIBS_INIT} )
 endif(UNIX)
 
