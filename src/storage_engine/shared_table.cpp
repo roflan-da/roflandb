@@ -96,10 +96,12 @@ void SharedTable::save_to_disk(const Table& table) const {
     // set prev and next blocks to 0
     uint32_t no_block_pointer = 0;
     uint32_t block_counter = 1;
+    uint64_t current_transaction = 0;
     data_file.write(reinterpret_cast<char*>(&block_counter), sizeof(uint32_t));
     data_file.write(reinterpret_cast<char*>(&block_counter), sizeof(uint32_t));
     data_file.write(reinterpret_cast<char*>(&no_block_pointer), sizeof(uint32_t));
     data_file.write(reinterpret_cast<char*>(&block_counter), sizeof(uint32_t));
+    data_file.write(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
 
     DataBlock new_data_block(0, 0, 0, 1);// TODO::Вставить нормальную генерацию номеров(тут это мб и не обязательно)
     auto block_binary = new_data_block.get_binary_representation();

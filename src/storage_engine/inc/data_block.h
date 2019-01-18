@@ -18,14 +18,15 @@ namespace st_e {
  * [unit32_t free space offset]
  * [uint32_t current_block_ptr]
  * [DATA_BLOCK_SIZE-HEADER_LENGTH bytes of data]
- * [uint32_t: Creating transaction number]
- * [uint32_t: Expire transaction number] if 0, it is valid
+ * [uint64_t: Creating transaction number]
+ * [uint64_t: Expire transaction number] if 0, it is valid
  *
  * Data File structure:
  * [uint32_t first existing block]
  * [uint32_t last existing block]
  * [uint32_t first deleted block]
  * [uint32_t block counter]
+ * [uint64_t current transaction]
  * [N blocks of data blocks]
  */
 
@@ -41,9 +42,11 @@ public:
 
     uint32_t  get_free_space()  const { return DATA_BLOCK_SIZE - free_offset_; }
     size_t get_file_offset() const { return file_offset_; }
-    uint32_t  get_free_offset() const { return free_offset_; }
-    uint32_t  get_data_start()  const { return data_start_; }
-    uint32_t  get_ptr() const { return curr_block_ptr_; }
+    uint32_t get_free_offset() const { return free_offset_; }
+    uint32_t get_data_start()  const { return data_start_; }
+    uint32_t get_ptr() const { return curr_block_ptr_; }
+    uint64_t get_creating_transaction_number(){ return creating_transaction_number_; }
+    uint64_t get_expire_transaction_number(){ return expire_transaction_number_; }
 
 private:
     uint32_t previous_ = 0;
@@ -54,8 +57,8 @@ private:
     uint32_t free_offset_ = HEADER_LENGTH;
     uint32_t curr_block_ptr_;
     size_t file_offset_ = DATA_FILE_HEADER_SIZE + (curr_block_ptr_ - 1) * DATA_BLOCK_SIZE;
-    uint32_t creating_transaction_number_;
-    uint32_t expire_transaction_number_ = 0;
+    uint64_t creating_transaction_number_;
+    uint64_t expire_transaction_number_ = 0;
 };
 
 } // namespace st_e
