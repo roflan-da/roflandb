@@ -144,6 +144,6 @@ public:
 class ShowTableNotExistException : public InsertValidException{
 public:
     explicit ShowTableNotExistException(std::string name) :
-            InsertValidException("ERROR dropping table: table " + name + " doesn't exist") {}
+            InsertValidException("ERROR showing table: table " + name + " doesn't exist") {}
 };
 } // namespace st_e

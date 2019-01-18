@@ -1,0 +1,4 @@
+REQUIRE
+SHOW CREATE TABLE a;
+---
+ERROR showing table: table a doesn't exist
