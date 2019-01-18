@@ -22,7 +22,7 @@ install:
   - sudo apt-get install build-essential g++ python-dev autotools-dev libicu-dev build-essential libbz2-dev libboost-all-dev > /dev/null 2>&1
   - ./bootstrap.sh --prefix=/usr/
   - ./b2 --with-filesystem --with-system --with-thread -j2 > /dev/null 2>&1
-  - sudo ./b2 install --with-filesystem --with-system --with-thread
+  - sudo ./b2 install --with-filesystem --with-system --with-thread > /dev/null 2>&1
   # first we create a directory for the CMake binaries
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
