@@ -2,6 +2,7 @@
 
 #include <string>
 #include <tcp_server.h>
+#include <boost/thread.hpp>
 
 namespace roflan_srv {
 
@@ -17,10 +18,12 @@ public:
     // return exit code;
     int start();
     void signal_handler(const boost::system::error_code&, int signal);
+    void listen_thread();
 private:
     Server() = default;
-    boost::asio::io_service io_service_;
+    boost::asio::io_context io_service_;
     bool is_starts_with(const std::string& hay, const std::string& needle) const;
+    boost::thread_group threads_;
 
 };
 
