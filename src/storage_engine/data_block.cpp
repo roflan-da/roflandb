@@ -6,8 +6,13 @@ namespace st_e {
 
 st_e::DataBlock::DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint64_t creating_transaction_number, uint32_t data_start, uint32_t free_offset,
         uint32_t curr_block_ptr)
-    : previous_(previous_ptr), next_(next_ptr), data_start_(data_start), free_offset_(free_offset),
+        : previous_(previous_ptr), next_(next_ptr), data_start_(data_start), free_offset_(free_offset),
         curr_block_ptr_(curr_block_ptr), creating_transaction_number_(creating_transaction_number) {}
+
+st_e::DataBlock::DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint64_t creating_transaction_number, uint64_t expire_transaction_number, uint32_t data_start, uint32_t free_offset,
+        uint32_t curr_block_ptr)
+        : previous_(previous_ptr), next_(next_ptr), data_start_(data_start), free_offset_(free_offset),
+            curr_block_ptr_(curr_block_ptr), creating_transaction_number_(creating_transaction_number), expire_transaction_number_(expire_transaction_number) {}
 
 DataBlock::DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint64_t creating_transaction_number, uint32_t curr_block_ptr)
     : previous_(previous_ptr), next_(next_ptr), curr_block_ptr_(curr_block_ptr), creating_transaction_number_(creating_transaction_number) {}

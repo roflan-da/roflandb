@@ -54,8 +54,8 @@ DataBlock StorageEngine::get_block(const std::string& table_name, uint32_t block
     uint32_t cur_block_ptr;
     uint32_t free_offset;
     uint32_t data_start;
-    uint32_t creating_transaction_number;
-    uint32_t expire_transaction_number;
+    uint64_t creating_transaction_number;
+    uint64_t expire_transaction_number;
 
     // setvbuf
     // Low level section ahead. Please fasten your seatbelts and don't touch anything.
@@ -66,10 +66,10 @@ DataBlock StorageEngine::get_block(const std::string& table_name, uint32_t block
     data_file.read(reinterpret_cast<char*>(&data_start),     sizeof(uint32_t));
     data_file.read(reinterpret_cast<char*>(&free_offset),    sizeof(uint32_t));
     data_file.read(reinterpret_cast<char*>(&cur_block_ptr),  sizeof(uint32_t));
-    data_file.read(reinterpret_cast<char*>(&creating_transaction_number), sizeof(uint32_t));
-    data_file.read(reinterpret_cast<char*>(&expire_transaction_number), sizeof(uint32_t));
+    data_file.read(reinterpret_cast<char*>(&creating_transaction_number), sizeof(uint64_t));
+    data_file.read(reinterpret_cast<char*>(&expire_transaction_number), sizeof(uint64_t));
 
-    return DataBlock(prev_block_ptr, next_block_ptr, creating_transaction_number, data_start, free_offset, cur_block_ptr);  // TODO::Вставить нормальную генерацию номеров
+    return DataBlock(prev_block_ptr, next_block_ptr, creating_transaction_number, expire_transaction_number, data_start, free_offset, cur_block_ptr);  // TODO::Вставить нормальную генерацию номеров
 }
 
 DataBlock StorageEngine::get_first_block(const std::string& table_name) {
@@ -138,7 +138,10 @@ DataBlock StorageEngine::append_new_block(const std::string& table_name, const D
     data_file.seekp(12);
     data_file.write(reinterpret_cast<char*>(&block_number), sizeof(uint32_t));
 
-    DataBlock new_data_block(last_block.get_ptr(), 0, 0, block_number); // TODO::Вставить нормальную генерацию номеров
+    data_file.seekg(16); // смещение на current_transaction
+    uint64_t current_transaction;
+    data_file.read(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
+    DataBlock new_data_block(last_block.get_ptr(), 0, current_transaction, block_number); // TODO::Вставить нормальную генерацию номеров
     data_file.seekp(0, std::ios::end);
     auto block_binary = new_data_block.get_binary_representation();
     data_file.write(block_binary.data(), block_binary.size());
@@ -155,7 +158,11 @@ SelectAnswer
 StorageEngine::select(std::string table_name, std::vector<std::string> columns_names, ConditionPtr condition) {
     auto curr_data_block = get_first_block(table_name);
     auto table = tables_.get_table(table_name);
-    uint64_t transaction_number = 0;
+    std::ifstream data_file;
+    data_file.open(table.get_data_file_path().string(), std::ofstream::binary | std::ofstream::out | std::ofstream::in);
+    data_file.seekg(16); // смещение на current_transaction
+    uint64_t current_transaction;
+    data_file.read(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
 
     SelectAnswer answer;
     answer.columns_names = columns_names;
@@ -166,7 +173,7 @@ StorageEngine::select(std::string table_name, std::vector<std::string> columns_n
             curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
         }
         first = false;
-        if (curr_data_block.get_expire_transaction_number() < transaction_number) {
+        if ((curr_data_block.get_expire_transaction_number() <= current_transaction) && (curr_data_block.get_expire_transaction_number() != 0)) {
             continue;
         }
         TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
@@ -263,6 +270,19 @@ void StorageEngine::update(const std::string& table_name, UpdateValues update_va
             }
         }
 
+        //устанавливаем expire_transaction
+
+        std::fstream data_file;
+        data_file.open(table.get_data_file_path().string(), std::ofstream::binary | std::ofstream::out | std::ofstream::in);
+        data_file.seekg(16); // смещение на current_transaction
+        uint64_t current_transaction;
+        data_file.read(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
+        current_transaction++;
+        data_file.seekp(16);
+        data_file.write(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
+        data_file.seekp(curr_data_block.get_file_offset() + 28); // смещение для expire_transaction изменяемого блока
+        data_file.write(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
+
         //создаем новый блок и закидываем данные
         std::vector<char> out;
         for (auto& row : curr_table_chunk.get_rows()) {
@@ -275,17 +295,6 @@ void StorageEngine::update(const std::string& table_name, UpdateValues update_va
 
         last_block = get_last_block(table_name);
         append_record_to_block(out, last_block, table);
-
-        //устанавливаем expire_transaction
-
-        std::fstream data_file;
-        data_file.open(table.get_data_file_path().string(), std::ofstream::binary | std::ofstream::out | std::ofstream::in);
-        data_file.seekg(16); // смещение на current_transaction
-        uint64_t current_transaction;
-        data_file.read(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
-        data_file.seekp(curr_data_block.get_file_offset() + 28); // смещение для expire_transaction изменяемого блока
-        data_file.write(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
-
 
         //rewrite_record(curr_data_block, curr_table_chunk, table);
 

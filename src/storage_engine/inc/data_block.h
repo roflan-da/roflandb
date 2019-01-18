@@ -35,6 +35,8 @@ public:
     static const uint32_t HEADER_LENGTH = 36;
 
     DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint64_t creating_transaction_number, uint32_t data_start, uint32_t free_offset, uint32_t curr_block_ptr);
+    DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint64_t creating_transaction_number, uint64_t expire_transaction_number,
+            uint32_t data_start, uint32_t free_offset, uint32_t curr_block_ptr);
     DataBlock(uint32_t previous_ptr, uint32_t next_ptr, uint64_t creating_transaction_number, uint32_t curr_block_ptr);
     uint32_t get_previous_ptr() const { return previous_; }
     uint32_t get_next_ptr() const { return next_; }
