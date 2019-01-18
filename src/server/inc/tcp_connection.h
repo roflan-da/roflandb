@@ -2,6 +2,7 @@
 
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/asio.hpp>
+#include <driver.h>
 
 namespace roflan_srv {
 
@@ -22,6 +23,7 @@ public:
     void handle_read(const boost::system::error_code& , size_t /*bytes_transferred*/);
 
 private:
+    roflan_parser::Driver parser_driver_;
     boost::asio::ip::tcp::socket socket_;
     boost::asio::streambuf query_;
 };

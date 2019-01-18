@@ -15,8 +15,7 @@ void roflan_srv::TcpServer::start_accept() {
     TcpConnection::pointer new_connection = TcpConnection::create(acceptor_.get_io_service());
 
     acceptor_.async_accept(new_connection->socket(),
-                           boost::bind(&TcpServer::handle_accept, this, new_connection,
-                                       boost::asio::placeholders::error));
+                           boost::bind(&TcpServer::handle_accept, this, new_connection, placeholders::error));
 }
 
 void TcpServer::handle_accept(TcpConnection::pointer new_connection, const boost::system::error_code& error) {
@@ -25,7 +24,6 @@ void TcpServer::handle_accept(TcpConnection::pointer new_connection, const boost
     }
 
     start_accept();
-
 }
 
 } // roflan_srv

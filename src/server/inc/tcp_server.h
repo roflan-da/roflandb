@@ -2,6 +2,7 @@
 
 #include <boost/asio.hpp>
 #include <tcp_connection.h>
+#include <driver.h>
 
 namespace roflan_srv {
 

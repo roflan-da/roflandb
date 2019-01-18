@@ -11,7 +11,7 @@
 
 namespace cmd {
 
-enum StatementType{
+enum StatementType {
     NONE,
     CREATE_TABLE,
     SHOW,

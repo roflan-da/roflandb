@@ -32,7 +32,24 @@ void TcpConnection::handle_write(const boost::system::error_code&, size_t) {
 
 void TcpConnection::handle_read(const boost::system::error_code&, size_t) {
 //    std::cout << "handle read" << std::endl << query_ << std::endl;
-    async_write(socket_, query_,
+    std::string error_message;
+    streambuf::const_buffers_type bufs = query_.data();
+    std::string query(boost::asio::buffers_begin(bufs),
+                    boost::asio::buffers_begin(bufs) + bufs.size());
+
+    parser_driver_.parse_string(query, error_message);
+
+    if (!parser_driver_.parse_string(query, error_message)) {
+        async_write(socket_, buffer(error_message),
+                    boost::bind(&TcpConnection::handle_write, shared_from_this(), boost::asio::placeholders::error,
+                                boost::asio::placeholders::bytes_transferred));
+        return;
+    }
+        parser_driver_.sql_parser_result->execute();
+//        output << parser_driver_.sql_parser_result->get_messages();
+//        output << parser_driver_.result;
+
+    async_write(socket_, buffer(parser_driver_.result),
                 boost::bind(&TcpConnection::handle_write, shared_from_this(), boost::asio::placeholders::error,
                             boost::asio::placeholders::bytes_transferred));
 

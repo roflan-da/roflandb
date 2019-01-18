@@ -15,6 +15,8 @@ Server& Server::get_instance() {
 }
 
 int Server::start() {
+    roflan_parser::Driver parser_driver;
+
     try {
         TcpServer server(io_service_);
         signal_set sig(io_service_, SIGINT, SIGTERM);
