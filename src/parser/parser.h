@@ -44,9 +44,10 @@
 
     #include "command.h"
     #include "statements.h"
+    #include <string>
     #include "../query_conditions/inc/query_conditions.h"
 
-#line 50 "parser.h" // lalr1.cc:379
+#line 51 "parser.h" // lalr1.cc:379
 
 
 # include <cstdlib> // std::abort
@@ -131,7 +132,7 @@
 
 
 namespace roflan_parser {
-#line 135 "parser.h" // lalr1.cc:379
+#line 136 "parser.h" // lalr1.cc:379
 
 
 
@@ -868,7 +869,7 @@ namespace roflan_parser {
 
 
 } // roflan_parser
-#line 872 "parser.h" // lalr1.cc:379
+#line 873 "parser.h" // lalr1.cc:379
 
 
 

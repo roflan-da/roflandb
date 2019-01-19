@@ -27,6 +27,8 @@ public:
     /// enable debug output in the bison parser
     bool trace_parsing;
 
+    std::string error_message;
+
     //shared_ptr to Parser result object
     std::shared_ptr<cmd::Command> sql_parser_result;
 
@@ -43,11 +45,11 @@ public:
 
     /** Invoke the scanner and parser on an input string.
      * @param input	input string
-     * @param sname	stream name for error messages
+     * @param error_message	stream name for error messages
      * @return		true if successfully parsed
      */
     bool parse_string(const std::string& input,
-                      const std::string& sname = "string stream");
+                      const std::string& error_message = "string stream");
 
     /** Invoke the scanner and parser on a file. Use parse_stream with a
      * std::ifstream if detection of file reading errors is required.
