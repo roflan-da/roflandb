@@ -14,6 +14,7 @@
 static std::string TEST_DELIMETER = "---";
 static std::string TESTS_DIRECTORY = "tests";
 static std::string TESTS_SUBDIRECTORY = "functional_tests";
+static std::string MULTITHREAD_TESTS_SUBDIRECTORY = "multithread_tests";
 static std::string PROJECT_DIRECTORY_NAME = "roflandb";
 
 bool compare(const std::string &s1, const std::string &s2) {
@@ -52,12 +53,17 @@ std::string repeat(int n, std::string s) {
     return os.str();
 }
 
-TEST_CASE("All tests"){
+boost::filesystem::path go_to_path(const std::string& dir, const std::string& subdir) {
     auto tests_path = boost::filesystem::current_path();
     while(tests_path.filename() != PROJECT_DIRECTORY_NAME){
         tests_path = tests_path.parent_path();
     }
-    tests_path.append(TESTS_DIRECTORY).append(TESTS_SUBDIRECTORY);
+    tests_path.append(dir).append(subdir);
+    return tests_path;
+}
+
+TEST_CASE("All tests"){
+    boost::filesystem::path tests_path = go_to_path(TESTS_DIRECTORY, TESTS_SUBDIRECTORY);
     for(auto& test_file: boost::filesystem::directory_iterator(tests_path)){
         std::cout << "RUNNING TEST " << test_file.path() << '\n';
         std::ifstream test(test_file.path().string());
@@ -111,8 +117,26 @@ void parallel_test_statement(std::string query){
 }
 
 void test_parallel(){
+    boost::filesystem::path tests_path = go_to_path(TESTS_DIRECTORY, MULTITHREAD_TESTS_SUBDIRECTORY);
+    std::vector <std::string> queries;
+    for(auto& test_file: boost::filesystem::directory_iterator(tests_path)) {
+        std::cout << "RUNNING TEST " << test_file.path() << '\n';
+        std::ifstream test(test_file.path().string());
+        std::string t;
+        while(std::getline(test,t)){
+            if (t == TEST_DELIMETER){
+                break;
+            }
+            queries.push_back(const_cast<char*>(t.c_str()));
+        }
+    }
+
     using namespace boost::asio;
-    char* messages[] = {const_cast<char *>("CREATE TABLE a(c1 INT)"), const_cast<char *>("CREATE TABLE b(c1 INT)")};
+    char* messages[queries.size()];
+    for (int i = 0; i < queries.size(); ++i){
+        messages[i] = const_cast<char *>(queries[i].c_str());
+    }
+    //char* messages[] = {const_cast<char *>("CREATE TABLE a(c1 INT)"), const_cast<char *>("CREATE TABLE b(c1 INT)")};
     boost::thread_group threads;
     for (char ** message = messages; *message; ++message) {
         threads.create_thread( boost::bind(parallel_test_statement, *message));
