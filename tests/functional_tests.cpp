@@ -118,7 +118,7 @@ void parallel_execute_statement(std::string query, boost::chrono::high_resolutio
     end = boost::chrono::high_resolution_clock::now();
 }
 
-void test_parallel(){
+TEST_CASE("parallel"){
     boost::filesystem::path tests_path = go_to_path(TESTS_DIRECTORY, MULTITHREAD_TESTS_SUBDIRECTORY);
     std::vector <std::string> queries;
     std::vector <int> speeds; //the lower the speed, the longer the query has to execute, same speeds can be finished in any order
@@ -127,6 +127,7 @@ void test_parallel(){
         std::string t;
         while(std::getline(test,t)){
             if (t == TEST_DELIMETER){
+                std::getline(test,t);
                 std::stringstream ss(t);
                 for (int i = 0; i < queries.size(); ++i){
                     int tmp;
@@ -145,13 +146,10 @@ void test_parallel(){
         messages[i] = const_cast<char *>(queries[i].c_str());
     }
     boost::thread_group threads;
-    std::vector<std::pair<int,boost::chrono::high_resolution_clock::time_point>> queries_end_times;
+    std::vector<std::pair<int,boost::chrono::high_resolution_clock::time_point>> queries_end_times(queries.size());
     int i = 0;
     for (char ** message = messages; *message; ++message) {
-        boost::chrono::high_resolution_clock::time_point tmp;
-        threads.create_thread(boost::bind(parallel_execute_statement, *message, tmp));
-        queries_end_times[i].first = i;
-        queries_end_times[i].second = tmp;
+        threads.create_thread(boost::bind(parallel_execute_statement, *message, queries_end_times[i].second));
         ++i;
         boost::this_thread::sleep( boost::posix_time::millisec(100));
     }

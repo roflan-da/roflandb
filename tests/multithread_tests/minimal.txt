@@ -1,0 +1,5 @@
+create table a(id int, phone int);
+create table b(id int, phone int);
+create table c(id int, phone int);
+---
+0 0 0
