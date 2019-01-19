@@ -17,7 +17,7 @@ if (MINGW)
     set(Boost_ARCHITECTURE -x64)
 endif (MINGW)
 
-find_package(Boost REQUIRED COMPONENTS filesystem system thread)
+find_package(Boost REQUIRED COMPONENTS thread system filesystem)
 
 add_subdirectory(src)
 add_subdirectory(tests)
