@@ -43,19 +43,22 @@ Column::Type Column::get_type_from_string(std::string& type) {
 
 uint32_t Column::deserialize(const std::vector<char>& input, TableRow::ArrayOfCells& cells, size_t offset) const {
     auto start_ptr = input.data() + offset;
-
-    if (type == INT) {
+    switch (type) {
+    case (INT): {
         int32_t val = 0;
         std::memcpy(&val, start_ptr, sizeof(int32_t));
         cells.emplace_back(new IntegerTableCell(val));
         return sizeof(uint32_t);
     }
-
-    if (type == BOOL) {
+    case (BOOL): {
         bool val = false;
         std::memcpy(&val, start_ptr, sizeof(bool));
         cells.emplace_back(new BoolTableCell(val));
         return sizeof(bool);
+    }
+    default: {
+        throw std::logic_error("Not implemented type in st_e::Column::deserialize");
+    }
     }
 }
 

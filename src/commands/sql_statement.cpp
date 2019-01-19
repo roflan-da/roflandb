@@ -2,9 +2,9 @@
 #include <insert_statement.h>
 
 
-cmd::SqlStatement::SqlStatement(cmd::StatementType type): type_(type) {}
+cmd::SqlStatement::SqlStatement(cmd::StatementType type) {}
 
-cmd::SqlStatement::SqlStatement() : type_(NONE){}
+cmd::SqlStatement::SqlStatement() {}
 
 std::string cmd::SqlStatement::get_message() {
     return message_;

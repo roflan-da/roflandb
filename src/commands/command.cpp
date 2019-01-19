@@ -4,6 +4,7 @@
 #include <storage_engine_exceptions.h>
 #include "iostream"
 
+
 void cmd::Command::execute() {
     for (const auto& statement : statements_){
         try{

@@ -2,10 +2,10 @@ REQUIRE
 CREATE TABLE a(c1 INT, c2 INT);
 CREATE TABLE abab(c1 INT);
 INSERT a(c1,c2) VALUES (12,14);
-INSERT abab(c1) VALUES (16);
-SELECT * FROM a;
+INSERT abab(c1) VALUES (99);
+SELECT * FROM abab;
 DROP TABLE a;
 DROP TABLE abab;
 ---
-|c1|c2|
-|12|14|
+|c1|
+|99|

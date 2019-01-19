@@ -4,7 +4,6 @@
 #include <map>
 #include <boost/filesystem.hpp>
 #include "table.h"
-
 namespace st_e {
 
 class SharedTable {

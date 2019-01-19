@@ -40,7 +40,6 @@ public:
 private:
     virtual void check_valid() = 0;
     std::string message_;
-    StatementType type_;
 };
 
 } //namespace cmd

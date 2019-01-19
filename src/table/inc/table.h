@@ -21,7 +21,7 @@ public:
 
     Column(Type type, const std::string& name) : type(type), name(name) {}
     // returns number of used bytes
-    virtual uint32_t deserialize(const std::vector<char>& input, TableRow::ArrayOfCells& cells, size_t offset) const;
+    uint32_t deserialize(const std::vector<char>& input, TableRow::ArrayOfCells& cells, size_t offset) const;
 };
 
 class VarcharColumn : public Column {
