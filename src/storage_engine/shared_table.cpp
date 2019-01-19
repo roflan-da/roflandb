@@ -59,7 +59,8 @@ Table& SharedTable::load_table(const std::string& table_name) {
         table_builder.add_column(tmp_col_type, tmp_col_name);
     }
     data_file.close();
-//    table_locks.insert_or_assign(invariant_table_name, false);
+    std::shared_ptr<boost::mutex> a(new boost::mutex);
+    table_locks.insert_or_assign(invariant_table_name, a);
     return cached_tables_.insert_or_assign(invariant_table_name, table_builder.build()).first->second;
 }
 
@@ -115,5 +116,9 @@ void SharedTable::delete_table(const std::string& table_name) {
     boost::filesystem::remove_all(data_dir);
     cached_tables_.erase(table_name);
 }
+
+    std::map<std::string, std::shared_ptr<boost::mutex>> &SharedTable::get_locks() {
+        return table_locks;
+    }
 
 } // namespace st_e

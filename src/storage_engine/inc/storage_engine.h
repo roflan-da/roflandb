@@ -5,6 +5,8 @@
 #include <memory>
 #include <map>
 #include <string>
+#include <boost/thread/thread.hpp>
+#include <boost/thread/mutex.hpp>
 #include <shared_table.h>
 #include <data_block.h>
 #include <table_chunk.h>
