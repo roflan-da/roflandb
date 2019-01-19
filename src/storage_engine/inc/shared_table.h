@@ -1,5 +1,6 @@
 #pragma once
 
+#include "mutex"
 #include <map>
 #include <boost/filesystem.hpp>
 #include "table.h"
@@ -20,7 +21,7 @@ public:
 private:
     SharedTable() = default;
     std::map<std::string, Table> cached_tables_;
-    std::map<std::string, bool> table_locks;
+    std::map<std::string, std::mutex> table_locks;
 
     Table& load_table(const std::string& name);
     void save_to_disk(const Table& table) const;
