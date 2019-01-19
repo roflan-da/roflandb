@@ -9,6 +9,7 @@
 #include <boost/thread.hpp>
 #include "boost/bind.hpp"
 #include "boost/thread/thread.hpp"
+#include <boost/chrono.hpp>
 #include "iostream"
 
 static std::string TEST_DELIMETER = "---";
@@ -98,13 +99,13 @@ boost::asio::ip::tcp::endpoint ep( boost::asio::ip::address::from_string(address
 
 size_t read_complete(char * buf, const boost::system::error_code & err, size_t bytes) {
     if ( err) return 0;
-    bool found = std::find(buf, buf + bytes, '\n') < buf + bytes;
+    bool found = std::find(buf, buf + bytes, '\0') < buf + bytes;
     // we read one-by-one until we get to enter, no buffering
     return found ? 0 : 1;
 }
-void parallel_test_statement(std::string query){
+void parallel_execute_statement(std::string query, boost::chrono::high_resolution_clock::time_point &end){
     using namespace boost::asio;
-    std::string tquery = query+"\n";
+    std::string tquery = query+"\0";
     ip::tcp::socket sock(service);
     sock.connect(ep);
     sock.write_some(buffer(tquery));
@@ -114,20 +115,27 @@ void parallel_test_statement(std::string query){
     tquery = tquery.substr(0, tquery.size() - 1);
     std::cout << "server returned " << tquery << std::endl;
     sock.close();
+    end = boost::chrono::high_resolution_clock::now();
 }
 
 void test_parallel(){
     boost::filesystem::path tests_path = go_to_path(TESTS_DIRECTORY, MULTITHREAD_TESTS_SUBDIRECTORY);
     std::vector <std::string> queries;
+    std::vector <int> speeds; //the lower the speed, the longer the query has to execute, same speeds can be finished in any order
     for(auto& test_file: boost::filesystem::directory_iterator(tests_path)) {
-        std::cout << "RUNNING TEST " << test_file.path() << '\n';
         std::ifstream test(test_file.path().string());
         std::string t;
         while(std::getline(test,t)){
             if (t == TEST_DELIMETER){
+                std::stringstream ss(t);
+                for (int i = 0; i < queries.size(); ++i){
+                    int tmp;
+                    ss >> tmp;
+                    speeds.push_back(tmp);
+                }
                 break;
             }
-            queries.push_back(const_cast<char*>(t.c_str()));
+            queries.push_back(t);
         }
     }
 
@@ -136,13 +144,24 @@ void test_parallel(){
     for (int i = 0; i < queries.size(); ++i){
         messages[i] = const_cast<char *>(queries[i].c_str());
     }
-    //char* messages[] = {const_cast<char *>("CREATE TABLE a(c1 INT)"), const_cast<char *>("CREATE TABLE b(c1 INT)")};
     boost::thread_group threads;
+    std::vector<std::pair<int,boost::chrono::high_resolution_clock::time_point>> queries_end_times;
+    int i = 0;
     for (char ** message = messages; *message; ++message) {
-        threads.create_thread( boost::bind(parallel_test_statement, *message));
+        boost::chrono::high_resolution_clock::time_point tmp;
+        threads.create_thread(boost::bind(parallel_execute_statement, *message, tmp));
+        queries_end_times[i].first = i;
+        queries_end_times[i].second = tmp;
+        ++i;
         boost::this_thread::sleep( boost::posix_time::millisec(100));
     }
     threads.join_all();
+    std::sort(queries_end_times.begin(),queries_end_times.end(), [](const std::pair<int,boost::chrono::high_resolution_clock::time_point> &x, const std::pair<int,boost::chrono::high_resolution_clock::time_point> &y){ return (x.second < y.second);});
+
+    for (int j = 0; j < queries_end_times.size(); ++j){
+        REQUIRE_FALSE(speeds[queries_end_times[j].first] > speeds[queries_end_times[j+1].first]);
+    }
+
 }
 
 //TEST_CASE("insert not all columns","[.]"){
