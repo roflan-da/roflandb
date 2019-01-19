@@ -33,6 +33,10 @@ void TcpConnection::handle_read(const boost::system::error_code&, size_t) {
 
     parser_driver_.parse_string(query, error_message);
 
+    if (!parser_driver_.error_message.empty()){
+        error_message = parser_driver_.error_message;
+    }
+
     if (!parser_driver_.parse_string(query, error_message)) {
         async_write(socket_, buffer(error_message + '\0'),
                     boost::bind(&TcpConnection::handle_write, shared_from_this(), boost::asio::placeholders::error,
@@ -40,10 +44,8 @@ void TcpConnection::handle_read(const boost::system::error_code&, size_t) {
         return;
     }
         parser_driver_.sql_parser_result->execute();
-//        output << parser_driver_.sql_parser_result->get_messages();
+//        output << parser_driver_.sql_parser_result->find_messages();
 //        output << parser_driver_.result;
-
-    auto kek = parser_driver_.sql_parser_result->get_messages();
 
     async_write(socket_, buffer(parser_driver_.sql_parser_result->get_messages() + '\0'),
                 boost::bind(&TcpConnection::handle_write, shared_from_this(), boost::asio::placeholders::error,

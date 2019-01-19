@@ -9,6 +9,7 @@
 %code requires{
     #include "command.h"
     #include "statements.h"
+    #include <string>
     #include "../query_conditions/inc/query_conditions.h"
 }
 
@@ -334,4 +335,7 @@ void roflan_parser::Parser::error(const Parser::location_type& l,
 			    const std::string& m)
 {
     driver.error(l, m);
+
+    driver.error_message = ":" + std::to_string(l.begin.line) + "." +
+          std::to_string(l.begin.column) + "-" + std::to_string(l.end.column) + ": " + m + '\n';
 }
