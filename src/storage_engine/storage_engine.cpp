@@ -281,7 +281,8 @@ void StorageEngine::update(const std::string& table_name, UpdateValues update_va
         data_file.read(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
         current_transaction++;
         data_file.seekp(16);
-        boost::lock_guard<boost::mutex> lock(*locks.find(table_name)->second);
+        auto mut = locks.find(table_name)->second;
+        boost::lock_guard<boost::mutex> lock(*mut);
         data_file.write(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
         data_file.seekp(curr_data_block.get_file_offset() + 28); // смещение для expire_transaction изменяемого блока
         data_file.write(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
