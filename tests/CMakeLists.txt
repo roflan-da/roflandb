@@ -14,7 +14,7 @@ if(WIN32)
 endif()
 
 if (UNIX)
-    find_package(Threads timer chrono)
+    find_package(Threads chrono)
     target_link_libraries(tests PUBLIC ${CMAKE_THREAD_LIBS_INIT} )
 endif(UNIX)
 
