@@ -119,6 +119,7 @@ TEST_CASE("parallel"){
 
     boost::filesystem::path tests_path = go_to_path(TESTS_DIRECTORY, MULTITHREAD_TESTS_SUBDIRECTORY);
     for(auto& test_file: boost::filesystem::directory_iterator(tests_path)) {
+        std::cout << "RUNNING MULTITHREADED TEST " << test_file.path() << '\n';
         std::vector <std::string> queries;
         std::vector <int> speeds; //the lower the speed, the longer the query has to execute, same speeds can be finished in any order
         std::ifstream test(test_file.path().string());
