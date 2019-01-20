@@ -1,0 +1,14 @@
+REQUIRE
+CREATE TABLE a(c1 INT, c2 INT);
+INSERT a(c1,c2) VALUES (12,14);
+INSERT a(c1,c2) VALUES (13,15);
+UPDATE a SET c1 = 99;
+UPDATE a SET c2 = 102;
+UPDATE a SET c2 = 228,c1 = 229 where c2 < 0;
+
+SELECT c1,c2 FROM a;
+DROP TABLE a;
+---
+|c1|c2|
+|99|102|
+|99|102|
