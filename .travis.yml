@@ -53,7 +53,8 @@ script:
   - cmake -DCMAKE_BUILD_TYPE=Release ..
   - make roflandb
   - make tests
-  #execute tests
+  #execute server and tests
+  - /.bin/roflandb &
   - ./bin/tests
 
 after_success:
