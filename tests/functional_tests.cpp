@@ -6,6 +6,7 @@
 #include "row_check.h"
 #include "boost/filesystem.hpp"
 #include <boost/asio.hpp>
+#include <boost/asio/read_until.hpp>
 #include <boost/thread.hpp>
 #include "boost/bind.hpp"
 #include "boost/thread/thread.hpp"
@@ -105,24 +106,26 @@ size_t read_complete(char * buf, const boost::system::error_code & err, size_t b
 }
 void parallel_execute_statement(std::string query, boost::chrono::high_resolution_clock::time_point &end){
     using namespace boost::asio;
-    std::string tquery = query+"\0";
     ip::tcp::socket sock(service);
+    streambuf b;
+    //todo: send request
     sock.connect(ep);
-    sock.write_some(buffer(tquery));
-    char buf[1024];
-    int bytes = read(sock, buffer(buf), boost::bind(read_complete,buf,_1,_2));
-    std::string copy(buf, bytes - 1);
-    tquery = tquery.substr(0, tquery.size() - 1);
-    std::cout << "server returned " << tquery << std::endl;
-    sock.close();
+    try {
+        write(sock, buffer(query + '\0'));
+        read_until(sock, b, '\0');
+    }
+    catch (boost::system::system_error &e) {
+        std::cerr << e.what();
+    }
     end = boost::chrono::high_resolution_clock::now();
+    sock.close();
 }
 
 TEST_CASE("parallel"){
     boost::filesystem::path tests_path = go_to_path(TESTS_DIRECTORY, MULTITHREAD_TESTS_SUBDIRECTORY);
-    std::vector <std::string> queries;
-    std::vector <int> speeds; //the lower the speed, the longer the query has to execute, same speeds can be finished in any order
     for(auto& test_file: boost::filesystem::directory_iterator(tests_path)) {
+        std::vector <std::string> queries;
+        std::vector <int> speeds; //the lower the speed, the longer the query has to execute, same speeds can be finished in any order
         std::ifstream test(test_file.path().string());
         std::string t;
         while(std::getline(test,t)){
@@ -138,26 +141,31 @@ TEST_CASE("parallel"){
             }
             queries.push_back(t);
         }
-    }
 
-    using namespace boost::asio;
-    char* messages[queries.size()];
-    for (int i = 0; i < queries.size(); ++i){
-        messages[i] = const_cast<char *>(queries[i].c_str());
-    }
-    boost::thread_group threads;
-    std::vector<std::pair<int,boost::chrono::high_resolution_clock::time_point>> queries_end_times(queries.size());
-    int i = 0;
-    for (char ** message = messages; *message; ++message) {
-        threads.create_thread(boost::bind(parallel_execute_statement, *message, queries_end_times[i].second));
-        ++i;
-        boost::this_thread::sleep( boost::posix_time::millisec(100));
-    }
-    threads.join_all();
-    std::sort(queries_end_times.begin(),queries_end_times.end(), [](const std::pair<int,boost::chrono::high_resolution_clock::time_point> &x, const std::pair<int,boost::chrono::high_resolution_clock::time_point> &y){ return (x.second < y.second);});
+        using namespace boost::asio;
+        char* messages[queries.size()];
+        for (int i = 0; i < queries.size(); ++i){
+            messages[i] = const_cast<char *>(queries[i].c_str());
+        }
+        boost::thread_group threads;
+        std::vector<boost::chrono::high_resolution_clock::time_point> times(queries.size());
+        int i = 0;
+        for (char ** message = messages; *message; ++message) {
+            threads.create_thread(boost::bind(parallel_execute_statement, *message, times[i]));
+            ++i;
+            boost::this_thread::sleep( boost::posix_time::millisec(100));
+        }
+        std::vector<std::pair<int,boost::chrono::high_resolution_clock::time_point>> queries_end_times(queries.size());
+        for (int i = 0; i < times.size(); ++i){
+            queries_end_times[i].first = i;
+            queries_end_times[i].second = times[i];
+        }
+        threads.join_all();
+        std::sort(queries_end_times.begin(),queries_end_times.end(), [](const std::pair<int,boost::chrono::high_resolution_clock::time_point> &x, const std::pair<int,boost::chrono::high_resolution_clock::time_point> &y){ return (x.second < y.second);});
 
-    for (int j = 0; j < queries_end_times.size(); ++j){
-        REQUIRE_FALSE(speeds[queries_end_times[j].first] > speeds[queries_end_times[j+1].first]);
+        for (int j = 0; j < queries_end_times.size(); ++j){
+            REQUIRE_FALSE(speeds[queries_end_times[j].first] > speeds[queries_end_times[j+1].first]);
+        }
     }
 
 }
