@@ -19,7 +19,8 @@ public:
     void execute() override;
 private:
     void check_valid() override;
-
+    bool is_condition_valid(const std::shared_ptr<cond::Condition>& condition,
+                            st_e::Table::MapOfColumns& columns_names, const st_e::Table::ArrayOfColumns& columns_types);
     std::string table_name_;
     std::shared_ptr<cond::Condition> conditions_;
 };
