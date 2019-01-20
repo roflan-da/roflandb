@@ -64,49 +64,39 @@ boost::filesystem::path go_to_path(const std::string& dir, const std::string& su
     return tests_path;
 }
 
-TEST_CASE("All tests"){
-    boost::filesystem::path tests_path = go_to_path(TESTS_DIRECTORY, TESTS_SUBDIRECTORY);
-    for(auto& test_file: boost::filesystem::directory_iterator(tests_path)){
-        std::cout << "RUNNING TEST " << test_file.path() << '\n';
-        std::ifstream test(test_file.path().string());
-        std::string mode;
-        std::getline(test,mode);
-        std::string t,query;
-        while(std::getline(test,t)){
-            if (t == TEST_DELIMETER){
-                break;
-            }
-            query += t;
-        }
-        std::string result;
-        while(std::getline(test,t)){
-            result += t + "\n";
-        }
-        if (mode == "REQUIRE_FALSE"){
-            REQUIRE_FALSE(test_statement(query,result));
-        } else if (mode == "REQUIRE_THROWS"){
-            REQUIRE_THROWS(test_statement(query,result));
-        } else{
-            REQUIRE(test_statement(query,result));
-        }
-    }
-}
-
-static std::string address = "127.0.0.1";
-static unsigned short port = 1337;
-int buffer_size = 1024;
+//TEST_CASE("All tests"){
+//    boost::filesystem::path tests_path = go_to_path(TESTS_DIRECTORY, TESTS_SUBDIRECTORY);
+//    for(auto& test_file: boost::filesystem::directory_iterator(tests_path)){
+//        std::cout << "RUNNING TEST " << test_file.path() << '\n';
+//        std::ifstream test(test_file.path().string());
+//        std::string mode;
+//        std::getline(test,mode);
+//        std::string t,query;
+//        while(std::getline(test,t)){
+//            if (t == TEST_DELIMETER){
+//                break;
+//            }
+//            query += t;
+//        }
+//        std::string result;
+//        while(std::getline(test,t)){
+//            result += t + "\n";
+//        }
+//        if (mode == "REQUIRE_FALSE"){
+//            REQUIRE_FALSE(test_statement(query,result));
+//        } else if (mode == "REQUIRE_THROWS"){
+//            REQUIRE_THROWS(test_statement(query,result));
+//        } else{
+//            REQUIRE(test_statement(query,result));
+//        }
+//    }
+//}
 boost::asio::io_service service;
-boost::asio::ip::tcp::endpoint ep( boost::asio::ip::address::from_string(address), port);
 
-size_t read_complete(char * buf, const boost::system::error_code & err, size_t bytes) {
-    if ( err) return 0;
-    bool found = std::find(buf, buf + bytes, '\0') < buf + bytes;
-    // we read one-by-one until we get to enter, no buffering
-    return found ? 0 : 1;
-}
-void parallel_execute_statement(std::string query, boost::chrono::high_resolution_clock::time_point &end){
+void parallel_execute_statement(std::string query, boost::chrono::high_resolution_clock::time_point &end, boost::asio::ip::tcp::endpoint& ep){
     using namespace boost::asio;
     ip::tcp::socket sock(service);
+
     streambuf b;
     //todo: send request
     sock.connect(ep);
@@ -122,6 +112,10 @@ void parallel_execute_statement(std::string query, boost::chrono::high_resolutio
 }
 
 TEST_CASE("parallel"){
+    static std::string address = "127.0.0.1";
+    static unsigned short port = 1337;
+    boost::asio::ip::tcp::endpoint ep( boost::asio::ip::address::from_string(address), port);
+
     boost::filesystem::path tests_path = go_to_path(TESTS_DIRECTORY, MULTITHREAD_TESTS_SUBDIRECTORY);
     for(auto& test_file: boost::filesystem::directory_iterator(tests_path)) {
         std::vector <std::string> queries;
@@ -143,24 +137,18 @@ TEST_CASE("parallel"){
         }
 
         using namespace boost::asio;
-        char* messages[queries.size()];
-        for (int i = 0; i < queries.size(); ++i){
-            messages[i] = const_cast<char *>(queries[i].c_str());
-        }
         boost::thread_group threads;
         std::vector<boost::chrono::high_resolution_clock::time_point> times(queries.size());
-        int i = 0;
-        for (char ** message = messages; *message; ++message) {
-            threads.create_thread(boost::bind(parallel_execute_statement, *message, times[i]));
-            ++i;
+        for (int i = 0; i < queries.size(); ++i) {
+            threads.create_thread(boost::bind(parallel_execute_statement, queries[i], times[i], ep));
             boost::this_thread::sleep( boost::posix_time::millisec(100));
         }
+        threads.join_all();
         std::vector<std::pair<int,boost::chrono::high_resolution_clock::time_point>> queries_end_times(queries.size());
         for (int i = 0; i < times.size(); ++i){
             queries_end_times[i].first = i;
             queries_end_times[i].second = times[i];
         }
-        threads.join_all();
         std::sort(queries_end_times.begin(),queries_end_times.end(), [](const std::pair<int,boost::chrono::high_resolution_clock::time_point> &x, const std::pair<int,boost::chrono::high_resolution_clock::time_point> &y){ return (x.second < y.second);});
 
         for (int j = 0; j < queries_end_times.size(); ++j){
