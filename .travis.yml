@@ -54,7 +54,7 @@ script:
   - make roflandb
   - make tests
   #execute server and tests
-  - /.bin/roflandb &
+  - ./bin/roflandb &
   - ./bin/tests
 
 after_success:
