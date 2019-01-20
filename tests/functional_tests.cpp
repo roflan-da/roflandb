@@ -12,6 +12,7 @@
 #include "boost/thread/thread.hpp"
 #include <boost/chrono.hpp>
 #include "iostream"
+#include <future>
 
 static std::string TEST_DELIMETER = "---";
 static std::string TESTS_DIRECTORY = "tests";
@@ -64,36 +65,36 @@ boost::filesystem::path go_to_path(const std::string& dir, const std::string& su
     return tests_path;
 }
 
-//TEST_CASE("All tests"){
-//    boost::filesystem::path tests_path = go_to_path(TESTS_DIRECTORY, TESTS_SUBDIRECTORY);
-//    for(auto& test_file: boost::filesystem::directory_iterator(tests_path)){
-//        std::cout << "RUNNING TEST " << test_file.path() << '\n';
-//        std::ifstream test(test_file.path().string());
-//        std::string mode;
-//        std::getline(test,mode);
-//        std::string t,query;
-//        while(std::getline(test,t)){
-//            if (t == TEST_DELIMETER){
-//                break;
-//            }
-//            query += t;
-//        }
-//        std::string result;
-//        while(std::getline(test,t)){
-//            result += t + "\n";
-//        }
-//        if (mode == "REQUIRE_FALSE"){
-//            REQUIRE_FALSE(test_statement(query,result));
-//        } else if (mode == "REQUIRE_THROWS"){
-//            REQUIRE_THROWS(test_statement(query,result));
-//        } else{
-//            REQUIRE(test_statement(query,result));
-//        }
-//    }
-//}
+TEST_CASE("All tests"){
+    boost::filesystem::path tests_path = go_to_path(TESTS_DIRECTORY, TESTS_SUBDIRECTORY);
+    for(auto& test_file: boost::filesystem::directory_iterator(tests_path)){
+        std::cout << "RUNNING TEST " << test_file.path() << '\n';
+        std::ifstream test(test_file.path().string());
+        std::string mode;
+        std::getline(test,mode);
+        std::string t,query;
+        while(std::getline(test,t)){
+            if (t == TEST_DELIMETER){
+                break;
+            }
+            query += t;
+        }
+        std::string result;
+        while(std::getline(test,t)){
+            result += t + "\n";
+        }
+        if (mode == "REQUIRE_FALSE"){
+            REQUIRE_FALSE(test_statement(query,result));
+        } else if (mode == "REQUIRE_THROWS"){
+            REQUIRE_THROWS(test_statement(query,result));
+        } else{
+            REQUIRE(test_statement(query,result));
+        }
+    }
+}
 boost::asio::io_service service;
 
-void parallel_execute_statement(std::string query, boost::chrono::high_resolution_clock::time_point &end, boost::asio::ip::tcp::endpoint& ep){
+void parallel_execute_statement(std::string query, boost::chrono::high_resolution_clock::time_point *end, boost::asio::ip::tcp::endpoint& ep){
     using namespace boost::asio;
     ip::tcp::socket sock(service);
 
@@ -107,7 +108,7 @@ void parallel_execute_statement(std::string query, boost::chrono::high_resolutio
     catch (boost::system::system_error &e) {
         std::cerr << e.what();
     }
-    end = boost::chrono::high_resolution_clock::now();
+    *end = boost::chrono::high_resolution_clock::now();
     sock.close();
 }
 
@@ -138,21 +139,21 @@ TEST_CASE("parallel"){
 
         using namespace boost::asio;
         boost::thread_group threads;
-        std::vector<boost::chrono::high_resolution_clock::time_point> times(queries.size());
+        boost::chrono::high_resolution_clock::time_point times[queries.size()];
         for (int i = 0; i < queries.size(); ++i) {
-            threads.create_thread(boost::bind(parallel_execute_statement, queries[i], times[i], ep));
+            threads.create_thread(boost::bind(parallel_execute_statement, queries[i], &times[i], ep));
             boost::this_thread::sleep( boost::posix_time::millisec(100));
         }
         threads.join_all();
         std::vector<std::pair<int,boost::chrono::high_resolution_clock::time_point>> queries_end_times(queries.size());
-        for (int i = 0; i < times.size(); ++i){
+        for (int i = 0; i < queries.size(); ++i){
             queries_end_times[i].first = i;
             queries_end_times[i].second = times[i];
         }
         std::sort(queries_end_times.begin(),queries_end_times.end(), [](const std::pair<int,boost::chrono::high_resolution_clock::time_point> &x, const std::pair<int,boost::chrono::high_resolution_clock::time_point> &y){ return (x.second < y.second);});
 
-        for (int j = 0; j < queries_end_times.size(); ++j){
-            REQUIRE_FALSE(speeds[queries_end_times[j].first] > speeds[queries_end_times[j+1].first]);
+        for (int j = 0; j < queries_end_times.size() - 1; ++j){
+            REQUIRE_FALSE(speeds[queries_end_times[j].first] < speeds[queries_end_times[j+1].first]);
         }
     }
 
