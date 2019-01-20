@@ -1,5 +1,5 @@
-create table a(id int, phone int);
-create table b(id int, phone int);
-create table c(id int, phone int);
+create table a(id int, phone int); drop table a;
+create table b(id int, phone int); drop table b;
+create table c(id int, phone int); drop table c;
 ---
 0 0 0
