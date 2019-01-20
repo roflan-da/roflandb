@@ -4,6 +4,7 @@
 #include <memory>
 #include <boost/filesystem.hpp>
 #include <boost/thread/mutex.hpp>
+#include <boost/thread/thread.hpp>
 #include "table.h"
 namespace st_e {
 
@@ -22,7 +23,8 @@ public:
 private:
     SharedTable() = default;
     std::map<std::string, Table> cached_tables_;
-    std::map<std::string, std::shared_ptr<boost::mutex>> table_locks;
+    std::map<std::string, std::shared_ptr<boost::mutex>> table_locks_;
+    boost::mutex map_lock_;
 
     Table& load_table(const std::string& name);
     void save_to_disk(const Table& table) const;

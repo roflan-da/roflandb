@@ -254,32 +254,44 @@ void StorageEngine::update(const std::string& table_name, UpdateValues update_va
     auto table = tables_.get_table(table_name);
 
     bool first = true;
+    std::fstream data_file;
+    data_file.open(table.get_data_file_path().string(), std::ofstream::binary | std::ofstream::out | std::ofstream::in);
+    data_file.seekg(16); // смещение на current_transaction
+    uint64_t current_transaction;
+    data_file.read(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
+    current_transaction++;
     do {
         if (!first) {
             curr_data_block = get_block(table_name, curr_data_block.get_next_ptr());
         }
-
         first = false;
+        if((curr_data_block.get_expire_transaction_number() <= current_transaction) && (curr_data_block.get_expire_transaction_number() != 0)){
+            continue;
+        }
+        if(curr_data_block.get_creating_transaction_number() == current_transaction){
+            break;
+        }
+
         TableChunk curr_table_chunk(tables_.get_table(table_name), curr_data_block);
 
+        bool changed = false;
         for(auto& row : curr_table_chunk.get_rows()) {
             if (!row.is_removed() && cond::row_check(table, row, condition)) {
+                changed = true;
                 for (const auto& pair : *update_values) {
                     row.get_cells()[table.get_columns_orders().at(pair.first)]->set_value(pair.second);
                 }
             }
         }
 
+        if (!changed){
+            continue;
+        }
+
         //устанавливаем expire_transaction
 
         auto locks = tables_.get_locks();
 
-        std::fstream data_file;
-        data_file.open(table.get_data_file_path().string(), std::ofstream::binary | std::ofstream::out | std::ofstream::in);
-        data_file.seekg(16); // смещение на current_transaction
-        uint64_t current_transaction;
-        data_file.read(reinterpret_cast<char*>(&current_transaction), sizeof(uint64_t));
-        current_transaction++;
         data_file.seekp(16);
         auto mut = locks.find(table_name)->second;
         boost::lock_guard<boost::mutex> lock(*mut);
@@ -294,8 +306,6 @@ void StorageEngine::update(const std::string& table_name, UpdateValues update_va
         }
         auto last_block = get_last_block(table_name);
         append_new_block(table_name, last_block);
-
-        const auto& table = get_table_by_name(table_name);
 
         last_block = get_last_block(table_name);
         append_record_to_block(out, last_block, table);

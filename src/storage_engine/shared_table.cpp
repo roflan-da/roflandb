@@ -60,8 +60,8 @@ Table& SharedTable::load_table(const std::string& table_name) {
     }
     data_file.close();
     std::shared_ptr<boost::mutex> a(new boost::mutex);
-    table_locks.insert_or_assign(invariant_table_name, a);
-    //table_locks[invariant_table_name] = a;
+    table_locks_.insert_or_assign(invariant_table_name, a);
+    //table_locks_[invariant_table_name] = a;
     //auto sizeasd = table_locks[invariant_table_name];
     return cached_tables_.insert_or_assign(invariant_table_name, table_builder.build()).first->second;
 }
@@ -69,6 +69,8 @@ Table& SharedTable::load_table(const std::string& table_name) {
 void SharedTable::save_table(const Table& table) {
     // first save to disk, then to RAM
     save_to_disk(table);
+    std::shared_ptr<boost::mutex> a(new boost::mutex);
+    table_locks_.insert_or_assign(table.get_name(), a);
     cached_tables_.insert_or_assign(table.get_name(), table);
 }
 
@@ -120,7 +122,7 @@ void SharedTable::delete_table(const std::string& table_name) {
 }
 
     std::map<std::string, std::shared_ptr<boost::mutex>> &SharedTable::get_locks() {
-        return table_locks;
+        return table_locks_;
     }
 
 } // namespace st_e
